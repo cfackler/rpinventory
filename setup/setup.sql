@@ -6,8 +6,8 @@ CREATE TABLE inventory (
        inventory_id int(5) NOT NULL auto_increment,
        description varchar(250) NOT NULL,
        location_id int(5) NOT NULL,
-       condition varchar(100) NOT NULL,
-       current_value float(6,2) NOT NULL,
+       current_condition varchar(100) NOT NULL,
+       current_value decimal(6,2) NOT NULL,
        PRIMARY KEY (inventory_id)
 ) type = MyISAM;
 
@@ -23,14 +23,14 @@ CREATE TABLE purchases (
        purchase_id int(5) NOT NULL auto_increment,
        business_id int(5) NOT NULL,
        purchase_date date NOT NULL,
-       total_price float(7,2) NOT NULL,
+       total_price decimal(7,2) NOT NULL,
        PRIMARY KEY (purchase_id)
 ) type = MyISAM;
 
 CREATE TABLE purchase_items (
        purchase_id int(5) NOT NULL auto_increment,
        inventory_id int(5) NOT NULL,
-       cost float(6,2) NOT NULL,
+       cost decimal(6,2) NOT NULL,
        PRIMARY KEY (purchase_id),
        KEY (inventory_id)
 ) type = MyISAM;
@@ -40,7 +40,7 @@ CREATE TABLE repairs (
        inventory_id int(5) NOT NULL,
        business_id int(5) NOT NULL,
        repair_date date NOT NULL,
-       repair_cost float(6,2) NOT NULL,
+       repair_cost decimal(6,2) NOT NULL,
        description varchar(250),
        PRIMARY KEY (repair_id)
 ) type = MyISAM;
