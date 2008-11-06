@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>RPInventory</title>
-    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
   </head>
   <body>
     <div class="header">
@@ -26,13 +26,13 @@
 		  FROM inventory, location 
 		  WHERE location.location_id=inventory.location_id";
 	 $result = mysql_query($query, $db);
-	 $myrow = mysql_fetch_array($result);
+	 $myrow = mysql_fetch_row($result);
 	 echo "<table border=1>";
 	 echo "<tr><td>Description</td><td>Location</td><td>Condition</td></tr>\n";
 	 do{
 	 printf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>\n", 
 	 $myrow["description"], $myrow["location"], $myrow["current_condition"]);
-	   } while ($myrow = mysql_fetch_array($result));
+	   } while ($myrow = mysql_fetch_row($result));
 	 echo "</table>\n";	 
 	 ?>
     </div>
