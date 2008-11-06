@@ -20,7 +20,8 @@
 
     <div class="main_body">
       <?php
-	 $db = mysql_connect("localhost", "inventory", "1nvp@ss");
+	 $db = mysql_connect("localhost", "inventory", "1nvp@ss") or 
+	     die("Could not connect: " . mysql_error());
 	 mysql_select_db("inventory", $db);
 	 $query= "SELECT description, location, current_condition 
 		  FROM inventory, location 
@@ -31,7 +32,7 @@
 	 echo "<tr><td>Description</td><td>Location</td><td>Condition</td></tr>\n";
 	 do{
 	 printf("<tr><td>%s</td><td>%s</td><td>%s</td></tr>\n", 
-	 $myrow["description"], $myrow["location"], $myrow["current_condition"]);
+	 $myrow[1], $myrow[2], $myrow[3]);
 	   } while ($myrow = mysql_fetch_row($result));
 	 echo "</table>\n";	 
 	 ?>
