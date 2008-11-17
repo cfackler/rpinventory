@@ -23,7 +23,7 @@
       <?php
 	 $db = mysql_connect("localhost", "inventory", "1nvp@ss") or 
 	     die("Could not connect: " . mysql_error());
-	 mysql_select_db("inventory", $db);
+	 mysql_select_db("rpinventory", $db);
 	 $query= "SELECT description, location, current_condition 
 		  FROM inventory, location 
 		  WHERE location.location_id=inventory.location_id";
