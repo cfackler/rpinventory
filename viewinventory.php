@@ -24,10 +24,10 @@ $smarty->cache_dir    = cache_dir;
 
 //items
 $query= "SELECT inventory.description, location, current_condition, current_value  FROM inventory, locations WHERE locations.location_id=inventory.location_id";
-$result = mysql_query($link, $query);
+$result = mysql_query($query, $link);
 $items = array();
 
-while($item = mysq_fetch_object($result))
+while($item = mysql_fetch_object($result))
 {
 	$items [] = $item;
 }
