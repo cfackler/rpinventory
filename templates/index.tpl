@@ -15,7 +15,7 @@
 	    <div class="left_sidebar">
 		    <a href="main.html">Home</a> <br />
 		    <a href="viewinventory.php">View Inventory</a> <br />
-		    <a href="addinventory.html">Add Inventory</a> <br />
+		    <a href="addinventory.php">Add Inventory</a> <br />
 		    <a href="borrowers.html">View Borrowers</a> <br />
 		    <a href="loans.html">View Loans</a> <br />
 		    <a href="repairs.html">View Repairs</a> <br />

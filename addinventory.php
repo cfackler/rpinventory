@@ -23,13 +23,13 @@ $smarty->cache_dir    = cache_dir;
 
 
 //items
-$query= "SELECT inventory.description, location, current_condition, current_value  FROM inventory, locations WHERE locations.location_id=inventory.location_id";
+$query= "SELECT location_id, location  FROM locations";
 $result = mysql_query($query, $link);
-$items = array();
+$locations = array();
 
-while($item = mysql_fetch_object($result))
+while($loc = mysql_fetch_object($result))
 {
-	$items [] = $item;
+	$locations [] = $loc;
 }
 
 //BEGIN Page
@@ -39,8 +39,8 @@ while($item = mysql_fetch_object($result))
 	
 //Assign vars
 $smarty->assign('title', "TITLE");
-$smarty->assign('page_tpl', 'viewinventory');
-$smarty->assign('items', $items);
+$smarty->assign('page_tpl', 'addInventory');
+$smarty->assign('locations', $locations);
 
 
 $smarty->display('index.tpl');
