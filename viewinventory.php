@@ -11,7 +11,7 @@ if($link == null)
 
 // SMARTY Setup
 
-require_once(SMARTY_DIR . 'Smarty.class.php');
+require_once('Smarty.class.php');
 
 $smarty = new Smarty();
 $smarty->caching = false;
