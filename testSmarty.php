@@ -6,7 +6,7 @@ require_once("inc/config.php");  //configs
 
 // SMARTY Setup
 
-require_once('Smarty.class.php');
+include('Smarty.class.php');
 
 $smarty = new Smarty();
 $smarty->caching = false;
