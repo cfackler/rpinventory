@@ -21,7 +21,7 @@
 	{/if}
 		
 	</td>
-	<td align="center"><a href="editUser.php?id={$users[userLoop]->id}">Edit User</a> | <a href="deleteUser.php?id={$users[userLoop]->id}">Delete User</a></td>
+	<td align="center"><a href="edituser.php?id={$users[userLoop]->id}">Edit User</a> | <a href="deleteUser.php?id={$users[userLoop]->id}">Delete User</a></td>
 </tr>
 {/section}	
 
