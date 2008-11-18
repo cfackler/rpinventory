@@ -1,6 +1,6 @@
 <?php
 
-//define('SMARTY_DIR', 'C:\\Program Files\\Apache Software Foundation\\Apache2.2\\Smarty\\libs\\');
+define('SMARTY_DIR', 'C:\\Program Files\\Apache Software Foundation\\Apache2.2\\Smarty\\libs\\');
 define("template_dir", 'templates');
 define("compile_dir", 'templates_c');
 define("config_dir", 'config');

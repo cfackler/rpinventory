@@ -21,6 +21,7 @@
 		    <a href="repairs.html">View Repairs</a> <br />
 		    <a href="purchases.html">View Purchases</a> <br />
 		    <a href="businesses.html">View Businesses</a> <br />
+			<a href="manageusers.php">Manage Users</a> <br />
 			<a href="login.html">Login</a> <br />
 	    </div>
 

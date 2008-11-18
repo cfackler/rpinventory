@@ -15,12 +15,12 @@ if(strlen($desc) == 0)
 
 //Condition
 $condition = $_POST["condition"];
-if(strlen($desc) == 0)
+if(strlen($condition) == 0)
 	die("Must have a description");	
 
 //Location	
 $location = (int)$_POST["location"];
-if(strlen($desc) == 0)
+if(strlen($location) == 0)
 	die("Must have a description");		
 	
 //Value

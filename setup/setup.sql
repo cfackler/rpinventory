@@ -91,8 +91,9 @@ CREATE TABLE addresses (
 ) type = MyISAM;
 
 CREATE TABLE logins (
+       id int(5) NOT NULL auto_increment,
        username varchar(50) NOT NULL,
        password varchar(32) NOT NULL,
        access_level int(1) NOT NULL,
-       PRIMARY KEY (username)
+       PRIMARY KEY (id)
 ) type = MyISAM;

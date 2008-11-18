@@ -22,14 +22,14 @@ $smarty->cache_dir    = cache_dir;
 
 
 
-//items
-$query= "SELECT location_id, location  FROM locations";
-$result = mysql_query($query, $link);
-$locations = array();
+//users
+$userQuery= "SELECT id, username, access_level from logins";
+$userResult = mysql_query($userQuery, $link);
+$users = array();
 
-while($loc = mysql_fetch_object($result))
+while($user = mysql_fetch_object($userResult))
 {
-	$locations [] = $loc;
+	$users [] = $user;
 }
 
 //BEGIN Page
@@ -38,9 +38,9 @@ while($loc = mysql_fetch_object($result))
 
 	
 //Assign vars
-$smarty->assign('title', "TITLE");
-$smarty->assign('page_tpl', 'addInventory');
-$smarty->assign('locations', $locations);
+$smarty->assign('title', "Manage Users");
+$smarty->assign('page_tpl', 'manageusers');
+$smarty->assign('users', $users);
 
 
 $smarty->display('index.tpl');

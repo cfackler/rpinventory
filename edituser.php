@@ -21,16 +21,17 @@ $smarty->config_dir   = config_dir;
 $smarty->cache_dir    = cache_dir;
 
 
+$id = (int)$_GET['id'];
+if($id == 0)
+	die("Invalid ID");
 
-//items
-$query= "SELECT location_id, location  FROM locations";
-$result = mysql_query($query, $link);
-$locations = array();
+//users
+$userQuery= "SELECT id, username, access_level from logins where id = " . $id;
+$userResult = mysql_query($userQuery, $link);
+$user = mysql_fetch_object($userResult);
 
-while($loc = mysql_fetch_object($result))
-{
-	$locations [] = $loc;
-}
+if($user == false)
+	die("Invalid ID");
 
 //BEGIN Page
 
@@ -38,9 +39,9 @@ while($loc = mysql_fetch_object($result))
 
 	
 //Assign vars
-$smarty->assign('title', "TITLE");
-$smarty->assign('page_tpl', 'addInventory');
-$smarty->assign('locations', $locations);
+$smarty->assign('title', "Edit User");
+$smarty->assign('page_tpl', 'editUser');
+$smarty->assign('user', $user);
 
 
 $smarty->display('index.tpl');

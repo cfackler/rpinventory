@@ -22,25 +22,12 @@ $smarty->cache_dir    = cache_dir;
 
 
 
-//items
-$query= "SELECT location_id, location  FROM locations";
-$result = mysql_query($query, $link);
-$locations = array();
-
-while($loc = mysql_fetch_object($result))
-{
-	$locations [] = $loc;
-}
-
-//BEGIN Page
-
 
 
 	
 //Assign vars
-$smarty->assign('title', "TITLE");
-$smarty->assign('page_tpl', 'addInventory');
-$smarty->assign('locations', $locations);
+$smarty->assign('title', "Add new user");
+$smarty->assign('page_tpl', 'addUser');
 
 
 $smarty->display('index.tpl');
