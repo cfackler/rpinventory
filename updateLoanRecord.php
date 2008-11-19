@@ -5,7 +5,6 @@ require_once("inc/auth.php");  //Session
 $link = connect();
 if($link == null)
 	die("Database connection failed");
-	
 
 //Authenticate
 $auth = GetAuthority();	
@@ -14,32 +13,24 @@ if($auth < 1)
 	
 
 //id
-$id = (int)$_GET["id"];
+$id = (int)$_POST["loan_id"];
 if($id == 0)
 	die("Invalid ID");
-
-
-$sure = $_GET['sure'];
-//Make sure they want to delete
-if($sure != "yes")
-{
-	echo "<h1>Are you sure?</h1>";
-	echo "<a href=\"deleteItem.php?id=" . $id . "&sure=yes\">Yes</a><br><br>";
-	echo "<a href=\"viewinventory.php\">No</a><br>";
 	
-	die("");
-}
 
-
+$timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
+$date = date("Y-m-d", $timestamp);
+	
 	
 //Create query
-$sql = "Delete from inventory where inventory_id = '" . $id . "'";
+$sql = "Update loans set return_date = '" . $date . "' where loan_id = " . $id;
 
 //Run update
 if(!mysqli_query($link, $sql))
 	die("Query failed");
 
-mysqli_close($link);
-header('Location: viewinventory.php');
+
+mysqli_close($link);	
+header('Location: viewLoans.php');
 	
 ?>

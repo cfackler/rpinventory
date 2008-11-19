@@ -26,7 +26,9 @@ $smarty->cache_dir    = cache_dir;
 
 
 //items
-$query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value  FROM inventory, locations WHERE locations.location_id=inventory.location_id";
+$query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
+		FROM inventory, locations
+		WHERE locations.location_id=inventory.location_id";
 $result = mysqli_query($link, $query);
 $items = array();
 

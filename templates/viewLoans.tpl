@@ -37,7 +37,16 @@ Show:
 	<td>{$items[itemLoop]->starting_condition}</td>
 	<td>{$items[itemLoop]->username}</td>
 	<td>{$items[itemLoop]->issue_date}</td>
-	<td>{$items[itemLoop]->return_date}</td>
+	<td align="center">
+	{if $items[itemLoop]->return_date == NULL && $authority >= 1}
+		<a href="returnItem.php?id={$items[itemLoop]->loan_id}">Return</a>
+	{elseif $items[itemLoop]->return_date == NULL}
+		Out
+	{else}
+		{$items[itemLoop]->return_date}
+	{/if}
+	
+	</td>
 </tr>
 {/section}	
 
