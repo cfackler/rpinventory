@@ -1,11 +1,13 @@
 <?php
 require_once("inc/connect.php");  //mysql
+require_once("inc/auth.php");  //Session
 
 $link = connect();
 if($link == null)
 	die("Database connection failed");
 
-	
+//Authenticate
+$auth = GetAuthority();	
 
 
 //Description
@@ -30,9 +32,9 @@ if($value == 0)
 	
 	
 //Check location exists
-$result=mysql_query("select * from locations where location_id=" . $location, $link);
+$result=mysqli_query($link, "select * from locations where location_id=" . $location);
 //verify count
-if(mysql_num_rows($result) == 0)
+if(mysqli_num_rows($result) == 0)
 	die("Invalid Location");
 	
 
@@ -40,10 +42,10 @@ if(mysql_num_rows($result) == 0)
 $sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $desc . "', " . $location . ", '" . $condition . "', " . $value . ")";	
 	
 	
-if(!mysql_query($sql, $link))
+if(!mysqli_query($link, $sql))
 	die("Query failed");
 
-	
+mysqli_close($link);
 header('Location: viewinventory.php');
 	
 ?>

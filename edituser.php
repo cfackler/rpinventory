@@ -2,12 +2,17 @@
 
 
 require_once("inc/connect.php");  //mysql
+require_once("inc/auth.php");  //Session
 require_once("inc/config.php");  //configs
 
 $link = connect();
 if($link == null)
 	die("Database connection failed");
-	
+
+//Authenticate
+$auth = GetAuthority();	
+if($auth != 2)
+	die("You dont have permission to access this page");
 
 // SMARTY Setup
 
@@ -27,8 +32,8 @@ if($id == 0)
 
 //users
 $userQuery= "SELECT id, username, access_level from logins where id = " . $id;
-$userResult = mysql_query($userQuery, $link);
-$user = mysql_fetch_object($userResult);
+$userResult = mysqli_query($link, $userQuery);
+$user = mysqli_fetch_object($userResult);
 
 if($user == false)
 	die("Invalid ID");
@@ -40,6 +45,7 @@ if($user == false)
 	
 //Assign vars
 $smarty->assign('title', "Edit User");
+$smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'editUser');
 $smarty->assign('user', $user);
 
@@ -48,6 +54,6 @@ $smarty->display('index.tpl');
 
 
 
-mysql_close($link);
+mysqli_close($link);
 
 ?>

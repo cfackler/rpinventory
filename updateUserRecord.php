@@ -1,10 +1,15 @@
 <?php
 require_once("inc/connect.php");  //mysql
+require_once("inc/auth.php");  //Session
 
 $link = connect();
 if($link == null)
 	die("Database connection failed");
 
+//Authenticate
+$auth = GetAuthority();	
+if($auth != 2)
+	die("You dont have permission to access this page");
 	
 //Username
 $username = $_POST["username"];
@@ -40,10 +45,11 @@ $sql .= " where id = '" . $id . "'";
 
 
 //Run update
-if(!mysql_query($sql, $link))
+if(!mysqli_query($link, $sql))
 	die("Query failed");
 
-	
+
+mysqli_close($link);	
 header('Location: manageusers.php');
 	
 ?>

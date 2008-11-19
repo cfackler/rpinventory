@@ -2,12 +2,16 @@
 
 
 require_once("inc/connect.php");  //mysql
+require_once("inc/auth.php");  //Session
 require_once("inc/config.php");  //configs
 
 $link = connect();
 if($link == null)
 	die("Database connection failed");
 	
+//Authenticate
+$auth = GetAuthority();
+
 
 // SMARTY Setup
 
@@ -24,10 +28,10 @@ $smarty->cache_dir    = cache_dir;
 
 //items
 $query= "SELECT location_id, location  FROM locations";
-$result = mysql_query($query, $link);
+$result = mysqli_query($link, $query);
 $locations = array();
 
-while($loc = mysql_fetch_object($result))
+while($loc = mysqli_fetch_object($result))
 {
 	$locations [] = $loc;
 }
@@ -38,7 +42,8 @@ while($loc = mysql_fetch_object($result))
 
 	
 //Assign vars
-$smarty->assign('title', "TITLE");
+$smarty->assign('title', "Add Inventory");
+$smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'addInventory');
 $smarty->assign('locations', $locations);
 
@@ -47,6 +52,6 @@ $smarty->display('index.tpl');
 
 
 
-mysql_close($link);
+mysqli_close($link);
 
 ?>

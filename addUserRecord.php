@@ -27,10 +27,10 @@ if($access > 2 || $access < 0)
 	
 $sql = "INSERT INTO logins (id , username, password, access_level) VALUES (NULL, '" . $username . "', '" . md5($password) . "', " . $access . ")";	
 	
-if(!mysql_query($sql, $link))
+if(!mysqli_query($link, $sql))
 	die("Query failed");
 
-	
+mysqli_close($link);
 header('Location: manageusers.php');
 	
 ?>

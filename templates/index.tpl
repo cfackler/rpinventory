@@ -21,8 +21,20 @@
 		    <a href="repairs.html">View Repairs</a> <br />
 		    <a href="purchases.html">View Purchases</a> <br />
 		    <a href="businesses.html">View Businesses</a> <br />
-			<a href="manageusers.php">Manage Users</a> <br />
-			<a href="login.html">Login</a> <br />
+			
+			{if $authority == 2}
+				<br>
+				<b>Admin</b><br>
+				<a href="manageusers.php">Manage Users</a> <br />
+			{/if}
+			
+			<br>
+			{if $authority == null}
+				<a href="login.php">Login</a> <br />
+			{else}
+				<a href="logout.php">Logout</a> <br />
+			{/if}
+			
 	    </div>
 
 	    <div class="main_body">

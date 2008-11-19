@@ -2,17 +2,12 @@
 
 
 require_once("inc/connect.php");  //mysql
-require_once("inc/auth.php");  //Session
 require_once("inc/config.php");  //configs
 
 $link = connect();
 if($link == null)
 	die("Database connection failed");
 	
-//Authenticate
-$auth = GetAuthority();
-if($auth != 2)
-	die("You dont have permission to access this page");
 
 // SMARTY Setup
 
@@ -27,13 +22,16 @@ $smarty->cache_dir    = cache_dir;
 
 
 
-
-
+$loginStatus = "none";
+if(isset($_GET['login']) && $_GET['login'] == "fail")
+{
+	$loginStatus = "fail";
+}
 	
 //Assign vars
-$smarty->assign('title', "Add new user");
-$smarty->assign('authority', $auth);
-$smarty->assign('page_tpl', 'addUser');
+$smarty->assign('title', "Login");
+$smarty->assign('loginStatus', $loginStatus);
+$smarty->assign('page_tpl', 'login');
 
 
 $smarty->display('index.tpl');

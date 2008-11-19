@@ -2,12 +2,15 @@
 
 
 require_once("inc/connect.php");  //mysql
+require_once("inc/auth.php");  //Session
 require_once("inc/config.php");  //configs
 
 $link = connect();
 if($link == null)
 	die("Database connection failed");
-	
+
+//Authenticate
+$auth = GetAuthority();	
 
 // SMARTY Setup
 
@@ -44,10 +47,10 @@ else if($view == "returned")
 }
 
 
-$result = mysql_query($query, $link);
+$result = mysqli_query($link, $query);
 $items = array();
 
-while($item = mysql_fetch_object($result))
+while($item = mysqli_fetch_object($result))
 {
 	$items [] = $item;
 }
@@ -58,7 +61,8 @@ while($item = mysql_fetch_object($result))
 
 	
 //Assign vars
-$smarty->assign('title', "TITLE");
+$smarty->assign('title', "View Loans");
+$smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewLoans');
 $smarty->assign('items', $items);
 $smarty->assign('filter', $view);
@@ -68,6 +72,6 @@ $smarty->display('index.tpl');
 
 
 
-mysql_close($link);
+mysqli_close($link);
 
 ?>
