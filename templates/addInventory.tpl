@@ -1,4 +1,4 @@
-<form name="storeTransaction" action="insertInventory.php" METHOD="post">
+<form name="addInventory" action="insertInventory.php" METHOD="post">
 
 <h3>Add Item</h3>
 
@@ -11,15 +11,21 @@
 </tr>
 
 <tr>
-	<td>Condition: </td>
-	<td><input type="text" name="condition" size="40"></td>
-</tr>
-
-<tr>
 	<td>Value: </td>
 	<td><input type="text" name="value" size="40"></td>
 </tr>
 
+<tr>
+	<td>Condition: </td>
+	<td>
+		<select name="condition">
+			<option value="Excellent">Excellent</option>
+			<option value="Good">Good</option>
+			<option value="Fair">Fair</option>
+			<option value="Poor">Poor</option>
+		</select>
+	</td>
+</tr>
 
 <tr>
 	<td>Location: </td>

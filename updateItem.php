@@ -1,15 +1,20 @@
 <?php
+
+
 require_once("inc/connect.php");  //mysql
 require_once("inc/auth.php");  //Session
+require_once("inc/config.php");  //configs
 
 $link = connect();
 if($link == null)
 	die("Database connection failed");
-
+	
 //Authenticate
-$auth = GetAuthority();	
+$auth = GetAuthority();
+if($auth < 1)
+	die("You dont have permission to access this page");
 
-
+	
 //Description
 $desc = $_POST["desc"];
 if(strlen($desc) == 0)
@@ -22,7 +27,7 @@ if(strlen($condition) == 0)
 
 //Location	
 $location = (int)$_POST["location"];
-if(strlen($location) == 0)
+if($location == 0)
 	die("Must have a location");		
 	
 //Value
@@ -30,22 +35,23 @@ $value = (double)$_POST["value"];
 if($value == 0)
 	die("Invalid Value");
 	
+//Item ID
+$inventory_id = (int)$_POST["inventory_id"];
+if($inventory_id == 0)
+	die("Invalid item id");	
 	
-//Check location exists
-$result=mysqli_query($link, "select * from locations where location_id=" . $location);
-//verify count
-if(mysqli_num_rows($result) == 0)
-	die("Invalid Location");
+	
+$query = "update inventory set description = '" . $desc . "', location_id = '" . $location . "', current_condition = '" . $condition . "', current_value = '" . $value . "' where inventory_id = '" . $inventory_id . "'";
+
+//Run update
+if(!mysqli_query($link, $query))
+	die("Query failed");	
 	
 
-	
-$sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $desc . "', " . $location . ", '" . $condition . "', " . $value . ")";	
-	
-	
-if(!mysqli_query($link, $sql))
-	die("Query failed");
+
 
 mysqli_close($link);
+
 header('Location: viewinventory.php');
-	
+
 ?>
