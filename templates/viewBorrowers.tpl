@@ -19,7 +19,6 @@
 	</tr>
 	{/section}
     </table>
-{/if}
 {else}
     <p>Please login if you wish to view information about borrowers</p>
-{/else}
+{/if}
