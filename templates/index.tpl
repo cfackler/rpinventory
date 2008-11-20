@@ -16,7 +16,7 @@
 		    <a href="index.php">Home</a> <br />
 		    <a href="viewinventory.php">View Inventory</a> <br />
 		    <a href="addinventory.php">Add Inventory</a> <br />
-		    <a href="borrowers.html">View Borrowers</a> <br />
+		    <a href="viewBorrowers.php">View Borrowers</a> <br />
 		    <a href="viewLoans.php">View Loans</a> <br />
 		    <a href="repairs.html">View Repairs</a> <br />
 		    <a href="purchases.html">View Purchases</a> <br />
