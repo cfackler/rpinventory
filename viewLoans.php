@@ -28,7 +28,7 @@ $smarty->cache_dir    = cache_dir;
 
 
 //items
-$query= "SELECT loan_id, loans.inventory_id, username, user_id, issue_date, return_date, starting_condition, username, description  FROM logins, loans, inventory WHERE loans.user_id = logins.id and inventory.inventory_id = loans.inventory_id";
+$query= "SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description  FROM logins, loans, inventory WHERE loans.borrower_id = logins.id and inventory.inventory_id = loans.inventory_id";
 
 
 //Filter

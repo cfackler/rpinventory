@@ -58,7 +58,7 @@ CREATE TABLE businesses (
 CREATE TABLE loans (
        loan_id int(5) NOT NULL auto_increment,
        inventory_id int(5) NOT NULL,
-       user_id int(5) NOT NULL,
+       borrower_id int(5) NOT NULL,
        issue_date date NOT NULL,
        return_date date,
        starting_condition varchar(100),

@@ -37,7 +37,7 @@ $item = mysqli_fetch_object($itemResult);
 $timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
 $date = date("Y-m-d", $timestamp);
 	
-$sql = "INSERT INTO loans (loan_id, inventory_id, user_id, issue_date, return_date, starting_condition) VALUES (NULL, " . $inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "'	)";	
+$sql = "INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition) VALUES (NULL, " . $inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "'	)";	
 
 	
 if(!mysqli_query($link, $sql))
