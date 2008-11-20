@@ -9,6 +9,8 @@ if($link == null)
 //Authenticate
 $auth = GetAuthority();	
 
+if($auth<1)
+	die("Please login to complete this action"();
 
 //Description
 $desc = $_POST["desc"];
