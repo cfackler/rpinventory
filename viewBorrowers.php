@@ -26,7 +26,7 @@ $smarty->cache_dir    = cache_dir;
 $query = "SELECT borrower_name, rin, email, phone
                  FROM borrowers, borrower_addresses, addresses
 		 WHERE addresses.address_id=borrower_addresses.address_id AND
-		       borrowers.borrower_id=borrower_addresses.borrower_id;"
+		       borrowers.borrower_id=borrower_addresses.borrower_id";
                  
 $result = mysqli_query($link, $query);
 $items = array();
