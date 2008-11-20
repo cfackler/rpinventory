@@ -4,14 +4,14 @@
 	<tr>
 		<th>Username</th>
 		<th>Access</th>
-		<th width="162">Actions</th>
+		<th width="200">Actions</th>
 	</tr>
 
 {section name=userLoop loop=$users}
 <tr>
 
-	<td>{$users[userLoop]->username}</td>
-	<td>
+	<td align="center">{$users[userLoop]->username}</td>
+	<td align="center">
 	{if $users[userLoop]->access_level == 2}
 		Administrator
 	{elseif $users[userLoop]->access_level == 1}
