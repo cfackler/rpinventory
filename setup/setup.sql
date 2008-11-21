@@ -72,7 +72,7 @@ CREATE TABLE borrower_addresses (
 ) type = MyISAM;
 
 CREATE TABLE addresses (
-       address_id int(5) NOT NULL,
+       address_id int(5) NOT NULL auto_increment,
        address varchar(100),
        address2 varchar(200),
        city varchar(50),

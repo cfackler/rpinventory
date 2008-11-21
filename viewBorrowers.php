@@ -23,17 +23,17 @@ $smarty->cache_dir    = cache_dir;
 
 
 //items
-$query = "SELECT borrower_name, rin, email, phone
-                 FROM borrowers, borrower_addresses, addresses
+$query = "SELECT username, name, rin, email, address, city, state, zipcode, phone
+                 FROM logins, borrower_addresses, addresses
 		 WHERE addresses.address_id=borrower_addresses.address_id AND
-		       borrowers.borrower_id=borrower_addresses.borrower_id";
+		       borrower_addresses.user_id=logins.id";
                  
 $result = mysqli_query($link, $query);
-$items = array();
+$borrowers = array();
 
 while($item = mysqli_fetch_object($result))
 {
-	$items [] = $item;
+	$borrowers [] = $item;
 }
 
 //BEGIN Page
@@ -42,7 +42,7 @@ while($item = mysqli_fetch_object($result))
 $smarty->assign('title', "View Borrowers");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewBorrowers');
-$smarty->assign('items', $items);
+$smarty->assign('borrowers', $borrowers);
 
 
 $smarty->display('index.tpl');
