@@ -4,6 +4,20 @@
 
 <table width="400">
 
+<tr>
+	<td>Name: </td>
+	<td><input type="text" name="name" size="40"></td>
+</tr>
+
+<tr>
+	<td>RIN: </td>
+	<td><input type="text" name="rin" size="40"></td>
+</tr>
+
+<tr>
+	<td>Email: </td>
+	<td><input type="text" name="email" size="40"></td>
+</tr>
 
 <tr>
 	<td>Username: </td>

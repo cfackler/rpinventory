@@ -1,3 +1,9 @@
+{if $authority >= 1}
+<a href="addinventory.php">Add Inventory</a>
+<br>
+<br>
+{/if}
+
 <table width="800" border="1">
 	<tr>
 		<th width="250">Item</th>

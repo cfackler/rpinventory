@@ -23,7 +23,23 @@ $password = $_POST["password"];
 //Access level	
 $access = (int)$_POST["access_level"];
 if($access > 2 || $access < 0)
-	die("Invalid access level");		
+	die("Invalid access level");
+	
+	
+//RIN
+$rin = $_POST["rin"];
+if(strlen($rin) == 0)
+	die("Must have a RIN");
+	
+//email
+$email = $_POST["email"];
+if(strlen($email) == 0)
+	die("Must have a email");
+	
+//email
+$name = $_POST["name"];
+if(strlen($name) == 0)
+	die("Must have a name");
 	
 //id
 $id = (int)$_POST["id"];
@@ -32,7 +48,8 @@ if($id == 0)
 	
 	
 //Create query
-$sql = "Update logins set username = '" . $username . "', access_level = '" . $access . "'";
+$sql = "Update logins set username = '" . $username . "', access_level = '" . $access . "', rin = '" . $rin . "', email = '" . $email . "', name = '" . $name . "'";
+
 
 //Add password if changed
 if(strlen($password) != 0)

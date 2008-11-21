@@ -65,16 +65,8 @@ CREATE TABLE loans (
        PRIMARY KEY (loan_id)
 ) type = MyISAM;
 
-CREATE TABLE borrowers (
-       borrower_id int(5) NOT NULL auto_increment,
-       borrower_name varchar(100) NOT NULL,
-       rin char(9),
-       email varchar(100),
-       PRIMARY KEY (borrower_id)
-) type = MyISAM;
-
 CREATE TABLE borrower_addresses (
-       borrower_id int(5) NOT NULL,
+       user_id int(5) NOT NULL,
        address_id int(5) NOT NULL,
        PRIMARY KEY (borrower_id, address_id)
 ) type = MyISAM;
@@ -95,5 +87,8 @@ CREATE TABLE logins (
        username varchar(50) NOT NULL,
        password varchar(32) NOT NULL,
        access_level int(1) NOT NULL,
+       rin char(9) NOT NULL,
+       email varchar(100) NOT NULL,
+       name varchar(100) NOT NULL,
        PRIMARY KEY (id)
 ) type = MyISAM;

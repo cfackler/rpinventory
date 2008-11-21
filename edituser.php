@@ -31,7 +31,7 @@ if($id == 0)
 	die("Invalid ID");
 
 //users
-$userQuery= "SELECT id, username, access_level from logins where id = " . $id;
+$userQuery= "SELECT * from logins where id = " . $id;
 $userResult = mysqli_query($link, $userQuery);
 $user = mysqli_fetch_object($userResult);
 

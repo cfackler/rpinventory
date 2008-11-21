@@ -28,7 +28,7 @@ $smarty->cache_dir    = cache_dir;
 
 
 //users
-$userQuery= "SELECT id, username, access_level from logins";
+$userQuery= "SELECT * from logins";
 $userResult = mysqli_query($link, $userQuery);
 $users = array();
 
