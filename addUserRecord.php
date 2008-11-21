@@ -44,7 +44,6 @@ if(strlen($name) == 0)
 	
 $sql = "INSERT INTO logins (id , username, password, access_level, rin, email, name) VALUES (NULL, '" . $username . "', '" . md5($password) . "', " . $access . ", '" . $rin . "', '" . $email . "', '" . $name . "')";	
 
-die($sql);
 	
 if(!mysqli_query($link, $sql))
 	die("Query failed");

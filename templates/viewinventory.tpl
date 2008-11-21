@@ -37,7 +37,9 @@
 		<td align="center"><a href="editItem.php?id={$items[itemLoop]->inventory_id}">Edit</a></td>
 	{/if}
 	{if $authority >= 1}
-		<td align="center"><a href="deleteItem.php?id={$items[itemLoop]->inventory_id}">Delete</a></td>
+		<td align="center">
+		<input type="button" onclick="confirmation('Are you sure you want to delete item \'{$items[itemLoop]->description}\' ?','deleteItem.php?id={$items[itemLoop]->inventory_id}')" value="Delete">
+	    </td>
 	{/if}
 </tr>
 {/section}	

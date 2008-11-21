@@ -33,6 +33,65 @@ if(mysqli_num_rows($itemResult) == 0)
 	die("Invalid Item");
 	
 $item = mysqli_fetch_object($itemResult);
+	
+//Address INFO
+
+
+$useOld = $_POST["useOld"];
+$oldExists = false;
+//Check if old address exists
+
+$query= "SELECT *  FROM addresses, borrower_addresses WHERE addresses.address_id = borrower_addresses.address_id and borrower_addresses.user_id = " . $user_id . " LIMIT 1";
+$result = mysqli_query($link, $query);
+$addyResult = null;
+if(mysqli_num_rows($result) != 0)
+{
+	$oldExists = true;
+	$addyResult = mysqli_fetch_object($result);
+}
+
+if($useOld == "on" && $oldExists == false)
+	die("Old address doesnt exist");
+else
+{
+	$address = $_POST["address"];
+	$address2 = $_POST["address2"];
+	if($address2 == null)
+		$address2="";
+	
+	$city = $_POST["City"];
+	$state = $_POST["State"];
+	$zipcode = $_POST["Zipcode"];
+	$phone = $_POST["Phone"];
+	
+	
+	if(strlen($address) == 0 || strlen($city) == 0 || strlen($state) == 0 || strlen($zipcode) == 0 || strlen($phone) == 0)
+		die("Null values not allowed");
+		
+	if(!$oldExists)
+	{
+		$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zipcode . "', '" . $phone . "')";
+		
+		if(!mysqli_query($link, $query))
+			die("Query failed");
+		$address_id = mysqli_insert_id($link);
+		
+		$query = "insert into borrower_addresses (user_id, address_id) VALUES(" . $user_id . ", " . $address_id . ")";
+		if(!mysqli_query($link, $query))
+			die("Query failed");
+	}
+	else
+	{
+		$query = "update addresses set address='" . $address . "', address2='" . $address2 . "', city='" . $city . "', state='" . $state . "', zipcode='" . $zipcode . "', phone='" . $phone . "' where address_id = " . $addyResult->address_id;
+		
+		
+		if(!mysqli_query($link, $query))
+			die("Query failed");
+	}	
+		
+}
+	
+
 
 $timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
 $date = date("Y-m-d", $timestamp);

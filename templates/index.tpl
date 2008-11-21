@@ -5,7 +5,8 @@
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
 
 <script src="ExternalJS.js" language="javascript" type="text/javascript"></script>
-    
+<script src="prototype.js" language="javascript" type="text/javascript"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
 </head>

@@ -1,4 +1,4 @@
-<form name="loanItem" action="insertLoanRecord.php" METHOD="post">
+<form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" METHOD="post">
 
 <h3>Loan Item</h3>
 
@@ -85,7 +85,8 @@
 	<td>Loan To: </td>
 	<td>
 	
-	<select name="user_id">
+	<select id="user_id" name="user_id" onchange="sendAddressRequest({$users[usr]->id});">
+		<option value="-1">Select User</option>
 	{section name=usr loop=$users}
 		<option value="{$users[usr]->id}">
 			{$users[usr]->username}
@@ -96,6 +97,43 @@
 	</td>
 </tr>
 
+<tr>
+	<td valign="top">Address</td>
+	<td valign="top">
+		<table width="350">
+		<tr>
+			<td>Use old address:</td>
+			<td><input type="checkbox" id="useOld" name="useOld" onchange="useAddress()"></td>
+		</tr>
+		<tr>
+			<td>Address:</td>
+			<td><input type="text" name="address" id="address" value=""></td>
+		</tr>
+		<tr>
+			<td>Address2:</td>
+			<td><input type="text" name="address2" id="address2" value=""></td>
+		</tr>
+		<tr>
+			<td>City:</td>
+			<td><input type="text" name="City" id="City" value=""></td>
+		</tr>
+		<tr>
+			<td>State:</td>
+			<td><input type="text" name="State" id="State" value=""></td>
+		</tr>
+		<tr>
+			<td>Zipcode:</td>
+			<td><input type="text" name="Zipcode" id="Zipcode" value=""></td>
+		</tr>
+		<tr>
+			<td>Phone:</td>
+			<td><input type="text" name="Phone" id="Phone" value=""></td>
+		</tr>
+		</table>
+
+	 </td>
+</tr>
+
 </table>
 
 <br>
@@ -104,4 +142,4 @@
 {/if}
 
 
-<form>
+</form>
