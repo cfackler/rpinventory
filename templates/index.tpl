@@ -25,6 +25,11 @@
 		    <a href="purchases.html">View Purchases</a> <br />
 		    <a href="businesses.html">View Businesses</a> <br />
 			
+			{if $authority >= 1}
+				<br>
+				<a href="manageLocations.php">Manage Locations</a> <br />
+			{/if}
+			
 			{if $authority == 2}
 				<br>
 				<b>Admin</b><br>
