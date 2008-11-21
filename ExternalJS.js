@@ -37,6 +37,7 @@ function recieveAddress(oReq, oJSN)
 		$('Zipcode').value = "";
 		$('Phone').value = "";
 		$('useOld').checked = false;
+		$('useOld').disabled = true;
 		useAddress();
 		return;
 	}
@@ -50,6 +51,7 @@ function recieveAddress(oReq, oJSN)
 	$('Phone').value = oJSN.Phone;
 	
 	$('useOld').checked = true;
+	$('useOld').disabled = false;
 	
 	useAddress();
 	
