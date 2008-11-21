@@ -52,7 +52,7 @@ if(mysqli_num_rows($result) != 0)
 
 if($useOld == "on" && $oldExists == false)
 	die("Old address doesnt exist");
-else
+else if($useOld == "off")
 {
 	$address = $_POST["address"];
 	$address2 = $_POST["address2"];
