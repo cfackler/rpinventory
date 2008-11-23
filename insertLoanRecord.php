@@ -58,6 +58,8 @@ echo $useOld;
 if($useOld == "off")
 {
     echo "insert/update addy";
+    
+    die("INSERT");
 
 	$address = $_POST["address"];
 	$address2 = $_POST["address2"];
@@ -96,6 +98,7 @@ if($useOld == "off")
 		
 }
 	
+die("END");
 
 
 $timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
