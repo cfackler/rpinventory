@@ -50,16 +50,13 @@ if(mysqli_num_rows($result) != 0)
 	$addyResult = mysqli_fetch_object($result);
 }
 
-if($useOld == "on" && $oldExists == false)
-	die("Old address doesnt exist");
-    
-echo $useOld;    
-    
-if($useOld == "off")
+if($useOld == "on")
 {
-    echo "insert/update addy";
-    
-    die("INSERT");
+    if($oldExists == false)
+        die("Old address doesnt exist");
+}   
+else
+{
 
 	$address = $_POST["address"];
 	$address2 = $_POST["address2"];
@@ -98,7 +95,6 @@ if($useOld == "off")
 		
 }
 	
-die("END");
 
 
 $timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
