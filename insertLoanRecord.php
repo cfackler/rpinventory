@@ -55,7 +55,7 @@ if($useOld == "on" && $oldExists == false)
     
 echo $useOld;    
     
-else if($useOld == "off")
+if($useOld == "off")
 {
     echo "insert/update addy";
 
