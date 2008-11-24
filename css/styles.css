@@ -1,3 +1,79 @@
-div.header{text-align:center; position:absolute;left:200px; height:100px;}
-div.main_body{position: absolute; top: 100px; left:200px;}
-div.left_sidebar{position: absolute; top:100px}
+div.header
+{
+    text-align:center;
+    position:absolute;
+    left:200px;
+    height:100px;
+}
+
+div.main_body
+{
+    position: absolute;
+    top: 100px;
+    left:200px;
+}
+
+div.left_sidebar
+{
+    position: absolute;
+    top:100px
+}
+
+body
+{
+    font: bold 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+
+/* LINK styles */
+
+a
+{
+    color: #2c7479;
+    font-size: 16px;
+}
+
+a:hover
+{
+    color: #6cbcc1;
+    
+    
+}
+
+
+
+/* Items table styling */
+.itemsTable {
+	padding: 0;
+	margin: 0;
+    border-left: 1px solid #C1DAD7;
+}
+
+
+.itemsTable th {
+	font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-align: left;
+	padding: 6px 6px 6px 12px;
+	background: #CAE8EA url(../images/bg_header.jpg) no-repeat;
+}
+
+
+.itemsTable td {
+    font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	background: #fff;
+	padding: 6px 6px 6px 12px;
+	color: #4f6b72;
+}
+
+.alt  td{
+	background: #F5FAFA;
+	color: #797268;
+}

@@ -6,19 +6,19 @@
 
 <form id="itemList" name="itemList">
 
-<table width="800" border="1">
+<table width="800" border="0" class="itemsTable" cellspacing="0" >
 	<tr>
 		{if $authority >= 1}
 			<th width="20"> </th>
 		{/if}
 		<th width="250">Item</th>
-		<th>Condition</th>
+		<th width="100">Condition</th>
 		<th>Value</th>
 		<th>Location</th>
 	</tr>
 
 {section name=itemLoop loop=$items}
-<tr>
+<tr{cycle values=" class=\"alt\","}>
 	{if $authority >= 1}
 		<td><input type="checkbox" name="{$items[itemLoop]->inventory_id}" id="{$items[itemLoop]->inventory_id}"></td>
 	{/if}
