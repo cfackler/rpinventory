@@ -21,7 +21,7 @@ div.left_sidebar
 
 body
 {
-    font: bold 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 }
 
 
@@ -30,7 +30,7 @@ body
 a
 {
     color: #2c7479;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 a:hover
@@ -65,7 +65,7 @@ a:hover
 
 
 .itemsTable td {
-    font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    font: 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	border-right: 1px solid #C1DAD7;
 	border-bottom: 1px solid #C1DAD7;
 	background: #fff;
