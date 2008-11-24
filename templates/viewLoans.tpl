@@ -21,17 +21,17 @@ Show:
 <br>
 
 
-<table width="600" border="1">
+<table width="800" border="0" class="itemsTable" cellspacing="0">
 	<tr>
-		<th>Item</th>
+		<th width="250">Item</th>
 		<th>Starting Condition</th>
 		<th>Borrower</th>
 		<th>Loan Date</th>
-		<th>Return Date</th>
+		<th width="100">Return Date</th>
 	</tr>
 
 {section name=itemLoop loop=$items}
-<tr>
+<tr{cycle values=" class=\"alt\","}>
 
 	<td>{$items[itemLoop]->description}</td>
 	<td>{$items[itemLoop]->starting_condition}</td>

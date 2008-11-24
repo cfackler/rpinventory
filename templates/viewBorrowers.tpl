@@ -1,7 +1,7 @@
 <h3>Borrowers</h3>
 
 {if $authority >= 1}
-    <table width="800" border="1">
+    <table width="800" border="0" cellspacing="0" class="itemsTable">
     	<tr>
 		<th width="150">Name</th>
 		<th width="100">RIN</th>
@@ -11,7 +11,7 @@
 	</tr>
 
 	{section name=num loop=$borrowers}
-	<tr>
+	<tr{cycle values=" class=\"alt\","}>
 		<td align="center">{$borrowers[num]->name}</td>
 		<td align="center">{$borrowers[num]->rin}</td>
 		<td align="center">{$borrowers[num]->email}</td>

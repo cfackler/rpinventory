@@ -33,12 +33,17 @@ while ($token !== false) {
     $token = strtok(",");
 }
 
+$items = array();
+
 //Verify all ids are valid
 foreach ($idList as $id)
 {
-	$result = mysqli_query($link, "select description from inventory where inventory_id = " . $id);
+	$result = mysqli_query($link, "select current_condition, inventory_id from inventory where inventory_id = " . $id);
 	if(mysqli_num_rows($result) == 0)
-		die("Invalid item ID");
+		die("Invalid item ID:");
+        
+    $item = mysqli_fetch_object($result);
+    $items[] = $item;
 }
 
 
@@ -108,12 +113,14 @@ else
 $timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
 $date = date("Y-m-d", $timestamp);
 
-foreach ($idList as $id)
+foreach ($items as $item)
 {
+    
 	
 	$sql = "INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition) VALUES
-	(NULL, " . $id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "'	)";	
+	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "'	)";	
 
+    echo $sql;
 		
 	if(!mysqli_query($link, $sql))
 		die("Query failed");

@@ -1,17 +1,17 @@
 <h3><a href="addUser.php">Add new user</a></h3>
 
-<table width="900" border="1">
+<table width="900" border="0" class="itemsTable" cellspacing="0">
 	<tr>
 		<th>Name</th>
-		<th>Username</th>
-		<th width="120">Access</th>
+		<th width="100">Username</th>
+		<th width="100">Access</th>
 		<th width="100">RIN</th>
-		<th>Email</th>
-		<th width="200">Actions</th>
+		<th width="150">Email</th>
+		<th width="150">Actions</th>
 	</tr>
 
 {section name=userLoop loop=$users}
-<tr>
+<tr{cycle values=" class=\"alt\","}>
 	<td align="center">{$users[userLoop]->name}</td>
 	<td align="center">{$users[userLoop]->username}</td>
 	<td align="center">
@@ -29,7 +29,7 @@
 	<td align="center">{$users[userLoop]->rin}</td>
 	<td align="center">{$users[userLoop]->email}</td>
 	
-	<td align="center"><a href="edituser.php?id={$users[userLoop]->id}">Edit User</a> | <input type="button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')" value="Delete User"></td>
+	<td align="center"><a href="edituser.php?id={$users[userLoop]->id}">Edit</a> or <input type="button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')" value="Delete User"></td>
 </tr>
 {/section}	
 
