@@ -26,16 +26,35 @@ $smarty->config_dir   = config_dir;
 $smarty->cache_dir    = cache_dir;
 
 
-//id
-$id = (int)$_GET["id"];
-if($id == 0)
-	die("Invalid ID");
+//grab all ids
+$idString = $_GET["ids"];
+$token = strtok($idString, ",");
+$idList = array();
+
+while ($token !== false) {
+	$idList[] = (int)$token;
+    $token = strtok(",");
+}
+
+if(count($idList) == 0)
+	die("No items");
 
 
-//item
-$query= "SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value  FROM inventory, locations WHERE locations.location_id=inventory.location_id and inventory.inventory_id = " . $id;
-$result = mysqli_query($link, $query);
-$item = mysqli_fetch_object($result);
+//Get all items
+$items = array();
+foreach($idList as $id)
+{
+
+	//item
+	$query= "SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value  FROM inventory, locations WHERE locations.location_id=inventory.location_id and inventory.inventory_id = " . $id;
+	$result = mysqli_query($link, $query);
+	
+	if(mysqli_num_rows($result) == 0)
+		die("Invalid ID");
+	
+	$item = mysqli_fetch_object($result);
+	$items[] = $item;
+}
 
 
 
@@ -58,7 +77,8 @@ while($loc = mysqli_fetch_object($locResult))
 $smarty->assign('title', "Edit Item");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'editItem');
-$smarty->assign('item', $item);
+$smarty->assign('items', $items);
+$smarty->assign('itemCount', count($items));
 $smarty->assign('locations', $locations);
 
 
