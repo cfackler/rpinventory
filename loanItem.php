@@ -26,32 +26,50 @@ $smarty->config_dir   = config_dir;
 $smarty->cache_dir    = cache_dir;
 
 
-//id
-$id = (int)$_GET["id"];
-if($id == 0)
-	die("Invalid ID");
+//grab all ids
+$idString = $_GET["ids"];
+$token = strtok($idString, ",");
+$idList = array();
+$itemDesc = array();
+
+while ($token !== false) {
+	$idList[] = (int)$token;
+    $token = strtok(",");
+}
+
+//Verify all ids are valid,  get item description
+foreach ($idList as $id)
+{
+	$result = mysqli_query($link, "select description from inventory where inventory_id = " . $id);
+	if(mysqli_num_rows($result) == 0)
+		die("Invalid item ID");
+	
+	$item = mysqli_fetch_object($result);
+	$itemDesc[] = $item->description;
+}
 
 
-//item
-$query= "SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value  FROM inventory, locations WHERE locations.location_id=inventory.location_id and inventory.inventory_id = " . $id;
-$result = mysqli_query($link, $query);
+	
 
-if(mysqli_num_rows($result) == 0)
-	die("Invalid item ID");
+$itemsOut = array();
 
-$item = mysqli_fetch_object($result);
+//Check Loan status
+$loanedOut = false;
 
+foreach ($idList as $id)
+{
+	$loanQuery = "Select description from loans, inventory where return_date is NULL and loans.inventory_id = inventory.inventory_id and loans.inventory_id = " . $id;
+	$loanResult = mysqli_query($link, $loanQuery);
+	if(mysqli_num_rows($loanResult) != 0)
+	{
+		$item = mysqli_fetch_object($loanResult);
+		$itemsOut[] = $item->description;
+		$loanedOut = true;
+	}
+	
+}
 
-//Loan status
-$loanQuery = "Select * from loans where return_date is NULL and inventory_id = " . $id;
-$loanResult = mysqli_query($link, $loanQuery);
-
-
-$status = "None";
-if(mysqli_num_rows($loanResult) != 0)
-	$status = "Out";
-
-//Locations
+//User list
 $userQuery= "SELECT id, username FROM logins";
 $userResult = mysqli_query($link, $userQuery);
 $users = array();
@@ -64,15 +82,16 @@ while($user = mysqli_fetch_object($userResult))
 //BEGIN Page
 
 
-
 	
 //Assign vars
-$smarty->assign('title', "Loan Item");
+$smarty->assign('title', "Loan Items");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'loanItem');
-$smarty->assign('item', $item);
+$smarty->assign('itemDesc', $itemDesc);
+$smarty->assign('itemsOut', $itemsOut);
+$smarty->assign('idString', $idString);
 $smarty->assign('users', $users);
-$smarty->assign('status', $status);
+$smarty->assign('loanedOut', $loanedOut);
 $smarty->assign('selectDate', getdate(time()));
 
 $smarty->display('index.tpl');

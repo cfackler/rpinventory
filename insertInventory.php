@@ -41,8 +41,7 @@ if(mysqli_num_rows($result) == 0)
 	
 
 	
-$sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $desc . "', " . $location . ", '" . $condition . "', " . $value . ")";	
-	
+$sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $desc . "', " . $location . ", '" . $condition . "', " . $value . ")";		
 	
 if(!mysqli_query($link, $sql))
 	die("Query failed");

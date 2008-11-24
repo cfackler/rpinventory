@@ -12,19 +12,36 @@ $auth = GetAuthority();
 if($auth < 1)
 	die("You dont have permission to access this page");
 	
-
-//id
-$id = (int)$_GET["id"];
-if($id == 0)
-	die("Invalid ID");
-
 	
-//Create query
-$sql = "Delete from inventory where inventory_id = '" . $id . "'";
+//grab all ids
+$idString = $_GET["ids"];
+$token = strtok($idString, ",");
+$idList = array();
 
-//Run update
-if(!mysqli_query($link, $sql))
-	die("Query failed");
+while ($token !== false) {
+	$idList[] = (int)$token;
+    $token = strtok(",");
+}
+
+//Run delete
+foreach ($idList as $id)
+{
+	//Remove item
+	$sql = "Delete from inventory where inventory_id = '" . $id . "'";
+
+	//Run update
+	if(!mysqli_query($link, $sql))
+		die("Query failed");
+		
+		
+	//Remove any loan records
+	$sql = "Delete from loans where inventory_id = '" . $id . "'";
+
+	//Run update
+	if(!mysqli_query($link, $sql))
+		die("Query failed");
+}
+
 
 mysqli_close($link);
 header('Location: viewinventory.php');

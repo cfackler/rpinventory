@@ -1,20 +1,36 @@
 <form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" METHOD="post">
 
-<h3>Loan Item</h3>
+<h3>Loan Items</h3>
 
-{if $status == "Out" }
-<h4>Item already loaned out</h4>
-{/if}
+{if $loanedOut == true }
+<h4>The following item(s) have already been loaned out:</h4>
+
+<ul>
+{section name=out loop=$itemsOut}
+<li>{$itemsOut[out]}</li>
+{/section}
+</ul>
 
 
-{if $status != "Out" }
+
+
+{else}
 <table width="400">
 
-<input type="hidden" name="inventory_id" size="40" value="{$item->inventory_id}">
+<input type="hidden" name="inventory_ids" size="40" value="{$idString}">
 
 <tr>
-	<td>Description: </td>
-	<td>{$item->description}</td>
+	<td valign="top">Items: </td>
+	<td>
+	
+	
+		<ul>
+			{section name=items loop=$itemDesc}
+			<li>{$itemDesc[items]}</li>
+			{/section}
+		</ul>
+	
+	</td>
 </tr>
 
 
