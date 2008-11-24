@@ -68,7 +68,7 @@ CREATE TABLE loans (
 CREATE TABLE borrower_addresses (
        user_id int(5) NOT NULL,
        address_id int(5) NOT NULL,
-       PRIMARY KEY (borrower_id, address_id)
+       PRIMARY KEY (user_id, address_id)
 ) type = MyISAM;
 
 CREATE TABLE addresses (
