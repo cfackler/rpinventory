@@ -21,9 +21,9 @@
 		    <a href="viewinventory.php">View Inventory</a> <br />
 		    <a href="viewBorrowers.php">View Borrowers</a> <br />
 		    <a href="viewLoans.php">View Loans</a> <br />
-		    <a href="repairs.html">View Repairs</a> <br />
+		    <a href="viewRepairs.php">View Repairs</a> <br />
 		    <a href="purchases.html">View Purchases</a> <br />
-		    <a href="businesses.html">View Businesses</a> <br />
+		    <a href="viewBusinesses.php">View Businesses</a> <br />
 			
 			{if $authority >= 1}
 				<br>
