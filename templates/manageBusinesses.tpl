@@ -5,7 +5,7 @@
 	       <tr>
 			<th width="200">Company Name</th>
 			<th width="150">Address</th>
-			<th width="150">Address 2</th>
+			<th width="160">Address 2</th>
 			<th width="100">City</th>
 			<th width="20">State</th>
 			<th width="100">Zip Code</th>
