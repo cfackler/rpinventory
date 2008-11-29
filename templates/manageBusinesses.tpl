@@ -1,11 +1,11 @@
 {if $authority>=1}
-	<h3><a href="addBorrower.php">Add new business</a></h3>
+	<h3><a href="addBusiness.php">Add new business</a></h3>
 
 	<table width="900" border="0" class="itemsTable" cellspacing="0">
 	       <tr>
 			<th width="200">Company Name</th>
 			<th width="150">Address</th>
-			<th width="150">Address</th>
+			<th width="150">Address 2</th>
 			<th width="100">City</th>
 			<th width="20">State</th>
 			<th width="100">Zip Code</th>
