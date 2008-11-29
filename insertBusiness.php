@@ -51,14 +51,14 @@ $website = $_POST["website"];
 $query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "')";
 		
 if(!mysqli_query($link, $query))
-	die("Query failed");
+	die("Query failed first");
 $address_id = mysqli_insert_id($link);
 
 $sql = "INSERT INTO businesses (business_id, address_id, company name, fax, email, website) VALUES (NULL, '" . $address_id . "' , '" . $company . "', '" . $fax . "', '" . $email . "', '" . $website . "')";
 
 	
 if(!mysqli_query($link, $sql))
-	die("Query failed");
+	die("Query failed second");
 
 mysqli_close($link);
 header('Location: manageLocations.php');
