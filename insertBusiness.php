@@ -54,7 +54,7 @@ if(!mysqli_query($link, $query))
 	die("Query failed first");
 $address_id = mysqli_insert_id($link);
 
-$sql = "INSERT INTO businesses (business_id, address_id, company name, fax, email, website) VALUES (NULL, '" . $address_id . "' , '" . $company . "', '" . $fax . "', '" . $email . "', '" . $website . "')";
+$sql = "INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES (NULL, '" . $address_id . "' , '" . $company . "', '" . $fax . "', '" . $email . "', '" . $website . "')";
 
 	
 if(!mysqli_query($link, $sql))
