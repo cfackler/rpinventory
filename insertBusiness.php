@@ -61,6 +61,6 @@ if(!mysqli_query($link, $sql))
 	die("Query failed second");
 
 mysqli_close($link);
-header('Location: viewBusiness.php');
+header('Location: viewBusinesseses.php');
 	
 ?>
