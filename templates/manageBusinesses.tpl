@@ -1,5 +1,5 @@
 {if $authority>=1}
-	<h3><a href="addBusiness.php">Add new business</a></h3>
+	<a href="addBusiness.php">Add new business</a>
 
 	<table width="900" border="0" class="itemsTable" cellspacing="0">
 	       <tr>
