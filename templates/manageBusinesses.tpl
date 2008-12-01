@@ -1,6 +1,7 @@
 {if $authority>=1}
 	<a href="addBusiness.php">Add new business</a>
-
+	<br />
+	<br />
 	<table width="900" border="0" class="itemsTable" cellspacing="0">
 	       <tr>
 			<th width="200">Company Name</th>

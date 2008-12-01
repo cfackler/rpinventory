@@ -1,5 +1,7 @@
 {if $authority>1}
     <a href="addPurchase.php">Add a purchase</a>
+    <br />
+    <br />
     <table width="800" border="0" class="itemsTable" cellspacing="0">
     	<tr>		
 		<th width="150">Items</th>
