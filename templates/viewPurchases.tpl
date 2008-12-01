@@ -10,13 +10,13 @@
 		<th>Total Cost</th>
 	</tr>
 
-    {section name=itemLoop loop=$items}
+    {section name=itemLoop loop=$purchases}
     <tr{cycle values=" class=\"alt\","}>
 
-	<td><a href="viewItems.php?id={$items[itemLoop]->purchase_id}></td>
-	<td>{$items[itemLoop]->company_name}</td>
-	<td>{$items[itemLoop]->purchase_date}</td>
-	<td>${$items[itemLoop]->total_price}</td>
+	<td><a href="viewItems.php?id={$purchases[itemLoop]->purchase_id}></td>
+	<td>{$purchases[itemLoop]->company_name}</td>
+	<td>{$purchases[itemLoop]->purchase_date}</td>
+	<td>${$purchases[itemLoop]->total_price}</td>
     </tr>
     {/section}	
 
