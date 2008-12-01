@@ -27,21 +27,37 @@ $smarty->cache_dir    = cache_dir;
 
 
 //users
-$query= "SELECT purchases.purchase_id, purchases.business_id, businesses.business_id, purchases.purchase_date, company_name, total_price, purchase_items.inventory_id, inventory.inventory_id, inventory.description
-	 FROM purchases, businesses, purchase_items, inventory
-	 WHERE businesses.business_id=purchases.business_id 
-	 AND purchase_items.purchase_id= purchases.purchase_id
-	 AND purchase_items.inventory_id= inventory.inventory_id";
+$query= "SELECT purchases.purchase_id, purchases.business_id, purchases.purchase_date, company_name, total_price
+	 FROM purchases, businesses
+	 WHERE businesses.business_id=purchases.business_id ";
 $result = mysqli_query($link, $query);
 $purchases = array();
+$items = array();
 
 while($purchase = mysqli_fetch_object($result))
 {
 	$purchases [] = $purchase;
+	
+	
+	$itemQuery = "select purchase_id, description from inventory, purchase_items where inventory.inventory_id = purchase_items.inventory_id and purchase_items.purchase_id = " . $purchase->purchase_id;
+
+	$itemResult = mysqli_query($link, $itemQuery);
+	$string = "";
+	
+	while($item = mysqli_fetch_object($itemResult))
+	{
+		if(strlen($string) != 0)
+			$string .= ", ";
+			
+		$string .= $item->description;
+	}
+	
+	$items[] = $string;
+	
 }
 
-//BEGIN Page
 
+//BEGIN Page
 
 
 	
@@ -50,7 +66,7 @@ $smarty->assign('title', "View Purchases");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewPurchases');
 $smarty->assign('purchases', $purchases);
-
+$smarty->assign('purchaseItems', $items);
 
 $smarty->display('index.tpl');
 

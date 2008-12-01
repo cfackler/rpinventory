@@ -26,6 +26,9 @@ $smarty->config_dir   = config_dir;
 $smarty->cache_dir    = cache_dir;
 
 
+$count = (int)$_GET['count'];
+
+
 
 //Business List
 
@@ -38,7 +41,7 @@ while($business = mysqli_fetch_object($businessResult))
 	$businesses [] = $business;
 }
 
-//User list
+//inventory list
 $itemQuery= "SELECT inventory_id, description FROM inventory";
 $itemResult = mysqli_query($link, $itemQuery);
 $items = array();
@@ -48,15 +51,18 @@ while($item = mysqli_fetch_object($itemResult))
 	$items [] = $item;
 }
 
+
+
 //BEGIN Page
 
 
 	
 //Assign vars
-$smarty->assign('title', "Loan Items");
+$smarty->assign('title', "Purchase Items");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'purchaseItem');
 $smarty->assign('items', $items);
+$smarty->assign('count', $count);
 $smarty->assign('businesses', $businesses);
 $smarty->assign('selectDate', getdate(time()));
 

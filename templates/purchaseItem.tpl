@@ -1,39 +1,36 @@
-<form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" METHOD="post">
+
 
 <h3>Create Purchase</h3>
 
 
+{if $count == 0}
+
+<form name="purchaseCount" action="addPurchase.php" METHOD="get">
+
+
+Item Count: <input type="text" name="count" size="10">
+
+<input type="submit" value="Go">
+
+
+{else}
+
+<form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" METHOD="post">
+
+<input type="hidden" name="count" value="{$count}">
+
 <table width="400">
-
-
-<tr>
-	<td>Item Purchased: </td>
-	<td>
-	
-	<select id="inv_id" name="inv_id" onchange="sendAddressRequest({$items[item]->inventory_id});">
-		<option value="-1">Select Item</option>
-	{section name=item loop=$items}
-		<option value="{$items[item]->inventory_id}">
-			{$items[item]->description}
-		</option>
-	{/section}
-	</select>
-	
-	</td>
-</tr>
-
-
 <tr>
 	<td>Purchased From: </td>
 	<td>
 	
-	<select id="business_id" name="business_id" onchange="sendAddressRequest({$businesses[bus]->business_id});">
+	<select id="business_id" name="business_id">
 		<option value="-1">Select Business</option>
-	{section name=bus loop=$businesses}
-		<option value="{$businesses[bus]->business_id}">
-			{$businesses[bus]->company_name}
-		</option>
-	{/section}
+		{section name=bus loop=$businesses}
+			<option value="{$businesses[bus]->business_id}">
+				{$businesses[bus]->company_name}
+			</option>
+		{/section}
 	</select>
 	
 	</td>
@@ -103,17 +100,54 @@
 	<td>
 </tr>
 
-
 <tr>
 	<td>Total Value of Purchase: </td>
 	<td><input type="text" name="total_cost" value=""></td>
 </tr>
+</table>
+
+<br>
+<table width="300" border="0">
+
+<tr>
+	<th>Item</th>
+	<th width="100">Cost</th>
+</tr>
+
+{section name=foo loop=$count}
+<tr>
+	<td>
+	
+	<select name="inv_id{$smarty.section.foo.index}">
+		{section name=item loop=$items}
+			<option value="{$items[item]->inventory_id}">
+				{$items[item]->description}
+			</option>
+		{/section}
+	</select>
+	</td>
+	
+	<td>
+	<input type="text" name="cost{$smarty.section.foo.index}" size="10">
+	
+	</td>
+</tr>
+{/section}
+</table>
+
+
+
+
+
+
 
 </table>
 
 <br>
 
 <input type="submit" value="Add">
+
+{/if}
 
 
 </form>

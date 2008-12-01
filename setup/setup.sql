@@ -28,11 +28,10 @@ CREATE TABLE purchases (
 ) type = MyISAM;
 
 CREATE TABLE purchase_items (
-       purchase_id int(5) NOT NULL auto_increment,
+       purchase_id int(5) NOT NULL,
        inventory_id int(5) NOT NULL,
        cost decimal(6,2) NOT NULL,
-       PRIMARY KEY (purchase_id),
-       KEY (inventory_id)
+       PRIMARY KEY  (purchase_id, inventory_id)
 ) type = MyISAM;
 
 CREATE TABLE repairs (
