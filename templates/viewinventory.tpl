@@ -39,6 +39,7 @@
 
 <option value="Loan">Loan</option>
 <option value="Edit">Edit</option>
+<option value="Repair">Repair</option>
 <option value="Delete">Delete</option>
 </select>
 

@@ -41,6 +41,10 @@ function submitItems()
 	{
 		window.location="editItem.php?ids=" + ids;
 	}
+	else if(action == "Repair")
+	{
+		window.location="repairItems.php?ids=" + ids;
+	}
 	
 	//alert(action);
 }
