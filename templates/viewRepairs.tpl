@@ -1,4 +1,5 @@
 {if $authority>1}
+    <h3><a href="addRepair.php">Add a repair</a></h3>
     <table width="800" border="0" class="itemsTable" cellspacing="0">
     	<tr>		
 		<th width="200">Item</th>
