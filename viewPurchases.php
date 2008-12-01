@@ -46,7 +46,7 @@ while($purchase = mysqli_fetch_object($result))
 //Assign vars
 $smarty->assign('title', "View Purchases");
 $smarty->assign('authority', $auth);
-$smarty->assign('page_tpl', 'viewBusinesses');
+$smarty->assign('page_tpl', 'viewPurchases');
 $smarty->assign('businesses', $purchases);
 
 
