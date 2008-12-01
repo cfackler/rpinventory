@@ -47,12 +47,11 @@
 			
 			{if $authority >= 1}
 				<br>
+                <b>Admin</b><br>
 				<a href="manageLocations.php">Manage Locations</a> <br />
 			{/if}
 			
 			{if $authority == 2}
-				<br>
-				<b>Admin</b><br>
 				<a href="manageusers.php">Manage Users</a> <br />
 			{/if}
 			
