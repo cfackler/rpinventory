@@ -49,7 +49,7 @@ $smarty->cache_dir    = cache_dir;
 
 
 //items
-$query= "SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description  FROM logins, loans, inventory WHERE loans.borrower_id = logins.id and inventory.inventory_id = loans.inventory_id order by issue_date desc";
+$query= "SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description  FROM logins, loans, inventory WHERE loans.borrower_id = logins.id and inventory.inventory_id = loans.inventory_id";
 
 
 //Filter
@@ -66,6 +66,8 @@ else if($view == "returned")
 {
 	$query .= " and return_date IS NOT NULL";
 }
+
+$query .= " order by issue_date desc";
 
 
 $result = mysqli_query($link, $query);
