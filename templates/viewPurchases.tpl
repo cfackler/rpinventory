@@ -13,7 +13,7 @@
     {section name=itemLoop loop=$purchases}
     <tr{cycle values=" class=\"alt\","}>
 
-	<td><a href="viewItems.php?id={$purchases[itemLoop]->purchase_id}></td>
+	<td>{$purchases[itemLoop]->description}</td>
 	<td>{$purchases[itemLoop]->company_name}</td>
 	<td>{$purchases[itemLoop]->purchase_date}</td>
 	<td>${$purchases[itemLoop]->total_price}</td>
