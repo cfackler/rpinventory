@@ -142,7 +142,7 @@ foreach ($items as $item)
 	$sql = "INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition) VALUES
 	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "'	)";	
 
-    echo $sql;
+    //echo $sql;
 		
 	if(!mysqli_query($link, $sql))
 		die("Query failed");
