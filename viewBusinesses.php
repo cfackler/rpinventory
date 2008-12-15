@@ -67,7 +67,7 @@ while($business = mysqli_fetch_object($result))
 //Assign vars
 $smarty->assign('title', "Manage Businesses");
 $smarty->assign('authority', $auth);
-$smarty->assign('page_tpl', 'manageBusinesses');
+$smarty->assign('page_tpl', 'viewBusinesses');
 $smarty->assign('businesses', $businesses);
 
 

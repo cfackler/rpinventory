@@ -18,7 +18,7 @@
 
 *}
 
-{if $authority>=1}
+{if $authority>1}
 	<a href="addBusiness.php">Add new business</a>
 	<br />
 	<br />

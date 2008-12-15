@@ -16,7 +16,13 @@ div.main_body
 div.left_sidebar
 {
     position: absolute;
-    top:100px
+    top:86px;
+    left:-32px
+}
+
+div.left_sidebar ul
+{
+    list-style-type: none
 }
 
 body

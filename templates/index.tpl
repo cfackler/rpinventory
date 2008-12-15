@@ -37,30 +37,35 @@
 	    </div>
 		
 	    <div class="left_sidebar">
-		    <a href="index.php">Home</a> <br />
-		    <a href="viewInventory.php">View Inventory</a> <br />
-		    <a href="viewBorrowers.php">View Borrowers</a> <br />
-		    <a href="viewLoans.php">View Loans</a> <br />
-		    <a href="viewRepairs.php">View Repairs</a> <br />
-		    <a href="viewPurchases.php">View Purchases</a> <br />
-		    <a href="viewBusinesses.php">View Businesses</a> <br />
-			
+	    	 <ul>
+			<li><a href="index.php">Home</a></li>
+			<li><a href="viewInventory.php">View Inventory</a></li>
 			{if $authority >= 1}
-				<br>
-                <b>Admin</b><br>
-				<a href="manageLocations.php">Manage Locations</a> <br />
+		             <li><a href="viewBorrowers.php">View Borrowers</a></li>
+		    	     <li><a href="viewLoans.php">View Loans</a></li>
+			     {if $authority == 2}
+		    	     <li><a href="viewRepairs.php">View Repairs</a></li>
+		    	     <li><a href="viewPurchases.php">View Purchases</a></li>
+		    	     <li><a href="viewBusinesses.php">View Businesses</a></li>
+			     {/if}
+			     
+			     <li><br /></li>
+			     <li><b>Admin</b></li>
+			     <li><a href="manageLocations.php">Manage Locations</a></li>
 			{/if}
 			
 			{if $authority == 2}
-				<a href="manageUsers.php">Manage Users</a> <br />
+			     <li><a href="manageUsers.php">Manage Users</a></li>
 			{/if}
 			
-			<br>
+			<li><br /></li>
+			
 			{if $authority == null}
-				<a href="login.php">Login</a> <br />
+			     <li><a href="login.php">Login</a></li>
 			{else}
-				<a href="logout.php">Logout</a> <br />
+			     <li><a href="logout.php">Logout</a></li>
 			{/if}
+		</ul>
 			
 	    </div>
 
