@@ -38,7 +38,7 @@
 		
 	    <div class="left_sidebar">
 		    <a href="index.php">Home</a> <br />
-		    <a href="viewinventory.php">View Inventory</a> <br />
+		    <a href="viewInventory.php">View Inventory</a> <br />
 		    <a href="viewBorrowers.php">View Borrowers</a> <br />
 		    <a href="viewLoans.php">View Loans</a> <br />
 		    <a href="viewRepairs.php">View Repairs</a> <br />
@@ -52,7 +52,7 @@
 			{/if}
 			
 			{if $authority == 2}
-				<a href="manageusers.php">Manage Users</a> <br />
+				<a href="manageUsers.php">Manage Users</a> <br />
 			{/if}
 			
 			<br>

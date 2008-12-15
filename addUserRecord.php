@@ -71,6 +71,6 @@ if(!mysqli_query($link, $sql))
 	die("Query failed");
 
 mysqli_close($link);
-header('Location: manageusers.php');
+header('Location: manageUsers.php');
 	
 ?>

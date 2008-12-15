@@ -46,7 +46,7 @@ if(!Authenticate($_POST["username"], $_POST["password"], $link))
 }
 
 //Redirect to main page
-header("location: viewinventory.php");
+header("location: viewInventory.php");
 
 mysqli_close($link);
 

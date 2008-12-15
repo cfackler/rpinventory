@@ -109,10 +109,10 @@
 </tr>
 
 <tr>
-	<td>Buisness: </td>
+	<td>Business: </td>
 	<td>
 	
-	<select name="buisnessId{$smarty.section.num.index}">
+	<select name="businessId{$smarty.section.num.index}">
 	{section name=biz loop=$businesses}
 		<option value="{$businesses[biz]->business_id}">
 			{$businesses[biz]->company_name}

@@ -150,6 +150,6 @@ foreach ($items as $item)
 }
 
 mysqli_close($link);
-header('Location: viewinventory.php');
+header('Location: viewInventory.php');
 	
 ?>

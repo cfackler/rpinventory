@@ -27,5 +27,5 @@ require_once("inc/auth.php");  //authentication
 
 Logout();
 
-header('Location: viewinventory.php');
+header('Location: viewInventory.php');
 ?>

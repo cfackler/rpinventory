@@ -81,7 +81,7 @@ while($item = mysqli_fetch_object($itemResult))
 //Assign vars
 $smarty->assign('title', "Purchase Items");
 $smarty->assign('authority', $auth);
-$smarty->assign('page_tpl', 'purchaseItem');
+$smarty->assign('page_tpl', 'addPurchase');
 $smarty->assign('items', $items);
 $smarty->assign('count', $count);
 $smarty->assign('businesses', $businesses);

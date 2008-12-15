@@ -29,12 +29,14 @@ require_once("inc/config.php");  //configs
 $link = connect();
 if($link == null)
 	die("Database connection failed");
-	
-//Authenticate
-$auth = GetAuthority();
 
+//Authenticate
+$auth = GetAuthority();	
+if($auth != 2)
+	die("You dont have permission to access this page");
 
 // SMARTY Setup
+
 require_once('Smarty.class.php');
 
 $smarty = new Smarty();
@@ -46,16 +48,14 @@ $smarty->cache_dir    = cache_dir;
 
 
 
-//items
-$query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
-		FROM inventory, locations
-		WHERE locations.location_id=inventory.location_id";
-$result = mysqli_query($link, $query);
-$items = array();
+//users
+$userQuery= "SELECT * from logins";
+$userResult = mysqli_query($link, $userQuery);
+$users = array();
 
-while($item = mysqli_fetch_object($result))
+while($user = mysqli_fetch_object($userResult))
 {
-	$items [] = $item;
+	$users [] = $user;
 }
 
 //BEGIN Page
@@ -64,10 +64,10 @@ while($item = mysqli_fetch_object($result))
 
 	
 //Assign vars
-$smarty->assign('title', "View Inventory");
+$smarty->assign('title', "Manage Users");
 $smarty->assign('authority', $auth);
-$smarty->assign('page_tpl', 'viewinventory');
-$smarty->assign('items', $items);
+$smarty->assign('page_tpl', 'manageUsers');
+$smarty->assign('users', $users);
 
 
 $smarty->display('index.tpl');

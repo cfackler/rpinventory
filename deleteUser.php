@@ -61,6 +61,6 @@ if(mysqli_num_rows($result) != 0)
 }
 
 mysqli_close($link);
-header('Location: manageusers.php');
+header('Location: manageUsers.php');
 	
 ?>

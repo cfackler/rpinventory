@@ -81,6 +81,6 @@ for($x=0; $x<$count; $x++)
 }
 
 mysqli_close($link);
-header('Location: viewinventory.php');
+header('Location: viewInventory.php');
 	
 ?>

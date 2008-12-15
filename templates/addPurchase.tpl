@@ -54,13 +54,12 @@ Item Count: <input type="text" name="count" size="10">
 	</td>
 </tr>
 
-
 <tr>
 	<td>Date: </td>
 	<td>
 	
 		<select name="months">
-                    <option value="1"{if $selectDate.mon == 1} selected{/if}>January</option>
+                    <option value="1"{if $selectDate.mon == 1}selected{/if}>January</option>
                     <option value="2"{if $selectDate.mon == 2}selected{/if}>February</option>
                     <option value="3"{if $selectDate.mon == 3}selected{/if}>March</option>
                     <option value="4"{if $selectDate.mon == 4}selected{/if}>April</option>
