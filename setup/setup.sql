@@ -1,7 +1,3 @@
-DROP DATABASE IF EXISTS rpinventory;
-CREATE DATABASE rpinventory;
-USE rpinventory;
-
 CREATE TABLE inventory (
        inventory_id int(5) NOT NULL auto_increment,
        description varchar(250) NOT NULL,
