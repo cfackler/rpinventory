@@ -21,28 +21,18 @@
 
 */
 
-require_once("inc/auth.php");  //Session
-require_once("inc/config.php");  //configs
+require_once('Smarty.class.php');
 
-//Authenticate
-$auth = GetAuthority();
-
-
-// SMARTY Setup
-require_once('inc/setup.php');
-
-$smarty = new Smarty_Inv();
-
-//BEGIN Page
-
-	
-//Assign vars
-$smarty->assign('title', "RPInventory");
-$smarty->assign('authority', $auth);
-$smarty->assign('page_tpl', 'main');
-
-
-$smarty->display('index.tpl');
-
+class Smarty_Inv extends Smarty {
+  function Smarty_Inv()
+  {
+    $this->Smarty();
+    $this->template_dir = 'templates';
+    $this->compile_dir = 'templates_c';
+    $this->config_dir = 'config';
+    $this->cache_dir = 'cache';
+    $this->caching = false;
+  }
+}
 
 ?>

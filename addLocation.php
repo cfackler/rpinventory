@@ -38,16 +38,9 @@ if($auth < 1)
 
 // SMARTY Setup
 
-require_once('Smarty.class.php');
+require_once('inc/setup.php');
 
-$smarty = new Smarty();
-$smarty->caching = false;
-$smarty->template_dir = template_dir;
-$smarty->compile_dir  = compile_dir;
-$smarty->config_dir   = config_dir;
-$smarty->cache_dir    = cache_dir;
-
-
+$smarty = new Smarty_Inv();
 	
 //Assign vars
 $smarty->assign('title', "Add Location");

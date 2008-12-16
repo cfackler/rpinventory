@@ -33,15 +33,9 @@ if($link == null)
 $auth = GetAuthority();
 
 // SMARTY Setup
-require_once('Smarty.class.php');
+require_once('inc/setup.php');
 
-$smarty = new Smarty();
-$smarty->caching = false;
-$smarty->template_dir = template_dir;
-$smarty->compile_dir  = compile_dir;
-$smarty->config_dir   = config_dir;
-$smarty->cache_dir    = cache_dir;
-
+$smarty = new Smarty_Inv();
 
 //items
 $query = "SELECT username, name, rin, email, address, city, state, zipcode, phone

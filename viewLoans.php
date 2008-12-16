@@ -35,18 +35,9 @@ $auth = GetAuthority();
 
 // SMARTY Setup
 
-require_once('Smarty.class.php');
+require_once('inc/setup.php');
 
-$smarty = new Smarty();
-$smarty->caching = false;
-$smarty->template_dir = template_dir;
-$smarty->compile_dir  = compile_dir;
-$smarty->config_dir   = config_dir;
-$smarty->cache_dir    = cache_dir;
-
-
-
-
+$smarty = new Smarty_Inv();
 
 //items
 $query= "SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description  FROM logins, loans, inventory WHERE loans.borrower_id = logins.id and inventory.inventory_id = loans.inventory_id";
