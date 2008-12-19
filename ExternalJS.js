@@ -144,3 +144,23 @@ function useAddress()
 	
 
 }
+
+function OnChange(item1, item2)
+{
+    var x = document.getElementById(item1);
+    var y = document.getElementById(item2);
+    var text = x.options[x.selectedIndex].text;
+
+    if ( text == 'Add a New Business' || text == 'New Location') {
+	y.style.display = '';
+    }
+    else {
+	y.style.display = 'none';
+    }
+}
+
+function OnChangeDouble(item1, item2, item3)
+{
+    OnChange(item1, item2);
+    OnChange(item1, item3);
+}

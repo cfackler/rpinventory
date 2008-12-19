@@ -38,12 +38,68 @@ if($auth < 1)
 // Business
 $bus_id = (int)$_POST["business_id"];
 
-if($bus_id == 0)
-	die("Invalid Business ID");
+$sql = "SELECT business_id FROM businesses";
 
-if(!VerifyBusinessExists($bus_id, $link))
-	die("Invalid Business");
+$result = mysqli_query($link, $sql);
+$numBusinesses = mysqli_num_rows($result);
+
+if($bus_id>$numBusinesses){
+        //Company name
+        $company = $_POST["company"];
+	if(strlen($company) == 0)
+	  die("Must have a company name");
 	
+	//Address
+	$address = $_POST["address"];
+	if(strlen($address) == 0)
+	  die("Must have an address");
+
+	$address2 = $_POST["address2"];
+	
+	//City
+	$city = $_POST["city"];
+	if(strlen($city) == 0)
+	  die("Must have a city");
+	
+	//State
+	$state = $_POST["state"];
+	if(strlen($state) == 0)
+	  die("Must have a state");
+	
+	//Zip Code
+	$zip = $_POST["zip"];
+	if(strlen($zip) == 0)
+	  die("Must have a zip code");
+	
+	//Contact info
+	$phone = $_POST["phone"];
+	$fax = $_POST["fax"];
+	$email = $_POST["email"];
+	if(strlen($phone) == 0 && strlen($fax) == 0 && strlen($email) == 0)
+	  die("Must have contact information");
+	
+	$website = $_POST["website"];
+	
+	$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "')";
+		
+	if(!mysqli_query($link, $query))
+	  die("Query failed first");
+	$address_id = mysqli_insert_id($link);
+
+	$sql = "INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES (NULL, '" . $address_id . "' , '" . $company . "', '" . $fax . "', '" . $email . "', '" . $website . "')";
+
+	
+	if(!mysqli_query($link, $sql))
+	  die("Query failed business insert");
+
+	$bus_id = mysqli_insert_id($link);
+}
+elseif($bus_id == 0){
+	die("Invalid Business ID");
+}
+elseif(!VerifyBusinessExists($bus_id, $link)){
+	die("Invalid Business");
+}
 
 $count = (int)$_POST['count'];
 if($count == 0)
@@ -57,15 +113,17 @@ $date = date("Y-m-d", $timestamp);
 //Total cost
 $cost = $_POST['total_cost'];	
 
+//echo $bus_id."<br />";
+
 	
 //Insert purchase
 $sql = "INSERT INTO purchases (purchase_id, business_id, purchase_date, total_price) VALUES
 	(NULL, " . $bus_id . ", '" . $date . "', '" . $cost . "')";
+
+//echo $sql . "<br>";
 		
 if(!mysqli_query($link, $sql))
 	die("Query failed");
-	
-//echo $sql . "<br>";
 	
 //ID
 $purchase_id = mysqli_insert_id($link);
@@ -73,26 +131,64 @@ $purchase_id = mysqli_insert_id($link);
 //All items
 for($x=0; $x<$count; $x++)
 {
-	// Inventory Item
-	$inv_id = (int)$_POST["inv_id" . $x];
+  //  echo $x."<br />";
+	//Description
+	$itemdesc = $_POST["desc".$x];
+	if(strlen($itemdesc) == 0)
+	  die("Must have a description");
 	
+	//Condition
+	$condition = $_POST["condition".$x];
+	if(strlen($condition) == 0)
+	  die("Must have a condition");	
+	
+	//Location	
+	$location = (int)$_POST["location".$x];
+	if(strlen($location) == 0)
+	  die("Must have a location");		
+	
+	//Value
+	$value = (double)$_POST["value".$x];
+	if($value == 0)
+	  die("Invalid Value");
+	
+	//Get new location if specified
+	$newLocation='';
+	$locDescription='';
+	
+	//Check location exists
+	$result=mysqli_query($link, "select * from locations where location_id=" . $location);
 
-	if($inv_id == 0)
-		die("Invalid Inventory ID");
+	//if not in database, new location was specified
+	if(mysqli_num_rows($result) == 0){
+	  $newLocation = $_POST["newlocation".$x];
+	  $locDescription = $_POST["newdescription".$x];
+	  $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $newLocation . "', '" . $locDescription . "')";
 
-	if(!VerifyItemExists($inv_id, $link))
-		die("Invalid Item");
+	  //  echo $sql."<br />";
 
-	// Cost
-	$cost = $_POST["cost" . $x];
-	//if(!ereg("^[0-9]{1,7}.[0-9]{2}$", $cost))
-	//	die("Cost must be of the form xxxx.xx");	
+	  if(!mysqli_query($link, $sql))
+	    die("New Location Query Failed");
+
+	  $location = mysqli_insert_id($link);
+	}
+	
+	//Insert new inventory item
+	$sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $itemdesc . "', " . $location . ", '" . $condition . "', " . $value . ")";		
+	
+	//	echo $sql."<br />";
+
+	if(!mysqli_query($link, $sql))
+	  die("Query failed");
+	
+	$inv_id = mysqli_insert_id($link);
 		
 		
+	//Insert purchase record for new inventory item
 	$sql = "INSERT INTO purchase_items (purchase_id, inventory_id, cost) VALUES
 	(" . $purchase_id .", " . $inv_id .", " . $cost .")";
 	
-	//echo $sql . "<br>";
+	//	echo $sql . "<br>";
 	
 	
 	if(!mysqli_query($link, $sql))

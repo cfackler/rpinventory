@@ -37,28 +37,81 @@ Item Count: <input type="text" name="count" size="10">
 
 <input type="hidden" name="count" value="{$count}">
 
-<table width="400">
-<tr>
-	<td>Purchased From: </td>
-	<td>
-	
-	<select id="business_id" name="business_id">
+<ul style="list-style-type:none">
+<li>
+	Purchased From:
+		
+	<select id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')">
 		<option value="-1">Select Business</option>
 		{section name=bus loop=$businesses}
 			<option value="{$businesses[bus]->business_id}">
 				{$businesses[bus]->company_name}
 			</option>
 		{/section}
-	</select>
-	
-	</td>
-</tr>
 
-<tr>
-	<td>Date: </td>
-	<td>
-	
-		<select name="months">
+		<option value="newBusiness">
+			Add a New Business
+		</option>
+	</select>
+</li>
+<li>
+           <table id="newBusiness" style="display:none;padding-left:1cm">	
+
+     	 	<tr>
+			<td>Company Name:</td>
+			<td><input type="text" name="company" size="30"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Address:</td>
+			<td> <input type="text" name="address" size="30"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Address 2:</td>
+			<td><input type="text" name="address2" size="30"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>City: </td>
+			<td><input type="text" name="city" size="30"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>State: </td>
+			<td><input type="text" name="state" size="10"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Zip Code: </td>
+			<td><input type="text" name="zip" size="10"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Phone Number: </td>
+			<td><input type="text" name="phone" size="20"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Fax Number: </td>
+			<td><input type="text" name="fax" size="20"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>E-mail: </td>
+			<td><input type="text" name="email" size="30"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Website: </td>
+			<td><input type="text" name="website" size="30"></td>
+     	 	</tr>
+	</table>
+</li>
+<br />
+<li>
+	Date: 
+	            <select name="months">
                     <option value="1"{if $selectDate.mon == 1}selected{/if}>January</option>
                     <option value="2"{if $selectDate.mon == 2}selected{/if}>February</option>
                     <option value="3"{if $selectDate.mon == 3}selected{/if}>March</option>
@@ -114,51 +167,83 @@ Item Count: <input type="text" name="count" size="10">
 					<option value="2009"{if $selectDate.year == 2009}selected{/if}>2009</option>
                 </select>
 	
-	<td>
-</tr>
+</li>
 
-<tr>
-	<td>Total Value of Purchase: </td>
-	<td><input type="text" name="total_cost" value=""></td>
-</tr>
-</table>
+<br />
+
+<li>
+	Total Value of Purchase: 
+	<input type="text" name="total_cost" value="">
+</li>
 
 <br>
-<table width="300" border="0">
 
-<tr>
-	<th>Item</th>
-	<th width="100">Cost</th>
-</tr>
+<table width="500" border="0">
 
 {section name=foo loop=$count}
 <tr>
+        <td><b>Item {$smarty.section.foo.index+1}:</b></td>
+</tr>
+<tr>
+	<td>Item Description:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+	<td><input type="text" name="desc{$smarty.section.foo.index}" size="40"></td>
+</tr>
+
+<tr>
+	<td>Value: </td>
+	<td><input type="text" name="value{$smarty.section.foo.index}"></td>
+</tr>
+
+<tr>
+	<td>Condition: </td>
 	<td>
-	
-	<select name="inv_id{$smarty.section.foo.index}">
-		{section name=item loop=$items}
-			<option value="{$items[item]->inventory_id}">
-				{$items[item]->description}
-			</option>
-		{/section}
-	</select>
+		<select name="condition{$smarty.section.foo.index}">
+			<option value="Excellent">Excellent</option>
+			<option value="Good">Good</option>
+			<option value="Fair">Fair</option>
+			<option value="Poor">Poor</option>
+		</select>
 	</td>
-	
+</tr>
+
+<tr>
+	<td>Location: </td>
+
 	<td>
-	<input type="text" name="cost{$smarty.section.foo.index}" size="10">
+	<select id="location{$smarty.section.foo.index}" name="location{$smarty.section.foo.index}" onChange="OnChangeDouble('location{$smarty.section.foo.index}', 'newLocation{$smarty.section.foo.index}', 'newDescription{$smarty.section.foo.index}')">
+	{section name=loc loop=$locations}
+		<option value="{$locations[loc]->location_id}">
+			{$locations[loc]->location}
+		</option>
+	{/section}
+		<option value="newLocation">
+			New Location
+		</option>
+	</select>
 	
 	</td>
 </tr>
+
+<tr id="newLocation{$smarty.section.foo.index}" style="display:none">
+        <td>New Location:</td>
+	<td>
+	        <input type="text" name="newlocation{$smarty.section.foo.index}" size="40">
+	</td>
+</tr>
+<tr id="newDescription{$smarty.section.foo.index}" style="display:none">
+        <td>Location Description:</td>
+	<td>
+	        <input type="text" name="newdescription{$smarty.section.foo.index}" size="40">
+	</td>
+</tr>
+
 {/section}
 </table>
 
 
 
 
-
-
-
-</table>
+</ul>
 
 <br>
 

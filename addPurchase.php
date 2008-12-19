@@ -66,7 +66,15 @@ while($item = mysqli_fetch_object($itemResult))
 	$items [] = $item;
 }
 
+//Locations
+$locQuery= "SELECT location_id, location  FROM locations";
+$locResult = mysqli_query($link, $locQuery);
+$locations = array();
 
+while($loc = mysqli_fetch_object($locResult))
+{
+	$locations [] = $loc;
+}
 
 //BEGIN Page
 
@@ -76,10 +84,11 @@ while($item = mysqli_fetch_object($itemResult))
 $smarty->assign('title', "Purchase Items");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'addPurchase');
-$smarty->assign('items', $items);
+//$smarty->assign('items', $items);
 $smarty->assign('count', $count);
 $smarty->assign('businesses', $businesses);
 $smarty->assign('selectDate', getdate(time()));
+$smarty->assign('locations', $locations);
 
 $smarty->display('index.tpl');
 
