@@ -43,6 +43,7 @@ $sql = "SELECT business_id FROM businesses";
 $result = mysqli_query($link, $sql);
 $numBusinesses = mysqli_num_rows($result);
 
+// Chose to insert a new business
 if($bus_id>$numBusinesses){
         //Company name
         $company = $_POST["company"];
@@ -80,22 +81,24 @@ if($bus_id>$numBusinesses){
 	
 	$website = $_POST["website"];
 	
+	//Insert the business address
 	$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "')";
 		
 	if(!mysqli_query($link, $query))
 	  die("Query failed first");
 	$address_id = mysqli_insert_id($link);
 
+	//Inser the business
 	$sql = "INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES (NULL, '" . $address_id . "' , '" . $company . "', '" . $fax . "', '" . $email . "', '" . $website . "')";
 
-	
 	if(!mysqli_query($link, $sql))
 	  die("Query failed business insert");
 
+	// Get the ID of the new business
 	$bus_id = mysqli_insert_id($link);
-}
+}//Incorrect business was selected
 elseif($bus_id == 0){
-	die("Invalid Business ID");
+	die("Invalid Business was chosen");
 }
 elseif(!VerifyBusinessExists($bus_id, $link)){
 	die("Invalid Business");
@@ -163,15 +166,30 @@ for($x=0; $x<$count; $x++)
 	if(mysqli_num_rows($result) == 0){
 	  $newLocation = $_POST["newlocation".$x];
 	  $locDescription = $_POST["newdescription".$x];
-	  $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $newLocation . "', '" . $locDescription . "')";
+	  
+	  $sql = "SELECT location, location_id FROM locations WHERE location='" . $newLocation . "'ORDER BY location_id DESC";
+	  $result = mysqli_query($link, $sql);
+	  $rows = mysqli_num_rows($result);
 
-	  //  echo $sql."<br />";
-
+	  /*	  if($rows == 1){
+	    $loc = mysqli_fetch_object($result);
+	    $location = $loc->location_id;
+	    }*/
+	  if($rows == 0){
+	    $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $newLocation . "', '" . $locDescription . "')";
+}
+	  else{
+	    die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
+	  }
+	  
 	  if(!mysqli_query($link, $sql))
-	    die("New Location Query Failed");
+	    die("New Location Insert Query Failed");
 
 	  $location = mysqli_insert_id($link);
+	  //  }
+	  //  else{
 	}
+	
 	
 	//Insert new inventory item
 	$sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $itemdesc . "', " . $location . ", '" . $condition . "', " . $value . ")";		

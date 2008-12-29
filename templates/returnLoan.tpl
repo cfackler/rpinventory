@@ -27,6 +27,7 @@
 <table width="400">
 
 <input type="hidden" name="loan_id" size="40" value="{$loan_id}">
+<input type="hidden" name="inv_id" size="40" value="{$item->inventory_id}">
 
 <tr>
 	<td>Description: </td>
@@ -38,7 +39,7 @@
 	<td>Return Date: </td>
 	<td>
 	
-				<select name="months">
+		<select name="months">
                     <option value="1"{if $selectDate.mon == 1} selected{/if}>January</option>
                     <option value="2"{if $selectDate.mon == 2}selected{/if}>February</option>
                     <option value="3"{if $selectDate.mon == 3}selected{/if}>March</option>
@@ -97,10 +98,27 @@
 	<td>
 </tr>
 
+<tr>
+	<td>Previous Condition: </td>
+	<td>{$item->current_condition}</td>
+</tr>
+
+<tr>
+	<td>Returned Condition: </td>
+	<td>
+		<select name="condition">
+			<option value="Excellent"{if $item->current_condition == "Excellent"}selected{/if}>Excellent</option>
+			<option value="Good"{if $item->current_condition == "Good"}selected{/if}>Good</option>
+			<option value="Fair"{if $item->current_condition == "Fair"}selected{/if}>Fair</option>
+			<option value="Poor"{if $item->current_condition == "Poor"}selected{/if}>Poor</option>
+		</select>
+	</td>
+</tr>
+
 
 </table>
 
-<br>
+<br />
 
 <input type="submit" value="Return">
 

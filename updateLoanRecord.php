@@ -34,22 +34,31 @@ if($auth < 1)
 	die("You dont have permission to access this page");
 	
 
-//id
-$id = (int)$_POST["loan_id"];
-if($id == 0)
-	die("Invalid ID");
-	
+//loan id
+$loan_id = (int)$_POST["loan_id"];
+if($loan_id == 0)
+	die("Invalid Loan ID");
 
+//Inventory ID
+$inv_id = (int)$_POST["inv_id"];
+
+//Time
 $timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
 $date = date("Y-m-d", $timestamp);
 	
 	
-//Create query
-$sql = "Update loans set return_date = '" . $date . "' where loan_id = " . $id;
+//Create query for returning item
+$sql = "Update loans set return_date = '" . $date . "' where loan_id = " . $loan_id;
 
 //Run update
 if(!mysqli_query($link, $sql))
 	die("Query failed");
+
+//Create query for updating item condition
+$sql = "UPDATE inventory SET current_condition = '". $_POST["condition"] . "' WHERE inventory_id = " . $inv_id;
+
+if(!mysqli_query($link, $sql))
+        die("Query failed");
 
 
 mysqli_close($link);	
