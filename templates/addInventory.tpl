@@ -18,7 +18,9 @@
 
 *}
 
+
 <form name="addInventory" action="insertInventory.php" METHOD="post">
+
 
 <h3>Add Item</h3>
 
@@ -51,16 +53,32 @@
 	<td>Location: </td>
 	<td>
 	
-	<select name="location">
-	{section name=loc loop=$locations}
-		<option value="{$locations[loc]->location_id}">
-			{$locations[loc]->location}
-		</option>
-	{/section}
+	<select id = "location_id" name="location_id" onChange="OnChange('location_id', 'newLocation')">
+        {section name=loc loop=$locations}
+            <option value="{$locations[loc]->location_id}">
+                {$locations[loc]->location}
+            </option>
+        {/section}
+    
+        <option value = "-1">
+            New Location
+        </option>
 	</select>
-	
-	</td>
-</tr>
+    <tr>
+    <table id="newLocation" style="display:none;padding-left:1cm">
+        <tr>
+            <td>Location: </td>
+            <td><input type="text" name="newLocationName" size="40"></td>
+        </tr>
+        
+        <tr>
+            <td>Description: </td>
+            <td><textarea name="newLocationDescription" rows="6" cols="30"></textarea></td>
+        </tr>
+            </td>
+        </tr>
+    </table>
+    </tr>
 
 </table>
 
