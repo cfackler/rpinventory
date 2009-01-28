@@ -18,7 +18,7 @@
 
 *}
 
-<form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" onsubmit="return ValidateLoanForm(this)" METHOD="post">
+<form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" onsubmit="return ValidateForm(this)" METHOD="post">
 
 <h3>Loan Items</h3>
 
@@ -121,7 +121,7 @@
 	<td>Loan To: </td>
 	<td>
 	
-	<select id="user_id" name="user_id" onchange="sendAddressRequest({$users[usr]->id});">
+	<select id="user_id" name="user_id" class="validate" onchange="sendAddressRequest({$users[usr]->id});">
 		<option value="-1">Select User</option>
 	{section name=usr loop=$users}
 		<option value="{$users[usr]->id}">
@@ -143,7 +143,7 @@
 		</tr>
 		<tr>
 			<td>Address:</td>
-			<td><input type="text" name="address" id="address" value=""></td>
+			<td><input type="text" name="address" id="address" class="validate" value=""></td>
 		</tr>
 		<tr>
 			<td>Address2:</td>
@@ -151,19 +151,19 @@
 		</tr>
 		<tr>
 			<td>City:</td>
-			<td><input type="text" name="city" id="city" value=""></td>
+			<td><input type="text" name="city" id="city" class="validate" value=""></td>
 		</tr>
 		<tr>
 			<td>State:</td>
-			<td><input type="text" name="state" id="state" value=""></td>
+			<td><input type="text" name="state" id="state" class="validate" value=""></td>
 		</tr>
 		<tr>
 			<td>Zipcode:</td>
-			<td><input type="text" name="zipcode" id="zipcode" value=""></td>
+			<td><input type="text" name="zipcode" id="zipcode" class="validate" value=""></td>
 		</tr>
 		<tr>
 			<td>Phone:</td>
-			<td><input type="text" name="phone" id="phone" value=""></td>
+			<td><input type="text" name="phone" id="phone" class="validate" value=""></td>
 		</tr>
 		</table>
 

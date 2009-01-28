@@ -18,7 +18,7 @@
 
 *}
 
-<form name="addBusiness" action="insertBusiness.php" onsubmit="return ValidateAddBusinessForm(this)" METHOD="post">
+<form name="addBusiness" action="insertBusiness.php" onsubmit="return ValidateForm(this)" METHOD="post">
 
 <h3>Add Business</h3>
 
@@ -27,12 +27,12 @@
 
 <tr>
 	<td>Company Name: </td>
-	<td><input type="text" name="company" id="company" size="40"></td>
+	<td><input type="text" name="company" id="company" class="validate" size="40"></td>
 </tr>
 
 <tr>
 	<td>Address: </td>
-	<td><input type="text" name="address" id="address" size="40"></td>
+	<td><input type="text" name="address" id="address" class="validate" size="40"></td>
 </tr>
 
 <tr>
@@ -42,22 +42,22 @@
 
 <tr>
 	<td>City: </td>
-	<td><input type="text" name="city" id="city" size="40"></td>
+	<td><input type="text" name="city" id="city" class="validate" size="40"></td>
 </tr>
 
 <tr>
 	<td>State: </td>
-	<td><input type="text" name="state" id="state" size="10"></td>
+	<td><input type="text" name="state" id="state" class="validate" size="10"></td>
 </tr>
 
 <tr>
 	<td>Zip Code: </td>
-	<td><input type="text" name="zip" id="zip" size="10"></td>
+	<td><input type="text" name="zip" id="zip" class="validate" size="10"></td>
 </tr>
 
 <tr>
 	<td>Phone Number: </td>
-	<td><input type="text" name="phone" id="phone" size="20"></td>
+	<td><input type="text" name="phone" id="phone" class="validate" size="20"></td>
 </tr>
 
 <tr>
@@ -72,7 +72,7 @@
 
 <tr>
 	<td>Website: </td>
-	<td><input type="text" name="website" id="website" size="40"></td>
+	<td><input type="text" name="website" id="website" class="validate" size="40"></td>
 </tr>
 
 </table>

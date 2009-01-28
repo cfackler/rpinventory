@@ -98,10 +98,12 @@ else
 	if($address2 == null)
 		$address2="";
 	
-	$city = $_POST["City"];
-	$state = $_POST["State"];
-	$zipcode = $_POST["Zipcode"];
-	$phone = $_POST["Phone"];
+	$city = $_POST["city"];
+	$state = $_POST["state"];
+	$zipcode = $_POST["zipcode"];
+	$phone = $_POST["phone"];
+	
+	
 	
 	
 	if(strlen($address) == 0 || strlen($city) == 0 || strlen($state) == 0 || strlen($zipcode) == 0 || strlen($phone) == 0)

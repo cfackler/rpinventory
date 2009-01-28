@@ -148,106 +148,32 @@ function OnChangeDouble(item1, item2, item3){
     OnChange(item1, item3);
 }
 
-function ValidateLoanForm(thisform){
-    with (thisform){
-	if(ValidateRequired(user_id, "Please select a valid user") == false){
-	    user_id.focus();
-	    return false;
-	}
-	else if(ValidateRequired(address, "Please enter an address") == false){
-	    address.focus();
-	    return false;
-	}
-	else if(ValidateRequired(city, "Please enter a city") == false){
-	    city.focus();
-	    return false;
-	}
-	else if(ValidateRequired(state, "Please enter a state") == false){
-	    state.focus();
-	    return false;
-	}
-	else if(ValidateRequired(zipcode, "Please enter a zipcode") == false){
-	    zipcode.focus();
-	    return false;
-	}
-	else if(ValidateRequired(phone, "Please enter a phone number") == false){
-	    phone.focus();
-	    return false;
-	}
-    }
-}
 
-function ValidateEditForm(thisform){
-    with (thisform){
-	if(ValidateRequired(description, "Please enter a description") == false){
-	    description.focus();
-	    return false;
-	}
-	else if(ValidateRequired(value, "Please enter a value") == false){
-	    value.focus();
-	    return false;
-	}
-    }
-}
-	    
-function ValidateRepairForm(thisform){
-    with (thisform){
-	if(ValidateRequired(description, "Please enter a description") == false){
-	    description.focus();
-	    return false;
-	}
-	else if(ValidateRequired(cost, "Please enter a cost") == false){
-	    cost.focus();
-	    return false;
-	}
-    }
-}
-
-function ValidateAddBusinessForm(thisform){
-    with (thisform){
-	if(ValidateRequired(company, "Please enter a company name") == false){
-	    company.focus();
-	    return false;
-	}
-	else if(ValidateRequired(address, "Please enter an address") == false){
-	    address.focus();
-	    return false;
-	}
-	else if(ValidateRequired(city, "Please enter a city") == false){
-	    city.focus();
-	    return false;
-	}
-	else if(ValidateRequired(state, "Please enter a state") == false){
-	    state.focus();
-	    return false;
-	}
-	else if(ValidateRequired(zip, "Please enter a zip code") == false){
-	    zip.focus();
-	    return false;
-	}
-	else if(ValidateRequired(phone, "Please enter a phone number") == false){
-	    phone.focus();
-	    return false;
-	}
-	else if(ValidateRequired(website, "Please enter a website") == false){
-	    website.focus();
-	    return false;
+function ValidateForm(document){
+    with(document){
+	var objects = new Array();
+	var i=0, cur_id;
+	objects = document.getElementsByClassName("validate");
+	
+	for(i=0; i<objects.length; i++){
+	    cur_id = objects[i].id;
+	    if (!ValidateRequired(objects[i], "Please enter a "+cur_id)){
+		return false;
+	    }
 	}
 	
-	
+	return true;
     }
 }
 
-function ValidateRequired(field, alerttext)
-{  
-    with(field)
-        {
-            if(value==null || value=="" || value==-1){
-		    alert(alerttext);
-		    return false;
-		}
-            else{
-                return true;
-            }
-        }
+function ValidateRequired(field, alerttext){
+    with(field){
+	if(value==null || value=="" || value==-1){
+	    alert(alerttext);
+	    return false;
+	}
+	else{
+	    return true;
+	}
+    }
 }       
