@@ -18,7 +18,7 @@
 
 *}
 
-<form name="editItem" action="insertRepairRecord.php" METHOD="post">
+<form name="editItem" action="insertRepairRecord.php" onsubmit="return ValidateRepairForm(this)" METHOD="post">
 
 <h3>Repair Items</h3>
 
@@ -37,12 +37,12 @@
 
 <tr>
 	<td>Repair Description:</td>
-	<td><input type="text" name="desc{$smarty.section.num.index}" size="40"></td>
+	<td><input type="text" name="desc{$smarty.section.num.index}" size="40" id="description"></td>
 </tr>
 
 <tr>
 	<td>Cost: </td>
-	<td><input type="text" name="cost{$smarty.section.num.index}" size="10"></td>
+	<td><input type="text" name="cost{$smarty.section.num.index}" size="10" id="cost"></td>
 </tr>
 
 <tr>

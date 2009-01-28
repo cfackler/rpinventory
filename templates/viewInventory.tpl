@@ -18,12 +18,6 @@
 
 *}
 
-{if $authority >= 1}
-<a href="addinventory.php">Add Inventory</a>
-<br>
-<br>
-{/if}
-
 <form id="itemList" name="itemList">
 
 <table width="800" border="0" class="itemsTable" cellspacing="0" >

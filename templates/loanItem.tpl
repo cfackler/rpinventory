@@ -18,7 +18,7 @@
 
 *}
 
-<form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" METHOD="post">
+<form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" onsubmit="return ValidateLoanForm(this)" METHOD="post">
 
 <h3>Loan Items</h3>
 
@@ -151,19 +151,19 @@
 		</tr>
 		<tr>
 			<td>City:</td>
-			<td><input type="text" name="City" id="City" value=""></td>
+			<td><input type="text" name="city" id="city" value=""></td>
 		</tr>
 		<tr>
 			<td>State:</td>
-			<td><input type="text" name="State" id="State" value=""></td>
+			<td><input type="text" name="state" id="state" value=""></td>
 		</tr>
 		<tr>
 			<td>Zipcode:</td>
-			<td><input type="text" name="Zipcode" id="Zipcode" value=""></td>
+			<td><input type="text" name="zipcode" id="zipcode" value=""></td>
 		</tr>
 		<tr>
 			<td>Phone:</td>
-			<td><input type="text" name="Phone" id="Phone" value=""></td>
+			<td><input type="text" name="phone" id="phone" value=""></td>
 		</tr>
 		</table>
 
