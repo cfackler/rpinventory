@@ -22,7 +22,6 @@
 
 require_once("inc/connect.php");  //mysql
 require_once("inc/auth.php");  //Session
-require_once("inc/config.php");  //configs
 
 $link = connect();
 if($link == null)
