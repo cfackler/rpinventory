@@ -18,7 +18,7 @@
 
 *}
 
-<form name="editItem" action="updateItem.php" METHOD="post">
+<form name="editItem" action="updateItem.php" onsubmit="return ValidateEditForm(this)" METHOD="post">
 
 <h3>Edit Item</h3>
 
@@ -33,12 +33,12 @@
 <tr>
 	<td>Description:
 </td>
-	<td><input type="text" name="desc{$smarty.section.num.index}" size="40" value="{$items[num]->description}"></td>
+	<td><input type="text" name="desc{$smarty.section.num.index}" size="40" id="description" value="{$items[num]->description}"></td>
 </tr>
 
 <tr>
 	<td>Value: </td>
-	<td><input type="text" name="value{$smarty.section.num.index}" size="40" value="{$items[num]->current_value}"></td>
+	<td><input type="text" name="value{$smarty.section.num.index}" size="40" id="value" value="{$items[num]->current_value}"></td>
 </tr>
 
 <tr>
@@ -57,7 +57,7 @@
 	<td>Location: </td>
 	<td>
 	
-	<select name="location{$smarty.section.num.index}">
+	<select name="location{$smarty.section.num.index}" id="location">
 	{section name=loc loop=$locations}
 		<option value="{$locations[loc]->location_id}"  {if $locations[loc]->location_id == $items[num]->location_id}selected{/if}>
 			{$locations[loc]->location}

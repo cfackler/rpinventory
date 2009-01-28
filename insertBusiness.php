@@ -70,7 +70,19 @@ if(strlen($phone) == 0 && strlen($fax) == 0 && strlen($email) == 0)
 
 $website = $_POST["website"];
 
-$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "')";
+// Clean user input
+$address = mysqli_real_escape_string($link, $address);
+$address2 = mysqli_real_escape_string($link, $address2);
+$city = mysqli_real_escape_string($link, $city);
+$state = mysqli_real_escape_string($link, $state);
+$zip = mysqli_real_escape_string($link, $zip);
+$phone = mysqli_real_escape_string($link, $phone);
+$company = mysqli_real_escape_string($link, $company);
+$fax = mysqli_real_escape_string($link, $fax);
+$email = mysqli_real_escape_string($link, $email);
+$website = mysqli_real_escape_string($link, $website);
+
+$query = "INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES (NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "')";
 		
 if(!mysqli_query($link, $query))
 	die("Query failed first");
