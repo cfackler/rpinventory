@@ -60,7 +60,7 @@ $email = $_POST["email"];
 if(strlen($email) == 0)
   die("Must have a email");
 	
-//email
+//name
 $name = $_POST["name"];
 if(strlen($name) == 0)
   die("Must have a name");
