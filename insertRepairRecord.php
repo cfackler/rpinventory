@@ -63,15 +63,15 @@ for($x=0; $x<$count; $x++)
 		die("Invalid Cost");
 		
 	//Biz id
-	$buisnessId = (int)$_POST["buisnessId" . $x];
-	if($buisnessId == 0)
-		die("Invalid item id");		
+	$businessId = (int)$_POST["businessId" . $x];
+	if($businessId == 0)
+		die("Invalid business id");		
 	
 		
 		
 	
 	$sql = "INSERT INTO repairs (repair_id, inventory_id, business_id, repair_date, repair_cost, description) VALUES
-	(NULL, " . $inventory_id . ", " . $buisnessId . ", '" . $date . "', " . $cost . ", '" . $desc . "'	)";	
+	(NULL, " . $inventory_id . ", " . $businessId . ", '" . $date . "', " . $cost . ", '" . $desc . "'	)";	
 
     //echo $sql . "<br>";
 		
