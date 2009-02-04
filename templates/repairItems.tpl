@@ -112,16 +112,73 @@
 	<td>Business: </td>
 	<td>
 	
-	<select name="businessId{$smarty.section.num.index}">
+	<select id="business_id" name="businessId{$smarty.section.num.index}" onChange="OnChange('business_id', 'newBusiness')">
 	{section name=biz loop=$businesses}
 		<option value="{$businesses[biz]->business_id}">
 			{$businesses[biz]->company_name}
 		</option>
 	{/section}
+    	<option value="-1">
+			Add a New Business
+		</option>
 	</select>
 	
 	</td>
 </tr>
+	<tr>
+		<table id="newBusiness" style="display:none;padding-left:1cm">	
+
+     	 	<tr>
+			<td>Company Name:</td>
+			<td><input type="text" name="company" size="30"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Address:</td>
+			<td> <input type="text" name="address" size="30"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Address 2:</td>
+			<td><input type="text" name="address2" size="30"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>City: </td>
+			<td><input type="text" name="city" size="30"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>State: </td>
+			<td><input type="text" name="state" size="10"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Zip Code: </td>
+			<td><input type="text" name="zip" size="10"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Phone Number: </td>
+			<td><input type="text" name="phone" size="20"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Fax Number: </td>
+			<td><input type="text" name="fax" size="20"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>E-mail: </td>
+			<td><input type="text" name="email" size="30"></td>
+     	 	</tr>
+
+     	 	<tr>
+			<td>Website: </td>
+			<td><input type="text" name="website" size="30"></td>
+     	 	</tr>
+		</table>
+	</tr>
 
 
 </table>
