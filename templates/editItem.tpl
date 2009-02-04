@@ -57,16 +57,33 @@
 	<td>Location: </td>
 	<td>
 	
-	<select name="location{$smarty.section.num.index}" id="location">
+	<select name="location{$smarty.section.num.index}" id="location{$smarty.section.num.index}" onChange="OnChangeDouble('location{$smarty.section.num.index}', 'newLocation{$smarty.section.num.index}', 'newDescription{$smarty.section.num.index}')">
 	{section name=loc loop=$locations}
-		<option value="{$locations[loc]->location_id}"  {if $locations[loc]->location_id == $items[num]->location_id}selected{/if}>
+		<option value="{$locations[loc]->location_id}">
 			{$locations[loc]->location}
 		</option>
 	{/section}
+        <option value="-1">
+			New Location
+		</option>
+        
 	</select>
 	
 	</td>
 </tr>
+    <tr id="newLocation{$smarty.section.num.index}" style="display:none">
+            <td>New Location:</td>
+        <td>
+                <input type="text" name="newlocation{$smarty.section.num.index}" size="40">
+        </td>
+    </tr>
+    <tr id="newDescription{$smarty.section.num.index}" style="display:none">
+            <td>Location Description:</td>
+        <td>
+                <input type="text" name="newdescription{$smarty.section.num.index}" size="40">
+        </td>
+    </tr>
+	
 
 </table>
 

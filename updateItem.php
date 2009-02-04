@@ -54,6 +54,38 @@ for($x=0; $x<$count; $x++)
 
 	//Location	
 	$location = (int)$_POST["location" . $x];
+	
+	//Check location exists
+	$result=mysqli_query($link, "select * from locations where location_id=" . $location);
+	$checkRows = mysqli_num_rows($result);
+	
+	//if not in database, new location was specified
+	if($checkRows == 0){
+		
+	  $newLocation = $_POST["newlocation" . $x];
+	  if(strlen($newLocation) == 0)
+		die("New location must have a name.");	
+	  $locDescription = $_POST["newdescription" . $x];
+	  if(strlen($locDescription) == 0)
+		die("New location must have a description.");	
+	  
+	  $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $newLocation . "', '" . $locDescription . "')";
+	  $location = mysqli_insert_id($link);
+	}
+	//stuff they entered already exists in the table
+	else if($rows == 1){
+	  $loc = mysqli_fetch_object($result);
+	  $location = $loc->location_id;
+	}
+	else{
+	  die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
+	}
+	  
+	if(!mysqli_query($link, $sql))
+	  die("New Location Insert Query Failed");
+	 
+	 $location = mysqli_insert_id($link);
+	  
 	if($location == 0)
 		die("Must have a location");		
 		
