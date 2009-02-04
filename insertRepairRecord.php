@@ -64,12 +64,74 @@ for($x=0; $x<$count; $x++)
 		
 	//Biz id
 	$businessId = (int)$_POST["businessId" . $x];
-	if($businessId == 0)
-		die("Invalid business id");		
+	
+	// Chose to insert a new business
+	if($businessId == -1)
+	{
+		//Company name
+		$company = $_POST["company"];
+		if(strlen($company) == 0)
+		  die("Must have a company name");
+		
+		//Address
+		$address = $_POST["address"];
+		if(strlen($address) == 0)
+		  die("Must have an address");
+	
+		$address2 = $_POST["address2"];
+		
+		//City
+		$city = $_POST["city"];
+		if(strlen($city) == 0)
+		  die("Must have a city");
+		
+		//State
+		$state = $_POST["state"];
+		if(strlen($state) == 0)
+		  die("Must have a state");
+		
+		//Zip Code
+		$zip = $_POST["zip"];
+		if(strlen($zip) == 0)
+		  die("Must have a zip code");
+		
+		//Contact info
+		$phone = $_POST["phone"];
+		$fax = $_POST["fax"];
+		$email = $_POST["email"];
+		if(strlen($phone) == 0 && strlen($fax) == 0 && strlen($email) == 0)
+		  die("Must have contact information");
+		
+		$website = $_POST["website"];
+		
+		//Insert the business address
+		$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . 				$state . "', '" . $zip . "', '" . $phone . "')";
+			
+		if(!mysqli_query($link, $query))
+		  die("Query failed first");
+		$address_id = mysqli_insert_id($link);
+	
+		//Insert the business
+		$sql = "INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES (NULL, '" . $address_id . "' , '" . $company . "', '" . $fax . "', '" . $email . "', '" . $website . "')";
+	
+		if(!mysqli_query($link, $sql))
+		  die("Query failed business insert");
+	
+		// Get the ID of the new business
+		$businessId = mysqli_insert_id($link);
+	}
+	elseif($businessId == 0)
+	{
+	die("Invalid Business id");
+	}
+	elseif(!VerifyBusinessExists($businessId, $link))
+	{
+	die("Invalid Business");
+	}
 	
 		
 		
-	
+	//insert repair
 	$sql = "INSERT INTO repairs (repair_id, inventory_id, business_id, repair_date, repair_cost, description) VALUES
 	(NULL, " . $inventory_id . ", " . $businessId . ", '" . $date . "', " . $cost . ", '" . $desc . "'	)";	
 
