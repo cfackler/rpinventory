@@ -189,7 +189,16 @@ function ValidateForm(document){
 	    }
 	    // Use the id as the descriptor for what field to update
 	    else{
-		id_match= cur_id.match(/[0-9]*/);
+		var vowel_match= cur_id.match(/^[aeiou]/);
+		var message;
+		if(vowel_match == null){ // Will change the prompt based on vowels
+		    message= "Please enter a ";
+		}
+		else{
+		    message= "Please enter an ";
+		}
+
+		var id_match= cur_id.match(/[0-9]*/);
 		if( id_match == null){
 		    var num;	// Pretty ugly workaround, but gives sensible descriptions now
 		    var id;
@@ -197,12 +206,12 @@ function ValidateForm(document){
 		    num= cur_id.replace(/[a-zA-Z]*/, "");
 		    id= cur_id.replace(/[0-9]*/g, "");
 
-		    if (!ValidateRequired(objects[i], "Please enter a " + id + " for item " + num)){
+		    if (!ValidateRequired(objects[i], message + id + " for item " + num)){
 			return false;
 		    }
 		}
 		else{
-		    if (!ValidateRequired(objects[i], "Please enter a " + cur_id)){
+		    if (!ValidateRequired(objects[i], message + cur_id)){
 			return false;
 		    }
 		}
