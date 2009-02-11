@@ -216,7 +216,7 @@ Item Count: <input type="text" name="count" size="10">
 			{$locations[loc]->location}
 		</option>
 	{/section}
-		<option value="newLocation">
+		<option>
 			New Location
 		</option>
 	</select>
