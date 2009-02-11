@@ -33,7 +33,7 @@ Item Count: <input type="text" name="count" size="10">
 
 {else}
 
-<form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" METHOD="post">
+<form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm(this)" METHOD="post">
 
 <input type="hidden" name="count" value="{$count}">
 
@@ -41,7 +41,7 @@ Item Count: <input type="text" name="count" size="10">
 <li>
 	Purchased From:
 		
-	<select id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')">
+	<select id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
 		<option value="-1">Select Business</option>
 		{section name=bus loop=$businesses}
 			<option value="{$businesses[bus]->business_id}">
@@ -59,12 +59,12 @@ Item Count: <input type="text" name="count" size="10">
 
      	 	<tr>
 			<td>Company Name:</td>
-			<td><input type="text" name="company" size="30"></td>
+			<td><input type="text" name="company" size="30" id="company" class="validate_cond_bus"></td>
      	 	</tr>
 
      	 	<tr>
 			<td>Address:</td>
-			<td> <input type="text" name="address" size="30"></td>
+			<td> <input type="text" name="address" size="30" id="address" class="validate_cond_bus"></td>
      	 	</tr>
 
      	 	<tr>
@@ -74,22 +74,22 @@ Item Count: <input type="text" name="count" size="10">
 
      	 	<tr>
 			<td>City: </td>
-			<td><input type="text" name="city" size="30"></td>
+			<td><input type="text" name="city" size="30" id="city" class="validate_cond_bus"></td>
      	 	</tr>
 
      	 	<tr>
 			<td>State: </td>
-			<td><input type="text" name="state" size="10"></td>
+			<td><input type="text" name="state" size="10" id="state" class="validate_cond_bus"></td>
      	 	</tr>
 
      	 	<tr>
 			<td>Zip Code: </td>
-			<td><input type="text" name="zip" size="10"></td>
+			<td><input type="text" name="zip" size="10" id="zip" class="validate_cond_bus"></td>
      	 	</tr>
 
      	 	<tr>
 			<td>Phone Number: </td>
-			<td><input type="text" name="phone" size="20"></td>
+			<td><input type="text" name="phone" size="20" id="phone" class="validate_cond_bus"></td>
      	 	</tr>
 
      	 	<tr>
@@ -173,7 +173,7 @@ Item Count: <input type="text" name="count" size="10">
 
 <li>
 	Total Value of Purchase: 
-	<input type="text" name="total_cost" value="">
+	<input type="text" name="total_cost" value="" id="total_cost" class="validate">
 </li>
 
 <br>
@@ -185,13 +185,13 @@ Item Count: <input type="text" name="count" size="10">
         <td><b>Item {$smarty.section.foo.index+1}:</b></td>
 </tr>
 <tr>
-	<td>Item Description:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
-	<td><input type="text" name="desc{$smarty.section.foo.index}" size="40"></td>
+	<td>Item Description: </td>
+	<td><input type="text" name="desc{$smarty.section.foo.index}" size="40" id="description{$smarty.section.foo.index}" class="validate"></td>
 </tr>
 
 <tr>
 	<td>Value: </td>
-	<td><input type="text" name="value{$smarty.section.foo.index}"></td>
+	<td><input type="text" name="value{$smarty.section.foo.index}" id="value{$smarty.section.foo.index}" class="validate"></td>
 </tr>
 
 <tr>
