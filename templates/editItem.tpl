@@ -57,11 +57,15 @@
 	<td>Location: </td>
 	<td>
 	
-	<select name="location{$smarty.section.num.index}" id="location{$smarty.section.num.index}" onChange="OnChangeDouble('location{$smarty.section.num.index}', 'newLocation{$smarty.section.num.index}', 'newDescription{$smarty.section.num.index}')">
-	{section name=loc loop=$locations}
+	<select name="location{$smarty.section.num.index}" id="location{$smarty.section.num.index}" onChange="OnChangeDouble('location{$smarty.section.num.index}', 'newLocation{$smarty.section.num.index}', 'newDescription{$smarty.section.num.index}')">   
+    {section name=loc loop=$locations}
 		<option value="{$locations[loc]->location_id}">
 			{$locations[loc]->location}
 		</option>
+    {* If there are no locations, just put a blank option there. *}
+    {sectionelse}
+  		<option value = "-1">
+        </option>
 	{/section}
         <option>
 			New Location

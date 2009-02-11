@@ -211,11 +211,15 @@ Item Count: <input type="text" name="count" size="10">
 
 	<td>
 	<select id="location{$smarty.section.foo.index}" name="location{$smarty.section.foo.index}" onChange="OnChangeDouble('location{$smarty.section.foo.index}', 'newLocation{$smarty.section.foo.index}', 'newDescription{$smarty.section.foo.index}')">
-	{section name=loc loop=$locations}
+
+    {section name=loc loop=$locations}
 		<option value="{$locations[loc]->location_id}">
 			{$locations[loc]->location}
 		</option>
-	{/section}
+    {sectionelse}
+  		<option value = "-1">
+        </option>
+    {/section}
 		<option>
 			New Location
 		</option>
