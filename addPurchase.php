@@ -2,47 +2,42 @@
 
 /*
 
-    Copyright (C) 2008, All Rights Reserved.
+  Copyright (C) 2008, All Rights Reserved.
 
-    This file is part of RPInventory.
+  This file is part of RPInventory.
 
-    RPInventory is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+  RPInventory is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-    RPInventory is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  RPInventory is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
+  You should have received a copy of the GNU General Public License
+  along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-
 
 require_once("inc/connect.php");  //mysql
 require_once("inc/auth.php");  //Session
 
 $link = connect();
 if($link == null)
-	die("Database connection failed");
+  die("Database connection failed");
 	
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
-	die("You dont have permission to access this page");
+  die("You dont have permission to access this page");
 
 // SMARTY Setup
-
 require_once('inc/setup.php');
-
 $smarty = new Smarty_Inv();
 
 $count = (int)$_GET['count'];
-
-
 
 //Business List
 
@@ -51,9 +46,7 @@ $businessResult = mysqli_query($link, $businessQuery);
 $businesses = array();
 
 while($business = mysqli_fetch_object($businessResult))
-{
-	$businesses [] = $business;
-}
+  $businesses [] = $business;
 
 //inventory list
 $itemQuery= "SELECT inventory_id, description FROM inventory";
@@ -61,9 +54,7 @@ $itemResult = mysqli_query($link, $itemQuery);
 $items = array();
 
 while($item = mysqli_fetch_object($itemResult))
-{
-	$items [] = $item;
-}
+  $items [] = $item;
 
 //Locations
 $locQuery= "SELECT location_id, location  FROM locations";
@@ -71,13 +62,9 @@ $locResult = mysqli_query($link, $locQuery);
 $locations = array();
 
 while($loc = mysqli_fetch_object($locResult))
-{
-	$locations [] = $loc;
-}
+  $locations [] = $loc;
 
 //BEGIN Page
-
-
 	
 //Assign vars
 $smarty->assign('title', "Purchase Items");
@@ -90,8 +77,6 @@ $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('locations', $locations);
 
 $smarty->display('index.tpl');
-
-
 
 mysqli_close($link);
 
