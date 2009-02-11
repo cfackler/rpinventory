@@ -70,10 +70,17 @@ for($x=0; $x<$count; $x++)
 		die("New location must have a description.");	
 	  
 	  $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $newLocation . "', '" . $locDescription . "')";
-	  $location = mysqli_insert_id($link);
+	  
+	  if(!mysqli_query($link, $sql))
+	  	die("New Location Insert Query Failed");
+	
+	  $location = mysqli_insert_id($link);  
+		
+	  if($location == 0)
+		die("Must have a location");
 	}
 	//stuff they entered already exists in the table
-	else if($rows == 1){
+	else if($checkRows == 1){
 	  $loc = mysqli_fetch_object($result);
 	  $location = $loc->location_id;
 	}
@@ -81,13 +88,7 @@ for($x=0; $x<$count; $x++)
 	  die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
 	}
 	  
-	if(!mysqli_query($link, $sql))
-	  die("New Location Insert Query Failed");
-	 
-	 $location = mysqli_insert_id($link);
-	  
-	if($location == 0)
-		die("Must have a location");		
+		
 		
 	//Value
 	$value = (double)$_POST["value" . $x];

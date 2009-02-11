@@ -32,8 +32,6 @@ if($link == null)
 $auth = GetAuthority();	
 if($auth < 1)
 	die("You dont have permission to access this page");
-
-
 	
 // Business
 $bus_id = (int)$_POST["business_id"];
@@ -145,50 +143,45 @@ for($x=0; $x<$count; $x++)
 	if(strlen($condition) == 0)
 	  die("Must have a condition");	
 	
-	//Location	
-	$location = (int)$_POST["location".$x];
-	if(strlen($location) == 0)
-	  die("Must have a location");		
-	
 	//Value
 	$value = (double)$_POST["value".$x];
 	if($value == 0)
 	  die("Invalid Value");
 	
-	//Get new location if specified
-	$newLocation='';
-	$locDescription='';
+	//Location	
+	$location = (int)$_POST["location" . $x];
 	
 	//Check location exists
 	$result=mysqli_query($link, "select * from locations where location_id=" . $location);
-
+	$checkRows = mysqli_num_rows($result);
+	
 	//if not in database, new location was specified
-	if(mysqli_num_rows($result) == 0){
-	  $newLocation = $_POST["newlocation".$x];
-	  $locDescription = $_POST["newdescription".$x];
+	if($checkRows == 0){
+		
+	  $newLocation = $_POST["newlocation" . $x];
+	  if(strlen($newLocation) == 0)
+		die("New location must have a name.");	
+	  $locDescription = $_POST["newdescription" . $x];
+	  if(strlen($locDescription) == 0)
+		die("New location must have a description.");	
 	  
-	  $sql = "SELECT location, location_id FROM locations WHERE location='" . $newLocation . "'ORDER BY location_id DESC";
-	  $result = mysqli_query($link, $sql);
-	  $rows = mysqli_num_rows($result);
-
-	  /*	  if($rows == 1){
-	    $loc = mysqli_fetch_object($result);
-	    $location = $loc->location_id;
-	    }*/
-	  if($rows == 0){
-	    $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $newLocation . "', '" . $locDescription . "')";
-}
-	  else{
-	    die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
-	  }
+	  $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $newLocation . "', '" . $locDescription . "')";
 	  
 	  if(!mysqli_query($link, $sql))
-	    die("New Location Insert Query Failed");
-
-	  $location = mysqli_insert_id($link);
-	  //  }
-	  //  else{
+	  	die("New Location Insert Query Failed");
+	
+	  $location = mysqli_insert_id($link);  
+		
+	  if($location == 0)
+		die("Must have a location");
 	}
+	//stuff they entered already exists in the table
+	else if($checkRows == 1){
+	  $loc = mysqli_fetch_object($result);
+	  $location = $loc->location_id;
+	}
+	else
+	  die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
 	
 	
 	//Insert new inventory item

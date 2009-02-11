@@ -63,7 +63,7 @@
 			{$locations[loc]->location}
 		</option>
 	{/section}
-        <option value="-1">
+        <option>
 			New Location
 		</option>
         
