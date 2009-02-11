@@ -47,7 +47,7 @@ $result= mysqli_query($link, $sql);
 
 $numItems = mysqli_num_rows($result); 
 
-if ( $numItems == 0) {
+if ( $numItems != 0) {
   die("Location still in use!  Deletion will not be allowed until all inventory using this location are updated.");
 }
 
