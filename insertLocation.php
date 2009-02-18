@@ -47,6 +47,16 @@ if(strlen($location) == 0)
 $desc = mysqli_real_escape_string($link, $desc);
 $location = mysqli_real_escape_string($link, $location);
 
+$sql = "SELECT location FROM locations WHERE location = '" . $location . "'";
+
+$result = mysqli_query($link, $sql); 
+
+while ($row = mysqli_fetch_array($result)) {
+  if (strcasecmp($row['location'], $location) == 0){ 
+    die("A location already exists with name, '" . $location ."'");
+  }
+}
+
 $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $location . "', '" . $desc . "')";
 	
 if(!mysqli_query($link, $sql))

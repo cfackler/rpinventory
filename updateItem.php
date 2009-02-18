@@ -54,9 +54,13 @@ for($x=0; $x<$count; $x++)
 
 	//Location	
 	$location = (int)$_POST["location" . $x];
+
+	$desc = mysqli_real_escape_string($link, $location);
+	$condition = mysqli_real_escape_string($link, $location);
+	$location = mysqli_real_escape_string($link, $location);
 	
 	//Check location exists
-	$result=mysqli_query($link, "select * from locations where location_id=" . $location);
+	$result=mysqli_query($link, "select * from locations where location= '" . $location ."'");
 	$checkRows = mysqli_num_rows($result);
 	
 	//if not in database, new location was specified
