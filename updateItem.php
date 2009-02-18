@@ -55,21 +55,35 @@ for($x=0; $x<$count; $x++)
 	//Location	
 	$location = (int)$_POST["location" . $x];
 
-	$desc = mysqli_real_escape_string($link, $location);
-	$condition = mysqli_real_escape_string($link, $location);
+	$newLocation = $_POST["newlocation" . $x];
+
+	$desc = mysqli_real_escape_string($link, $desc);
+	$condition = mysqli_real_escape_string($link, $condition);
 	$location = mysqli_real_escape_string($link, $location);
+	$newLocation = mysqli_real_escape_string($link, $newLocation);
 	
-	//Check location exists
-	$result=mysqli_query($link, "select * from locations where location= '" . $location ."'");
-	$checkRows = mysqli_num_rows($result);
+	$sql = "SELECT * FROM locations";	
+	$result = mysqli_query($link, $sql); 
+	$checkRows = 0;
+	$loc_match;
+	
+	// Check location exists
+	while ($row = mysqli_fetch_array($result)) {
+	  if (strcasecmp($row['location'], $newLocation) == 0){ 
+	    $loc_match = $row['location'];
+	    $checkRows++;
+	  }
+	}
+	
 	
 	//if not in database, new location was specified
-	if($checkRows == 0){
-		
-	  $newLocation = $_POST["newlocation" . $x];
+	if($location == -1 && $checkRows == 0){
 	  if(strlen($newLocation) == 0)
 		die("New location must have a name.");	
+
 	  $locDescription = $_POST["newdescription" . $x];
+	  $locDescription = mysqli_real_escape_string($link, $locDescription);
+
 	  if(strlen($locDescription) == 0)
 		die("New location must have a description.");	
 	  
@@ -84,13 +98,16 @@ for($x=0; $x<$count; $x++)
 		die("Must have a location");
 	}
 	//stuff they entered already exists in the table
-	else if($checkRows == 1){
+	else if($location == -1 && $checkRows == 1){
+	  echo "Loc_match: ".$loc_match."<br/>";
+	  $sql = "SELECT location_id FROM locations WHERE location = '" . $loc_match . "' LIMIT 1";
+	  $result = mysqli_query($link, $sql);
 	  $loc = mysqli_fetch_object($result);
 	  $location = $loc->location_id;
 	}
-	else{
+	/*	else{
 	  die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
-	}
+	  }*/
 	  
 		
 		
