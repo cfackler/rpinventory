@@ -24,7 +24,7 @@
 require_once("inc/connect.php");  //mysql
 require_once("inc/auth.php");  //Session
 
-//Authenticate
+// Authenticate
 $auth = GetAuthority();	
 if($auth<1)
   die("Please login to complete this action");
@@ -33,12 +33,12 @@ $link = connect();
 if($link == null)
   die("Database connection failed");
 
-//Description
+// Description
 $desc = $_POST["description"];
 if(strlen($desc) == 0)
   die("Must have a description");
 	
-//Location
+// Location
 $location = $_POST["location"];
 if(strlen($location) == 0)
   die("Must have a location");
@@ -51,6 +51,7 @@ $sql = "SELECT location FROM locations WHERE location = '" . $location . "'";
 
 $result = mysqli_query($link, $sql); 
 
+// Make sure location doesn't already exist
 while ($row = mysqli_fetch_array($result)) {
   if (strcasecmp($row['location'], $location) == 0){ 
     die("A location already exists with name, '" . $location ."'");
