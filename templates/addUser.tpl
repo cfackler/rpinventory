@@ -18,7 +18,7 @@
 
 *}
 
-<form name="storeTransaction" action="addUserRecord.php" METHOD="post">
+<form name="storeTransaction" action="addUserRecord.php" onsubmit="return ValidateForm(this)" METHOD="post">
 
 <h3>Add User</h3>
 
@@ -26,27 +26,27 @@
 
 <tr>
 	<td>Name: </td>
-	<td><input type="text" name="name" size="40"></td>
+	<td><input type="text" name="name" size="40" id="name" class="validate"></td>
 </tr>
 
 <tr>
 	<td>RIN: </td>
-	<td><input type="text" name="rin" size="40"></td>
+	<td><input type="text" name="rin" size="40" id="RIN" class="validate"></td>
 </tr>
 
 <tr>
 	<td>Email: </td>
-	<td><input type="text" name="email" size="40"></td>
+	<td><input type="text" name="email" size="40" id="email" class="validate"></td>
 </tr>
 
 <tr>
 	<td>Username: </td>
-	<td><input type="text" name="username" size="40"></td>
+	<td><input type="text" name="username" size="40" id="username" class="validate"></td>
 </tr>
 
 <tr>
 	<td>Password:</td>
-	<td><input type="password" name="password" size="40"></td>
+	<td><input type="password" name="password" size="40" id="password" class="validate"></td>
 </tr>
 
 <tr>

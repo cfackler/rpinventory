@@ -18,7 +18,7 @@
 
 *}
 
-<form name="addLocation" action="updateLocationRecord.php" METHOD="post">
+<form name="addLocation" action="updateLocationRecord.php" onsubmit="return ValidateForm(this)" METHOD="post">
 
 <h3>Edit Location</h3>
 
@@ -27,12 +27,12 @@
 <input type="hidden" name="location_id" value="{$location->location_id}">
 <tr>
 	<td>Location: </td>
-	<td><input type="text" name="location" size="40" value="{$location->location}"></td>
+	<td><input type="text" name="location" size="40" value="{$location->location}" id="location" class="validate"></td>
 </tr>
 
 <tr>
 	<td>Description: </td>
-	<td><textarea name="description" rows="6" cols="30">{$location->description}</textarea></td>
+	<td><textarea name="description" rows="6" cols="30" id="location" class="validate">{$location->description}</textarea></td>
 </tr>
 
 </table>

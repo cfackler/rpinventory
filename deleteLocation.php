@@ -38,6 +38,17 @@ $id = (int)$_GET["id"];
 if($id == 0)
   die("Invalid ID");
 
+//Verify no items use the location before deleting
+$sql = "SELECT location_id FROM inventory WHERE location_id = '" . $id ."'";
+
+$result= mysqli_query($link, $sql);
+
+$numItems = mysqli_num_rows($result); 
+
+if ( $numItems != 0) {
+  die("Location still in use!  Deletion will not be allowed until all inventory using this location are updated.");
+}
+
 //Create query
 $sql = "DELETE FROM locations WHERE location_id = '" . $id . "'";
 

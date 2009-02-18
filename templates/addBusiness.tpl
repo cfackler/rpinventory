@@ -72,7 +72,7 @@
 
 <tr>
 	<td>Website: </td>
-	<td><input type="text" name="website" id="website" class="validate" size="40"></td>
+	<td><input type="text" name="website" id="website" size="40"></td>
 </tr>
 
 </table>

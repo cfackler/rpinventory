@@ -69,6 +69,8 @@ if(strlen($phone) == 0 && strlen($fax) == 0 && strlen($email) == 0)
 
 $website = $_POST["website"];
 
+$website = preg_replace('/^(http:\/\/)*(.+)$/i', 'http://$2', $website); /* Add correct 'http://' at beginning on URL */
+
 // Clean user input
 $address = mysqli_real_escape_string($link, $address);
 $address2 = mysqli_real_escape_string($link, $address2);
