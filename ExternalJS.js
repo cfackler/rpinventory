@@ -130,20 +130,41 @@ function useAddress(){
     $('Phone').disabled = status;
 }
 
-function OnChange(item1, item2){
-	var Menu = document.getElementById(item1);
-	var blankFields = document.getElementById(item2);
-	
-	//If you have selected the last element in the list
-	//	(will always be "new Location" (or new whatever)
-	if(Menu.selectedIndex == Menu.length-1){
-		blankFields.style.display = '';
-	}
-	else{
-		blankFields.style.display = 'none';
-	}
+function sendBusinessRequest(itemID){
+    var item = document.getElementById( itemID );
+    companyName = item.value;
+
+    new Ajax.Request("validateBusiness.php?name=" + companyName + "&itemID=" + itemID,
+		     { 
+			 method: 'post', 
+			     parameters: $('company').serialize(true),
+			     onSuccess: updateBusiness
+			     });
 }
-																														  
+
+function updateBusiness(oReq, oJSN){
+    if ( oJSN.numRows > 0 ){
+	alert("A company already exists with that name");
+	$(oJSN.itemID).focus();
+    }
+}
+
+
+function OnChange(item1, item2){
+    var Menu = document.getElementById(item1);
+    var blankFields = document.getElementById(item2);
+    
+    //If you have selected the last element in the list
+    //	(will always be "new Location" (or new whatever)
+    if(Menu.selectedIndex == Menu.length-1){
+	blankFields.style.display = '';
+    }
+    else{
+	blankFields.style.display = 'none';
+    }
+}
+
+
 function OnChangeDouble(item1, item2, item3){
     OnChange(item1, item2);
     OnChange(item1, item3);
