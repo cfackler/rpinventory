@@ -105,7 +105,7 @@ elseif(!VerifyBusinessExists($bus_id, $link)){
 $count = (int)$_POST['count'];
 if($count == 0)
 	die("invalid count");
-	
+
 //Date
 $timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
 $date = date("Y-m-d", $timestamp);

@@ -37,7 +37,7 @@ if($auth < 1)
 require_once('inc/setup.php');
 $smarty = new Smarty_Inv();
 
-$count = (int)$_GET['count'];
+//$count = (int)$_GET['count'];
 
 //Business List
 
@@ -49,12 +49,12 @@ while($business = mysqli_fetch_object($businessResult))
   $businesses [] = $business;
 
 //inventory list
-$itemQuery= "SELECT inventory_id, description FROM inventory";
-$itemResult = mysqli_query($link, $itemQuery);
-$items = array();
+//$itemQuery= "SELECT inventory_id, description FROM inventory";
+//$itemResult = mysqli_query($link, $itemQuery);
+//$items = array();
 
-while($item = mysqli_fetch_object($itemResult))
-  $items [] = $item;
+//while($item = mysqli_fetch_object($itemResult))
+//  $items [] = $item;
 
 //Locations
 $locQuery= "SELECT location_id, location  FROM locations";
@@ -71,7 +71,7 @@ $smarty->assign('title', "Purchase Items");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'addPurchase');
 //$smarty->assign('items', $items);
-$smarty->assign('count', $count);
+//$smarty->assign('count', $count);
 $smarty->assign('businesses', $businesses);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('locations', $locations);

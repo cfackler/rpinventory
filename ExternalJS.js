@@ -234,3 +234,46 @@ function ValidateRequired(field, alerttext){
 	}
     }
 }
+
+function getItemBlockContents(element, idnum)
+{
+    new Ajax.Request("getItemBlock.php?id=" + idnum,
+		     {
+			 method: 'post',
+			 onSuccess: function(transport) {
+			     var response = transport.responseText;
+			     element.innerHTML = response;
+			 }
+		     });
+}
+
+function addItemField() {
+    var t = document.getElementById("itemTable");
+    var divs = t.getElementsByTagName("div");
+    var nextnum = divs.length;
+    var newrow = document.createElement('div');
+    newrow.setAttribute('id', 'item' + nextnum);
+    getItemBlockContents(newrow, nextnum);
+    t.appendChild(newrow);
+    var count = document.getElementById("count");
+    count.setAttribute('value', nextnum + 1);
+
+    // show delete button
+    document.getElementById("removeButton").style.display="";
+}
+
+function removeItemField() {
+    var count = document.getElementById("count");
+    if (Number(count.value) > 1) {
+	var t = document.getElementById("itemTable");
+	var divs = t.getElementsByTagName("div");
+	t.removeChild(divs[divs.length - 1]);
+
+	// decrement count
+	count.setAttribute('value', Number(count.value - 1));
+
+	// hide delete button?
+	if (Number(count.value) < 2)
+	    document.getElementById("removeButton").style.display="none";
+    }
+}
