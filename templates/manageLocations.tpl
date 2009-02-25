@@ -18,7 +18,10 @@
 
 *}
 
-<h3><a href="addLocation.php">Add new location</a></h3>
+<div class="TopOfTable"><span class="TopOfTable">
+<h3>Locations</h3>
+<a href="addLocation.php">Add new location</a>
+</span></div>
 
 <table width="700" border="0" cellspacing="0" class="itemsTable">
 	<tr>

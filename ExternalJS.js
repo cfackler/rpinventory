@@ -130,20 +130,59 @@ function useAddress(){
     $('Phone').disabled = status;
 }
 
-function OnChange(item1, item2){
-	var Menu = document.getElementById(item1);
-	var blankFields = document.getElementById(item2);
-	
-	//If you have selected the last element in the list
-	//	(will always be "new Location" (or new whatever)
-	if(Menu.selectedIndex == Menu.length-1){
-		blankFields.style.display = '';
+function sendValidateRequest(itemID){
+    var item = document.getElementById( itemID );
+    itemValue = item.value;
+
+    if ( itemID == 'location_edit' ){
+	locID = document.getElementById( 'location_id' );
+	new Ajax.Request("validateFormItem.php?itemValue=" + itemValue + "&itemID=" + itemID + "&locID=" + locID.value,
+		     { 
+			 method: 'post', 
+			     parameters: $(itemID).serialize(true),
+			     onSuccess: validateAction
+			     });
+    }
+    else{
+	new Ajax.Request("validateFormItem.php?itemValue=" + itemValue + "&itemID=" + itemID,
+			 { 
+			     method: 'post', 
+				 parameters: $(itemID).serialize(true),
+				 onSuccess: validateAction
+				 });
+    }
+}
+
+
+function validateAction(oReq, oJSN){
+    if ( oJSN.numRows > 0 ){
+	if ( oJSN.itemID == 'location_edit' ){
+	    alert( 'A location already exists with the name, ' + oJSN.itemValue );
 	}
 	else{
-		blankFields.style.display = 'none';
+	    alert( 'A ' + oJSN.itemID + ' already exists with the name, ' + oJSN.itemValue );
 	}
+
+	$(oJSN.itemID).focus();
+    }
 }
-																														  
+
+
+function OnChange(item1, item2){
+    var Menu = document.getElementById(item1);
+    var blankFields = document.getElementById(item2);
+    
+    //If you have selected the last element in the list
+    //	(will always be "new Location" (or new whatever)
+    if(Menu.selectedIndex == Menu.length-1){
+	blankFields.style.display = '';
+    }
+    else{
+	blankFields.style.display = 'none';
+    }
+}
+
+
 function OnChangeDouble(item1, item2, item3){
     OnChange(item1, item2);
     OnChange(item1, item3);

@@ -64,10 +64,10 @@
 		</option>
     {* If there are no locations, just put a blank option there. *}
     {sectionelse}
-  		<option value = "-1">
+  		<option value = "-2">
         </option>
 	{/section}
-        <option>
+        <option value = "-1">
 			New Location
 		</option>
         

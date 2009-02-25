@@ -18,7 +18,7 @@
 
 *}
 
-<form name="addBusiness" action="insertBusiness.php" onsubmit="return ValidateForm(this)" METHOD="post">
+<form id="AjaxForm" name="addBusiness" action="insertBusiness.php" onsubmit="return ValidateForm(this)" METHOD="post">
 
 <h3>Add Business</h3>
 
@@ -27,7 +27,7 @@
 
 <tr>
 	<td>Company Name: </td>
-	<td><input type="text" name="company" id="company" class="validate" size="40"></td>
+	<td><input type="text" name="company" id="company" class="validate" size="40" onchange="sendValidateRequest('company')"></td>
 </tr>
 
 <tr>

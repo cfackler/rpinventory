@@ -24,10 +24,10 @@
 
 <table width="400">
 
-<input type="hidden" name="location_id" value="{$location->location_id}">
+<input type="hidden" id="location_id" name="location_id" value="{$location->location_id}">
 <tr>
 	<td>Location: </td>
-	<td><input type="text" name="location" size="40" value="{$location->location}" id="location" class="validate"></td>
+	<td><input type="text" name="location_edit" size="40" value="{$location->location}" id="location_edit" class="validate" onchange="sendValidateRequest('location_edit')"></td>
 </tr>
 
 <tr>

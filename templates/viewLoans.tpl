@@ -17,7 +17,9 @@
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 *}
-
+<div class="TopOfTable">
+<span class="TopOfTable">
+<h3>Loans</h3>
 Show:
 
 {if $filter != "all"}
@@ -37,8 +39,7 @@ Show:
 {else}
 	<b>Returned </b>
 {/if}
-<br>
-<br>
+</span></div>
 
 
 <table width="800" border="0" class="itemsTable" cellspacing="0">

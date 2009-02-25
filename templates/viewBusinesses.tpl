@@ -19,9 +19,10 @@
 *}
 
 {if $authority>1}
+	<div class="TopOfTable"><span class="TopOfTable">
+    <h3>Businesses</h3>
 	<a href="addBusiness.php">Add new business</a>
-	<br />
-	<br />
+	</span></div>
 	<table width="900" border="0" class="itemsTable" cellspacing="0">
 	       <tr>
 			<th width="200">Company Name</th>

@@ -24,7 +24,7 @@
 require_once("inc/connect.php");  //mysql
 require_once("inc/auth.php");  //Session
 
-//Authenticate
+// Authenticate
 $auth = GetAuthority();	
 if($auth<1)
   die("Please login to complete this action");
@@ -33,12 +33,12 @@ $link = connect();
 if($link == null)
   die("Database connection failed");
 
-//Description
+// Description
 $desc = $_POST["description"];
 if(strlen($desc) == 0)
   die("Must have a description");
 	
-//Location
+// Location
 $location = $_POST["location"];
 if(strlen($location) == 0)
   die("Must have a location");
@@ -46,6 +46,19 @@ if(strlen($location) == 0)
 // Clean user input
 $desc = mysqli_real_escape_string($link, $desc);
 $location = mysqli_real_escape_string($link, $location);
+
+$location = trim($location);
+
+$sql = "SELECT location FROM locations";
+
+$result = mysqli_query($link, $sql); 
+
+// Make sure location doesn't already exist
+while ($row = mysqli_fetch_array($result)) {
+  if (strcasecmp($row['location'], $location) == 0){ 
+    die("A location already exists with name, '" . $location ."'");
+  }
+}
 
 $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $location . "', '" . $desc . "')";
 	
