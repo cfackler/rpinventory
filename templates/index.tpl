@@ -33,7 +33,7 @@
 
 	<body>
 	    <div class="header">
-			<h1>RPInventory</h1>
+			<span class="headerContent">RPInventory</span>
 	    </div>
 		
 	    <div class="left_sidebar">
@@ -50,7 +50,7 @@
 			     {/if}
 			     
 			     <li><br /></li>
-			     <li><b>Admin</b></li>
+			     <li class="nonLinkSidebarItem">Admin</li>
 			     <li><a href="manageLocations.php">Manage Locations</a></li>
 			{/if}
 			
