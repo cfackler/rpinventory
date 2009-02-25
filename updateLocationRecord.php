@@ -41,7 +41,7 @@ if(strlen($desc) == 0)
 	die("Must have a description");
 	
 //Location
-$location = $_POST["location"];
+$location = $_POST["location_edit"];
 if(strlen($location) == 0)
 	die("Must have a location");
 
