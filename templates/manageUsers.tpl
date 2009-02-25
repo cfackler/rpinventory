@@ -17,8 +17,10 @@
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 *}
-
-<h3><a href="addUser.php">Add new user</a></h3>
+<div class="TopOfTable"><span class="TopOfTable">
+<h3>Users</h3>
+<a href="addUser.php">Add new user</a>
+</span></div>
 
 <table width="900" border="0" class="itemsTable" cellspacing="0">
 	<tr>
