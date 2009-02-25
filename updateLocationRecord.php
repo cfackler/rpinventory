@@ -79,7 +79,7 @@ $query = "update locations set description = '" . $desc . "', location = '" . $l
 
 //Run update
 if(!mysqli_query($link, $query))
-	die("Query failed");	
+  die( 'Query failed' );	
 
 
 mysqli_close($link);
