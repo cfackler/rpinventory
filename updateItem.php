@@ -99,12 +99,12 @@ for($x=0; $x<$count; $x++)
 	}
 	//stuff they entered already exists in the table
 	else if($location == -1 && $checkRows == 1){
-	  echo "Loc_match: ".$loc_match."<br/>";
 	  $sql = "SELECT location_id FROM locations WHERE location = '" . $loc_match . "' LIMIT 1";
 	  $result = mysqli_query($link, $sql);
 	  $loc = mysqli_fetch_object($result);
 	  $location = $loc->location_id;
 	}
+	// Decided to not die(), but use the other location if duplicate was given
 	/*	else{
 	  die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
 	  }*/
