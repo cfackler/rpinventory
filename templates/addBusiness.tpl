@@ -27,7 +27,7 @@
 
 <tr>
 	<td>Company Name: </td>
-	<td><input type="text" name="company" id="company" class="validate" size="40" onchange="sendBusinessRequest('company')"></td>
+	<td><input type="text" name="company" id="company" class="validate" size="40" onchange="sendValidateRequest('company')"></td>
 </tr>
 
 <tr>

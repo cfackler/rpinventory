@@ -130,21 +130,39 @@ function useAddress(){
     $('Phone').disabled = status;
 }
 
-function sendBusinessRequest(itemID){
+function sendValidateRequest(itemID){
     var item = document.getElementById( itemID );
-    companyName = item.value;
+    itemValue = item.value;
 
-    new Ajax.Request("validateBusiness.php?name=" + companyName + "&itemID=" + itemID,
+    if ( itemID == 'location_edit' ){
+	locID = document.getElementById( 'location_id' );
+	new Ajax.Request("validateFormItem.php?itemValue=" + itemValue + "&itemID=" + itemID + "&locID=" + locID.value,
 		     { 
 			 method: 'post', 
-			     parameters: $('company').serialize(true),
-			     onSuccess: updateBusiness
+			     parameters: $(itemID).serialize(true),
+			     onSuccess: validateAction
 			     });
+    }
+    else{
+	new Ajax.Request("validateFormItem.php?itemValue=" + itemValue + "&itemID=" + itemID,
+			 { 
+			     method: 'post', 
+				 parameters: $(itemID).serialize(true),
+				 onSuccess: validateAction
+				 });
+    }
 }
 
-function updateBusiness(oReq, oJSN){
+
+function validateAction(oReq, oJSN){
     if ( oJSN.numRows > 0 ){
-	alert("A company already exists with that name");
+	if ( oJSN.itemID == 'location_edit' ){
+	    alert( 'A location already exists with the name, ' + oJSN.itemValue );
+	}
+	else{
+	    alert( 'A ' + oJSN.itemID + ' already exists with the name, ' + oJSN.itemValue );
+	}
+
 	$(oJSN.itemID).focus();
     }
 }

@@ -27,7 +27,7 @@
 
 <tr>
 	<td>Location: </td>
-	<td><input type="text" name="location" id="location" class="validate" size="40"></td>
+	<td><input type="text" name="location" id="location" class="validate" size="40" onchange="sendValidateRequest('location')"></td>
 </tr>
 
 <tr>

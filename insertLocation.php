@@ -47,6 +47,8 @@ if(strlen($location) == 0)
 $desc = mysqli_real_escape_string($link, $desc);
 $location = mysqli_real_escape_string($link, $location);
 
+$location = trim($location);
+
 $sql = "SELECT location FROM locations";
 
 $result = mysqli_query($link, $sql); 

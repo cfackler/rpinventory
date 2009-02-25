@@ -84,6 +84,8 @@ $fax = mysqli_real_escape_string($link, $fax);
 $email = mysqli_real_escape_string($link, $email);
 $website = mysqli_real_escape_string($link, $website);
 
+$company = trim($company);
+
 // Prevent Businesses with the same names (case insensitive)
 $sql = "SELECT * FROM businesses";
 
