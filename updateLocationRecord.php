@@ -41,7 +41,7 @@ if(strlen($desc) == 0)
 	die("Must have a description");
 	
 //Location
-$location = $_POST["location"];
+$location = $_POST["location_edit"];
 if(strlen($location) == 0)
 	die("Must have a location");
 
@@ -50,16 +50,36 @@ if(strlen($location) == 0)
 $location_id = (int)$_POST["location_id"];
 if($location_id == 0)
 	die("Invalid item id");	
-	
-	
-$query = "update locations set description = '" . $desc . "', location = '" . $location . "' where location_id = " . $location_id;
 
+// Prevent injections	
+$desc = mysqli_real_escape_string( $link, $desc );
+$location = mysqli_real_escape_string( $link, $location );
+$location_id = mysqli_real_escape_string( $link, $location_id );
+
+// Location query, excluding itself
+$sql = "SELECT location FROM locations WHERE location_id != '" . $location_id . "'";
+
+$result = mysqli_query($link, $sql);
+
+$numRows = 0;
+
+// Make sure location doesn't already exist
+while ($row = mysqli_fetch_array($result)) {
+  if (strcasecmp($row['location'], $itemValue) == 0){
+    $numRows++;
+  }
+}
+
+// If true, location is a duplicate
+if ( $numRows > 0 ){
+  die('A location already exists with the name ' . $location );
+}
+
+$query = "update locations set description = '" . $desc . "', location = '" . $location . "' where location_id = " . $location_id;
 
 //Run update
 if(!mysqli_query($link, $query))
-	die("Query failed");	
-	
-
+  die( 'Query failed' );	
 
 
 mysqli_close($link);
