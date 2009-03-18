@@ -20,7 +20,7 @@
 
 <H3>Create Purchase</h3>
 
-<form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm(this)" METHOD="post">
+<form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
   <input type="hidden" name="count" id="count" value="1">
 

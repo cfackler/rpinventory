@@ -18,7 +18,7 @@
 
 *}
 
-<form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" onsubmit="return ValidateForm(this)" METHOD="post">
+<form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
 <h3>Loan Items</h3>
 

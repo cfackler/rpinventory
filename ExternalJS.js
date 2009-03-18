@@ -198,77 +198,122 @@ function OnChangeDouble(item1, item2, item3){
 }
 
 
-function ValidateForm(document){
-    with(document){
-	var objects = new Array(), i=0, cur_id;
-
-	objects = document.getElementsByClassName("validate_cond");
-
-	for(i=0; i<objects.length; i++){
-	    if(objects[i].value == "newBusiness"){
-
-		var new_business_tags= new Array();
-		new_business_tags= document.getElementsByClassName("validate_cond_bus");
-		for(var j=0; j<new_business_tags.length; j++){
-		    cur_id= new_business_tags[j].id;
-		    if(!ValidateRequired(new_business_tags[j], "Please select a "+cur_id))
-		       return false;
-		}
+function ValidateForm(){
+    var objects = new Array(), i=0, cur_id, obj;
+    
+    objects = document.getElementsByClassName("validate_cond");
+    
+    for(i=0; i<objects.length; i++){
+	if(objects[i].value == "newBusiness"){
+	    
+	    var new_business_tags= new Array();
+	    new_business_tags= document.getElementsByClassName("validate_cond_bus");
+	    for(var j=0; j<new_business_tags.length; j++){
+		cur_id= new_business_tags[j].id;
+		if(!ValidateRequired(new_business_tags[j], "Please select a "+cur_id))
+		    return false;
 	    }
 	}
-	
-
-	objects = document.getElementsByClassName("validate");
-	
-	for(i=0; i<objects.length; i++){
-	    cur_id = objects[i].id;
-
-	    // Alter prompt so not to include actual ID
-	    if(cur_id == "user_id"){ 
-		if(!ValidateRequired(objects[i], "Please select a user"))
-		    return false;
-	    } // Same with id="business_id"
-	    else if(cur_id == "business_id"){
-		if(!ValidateRequired(objects[i], "Please select a business"))
-		    return false;
-	    } // Same with id="total_cost"
-	    else if(cur_id == "total_cost"){
-		if(!ValidateRequired(objects[i], "Please enter a total purchase cost"))
-		    return false;
-	    }
-	    // Use the id as the descriptor for what field to update
-	    else{
-		var vowel_match= cur_id.match(/^[aeiou]/);
-		var message;
-		if(vowel_match == null){ // Will change the prompt based on vowels
-		    message= "Please enter a ";
-		}
-		else{
-		    message= "Please enter an ";
-		}
-
-		var id_match= cur_id.match(/[0-9]*/);
-		if( id_match == null){
-		    var num;	// Pretty ugly workaround, but gives sensible descriptions now
-		    var id;
-			
-		    num= cur_id.replace(/[a-zA-Z]*/, "");
-		    id= cur_id.replace(/[0-9]*/g, "");
-
-		    if (!ValidateRequired(objects[i], message + id + " for item " + num)){
-			return false;
-		    }
-		}
-		else{
-		    if (!ValidateRequired(objects[i], message + cur_id)){
-			return false;
-		    }
-		}
-	    }
-	}
-
-	return true;
     }
+    
+    
+    objects = document.getElementsByClassName("validate");
+    
+    for(i=0; i<objects.length; i++){
+	cur_id = objects[i].id;
+	
+	// Alter prompt so not to include actual ID
+	if(cur_id == "user_id"){ 
+	    if(!ValidateRequired(objects[i], "Please select a user"))
+		return false;
+	} // Same with id="business_id"
+	else if(cur_id == "business_id"){
+	    if(!ValidateRequired(objects[i], "Please select a business"))
+		return false;
+	} // Same with id="total_cost"
+	else if(cur_id == "total_cost"){
+	    if(!ValidateRequired(objects[i], "Please enter a total purchase cost"))
+		return false;
+	}
+	// Use the id as the descriptor for what field to update
+	else{
+	    var vowel_match= cur_id.match(/^[aeiou]/);
+	    var message;
+	    if(vowel_match == null){ // Will change the prompt based on first letter in the id
+		message= "Please enter a ";
+	    }
+	    else{
+		message= "Please enter an ";
+	    }
+	    
+	    var id_match= cur_id.match(/[0-9]*/);
+	    if( id_match == null){
+		var num;	// Pretty ugly workaround, but gives sensible descriptions now
+		var id;
+		
+		num= cur_id.replace(/[a-zA-Z]*/, "");
+		id= cur_id.replace(/[0-9]*/g, "");
+		
+		if (!ValidateRequired(objects[i], message + id + " for item " + num)){
+		    return false;
+		}
+	    }
+	    else{
+		if (!ValidateRequired(objects[i], message + cur_id)){
+		    return false;
+		}
+	    }
+	}
+    }
+    
+    // Returns the bad id, or '-1' if no errors
+    return_code = ValidateSaneInput( objects ); 
+    
+    if( return_code != null ){
+	alert( return_code[0] );
+	
+	obj = document.getElementById( return_code[1] );
+	obj.focus();
+	obj.select();
+	return false;
+    }
+    
+    return true;
+}
+
+function ValidateSaneInput( objects ){
+    var message = '';
+    var offending_id = '';
+    
+    for ( i = 0; i < objects.length && message == ''; i++) {
+	cur_id = objects[i].id;
+
+	if( cur_id == "phone" ){
+	    if( !objects[i].value.match( /^\d{3}(\.|-)?\d{3}(\.|-)?\d{4}$/ ) ){
+		message = "Please enter a phone number in the form 'xxx-xxx-xxxx', 'xxx.xxx.xxxx', or 'xxxyyyzzzz'";
+		offending_id = cur_id;
+	    }
+	}
+	else if( cur_id == "zip" ){
+	    if( !objects[i].value.match( /^\d{5}$/ ) ){
+		message = "Please enter a zip code in the form 'xxxxx'";
+		offending_id = cur_id;
+	    }
+	}
+	else if( cur_id == "state" ){
+	    if( !objects[i].value.match( /^[a-zA-Z]{2}$/ ) ){
+		message = "Please enter a state as a two-letter abbreviation";
+		offending_id = cur_id;
+	    }
+	}
+    }
+
+    return_junk = new Array(message, offending_id);
+    if( message != '' ){
+	return return_junk;
+    }
+    
+    return null;
 }
 
 function ValidateRequired(field, alerttext){

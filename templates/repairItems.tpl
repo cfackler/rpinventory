@@ -18,7 +18,7 @@
 
 *}
 
-<form name="editItem" action="insertRepairRecord.php" onsubmit="return ValidateForm(this)" METHOD="post">
+<form name="editItem" action="insertRepairRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
 <h3>Repair Items</h3>
 

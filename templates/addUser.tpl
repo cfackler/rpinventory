@@ -18,7 +18,7 @@
 
 *}
 
-<form name="storeTransaction" action="addUserRecord.php" onsubmit="return ValidateForm(this)" METHOD="post">
+<form name="storeTransaction" action="addUserRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
 <h3>Add User</h3>
 
