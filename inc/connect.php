@@ -30,11 +30,11 @@ function connect()
 	global $hostname, $username, $password, $database;
 	
 	$link = mysqli_connect($hostname,$username,$password);
-    if($link == false)
+    if(!$link)
         die("Can't Connect to the DB");
-    
-	mysqli_select_db($link, $database) or die("Unable to select database");
 
+	mysqli_select_db($link, $database) or die("Unable to select database");
+	
 	return $link;
 }
 ?>
