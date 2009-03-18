@@ -63,4 +63,7 @@
 
 </form>
 
+{if $authority >= 1}
+
 <a href="generatePDF.php"><img border="0" src="images/pdficon_small.gif" />&nbsp;&nbsp;Download PDF</a>
+{/if}

@@ -48,7 +48,8 @@
 		}
 
 		return $items;
-	
+		
+		mysqli_close($link);	
 	}
 
 ?>
