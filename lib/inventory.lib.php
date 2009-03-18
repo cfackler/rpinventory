@@ -47,7 +47,9 @@
 			$items [] = $item;
 		}
 
-		return $items;	
+		return $items;
+		
+		mysqli_close($link);	
 	}
 
 ?>

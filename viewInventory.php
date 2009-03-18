@@ -56,8 +56,4 @@ $smarty->assign('items', $items);
 
 $smarty->display('index.tpl');
 
-
-
-mysqli_close($link);
-
 ?>
