@@ -47,8 +47,7 @@
 			$items [] = $item;
 		}
 
-		return $items;
-	
+		return $items;	
 	}
 
 ?>
