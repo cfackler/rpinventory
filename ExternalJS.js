@@ -143,6 +143,14 @@ function sendValidateRequest(itemID){
 			     onSuccess: validateAction
 			     });
     }
+    else if ( itemID.match("newlocation") ){
+	new Ajax.Request("validateFormItem.php?itemValue=" + itemValue + "&itemID=" + itemID,
+			 { 
+			     method: 'post', 
+				 parameters: $(itemID).serialize(true),
+				 onSuccess: validateAction
+				 });
+    }
     else{
 	new Ajax.Request("validateFormItem.php?itemValue=" + itemValue + "&itemID=" + itemID,
 			 { 
@@ -156,7 +164,7 @@ function sendValidateRequest(itemID){
 
 function validateAction(oReq, oJSN){
     if ( oJSN.numRows > 0 ){
-	if ( oJSN.itemID == 'location_edit' ){
+	if ( oJSN.itemID == 'location_edit' || oJSN.itemID.match( "newlocation" ) ){
 	    alert( 'A location already exists with the name, ' + oJSN.itemValue );
 	}
 	else{
@@ -164,6 +172,7 @@ function validateAction(oReq, oJSN){
 	}
 
 	$(oJSN.itemID).focus();
+	$(oJSN.itemID).select();
     }
 }
 

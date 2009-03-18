@@ -69,7 +69,7 @@ if ( $data['itemID'] == 'company' ){
       $numRows++;
   }
 }
-else if ( $data['itemID'] == 'location' ){
+else if ( $data['itemID'] == 'location' || preg_match( "/^newlocation[0-9]*$/", $data['itemID']) ){
   // Location query
   $sql = "SELECT location FROM locations";
   
@@ -100,6 +100,9 @@ else if ( $data['itemID'] == 'location_edit' ){
       $numRows++;
     }
   }
+}
+else {
+  die( "Did not match a function to execute" );
 }
 
 $data['numRows'] = $numRows;

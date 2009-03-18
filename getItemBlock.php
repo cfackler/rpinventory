@@ -94,7 +94,7 @@ echo <<<END
   <tr id="newLocation$id" style="display:none">
   <td>New Location:</td>
   <td>
-  <input type="text" name="newlocation$id" size="40">
+  <input type="text" name="newlocation$id" id="newlocation$id" size="40">
   </td>
   </tr>
   <tr id="newDescription$id" style="display:none">
