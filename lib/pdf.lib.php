@@ -40,7 +40,7 @@ function getInventoryPDF()
 	
 	//add text
 	$pdf->ezText('<u>Current Clubname Inventory</u>', 12, array('justification'=>'center'));
-	$pdf->ezText();
+	$pdf->ezText('');
 	
 	$data = array();
 	foreach($items as $value)
