@@ -56,12 +56,12 @@ span.TopOfTable
 {
 	color:#000000;
 }
-span.TopOfTable a
+a
 {
 	color:#c70000;
 	text-decoration:underline;
 }
-span.TopOfTable a:hover
+a:hover
 {
 	color:#ff0000;
 }
@@ -130,21 +130,18 @@ body
 
 /* LINK styles */
 
-a
+div.left_sidebar a
 {
     color: #969696;
     font-size: 14px;
 	text-decoration:none;
 }
 
-a:hover
+div.left_sidebar a:hover
 {
     color: #cccccc;
 	text-decoration:underline;
-    
-    
 }
-
 
 
 /* Items table styling */
