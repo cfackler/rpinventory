@@ -1,0 +1,13 @@
+;<?php exit(); ?>
+
+; database server hostname
+database_hostname = localhost
+
+; database name of RPInventory database
+database_name = rpinventory
+
+; username for RPInventory database
+database_username = inventory
+
+; password for database user
+database_password = inventory
