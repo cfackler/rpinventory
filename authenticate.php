@@ -22,7 +22,7 @@
 */
 
 require_once("inc/connect.php");  //mysql
-require_once("inc/auth.php");  //authentication
+require_once("lib/auth.lib.php");  //authentication
 
 
 $link = connect();

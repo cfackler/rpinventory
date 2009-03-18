@@ -21,7 +21,7 @@
 
 */
 
-require_once("inc/auth.php");  //Session
+require_once("lib/auth.lib.php");  //Session
 
 //Authenticate
 $auth = GetAuthority();
