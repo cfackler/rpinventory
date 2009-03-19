@@ -216,7 +216,6 @@ function ValidateForm(){
 	}
     }
     
-    
     objects = document.getElementsByClassName("validate");
     
     for(i=0; i<objects.length; i++){
@@ -267,12 +266,11 @@ function ValidateForm(){
     }
     
     // Returns the bad id, or '-1' if no errors
-    return_code = ValidateSaneInput( objects ); 
+    return_data = ValidateSaneInput( objects ); 
     
-    if( return_code != null ){
-	alert( return_code[0] );
-	
-	obj = document.getElementById( return_code[1] );
+    if( return_data != null ){
+	alert( return_data[0] ); // Alert the user, and highlight the offending field
+	obj = document.getElementById( return_data[1] );
 	obj.focus();
 	obj.select();
 	return false;
@@ -288,19 +286,20 @@ function ValidateSaneInput( objects ){
     for ( i = 0; i < objects.length && message == ''; i++) {
 	cur_id = objects[i].id;
 
-	if( cur_id == "phone" ){
+	// Regexp's
+	if( cur_id == "phone" ){ // Phone numbers
 	    if( !objects[i].value.match( /^\d{3}(\.|-)?\d{3}(\.|-)?\d{4}$/ ) ){
 		message = "Please enter a phone number in the form 'xxx-xxx-xxxx', 'xxx.xxx.xxxx', or 'xxxyyyzzzz'";
 		offending_id = cur_id;
 	    }
 	}
-	else if( cur_id == "zip" ){
+	else if( cur_id == "zip" ){ // Zip code
 	    if( !objects[i].value.match( /^\d{5}$/ ) ){
 		message = "Please enter a zip code in the form 'xxxxx'";
 		offending_id = cur_id;
 	    }
 	}
-	else if( cur_id == "state" ){
+	else if( cur_id == "state" ){ // 2-letter state abbreviation
 	    if( !objects[i].value.match( /^[a-zA-Z]{2}$/ ) ){
 		message = "Please enter a state as a two-letter abbreviation";
 		offending_id = cur_id;
@@ -308,9 +307,9 @@ function ValidateSaneInput( objects ){
 	}
     }
 
-    return_junk = new Array(message, offending_id);
+    return_data = new Array(message, offending_id);
     if( message != '' ){
-	return return_junk;
+	return return_data;
     }
     
     return null;
