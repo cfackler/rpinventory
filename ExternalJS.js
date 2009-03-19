@@ -285,6 +285,7 @@ function ValidateSaneInput( objects ){
     
     for ( i = 0; i < objects.length && message == ''; i++) {
 	cur_id = objects[i].id;
+	objects[i].value = rtrim(objects[i].value);
 
 	// Regexp's
 	if( cur_id == "phone" ){ // Phone numbers
@@ -302,6 +303,18 @@ function ValidateSaneInput( objects ){
 	else if( cur_id == "state" ){ // 2-letter state abbreviation
 	    if( !objects[i].value.match( /^[a-zA-Z]{2}$/ ) ){
 		message = "Please enter a state as a two-letter abbreviation";
+		offending_id = cur_id;
+	    }
+	}
+	else if( cur_id == "RIN" ){ // 9-digit RIN
+	    if( !objects[i].value.match( /^\d{9}$/ ) ){
+		message = "Please enter a RIN in the form 'xxxyyzzzz'";
+		offending_id = cur_id;
+	    }
+	} // Taken from http://xyfer.blogspot.com/2005/01/javascript-regexp-email-validator.html
+	else if( cur_id == "email" ){ // Validate email address
+	    if( !objects[i].value.match( /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i ) ){
+		message = "Please enter a valid email address";
 		offending_id = cur_id;
 	    }
 	}
@@ -368,4 +381,8 @@ function removeItemField() {
 	if (Number(count.value) < 2)
 	    document.getElementById("removeButton").style.display="none";
     }
+}
+
+function rtrim(str) {		// Trims all trailing whitespace from a string
+    return str.replace(/\s+$/, '');
 }
