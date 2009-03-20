@@ -286,38 +286,45 @@ function ValidateSaneInput( objects ){
     for ( i = 0; i < objects.length && message == ''; i++) {
 	cur_id = objects[i].id;
 	objects[i].value = rtrim(objects[i].value);
-
+	
 	// Regexp's
 	if( cur_id == "phone" ){ // Phone numbers
+	    alert('in phone');
 	    if( !objects[i].value.match( /^\d{3}(\.|-)?\d{3}(\.|-)?\d{4}$/ ) ){
 		message = "Please enter a phone number in the form 'xxx-xxx-xxxx', 'xxx.xxx.xxxx', or 'xxxyyyzzzz'";
 		offending_id = cur_id;
 	    }
 	}
 	else if( cur_id == "zip" ){ // Zip code
+	    alert('in zip');
 	    if( !objects[i].value.match( /^\d{5}$/ ) ){
 		message = "Please enter a zip code in the form 'xxxxx'";
 		offending_id = cur_id;
 	    }
 	}
 	else if( cur_id == "state" ){ // 2-letter state abbreviation
-	    if( !objects[i].value.match( /^[a-zA-Z]{2}$/ ) ){
+	    alert('in state');
+	    if( !validateState(objects[i].value) ) {
+		alert('failed the test');
 		message = "Please enter a state as a two-letter abbreviation";
 		offending_id = cur_id;
-	    }
+		}
 	}
 	else if( cur_id == "RIN" ){ // 9-digit RIN
+	    alert('in rin');
 	    if( !objects[i].value.match( /^\d{9}$/ ) ){
 		message = "Please enter a RIN in the form 'xxxyyzzzz'";
 		offending_id = cur_id;
 	    }
 	} // Taken from http://xyfer.blogspot.com/2005/01/javascript-regexp-email-validator.html
 	else if( cur_id == "email" ){ // Validate email address
+	    alert('in email');
 	    if( !objects[i].value.match( /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i ) ){
 		message = "Please enter a valid email address";
 		offending_id = cur_id;
 	    }
 	}
+	alert("now looping");
     }
 
     return_data = new Array(message, offending_id);
@@ -385,4 +392,22 @@ function removeItemField() {
 
 function rtrim(str) {		// Trims all trailing whitespace from a string
     return str.replace(/\s+$/, '');
+}
+
+function validateState(str) {
+    var states = new Array ('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL',
+			    'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME',
+			    'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH',
+			    'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
+			    'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV',
+			    'WI', 'WY');
+
+    for ( var i = 0; i < states.length; i++ ) {
+	if ( str.toUpperCase() == states[i] ) {
+	    return true;
+	}
+    }
+    alert('returns false');
+    
+    return false;
 }
