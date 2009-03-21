@@ -20,7 +20,7 @@
 
 <H3>Create Purchase</h3>
 
-<form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm(this)" METHOD="post">
+<form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
   <input type="hidden" name="count" id="count" value="1">
 
@@ -46,7 +46,7 @@
 
      	<tr>
 	  <td>Company Name:</td>
-	  <td><input type="text" name="company" size="30" id="company" class="validate_cond_bus"></td>
+	  <td><input type="text" name="company" size="30" id="company" class="validate_cond_bus" onchange="sendValidateRequest('company')"></td>
      	</tr>
 
      	<tr>
@@ -215,7 +215,7 @@
 	  <tr id="newLocation0" style="display:none">
 	    <td>New Location:</td>
 	    <td>
-	      <input type="text" name="newlocation0" size="40">
+	      <input type="text" name="newlocation0" id="newlocation0" size="40" onchange="sendValidateRequest('newlocation0')">
 	    </td>
 	  </tr>
 	  <tr id="newDescription0" style="display:none">

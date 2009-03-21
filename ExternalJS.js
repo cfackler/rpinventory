@@ -143,6 +143,14 @@ function sendValidateRequest(itemID){
 			     onSuccess: validateAction
 			     });
     }
+    else if ( itemID.match("newlocation") ){
+	new Ajax.Request("validateFormItem.php?itemValue=" + itemValue + "&itemID=" + itemID,
+			 { 
+			     method: 'post', 
+				 parameters: $(itemID).serialize(true),
+				 onSuccess: validateAction
+				 });
+    }
     else{
 	new Ajax.Request("validateFormItem.php?itemValue=" + itemValue + "&itemID=" + itemID,
 			 { 
@@ -156,7 +164,7 @@ function sendValidateRequest(itemID){
 
 function validateAction(oReq, oJSN){
     if ( oJSN.numRows > 0 ){
-	if ( oJSN.itemID == 'location_edit' ){
+	if ( oJSN.itemID == 'location_edit' || oJSN.itemID.match( "newlocation" ) ){
 	    alert( 'A location already exists with the name, ' + oJSN.itemValue );
 	}
 	else{
@@ -164,6 +172,7 @@ function validateAction(oReq, oJSN){
 	}
 
 	$(oJSN.itemID).focus();
+	$(oJSN.itemID).select();
     }
 }
 
@@ -189,77 +198,140 @@ function OnChangeDouble(item1, item2, item3){
 }
 
 
-function ValidateForm(document){
-    with(document){
-	var objects = new Array(), i=0, cur_id;
-
-	objects = document.getElementsByClassName("validate_cond");
-
-	for(i=0; i<objects.length; i++){
-	    if(objects[i].value == "newBusiness"){
-
-		var new_business_tags= new Array();
-		new_business_tags= document.getElementsByClassName("validate_cond_bus");
-		for(var j=0; j<new_business_tags.length; j++){
-		    cur_id= new_business_tags[j].id;
-		    if(!ValidateRequired(new_business_tags[j], "Please select a "+cur_id))
-		       return false;
-		}
+function ValidateForm(){
+    var objects = new Array(), i=0, cur_id, obj;
+    
+    objects = document.getElementsByClassName("validate_cond");
+    
+    for(i=0; i<objects.length; i++){
+	if(objects[i].value == "newBusiness"){
+	    
+	    var new_business_tags= new Array();
+	    new_business_tags= document.getElementsByClassName("validate_cond_bus");
+	    for(var j=0; j<new_business_tags.length; j++){
+		cur_id= new_business_tags[j].id;
+		if(!ValidateRequired(new_business_tags[j], "Please select a "+cur_id))
+		    return false;
 	    }
 	}
-	
-
-	objects = document.getElementsByClassName("validate");
-	
-	for(i=0; i<objects.length; i++){
-	    cur_id = objects[i].id;
-
-	    // Alter prompt so not to include actual ID
-	    if(cur_id == "user_id"){ 
-		if(!ValidateRequired(objects[i], "Please select a user"))
-		    return false;
-	    } // Same with id="business_id"
-	    else if(cur_id == "business_id"){
-		if(!ValidateRequired(objects[i], "Please select a business"))
-		    return false;
-	    } // Same with id="total_cost"
-	    else if(cur_id == "total_cost"){
-		if(!ValidateRequired(objects[i], "Please enter a total purchase cost"))
-		    return false;
-	    }
-	    // Use the id as the descriptor for what field to update
-	    else{
-		var vowel_match= cur_id.match(/^[aeiou]/);
-		var message;
-		if(vowel_match == null){ // Will change the prompt based on vowels
-		    message= "Please enter a ";
-		}
-		else{
-		    message= "Please enter an ";
-		}
-
-		var id_match= cur_id.match(/[0-9]*/);
-		if( id_match == null){
-		    var num;	// Pretty ugly workaround, but gives sensible descriptions now
-		    var id;
-			
-		    num= cur_id.replace(/[a-zA-Z]*/, "");
-		    id= cur_id.replace(/[0-9]*/g, "");
-
-		    if (!ValidateRequired(objects[i], message + id + " for item " + num)){
-			return false;
-		    }
-		}
-		else{
-		    if (!ValidateRequired(objects[i], message + cur_id)){
-			return false;
-		    }
-		}
-	    }
-	}
-
-	return true;
     }
+    
+    objects = document.getElementsByClassName("validate");
+    
+    for(i=0; i<objects.length; i++){
+	cur_id = objects[i].id;
+	
+	// Alter prompt so not to include actual ID
+	if(cur_id == "user_id"){ 
+	    if(!ValidateRequired(objects[i], "Please select a user"))
+		return false;
+	} // Same with id="business_id"
+	else if(cur_id == "business_id"){
+	    if(!ValidateRequired(objects[i], "Please select a business"))
+		return false;
+	} // Same with id="total_cost"
+	else if(cur_id == "total_cost"){
+	    if(!ValidateRequired(objects[i], "Please enter a total purchase cost"))
+		return false;
+	}
+	// Use the id as the descriptor for what field to update
+	else{
+	    var vowel_match= cur_id.match(/^[aeiou]/);
+	    var message;
+	    if(vowel_match == null){ // Will change the prompt based on first letter in the id
+		message= "Please enter a ";
+	    }
+	    else{
+		message= "Please enter an ";
+	    }
+	    
+	    var id_match= cur_id.match(/[0-9]*/);
+	    if( id_match == null){
+		var num;	// Pretty ugly workaround, but gives sensible descriptions now
+		var id;
+		
+		num= cur_id.replace(/[a-zA-Z]*/, "");
+		id= cur_id.replace(/[0-9]*/g, "");
+		
+		if (!ValidateRequired(objects[i], message + id + " for item " + num)){
+		    return false;
+		}
+	    }
+	    else{
+		if (!ValidateRequired(objects[i], message + cur_id)){
+		    return false;
+		}
+	    }
+	}
+    }
+    
+    // Returns the bad id, or '-1' if no errors
+    return_data = ValidateSaneInput( objects ); 
+    
+    if( return_data != null ){
+	alert( return_data[0] ); // Alert the user, and highlight the offending field
+	obj = document.getElementById( return_data[1] );
+	obj.focus();
+	obj.select();
+	return false;
+    }
+    
+    return true;
+}
+
+function ValidateSaneInput( objects ){
+    var message = '';
+    var offending_id = '';
+    
+    for ( i = 0; i < objects.length && message == ''; i++) {
+	cur_id = objects[i].id;
+	objects[i].value = rtrim(objects[i].value);
+	
+	// Regexp's
+	if( cur_id == "phone" ){ // Phone numbers
+	    if( !objects[i].value.match( /^\d{3}(\.|-)?\d{3}(\.|-)?\d{4}$/ ) ){
+		message = "Please enter a phone number in the form 'xxx-xxx-xxxx', 'xxx.xxx.xxxx', or 'xxxyyyzzzz'";
+		offending_id = cur_id;
+	    }
+	    else{		// Removes extra formatting for uniform phone number storage
+		objects[i].value = objects[i].value.replace( /[-\.]/g, '' );
+	    }
+	}
+	else if( cur_id == "zip" ){ // Zip code
+	    if( !objects[i].value.match( /^\d{5}$/ ) ){
+		message = "Please enter a zip code in the form 'xxxxx'";
+		offending_id = cur_id;
+	    }
+	}
+	else if( cur_id == "state" ){ // 2-letter state abbreviation
+	    if( !validateState(objects[i].value) ) {
+		message = "Please enter a state as a two-letter abbreviation";
+		offending_id = cur_id;
+	    }
+	    else{		// Stores the state as capital letters
+		objects[i].value = objects[i].value.toUpperCase();
+	    }
+	}
+	else if( cur_id == "RIN" ){ // 9-digit RIN
+	    if( !objects[i].value.match( /^\d{9}$/ ) ){
+		message = "Please enter a RIN in the form 'xxxyyzzzz'";
+		offending_id = cur_id;
+	    }
+	} // Taken from http://xyfer.blogspot.com/2005/01/javascript-regexp-email-validator.html
+	else if( cur_id == "email" ){ // Validate email address
+	    if( !objects[i].value.match( /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i ) ){
+		message = "Please enter a valid email address";
+		offending_id = cur_id;
+	    }
+	}
+    }
+
+    return_data = new Array(message, offending_id);
+    if( message != '' ){
+	return return_data;
+    }
+    
+    return null;
 }
 
 function ValidateRequired(field, alerttext){
@@ -315,4 +387,26 @@ function removeItemField() {
 	if (Number(count.value) < 2)
 	    document.getElementById("removeButton").style.display="none";
     }
+}
+
+function rtrim(str) {		// Trims all trailing whitespace from a string
+    return str.replace(/\s+$/, '');
+}
+
+function validateState(str) {
+    var states = new Array ('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL',
+			    'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME',
+			    'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH',
+			    'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
+			    'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV',
+			    'WI', 'WY');
+
+    for ( var i = 0; i < states.length; i++ ) {
+	if ( str.toUpperCase() == states[i] ) {
+	    return true;
+	}
+    }
+    alert('returns false');
+    
+    return false;
 }

@@ -62,3 +62,8 @@
 {/if}
 
 </form>
+
+{if $authority >= 1}
+<br />
+<a href="generateSummary.php"><img border="0" src="images/pdficon_small.gif" />&nbsp;&nbsp;Download PDF</a>
+{/if}

@@ -18,7 +18,7 @@
 
 *}
 
-<form name="addLocation" action="updateLocationRecord.php" onsubmit="return ValidateForm(this)" METHOD="post">
+<form name="addLocation" action="updateLocationRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
 <h3>Edit Location</h3>
 
