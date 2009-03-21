@@ -30,7 +30,7 @@ if($auth <= 1)
 
 // SMARTY Setup
 
-require_once('inc/setup.php');
+require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 	
 //Assign vars

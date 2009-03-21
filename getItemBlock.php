@@ -22,7 +22,7 @@
 */
 
 include_once('JSON.php');
-require_once("inc/connect.php");  //mysql
+require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");   //Session
 
 //Authenticate
