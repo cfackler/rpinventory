@@ -22,10 +22,27 @@
 */
 
 
-	//include lib
-	require_once('lib/pdf.lib.php');
-	
-	//generate PDF
-	getInventoryPDF();
+require_once("inc/connect.php");  //mysql
+require_once("inc/auth.php");  //Session
+require_once("lib/inventory.lib.php"); //inventory functions
 
+$link = connect();
+if($link == null)
+	die("Database connection failed");
+	
+//Authenticate
+$auth = GetAuthority();
+
+
+// SMARTY Setup
+require_once('inc/setup.php');
+
+$smarty = new Smarty_Inv();
+	
+//Assign vars
+$smarty->assign('title', "Generate Summary");
+$smarty->assign('authority', $auth);
+$smarty->assign('page_tpl', 'generateSummary');
+
+$smarty->display('index.tpl');
 ?>

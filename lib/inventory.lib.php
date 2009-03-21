@@ -20,36 +20,36 @@
 
 */
 
-	//inventory.lib.php
-	require_once("inc/connect.php");  //mysql
-	require_once("inc/auth.php");  //Session
-		
-	function getInventory()
-	{
+//inventory.lib.php
+require_once("inc/connect.php");  //mysql
+require_once("inc/auth.php");  //Session
 
-		$link = connect();
-		if($link == null)
-			die("Database connection failed");
-			
-		//Authenticate
-		$auth = GetAuthority();
-		
-		
-		//items
-		$query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
+function getInventory()
+{
+  
+  $link = connect();
+  if($link == null)
+    die("Database connection failed");
+  
+  //Authenticate
+  $auth = GetAuthority();
+  
+  
+  //items
+  $query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
 				FROM inventory, locations
 				WHERE locations.location_id=inventory.location_id";
-		$result = mysqli_query($link, $query);
-		$items = array();
-		
-		while($item = mysqli_fetch_object($result))
-		{
-			$items [] = $item;
-		}
-
-		mysqli_close($link);	
-
-		return $items;
-	}
+  $result = mysqli_query($link, $query);
+  $items = array();
+  
+  while($item = mysqli_fetch_object($result))
+    {
+      $items [] = $item;
+    }
+  
+  mysqli_close($link);	
+  
+  return $items;
+}
 
 ?>

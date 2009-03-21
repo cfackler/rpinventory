@@ -22,74 +22,33 @@
 */
 
 
-require_once('modules/pdf-php/class.ezpdf.php');
-require_once('lib/inventory.lib.php');
-require_once('lib/loans.lib.php');
 
-function generatePDF(){
-  
-
-function getInventoryPDF()
+function getInventoryData()
 {
-	$items = getInventory();
-	
-	//create new pdf document
-	$pdf =& new Cezpdf("paper='LETTER'");
-	
-	//choose font
-	$pdf->selectFont('modules/pdf-php/fonts/Helvetica.afm');
-	
-	//start page numbers
-	$pdf->ezStartPageNumbers(300, 50, 10);
-	
-	//add text
-	$pdf->ezText('<u>Current Clubname Inventory</u>', 12, array('justification'=>'center'));
-	$pdf->ezText('');
-	
-	$data = array();
-	foreach($items as $value)
-	{
-		$data [] = array('Item'=>$value->description,
-						'Condition'=>$value->current_condition,
-						'Value'=>$value->current_value,
-						'Location'=>$value->location);
-	}
-	$pdf->ezTable($data);
-	
-	
-	//output document
-	$pdf->ezStream();
-
+  require_once('lib/inventory.lib.php');
+  $items = getInventory();
+  
+  $data = array();
+  foreach($items as $value)
+    {
+      $data [] = array('Item'=>$value->description,
+		       'Condition'=>$value->current_condition,
+		       'Value'=>$value->current_value,
+		       'Location'=>$value->location);
+    }
+  
+  return $data;
 }
 
-function getLoanPDF()
+function getLoanData($then, $now)
 {
-  $then = date('Y-m-d', time() - (60*60*24*30*6));
-  $now = date('Y-m-d', time());
+  require_once('lib/loans.lib.php');
 
   $records = getLoans( $then, $now );
-  
-  //create new pdf document
-  $pdf =& new Cezpdf("paper='LETTER'");
-  
-  //choose font
-  $pdf->selectFont('modules/pdf-php/fonts/Helvetica.afm');
-  
-  //start page numbers
-  $pdf->ezStartPageNumbers(300, 50, 10);
-  
-  //add text
-  $pdf->ezText('<u>Clubname Borrowing History</u>', 12, array('justification'=>'center'));
-  $pdf->ezText('<u>'. $then .' to '. $now .'</u>', 10, array('justification'=>'center'));
-  $pdf->ezText('');
-  
+
   $data = array();
   foreach($records as $value)
     {
-      /*     echo "'";
-      print_r( $value->return_date);
-      echo "'";
-      echo "<br/>";*/
       if( $value->return_date == '' ){ /* Not yet returned */
 	$value->return_date = "Outstanding";
       }
@@ -100,11 +59,45 @@ function getLoanPDF()
 		       'Date Issued' => $value->issue_date,
 		       'Date Returned' => $value->return_date);
     }
-  
-  $pdf->ezTable($data);
-  
-  //output document
-  $pdf->ezStream();
-  
+
+  return $data;
+}
+
+function getRepairData()
+{
+  $data = array();
+
+  return $data;
+}
+
+function getPurchasesData()
+{
+  $data = array();
+
+  return $data;
+}
+
+
+function getBusinessesData()
+{
+  $data = array();
+
+  return $data;
+}
+
+
+function getUsersData()
+{
+  $data = array();
+
+  return $data;
+}
+
+
+function getLocationsData()
+{
+  $data = array();
+
+  return $data;
 }
 ?>
