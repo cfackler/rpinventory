@@ -21,11 +21,32 @@
 
 */
 
+// config class
+// provides access to configuration values stored in config.ini
 
-	//include lib
-	require_once('lib/pdf.lib.php');
-	
-	//generate PDF
-	getInventoryPDF();
+class Config {
+  private static $configs = array();
+  private static $loaded = 0;
+
+  // constructor - do nothing
+  public function __construct() {
+    //intentionally blank
+  }
+
+  // load - parse ini file and set configs
+  public static function load() {
+    self::$configs = parse_ini_file('config/config.ini.php');
+  }
+
+  // get - return the value of config option with given name
+  public static function get($name) {
+    if (!self::$loaded) {
+      self::load();
+      self::$loaded = 1;
+    }
+
+    return self::$configs[$name];
+  }
+}
 
 ?>

@@ -21,7 +21,7 @@
 
 */
 
-require_once("inc/auth.php");  //Session
+require_once("lib/auth.lib.php");  //Session
 
 //Authenticate
 $auth = GetAuthority();
@@ -29,7 +29,7 @@ if($auth != 2)
   die("You dont have permission to access this page");
 
 // SMARTY Setup
-require_once('inc/setup.php');
+require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 	
 //Assign vars

@@ -21,22 +21,22 @@
 
 */
 
-require_once("lib/auth.lib.php");  //Session
+require_once('lib/config.class.php');
 
-//Authenticate
-$auth = GetAuthority();	
-if($auth < 1)
-  die("You dont have permission to access this page");
-
-// SMARTY Setup
-require_once('lib/smarty_inv.class.php');
-$smarty = new Smarty_Inv();
+function connect()
+{
+  $hostname = Config::get('database_hostname');
+  $username = Config::get('database_username');
+  $password = Config::get('database_password');
+  $database = Config::get('database_name');
 	
-//Assign vars
-$smarty->assign('title', "Add Location");
-$smarty->assign('authority', $auth);
-$smarty->assign('page_tpl', 'addLocation');
+  $link = mysqli_connect($hostname,$username,$password);
+  if($link == false)
+    die("Can't Connect to the DB");
+    
+  mysqli_select_db($link, $database) or die("Unable to select database");
 
-$smarty->display('index.tpl');
+  return $link;
+}
 
 ?>

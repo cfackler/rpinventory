@@ -21,8 +21,8 @@
 
 */
 
-require_once("inc/connect.php");  //mysql
-require_once("inc/auth.php");  //Session
+require_once("lib/connect.lib.php");  //mysql
+require_once("lib/auth.lib.php");  //Session
 
 $link = connect();
 if($link == null)
@@ -32,7 +32,7 @@ if($link == null)
 $auth = GetAuthority();
 
 // SMARTY Setup
-require_once('inc/setup.php');
+require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
 //items

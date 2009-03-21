@@ -21,17 +21,19 @@
 
 */
 
-// Run setup if config.php does not exist
-if (!file_exists('inc/config.php'))
-  header('Location: setup/setup.php');
-  
-require_once("inc/auth.php");  //Session
+// Run install if config.ini.php does not exist
+if (!file_exists('config/config.ini.php')) {
+  header('Location: install.php');
+  exit();
+}
+
+require_once("lib/auth.lib.php");  //Session
 
 //Authenticate
 $auth = GetAuthority();
 
 // SMARTY Setup
-require_once('inc/setup.php');
+require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
 //BEGIN Page

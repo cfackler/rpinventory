@@ -24,32 +24,36 @@
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 
-function getInventory()
+/* Takes two dates, formatted as YYYY-MM-DD */
+function getLoans($startDate, $endDate)
 {
-  
+  // Connect
   $link = connect();
-  if($link == null)
-    die("Database connection failed");
+  if( $link == null )
+    die( "Database connection failed" );
   
-  //Authenticate
+  // Authenticate
   $auth = GetAuthority();
+
+  $startDate = mysqli_real_escape_string( $link, $startDate );
+  $endDate = mysqli_real_escape_string( $link, $endDate);
   
+  // Loan History
+  $query= "SELECT issue_date, return_date, starting_condition, inventory.description, username FROM loans, inventory, logins WHERE logins.id = loans.borrower_id AND loans.inventory_id = inventory.inventory_id AND issue_date >= '". $startDate ."' AND (return_date <= '". $endDate ."' OR return_date IS NULL)";
+
+  $result = mysqli_query($link, $query) or
+    die( 'Could not get the loan history' );
+
+  $records = array();
   
-  //items
-  $query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
-				FROM inventory, locations
-				WHERE locations.location_id=inventory.location_id";
-  $result = mysqli_query($link, $query);
-  $items = array();
-  
-  while($item = mysqli_fetch_object($result))
+  while($record = mysqli_fetch_object($result))
     {
-      $items [] = $item;
+      $records [] = $record;
     }
   
   mysqli_close($link);	
   
-  return $items;
+  return $records;
 }
 
 ?>

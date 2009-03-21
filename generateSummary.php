@@ -21,47 +21,28 @@
 
 */
 
+
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
-
-//Authenticate
-$auth = GetAuthority();	
-if($auth < 1)
-  die("You dont have permission to access this page");
+require_once("lib/inventory.lib.php"); //inventory functions
 
 $link = connect();
 if($link == null)
-  die("Database connection failed");
+	die("Database connection failed");
 	
-//grab all ids
-$idString = $_GET["ids"];
-$token = strtok($idString, ",");
-$idList = array();
+//Authenticate
+$auth = GetAuthority();
 
-while ($token !== false) {
-  $idList[] = (int)$token;
-  $token = strtok(",");
-}
 
-//Run delete
-foreach ($idList as $id)
-  {
-    //Remove item
-    $sql = "DELETE FROM inventory WHERE inventory_id = '" . $id . "'";
+// SMARTY Setup
+require_once('lib/smarty_inv.class.php');
 
-    //Run update
-    if(!mysqli_query($link, $sql))
-      die("Query failed");
-		
-    //Remove any loan records
-    $sql = "DELETE FROM loans WHERE inventory_id = '" . $id . "'";
-
-    //Run update
-    if(!mysqli_query($link, $sql))
-      die("Query failed");
-  }
-
-mysqli_close($link);
-header('Location: viewInventory.php');
+$smarty = new Smarty_Inv();
 	
+//Assign vars
+$smarty->assign('title', "Generate Summary");
+$smarty->assign('authority', $auth);
+$smarty->assign('page_tpl', 'generateSummary');
+
+$smarty->display('index.tpl');
 ?>
