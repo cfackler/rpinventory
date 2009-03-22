@@ -33,18 +33,18 @@ function getInventoryData()
     {
       $data [] = array('Item'=>$value->description,
 		       'Condition'=>$value->current_condition,
-		       'Value'=>$value->current_value,
+		       'Value'=>'$'.$value->current_value,
 		       'Location'=>$value->location);
     }
   
   return $data;
 }
 
-function getLoanData($then, $now)
+function getLoanData( $startDate, $endDate )
 {
   require_once('lib/loans.lib.php');
 
-  $records = getLoans( $then, $now );
+  $records = getLoans( $startDate, $endDate );
 
   $data = array();
   foreach($records as $value)
@@ -63,14 +63,14 @@ function getLoanData($then, $now)
   return $data;
 }
 
-function getRepairData()
+function getRepairData( $startDate, $endDate )
 {
   $data = array();
 
   return $data;
 }
 
-function getPurchasesData()
+function getPurchasesData( $startDate, $endDate )
 {
   $data = array();
 

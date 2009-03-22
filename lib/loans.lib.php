@@ -25,7 +25,7 @@ require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 
 /* Takes two dates, formatted as YYYY-MM-DD */
-function getLoans($startDate, $endDate)
+function getLoans( $startDate, $endDate )
 {
   // Connect
   $link = connect();

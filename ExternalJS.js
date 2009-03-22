@@ -311,6 +311,12 @@ function ValidateSaneInput( objects ){
 	    else{		// Stores the state as capital letters
 		objects[i].value = objects[i].value.toUpperCase();
 	    }
+	} // Check dates in the form yyyy-mm-dd
+	else if ( cur_id == "startdate" || cur_id == "enddate" ){
+	    if ( !objects[i].value.match( /^\d{4}-\d{2}-\d{2}$/ )){
+		message = "Please enter a date in the from 'yyyy-mm-dd'";
+		offending_id = cur_id;
+	    }
 	}
 	else if( cur_id == "RIN" ){ // 9-digit RIN
 	    if( !objects[i].value.match( /^\d{9}$/ ) ){
@@ -409,4 +415,11 @@ function validateState(str) {
     alert('returns false');
     
     return false;
+}
+
+function removeContents( id, defaultValue ) {
+    var element = document.getElementById( id );
+    if( element.value == defaultValue ){
+	element.value = '';
+    }
 }

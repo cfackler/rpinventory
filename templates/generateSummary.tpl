@@ -19,7 +19,7 @@
 *}
 
 
-<form name="makeSummary" action="makeSummary.php" METHOD="post">
+<form name="makeSummary" action="makeSummary.php" onsubmit="return ValidateForm()" METHOD="post">
 
 
 <h3>Select Items to be Included</h3>
@@ -54,6 +54,19 @@
 		<label for="locations">Locations</label>
 	</li>
 </ul>
+<br />
+<table>
+	<tr>
+		<td><label for="startdate">Starting Date:</label> </td>
+		<td><input type="text" id="startdate" name="startdate" onClick="removeContents('startdate', 'yyyy-mm-dd')" value="yyyy-mm-dd" class="validate"/></td>
+		
+	</tr>
+	<tr>
+		<td><label for="enddate">Ending Date:</label></td>
+		<td><input type="text" id="enddate" name="enddate" onClick="removeContents('enddate', 'yyyy-mm-dd')" value="yyyy-mm-dd" class="validate"/></td>
+	</tr>
+</table>
+
 
 <br />
 

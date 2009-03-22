@@ -33,21 +33,21 @@ $link = connect();
 if($link == null)
   die("Database connection failed");
 
-/*if( isset( $_POST['inventory'] ) ){ || !isset( $_POST['loans'] ) ||
-    !isset( $_POST['repairs'] ) || !isset( $_POST['purchases'] ) ||
-    !isset( $_POST['businesses'] ) || !isset( $_POST['users'] ) ||
-    !isset( $_POST['locations'] ) ){
-  die( 'Arguments not specified' );
-  }*/
+if ( !isset( $_POST['startdate'] ) || !isset( $_POST['enddate'] ) ){
+  die( "Start or end date not specified" );
+}
 
 /* Get block data */
-$inventory = $_POST['inventory'];
-$loans = $_POST['loans'];
-$repairs = $_POST['repairs'];
-$purchases = $_POST['purchases'];
-$businesses = $_POST['businesses'];
-$users = $_POST['users'];
-$locations = $_POST['locations'];
+$inventory = mysqli_real_escape_string( $link, $_POST['inventory'] );
+$loans = mysqli_real_escape_string( $link, $_POST['loans'] );
+$repairs = mysqli_real_escape_string( $link, $_POST['repairs'] );
+$purchases = mysqli_real_escape_string( $link, $_POST['purchases'] );
+$businesses = mysqli_real_escape_string( $link, $_POST['businesses'] );
+$users = mysqli_real_escape_string( $link, $_POST['users'] );
+$locations = mysqli_real_escape_string( $link, $_POST['locations'] );
+
+$startDate = mysqli_real_escape_string( $link, $_POST['startdate'] );
+$endDate = mysqli_real_escape_string( $link, $_POST['enddate'] );
 
 $data = array();
 
@@ -62,11 +62,14 @@ $pdf->selectFont('modules/pdf-php/fonts/Helvetica.afm');
 
 //start page numbers
 $pdf->ezStartPageNumbers(300, 50, 10);
+$pdf->ezText('<u>Clubname</u>', 14, array('justification'=>'center') );
+$pdf->ezText('<u>'. $startDate .' to '. $endDate .'</u>', 12, array('justification'=>'center'));
+$pdf->ezText('');
 
 
 if ( isset($inventory) ){
   //add text
-  $pdf->ezText('<u>Current Clubname Inventory</u>', 12, array('justification'=>'center'));
+  $pdf->ezText('<u>Current Inventory</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
   $return = getInventoryData();
@@ -82,15 +85,11 @@ if ( isset($inventory) ){
 }
 
 if ( isset($loans) ){
-  $then = date('Y-m-d', time() - (60*60*24*30*6));
-  $now = date('Y-m-d', time());
-
   //add text
-  $pdf->ezText('<u>Clubname Loan History</u>', 12, array('justification'=>'center'));
-  $pdf->ezText('<u>'. $then .' to '. $now .'</u>', 10, array('justification'=>'center'));
+  $pdf->ezText('<u>Loan History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
-  $return = getLoanData( $then, $now );
+  $return = getLoanData( $startDate, $endDate );
   
   foreach( $return as $item ){
     $data[] = $item;
@@ -103,15 +102,11 @@ if ( isset($loans) ){
 }
 
 if ( isset($repairs) ){
-  $then = date('Y-m-d', time() - (60*60*24*30*6));
-  $now = date('Y-m-d', time());
-
   //add text
-  $pdf->ezText('<u>Clubname Repair History</u>', 12, array('justification'=>'center'));
-  $pdf->ezText('<u>'. $then .' to '. $now .'</u>', 10, array('justification'=>'center'));
+  $pdf->ezText('<u>Repair History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
 
-  $return = getRepairData();
+  $return = getRepairData( $startDate, $endDate);
   
   foreach( $return as $item ){
     $data[] = $item;
@@ -124,15 +119,11 @@ if ( isset($repairs) ){
 }
 
 if ( isset($purchases) ){
-  $then = date('Y-m-d', time() - (60*60*24*30*6));
-  $now = date('Y-m-d', time());
-
   //add text
-  $pdf->ezText('<u>Clubname Purchase History</u>', 12, array('justification'=>'center'));
-  $pdf->ezText('<u>'. $then .' to '. $now .'</u>', 10, array('justification'=>'center'));
+  $pdf->ezText('<u>Purchase History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
 
-  $return = getPurchasesData();
+  $return = getPurchasesData( $startDate, $endDate );
   
   foreach( $return as $item ){
     $data[] = $item;
@@ -146,7 +137,7 @@ if ( isset($purchases) ){
 
 if ( isset($businesses) ){
   //add text
-  $pdf->ezText('<u>Clubname Businesses</u>', 12, array('justification'=>'center'));
+  $pdf->ezText('<u>Businesses</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
   $return = getBusinessesData();
@@ -163,7 +154,7 @@ if ( isset($businesses) ){
 
 if ( isset($users) ){
   //add text
-  $pdf->ezText('<u>Current Clubname Users</u>', 12, array('justification'=>'center'));
+  $pdf->ezText('<u>Users</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
   $return = getUsersData();
@@ -180,7 +171,7 @@ if ( isset($users) ){
 
 if ( isset($locations) ){
   //add text
-  $pdf->ezText('<u>Clubname Locations</u>', 12, array('justification'=>'center'));
+  $pdf->ezText('<u>Locations</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
   $return = getLocationsData();
