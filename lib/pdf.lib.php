@@ -47,8 +47,7 @@ function getLoanData( $startDate, $endDate )
   $records = getLoans( $startDate, $endDate );
 
   $data = array();
-  foreach($records as $value)
-    {
+  foreach( $records as $value ) {
       if( $value->return_date == '' ){ /* Not yet returned */
 	$value->return_date = "Outstanding";
       }
@@ -58,21 +57,45 @@ function getLoanData( $startDate, $endDate )
 		       'User' => $value->username,
 		       'Date Issued' => $value->issue_date,
 		       'Date Returned' => $value->return_date);
-    }
+  }
 
   return $data;
 }
 
 function getRepairData( $startDate, $endDate )
 {
+  require_once('lib/repairs.lib.php');
+
+  $records = getRepairs( $startDate, $endDate );
+
   $data = array();
+  foreach( $records as $value ) {
+    $data[] = array('Item' => $value->inventory_description,
+		    'Repairer' => $value->company_name,
+		    'Repair Date' => $value->repair_date,
+		    'Repair Description' => $value->repair_description,
+		    'Repair Cost' => '$'.$value->repair_cost);
+
+  }
+		    
 
   return $data;
 }
 
 function getPurchasesData( $startDate, $endDate )
 {
+  require_once('lib/purchases.lib.php');
+
   $data = array();
+
+  $records = getPurchases( $startDate, $endDate );
+  foreach( $records as $value ) {
+    $data[] = array('Item' => $value->description,
+		    'Company' => $value->company_name,
+		    'Cost' => '$'.$value->cost,
+		    'Purchase Date' => $value->purchase_date,
+		    'Purchase Order ID' => $value->purchase_id);
+  }
 
   return $data;
 }
@@ -80,9 +103,29 @@ function getPurchasesData( $startDate, $endDate )
 
 function getBusinessesData()
 {
-  $data = array();
+  require_once('lib/businesses.lib.php');
 
-  return $data;
+  $data1 = array();
+  $data2 = array();
+
+  $records = getBusinesses();
+  foreach( $records as $value ) {
+    $data1[] = array('Company Name' => $value->company_name,
+		     'Address' => $value->address,
+		     'Address2' => $value->address2,
+		     'City' => $value->city,
+		     'State' => $value->state,
+		     'Zipcode' => $value->zipcode,
+		     'Phone' => $value->phone,
+		     'Fax' => $value->fax,);
+  }
+  foreach( $records as $value ) {
+    $data2[] = array('Company Name' => $value->company_name,
+		     'Email' => $value->email,
+		     'Website' => $value->website);
+  }
+
+  return array($data1, $data2);
 }
 
 

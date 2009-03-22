@@ -67,75 +67,59 @@ $pdf->ezText('<u>'. $startDate .' to '. $endDate .'</u>', 12, array('justificati
 $pdf->ezText('');
 
 
-if ( isset($inventory) ){
+if ( $inventory != '' ){
   //add text
   $pdf->ezText('<u>Current Inventory</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
   $return = getInventoryData();
 
-  foreach( $return as $item ){
-    $data[] = $item;
-  }
-
-  $pdf->ezTable( $data );
+  $pdf->ezTable( $return );
   unset($data);
   $data= array();
   $pdf->ezText('');
 }
 
-if ( isset($loans) ){
+if ( $loans != ''){
   //add text
   $pdf->ezText('<u>Loan History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
   $return = getLoanData( $startDate, $endDate );
-  
-  foreach( $return as $item ){
-    $data[] = $item;
-  }
 
-  $pdf->ezTable( $data );
+  $pdf->ezTable( $return );
   unset($data);
   $data= array();
   $pdf->ezText('');
 }
 
-if ( isset($repairs) ){
+if ( $repairs != '' ){
   //add text
   $pdf->ezText('<u>Repair History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
 
-  $return = getRepairData( $startDate, $endDate);
-  
-  foreach( $return as $item ){
-    $data[] = $item;
-  }
+  $return = getRepairData( $startDate, $endDate );
 
-  $pdf->ezTable( $data );
+  $pdf->ezTable( $return );
   unset($data);
   $data= array();
   $pdf->ezText('');
 }
 
-if ( isset($purchases) ){
+if ( $purchases != '' ){
   //add text
   $pdf->ezText('<u>Purchase History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
 
   $return = getPurchasesData( $startDate, $endDate );
-  
-  foreach( $return as $item ){
-    $data[] = $item;
-  }
 
-  $pdf->ezTable( $data );
+  $pdf->ezTable( $return );
   unset($data);
   $data= array();
   $pdf->ezText('');
 }
 
-if ( isset($businesses) ){
+if ( $businesses != '' ){
   //add text
   $pdf->ezText('<u>Businesses</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
@@ -146,13 +130,14 @@ if ( isset($businesses) ){
     $data[] = $item;
   }
 
-  $pdf->ezTable( $data );
+  $pdf->ezTable( $return[0] );
+  $pdf->ezTable( $return[1] );
   unset($data);
   $data= array();
   $pdf->ezText('');
 }
 
-if ( isset($users) ){
+if ( $users != '' ){
   //add text
   $pdf->ezText('<u>Users</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
@@ -169,7 +154,7 @@ if ( isset($users) ){
   $pdf->ezText('');
 }
 
-if ( isset($locations) ){
+if ( $locations != '' ){
   //add text
   $pdf->ezText('<u>Locations</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
