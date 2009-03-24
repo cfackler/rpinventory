@@ -22,3 +22,6 @@ database_password = inventory
 ; If this database does not exit on the server, it will be created
 ; with the RPInventory schema.
 database_name = rpinventory
+
+; club name for this RPInventory installation
+club_name = clubname

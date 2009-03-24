@@ -21,8 +21,8 @@
 
 */
 
-require_once("lib/connect.lib.php");  // mysql
-require_once("lib/auth.lib.php");  // Session
+require_once( "lib/connect.lib.php" );  // mysql
+require_once( "lib/auth.lib.php" );  // Session
 
 // Authenticate
 $auth = GetAuthority();	
@@ -49,7 +49,10 @@ $locations = mysqli_real_escape_string( $link, $_POST['locations'] );
 $startDate = mysqli_real_escape_string( $link, $_POST['startdate'] );
 $endDate = mysqli_real_escape_string( $link, $_POST['enddate'] );
 
+require_once( 'lib/config.class.php' );
+
 $data = array();
+$clubName = Config::get( 'club_name' );
 
 require_once('modules/pdf-php/class.ezpdf.php');
 require_once( 'lib/pdf.lib.php' );
@@ -62,7 +65,7 @@ $pdf->selectFont('modules/pdf-php/fonts/Helvetica.afm');
 
 //start page numbers
 $pdf->ezStartPageNumbers(300, 50, 10);
-$pdf->ezText('<u>Clubname</u>', 14, array('justification'=>'center') );
+$pdf->ezText('<u>'.$clubName.'</u>', 14, array('justification'=>'center') );
 $pdf->ezText('<u>'. $startDate .' to '. $endDate .'</u>', 12, array('justification'=>'center'));
 $pdf->ezText('');
 
