@@ -25,16 +25,16 @@
 
 function getInventoryData()
 {
-  require_once('lib/inventory.lib.php');
+  require_once( 'lib/inventory.lib.php' );
   $items = getInventory();
   
   $data = array();
   foreach($items as $value)
     {
-      $data [] = array('Item'=>$value->description,
-		       'Condition'=>$value->current_condition,
-		       'Value'=>'$'.$value->current_value,
-		       'Location'=>$value->location);
+      $data [] = array('Item' => $value->description,
+		       'Condition' => $value->current_condition,
+		       'Value' => '$'.$value->current_value,
+		       'Location' => $value->location);
     }
   
   return $data;
@@ -42,7 +42,7 @@ function getInventoryData()
 
 function getLoanData( $startDate, $endDate )
 {
-  require_once('lib/loans.lib.php');
+  require_once( 'lib/loans.lib.php' );
 
   $records = getLoans( $startDate, $endDate );
 
@@ -64,7 +64,7 @@ function getLoanData( $startDate, $endDate )
 
 function getRepairData( $startDate, $endDate )
 {
-  require_once('lib/repairs.lib.php');
+  require_once( 'lib/repairs.lib.php' );
 
   $records = getRepairs( $startDate, $endDate );
 
@@ -77,14 +77,13 @@ function getRepairData( $startDate, $endDate )
 		    'Repair Cost' => '$'.$value->repair_cost);
 
   }
-		    
 
   return $data;
 }
 
 function getPurchasesData( $startDate, $endDate )
 {
-  require_once('lib/purchases.lib.php');
+  require_once( 'lib/purchases.lib.php' );
 
   $data = array();
 
@@ -103,7 +102,7 @@ function getPurchasesData( $startDate, $endDate )
 
 function getBusinessesData()
 {
-  require_once('lib/businesses.lib.php');
+  require_once( 'lib/businesses.lib.php' );
 
   $data1 = array();
   $data2 = array();
@@ -131,7 +130,17 @@ function getBusinessesData()
 
 function getUsersData()
 {
+  require_once( 'lib/users.lib.php' );
+
   $data = array();
+
+  $records = getUsers();
+  foreach( $records as $value ) {
+    $data[] = array('Name' => $value->name,
+		     'Username' => $value->username,
+		     'RIN' => $value->rin,
+		     'Email Address' => $value->email);
+  }
 
   return $data;
 }
@@ -139,8 +148,17 @@ function getUsersData()
 
 function getLocationsData()
 {
+  require_once( 'lib/locations.lib.php' );
+
   $data = array();
+
+  $records = getLocations();
+  foreach( $records as $value ) {
+    $data[] = array('Location' => $value->location,
+		     'Description' => $value->description);
+  }
 
   return $data;
 }
+
 ?>

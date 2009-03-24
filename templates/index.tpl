@@ -56,6 +56,7 @@
 			
 			{if $authority == 2}
 			     <li><a href="manageUsers.php">Manage Users</a></li>
+			     <li><a href="generateSummary.php">Create Summary</a></li>
 			{/if}
 			
 			<li><br /></li>
