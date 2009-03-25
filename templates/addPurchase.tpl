@@ -196,14 +196,14 @@
 	    <td>
 	      <select id="location0" name="location0" onChange="OnChangeDouble('location0', 'newLocation0', 'newDescription0')">
 
+		<option value="-1">Select Location</option>
+		
 		{section name=loc loop=$locations}
 		<option value="{$locations[loc]->location_id}">
 		  {$locations[loc]->location}
 		</option>
-		{sectionelse}
-		<option value = "-1">
-		</option>
 		{/section}
+
 		<option>
 		  New Location
 		</option>
