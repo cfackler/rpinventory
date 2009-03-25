@@ -446,3 +446,23 @@ function getLocationOptions(element)
 			 	 }
 		     });
 }
+
+function saveLocation(name, description, result)
+{
+    var resultElement = document.getElementById(result);
+    
+    var nameText = document.getElementById(name).value;
+
+    var descText = document.getElementById(description).value;
+    
+
+    new Ajax.Request("ajax.php?operation=savelocation&location="+nameText+"&description="+descText, 
+		  { 
+			   method: 'post', 
+			   onSuccess: function(transport)
+			   {
+				     resultElement.innerHTML = "Successfully saved.";
+			 	 }
+			     
+		  });
+}
