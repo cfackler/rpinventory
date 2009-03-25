@@ -1,4 +1,5 @@
 <?php
+
 /*
 
   Copyright (C) 2008, All Rights Reserved.
@@ -20,35 +21,26 @@
 
 */
 
-function getInventory()
-{
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
-  
-  $link = connect();
-  if($link == null)
-    die("Database connection failed");
-  
-  //Authenticate
-  $auth = GetAuthority();
-  
-  
-  //items
-  $query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
-				FROM inventory, locations
-				WHERE locations.location_id=inventory.location_id";
-  $result = mysqli_query($link, $query) or
-    die( 'Could not retrieve the inventory' );
-  $items = array();
-  
-  while($item = mysqli_fetch_object($result))
-    {
-      $items [] = $item;
-    }
-  
-  mysqli_close($link);	
-  
-  return $items;
-}
 
+require_once("lib/connect.lib.php");  //mysql
+require_once("lib/auth.lib.php");  //Session
+
+$link = connect();
+if($link == null)
+	die("Database connection failed");
+	
+//Authenticate
+$auth = GetAuthority();
+
+// SMARTY Setup
+require_once('lib/smarty_inv.class.php');
+
+$smarty = new Smarty_Inv();
+	
+//Assign vars
+$smarty->assign('title', "Generate Summary");
+$smarty->assign('authority', $auth);
+$smarty->assign('page_tpl', 'backupDatabase');
+
+$smarty->display('index.tpl');
 ?>

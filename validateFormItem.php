@@ -21,7 +21,7 @@
 
 */
 
-include_once('JSON.php');
+require_once('modules/json/JSON.php');
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");   //Session
 

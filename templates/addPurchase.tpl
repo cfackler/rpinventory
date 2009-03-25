@@ -194,19 +194,10 @@
 	    <td>Location: </td>
 
 	    <td>
-	      <select id="location0" name="location0" onChange="OnChangeDouble('location0', 'newLocation0', 'newDescription0')">
+	      <select id="location0" name="location0" onChange="OnChangeDouble('location0', 'newLocation0', 'newDescription0')" onFocus="getLocationOptions(this);">
 
-		{section name=loc loop=$locations}
-		<option value="{$locations[loc]->location_id}">
-		  {$locations[loc]->location}
-		</option>
-		{sectionelse}
-		<option value = "-1">
-		</option>
-		{/section}
-		<option>
-		  New Location
-		</option>
+			{$locations}
+		
 	      </select>
 
 	    </td>
@@ -221,7 +212,10 @@
 	  <tr id="newDescription0" style="display:none">
 	    <td>Location Description:</td>
 	    <td>
-	      <input type="text" name="newdescription0" size="40">
+	      <input type="text" name="newdescription0" id="newdescription0" size="40">
+	    </td>
+	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation0', 'newdescription0', 'resultText0');">
+	        <div id="resultText0"></div>
 	    </td>
 	  </tr>
 	</table>

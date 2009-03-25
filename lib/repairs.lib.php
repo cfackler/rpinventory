@@ -20,35 +20,39 @@
 
 */
 
-function getInventory()
+/* Takes two dates, formatted as YYYY-MM-DD */
+function getRepairs( $startDate, $endDate )
 {
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session
-  
+
+  // Connect
   $link = connect();
-  if($link == null)
-    die("Database connection failed");
+  if( $link == null )
+    die( "Database connection failed" );
   
-  //Authenticate
+  // Authenticate
   $auth = GetAuthority();
+
+  $startDate = mysqli_real_escape_string( $link, $startDate );
+  $endDate = mysqli_real_escape_string( $link, $endDate);
   
-  
-  //items
-  $query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
-				FROM inventory, locations
-				WHERE locations.location_id=inventory.location_id";
+  // Loan History
+  $query= "SELECT repairs.description AS repair_description, repair_cost, repair_date, company_name, inventory.description AS inventory_description FROM repairs, inventory, businesses WHERE repairs.inventory_id = inventory.inventory_id AND repairs.business_id = businesses.business_id AND repair_date >= '". $startDate ."' AND repair_date <= '". $endDate ."'";
+
   $result = mysqli_query($link, $query) or
-    die( 'Could not retrieve the inventory' );
-  $items = array();
+    die( 'Could not get the repair history' );
+
+  $records = array();
   
-  while($item = mysqli_fetch_object($result))
+  while($record = mysqli_fetch_object($result))
     {
-      $items [] = $item;
+      $records [] = $record;
     }
   
   mysqli_close($link);	
   
-  return $items;
+  return $records;
 }
 
 ?>

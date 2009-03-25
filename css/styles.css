@@ -5,7 +5,7 @@
  **/
 div.header, div.left_sidebar
 {
-	background-color: #c70000;
+	background-color: #cc0000;
 }
 
 div.header
@@ -58,7 +58,7 @@ span.TopOfTable
 }
 a
 {
-	color:#c70000;
+	color:#cc0000;
 	text-decoration:underline;
 }
 a:hover
@@ -116,7 +116,7 @@ div.left_sidebar ul li
 div.left_sidebar ul li.nonLinkSidebarItem
 {
 	color:#000000;
-	background-color:#b70000;
+	background-color:#cc0000;
 	border-bottom:solid 1px #000000;
 	font-style:italic;
 }
@@ -151,7 +151,7 @@ div.left_sidebar a:hover
 .itemsTable {
 	padding: 0;
 	margin: 0;
-	border-left: 1px solid #c70000;
+	border-left: 1px solid #cc0000;
 }
 
 /**
@@ -160,23 +160,23 @@ div.left_sidebar a:hover
 .itemsTable th {
 	font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #ffffff;
-	border-top: 1px solid #df4444;
-	border-right: 1px solid #df4444;
-	border-bottom: 1px solid #df4444;
+	border-top: 1px solid #cc3333;
+	border-right: 1px solid #cc3333;
+	border-bottom: 1px solid #cc3333;
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	text-align: left;
 	padding: 6px 6px 6px 12px;
-	background-color:#c70000;
+	background-color:#cc0000;
 	/**background: #CAE8EA url(../images/bg_header.jpg) no-repeat;**/
 }
 
 
 .itemsTable td {
     font: 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-	border-right: 1px solid #df4444;
-	border-bottom: 1px solid #df4444;
-	background: #d7d7d7;
+	border-right: 1px solid #cc3333;
+	border-bottom: 1px solid #cc3333;
+	background: #cccccc;
 	padding: 6px 6px 6px 12px;
 	/**color: #4f6b72;**/
 	color:000000;
@@ -184,7 +184,7 @@ div.left_sidebar a:hover
 
 .itemsTable td a
 {
-	color: #c70000;
+	color: #cc0000;
 	text-decoration:underline;
 }
 
@@ -194,13 +194,18 @@ div.left_sidebar a:hover
 }
 
 .alt  td{
-	background: #cecece;
-	border-right: 1px solid #df4444;
-	border-bottom: 1px solid #df4444;	
+	background: #dbdbdb;
+	border-right: 1px solid #cc3333;
+	border-bottom: 1px solid #cc3333;	
 }
 
 .nobullets {
     list-style-type: none;
     padding: 0px;
     margin: 0px;
+}
+
+.indent {
+    position: relative;
+    left: 20px
 }

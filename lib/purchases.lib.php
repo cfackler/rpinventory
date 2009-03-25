@@ -20,35 +20,39 @@
 
 */
 
-function getInventory()
+/* Takes two dates, formatted as YYYY-MM-DD */
+function getPurchases( $startDate, $endDate )
 {
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session
-  
+
+  // Connect
   $link = connect();
-  if($link == null)
-    die("Database connection failed");
+  if( $link == null )
+    die( "Database connection failed" );
   
-  //Authenticate
+  // Authenticate
   $auth = GetAuthority();
+
+  $startDate = mysqli_real_escape_string( $link, $startDate );
+  $endDate = mysqli_real_escape_string( $link, $endDate);
   
-  
-  //items
-  $query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
-				FROM inventory, locations
-				WHERE locations.location_id=inventory.location_id";
+  // Loan History
+  $query= "SELECT purchase_date, purchases.purchase_id, company_name, description, cost FROM purchases, purchase_items, businesses, inventory WHERE purchase_items.inventory_id = inventory.inventory_id AND purchase_items.purchase_id = purchases.purchase_id AND purchases.business_id = businesses.business_id AND purchase_date >= '". $startDate ."' AND purchase_date <= '". $endDate ."'";
+
   $result = mysqli_query($link, $query) or
-    die( 'Could not retrieve the inventory' );
-  $items = array();
+    die( 'Could not get the purchase history' );
+
+  $records = array();
   
-  while($item = mysqli_fetch_object($result))
+  while($record = mysqli_fetch_object($result))
     {
-      $items [] = $item;
+      $records [] = $record;
     }
   
   mysqli_close($link);	
   
-  return $items;
+  return $records;
 }
 
 ?>

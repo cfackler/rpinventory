@@ -21,37 +21,23 @@
 
 */
 
-include_once('JSON.php');
+require_once('modules/json/JSON.php');
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");   //Session
+require_once('lib/locations.lib.php'); //getting locations drop down items
 
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
   die("You dont have permission to access this page");
 
-$link = connect();
-if($link == null)
-  die("Database connection failed");
 
 //GET ID
 $id = (int)$_GET['id'];
 if($id == 0)
   die("Invalid ID");
 
-// Generate locations select
-$sql = "SELECT location_id, location FROM locations";
-$result = mysqli_query($link, $sql);
-$locations = array();
-
-while($loc = mysqli_fetch_object($result))
-  $locations [] = $loc;
-
-$loc_select = "";
-foreach($locations as $location) {
-  $loc_select .= '<option value="' . $location->location_id . '">';
-  $loc_select .= $location->location . "</option>\n";
-}
+$loc_select = getLocationsOptions();
 
 echo <<<END
 <table>
@@ -81,7 +67,7 @@ echo <<<END
   <td>Location: </td>
 
   <td>
-  <select id="location$id" name="location$id" onChange="OnChangeDouble('location$id', 'newLocation$id', 'newDescription$id')">
+  <select id="location$id" name="location$id" onChange="OnChangeDouble('location$id', 'newLocation$id', 'newDescription$id')" onFocus="getLocationOptions(this);">
   $loc_select
   <option>
   New Location
@@ -94,14 +80,17 @@ echo <<<END
   <tr id="newLocation$id" style="display:none">
   <td>New Location:</td>
   <td>
-  <input type="text" name="newlocation$id" id="newlocation$id" size="40">
+  <input type="text" name="newlocation$id" id="newlocation$id" size="40" onchange="sendValidateRequest('newlocation$id')">
   </td>
   </tr>
   <tr id="newDescription$id" style="display:none">
   <td>Location Description:</td>
   <td>
-  <input type="text" name="newdescription$id" size="40">
+  <input type="text" name="newdescription$id" id="newdescription$id" size="40">
   </td>
+  	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation$id', 'newdescription$id', 'resultText$id');">
+	        <div id="resultText$id"></div>
+	    </td>
   </tr>
   </table>
 END;

@@ -20,6 +20,7 @@
 */
 
 
+
 function submitItems(){
     var ids = "";
     
@@ -311,6 +312,12 @@ function ValidateSaneInput( objects ){
 	    else{		// Stores the state as capital letters
 		objects[i].value = objects[i].value.toUpperCase();
 	    }
+	} // Check dates in the form yyyy-mm-dd
+	else if ( cur_id == "startdate" || cur_id == "enddate" ){
+	    if ( !objects[i].value.match( /^\d{4}-\d{2}-\d{2}$/ )){
+		message = "Please enter a date in the from 'yyyy-mm-dd'";
+		offending_id = cur_id;
+	    }
 	}
 	else if( cur_id == "RIN" ){ // 9-digit RIN
 	    if( !objects[i].value.match( /^\d{9}$/ ) ){
@@ -409,4 +416,53 @@ function validateState(str) {
     alert('returns false');
     
     return false;
+}
+
+function removeContents( id, defaultValue ) {
+    var element = document.getElementById( id );
+    if( element.value == defaultValue ){
+	element.value = '';
+    }
+}
+
+function selectAllNone( checkAllNone, formId ) {
+    var form = document.getElementById( formId );
+    for ( var i = 0; i < form.length; i++ ) {
+	if( form[i].type == 'checkbox' && form[i].name != checkAllNone.name ) {
+	    form[i].checked = checkAllNone.checked;
+	}
+    }
+}
+
+function getLocationOptions(element)
+{
+	 new Ajax.Request("ajax.php?operation=locations", 
+		     { 
+			 method: 'post', 
+			     onSuccess: function(transport)
+			     {
+				     var response = transport.responseText;
+				     element.innerHTML = response;
+			 	 }
+		     });
+}
+
+function saveLocation(name, description, result)
+{
+    var resultElement = document.getElementById(result);
+    
+    var nameText = document.getElementById(name).value;
+
+    var descText = document.getElementById(description).value;
+    
+
+    new Ajax.Request("ajax.php?operation=savelocation&location="+nameText+"&description="+descText, 
+		  { 
+			   method: 'post', 
+			   onSuccess: function(transport)
+			   {
+				     resultElement.innerHTML = "Successfully saved.";
+			 	 }
+			     
+		  });
 }

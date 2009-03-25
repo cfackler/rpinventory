@@ -20,35 +20,36 @@
 
 */
 
-function getInventory()
+
+function getUsers()
 {
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session
-  
+
+  // Connect
   $link = connect();
-  if($link == null)
-    die("Database connection failed");
+  if( $link == null )
+    die( "Database connection failed" );
   
-  //Authenticate
+  // Authenticate
   $auth = GetAuthority();
   
-  
-  //items
-  $query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
-				FROM inventory, locations
-				WHERE locations.location_id=inventory.location_id";
+  // Loan History
+  $query= "SELECT name, username, rin, email FROM logins";
+
   $result = mysqli_query($link, $query) or
-    die( 'Could not retrieve the inventory' );
-  $items = array();
+    die( 'Could not get the users' );
+
+  $records = array();
   
-  while($item = mysqli_fetch_object($result))
+  while($record = mysqli_fetch_object($result))
     {
-      $items [] = $item;
+      $records [] = $record;
     }
   
   mysqli_close($link);	
   
-  return $items;
+  return $records;
 }
 
 ?>
