@@ -19,7 +19,7 @@
 *}
 
 
-<form name="makeSummary" action="makeSummary.php" onsubmit="return ValidateForm()" METHOD="post">
+<form name="makeSummary" id="checkBoxForm" action="makeSummary.php" onsubmit="return ValidateForm()" METHOD="post">
 
 
 <h3>Select Items to be Included</h3>
@@ -52,6 +52,11 @@
 	<li>
 		<input type="checkbox" name="locations" value="Locations" />
 		<label for="locations">Locations</label>
+	</li>
+	<br />
+	<li class="indent">
+		<input type="checkbox" name="selectallnone" value="selectallnone" onClick="selectAllNone(this, 'checkBoxForm');"/>
+		<label for="selectallnone">Select All/None</label>
 	</li>
 </ul>
 <br />
