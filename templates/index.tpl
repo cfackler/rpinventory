@@ -33,7 +33,11 @@
 
 	<body>
 	    <div class="header">
-			<span class="headerContent">RPInventory</span>
+			{php}
+				require_once('lib/config.class.php');
+				$this->assign('clubName', Config::get('club_name'));
+			{/php}
+			<span class="headerContent">{$clubName}</span>
 	    </div>
 		
 	    <div class="left_sidebar">
@@ -56,6 +60,7 @@
 			
 			{if $authority == 2}
 			     <li><a href="manageUsers.php">Manage Users</a></li>
+			     <li><a href="generateSummary.php">Create Summary</a></li>
 			{/if}
 			
 			<li><br /></li>

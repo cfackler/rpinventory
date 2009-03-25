@@ -201,3 +201,8 @@ div.left_sidebar a:hover
     padding: 0px;
     margin: 0px;
 }
+
+.indent {
+    position: relative;
+    left: 20px
+}

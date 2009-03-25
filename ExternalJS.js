@@ -423,3 +423,12 @@ function removeContents( id, defaultValue ) {
 	element.value = '';
     }
 }
+
+function selectAllNone( checkAllNone, formId ) {
+    var form = document.getElementById( formId );
+    for ( var i = 0; i < form.length; i++ ) {
+	if( form[i].type == 'checkbox' && form[i].name != checkAllNone.name ) {
+	    form[i].checked = checkAllNone.checked;
+	}
+    }
+}
