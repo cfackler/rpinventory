@@ -33,9 +33,12 @@ function getLocations()
   
   // Authenticate
   $auth = GetAuthority();
+  if($auth < 1)
+	  die("You dont have permission to access this page");
+
   
   // Loan History
-  $query= "SELECT location, description FROM locations";
+  $query= "SELECT location_id, location, description FROM locations";
 
   $result = mysqli_query($link, $query) or
     die( 'Could not get the locations' );
@@ -51,5 +54,22 @@ function getLocations()
   
   return $records;
 }
+
+function getLocationsOptions()
+{
+	$loc_select = '<option value="-1">Select Location</option>';
+	
+	//get locations array
+	$locations = getLocations();
+		
+	foreach($locations as $location) {
+	  $loc_select .= '<option value="' . $location->location_id . '">';
+	  $loc_select .= $location->location . "</option>";
+	}
+	$loc_select .= "<option>New Location</option>";
+	
+	return $loc_select;
+}
+
 
 ?>

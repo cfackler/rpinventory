@@ -23,6 +23,7 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/locations.lib.php'); //locations funciton
 
 $link = connect();
 if($link == null)
@@ -57,12 +58,8 @@ while($business = mysqli_fetch_object($businessResult))
 //  $items [] = $item;
 
 //Locations
-$locQuery= "SELECT location_id, location  FROM locations";
-$locResult = mysqli_query($link, $locQuery);
-$locations = array();
+$locations = getLocationsOptions();
 
-while($loc = mysqli_fetch_object($locResult))
-  $locations [] = $loc;
 
 //BEGIN Page
 	

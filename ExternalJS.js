@@ -20,6 +20,7 @@
 */
 
 
+
 function submitItems(){
     var ids = "";
     
@@ -431,4 +432,17 @@ function selectAllNone( checkAllNone, formId ) {
 	    form[i].checked = checkAllNone.checked;
 	}
     }
+}
+
+function getLocationOptions(element)
+{
+	 new Ajax.Request("ajax.php?operation=locations", 
+		     { 
+			 method: 'post', 
+			     onSuccess: function(transport)
+			     {
+				     var response = transport.responseText;
+				     element.innerHTML = response;
+			 	 }
+		     });
 }
