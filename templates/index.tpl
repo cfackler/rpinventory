@@ -33,7 +33,11 @@
 
 	<body>
 	    <div class="header">
-			<span class="headerContent">RPInventory</span>
+			{php}
+				require_once('lib/config.class.php');
+				$this->assign('clubName', Config::get('club_name'));
+			{/php}
+			<span class="headerContent">{$clubName}</span>
 	    </div>
 		
 	    <div class="left_sidebar">
