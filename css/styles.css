@@ -5,7 +5,7 @@
  **/
 div.header, div.left_sidebar
 {
-	background-color: #cc0000;
+	background-color: #d50000;
 }
 
 div.header
@@ -32,14 +32,14 @@ span.headerContent
 	font-size:35px;
 	position:relative;
 	top: 45px;
-	padding-left:200px;
+	padding-left:170px;
 }
 
 div.main_body
 {
     position: absolute;
     top: 145px;
-    left:200px;
+    left:170px;
 }
 /**
  * This is the div for the stuff at the top of the table on the pages.
@@ -58,7 +58,7 @@ span.TopOfTable
 }
 a
 {
-	color:#cc0000;
+	color:#d50000;
 	text-decoration:underline;
 }
 a:hover
@@ -78,12 +78,12 @@ span.TopOfTable h3
 div.left_sidebar
 {
     position: absolute;
-	border-bottom:solid 3px;
-	border-top: solid 3px;
-	border-right: solid 3px;
+	border:solid 3px;
+/*	border-top: solid 3px;
+	border-right: solid 3px;*/
     top:145px;
-	width: 175px;
-    left:-32px
+	width: 140px;
+	left:0px
 }
 
 /**
@@ -115,10 +115,13 @@ div.left_sidebar ul li
  **/
 div.left_sidebar ul li.nonLinkSidebarItem
 {
-	color:#000000;
-	background-color:#cc0000;
+    padding-left: 5px;
+/*    text-align: left;*/
+	color: #FFFFFF;
+	font-size: 17px;
+	background-color: #aa0000;
 	border-bottom:solid 1px #000000;
-	font-style:italic;
+/*	font-style:italic;*/
 }
 
 body
@@ -151,7 +154,7 @@ div.left_sidebar a:hover
 .itemsTable {
 	padding: 0;
 	margin: 0;
-	border-left: 1px solid #cc0000;
+	border-left: 1px solid #d50000;
 }
 
 /**
@@ -167,7 +170,7 @@ div.left_sidebar a:hover
 	text-transform: uppercase;
 	text-align: left;
 	padding: 6px 6px 6px 12px;
-	background-color:#cc0000;
+	background-color:#d50000;
 	/**background: #CAE8EA url(../images/bg_header.jpg) no-repeat;**/
 }
 
@@ -184,7 +187,7 @@ div.left_sidebar a:hover
 
 .itemsTable td a
 {
-	color: #cc0000;
+	color: #d50000;
 	text-decoration:underline;
 }
 

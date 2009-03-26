@@ -42,7 +42,7 @@
 		
 	    <div class="left_sidebar">
 	    	 <ul>
-			<li><a href="index.php">Home</a></li>
+			<li class="nonLinkSidebarItem">Home</li>
 			<li><a href="viewInventory.php">View Inventory</a></li>
 			{if $authority >= 1}
 		             <li><a href="viewBorrowers.php">View Borrowers</a></li>
