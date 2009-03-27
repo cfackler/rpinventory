@@ -217,6 +217,7 @@ function ValidateForm(){
 	}
     }
     
+    validateBusiness = document.getElementById( 'ignoreBusiness' );
     objects = document.getElementsByClassName("validate");
     
     for(i=0; i<objects.length; i++){
@@ -227,12 +228,12 @@ function ValidateForm(){
 	    if(!ValidateRequired(objects[i], "Please select a user"))
 		return false;
 	} // Same with id="business_id"
-	else if(cur_id == "business_id"){
-	    if(!ValidateRequired(objects[i], "Please select a business"))
+	else if(cur_id == "business_id" ){
+	    if(!validateBusiness.checked && !ValidateRequired(objects[i], "Please select a business"))
 		return false;
 	} // Same with id="total_cost"
-	else if(cur_id == "total_cost"){
-	    if(!ValidateRequired(objects[i], "Please enter a total purchase cost"))
+	else if(cur_id == "total_cost" ){
+	    if(!validateBusiness.checked && !ValidateRequired(objects[i], "Please enter a total purchase cost"))
 		return false;
 	}
 	// Use the id as the descriptor for what field to update
@@ -246,8 +247,9 @@ function ValidateForm(){
 		message= "Please enter an ";
 	    }
 	    
-	    var id_match= cur_id.match(/[0-9]*/);
-	    if( id_match == null){
+	    var cur_id_orig = cur_id;
+	    var id_match= cur_id.match(/^.*\d+$/);
+	    if( id_match != null ){
 		var num;	// Pretty ugly workaround, but gives sensible descriptions now
 		var id;
 		
@@ -255,11 +257,17 @@ function ValidateForm(){
 		id= cur_id.replace(/[0-9]*/g, "");
 		
 		if (!ValidateRequired(objects[i], message + id + " for item " + num)){
+		    obj = document.getElementById( cur_id_orig );
+		    obj.focus();
+		    obj.select();
 		    return false;
 		}
 	    }
 	    else{
 		if (!ValidateRequired(objects[i], message + cur_id)){
+		    obj = document.getElementById( cur_id_orig );
+		    obj.focus();
+		    obj.select();
 		    return false;
 		}
 	    }
@@ -267,7 +275,7 @@ function ValidateForm(){
     }
     
     // Returns the bad id, or '-1' if no errors
-    return_data = ValidateSaneInput( objects ); 
+    return_data = ValidateSaneInput( objects, validateBusiness ); 
     
     if( return_data != null ){
 	alert( return_data[0] ); // Alert the user, and highlight the offending field
@@ -280,7 +288,7 @@ function ValidateForm(){
     return true;
 }
 
-function ValidateSaneInput( objects ){
+function ValidateSaneInput( objects, validateBusiness ){
     var message = '';
     var offending_id = '';
     
@@ -330,17 +338,23 @@ function ValidateSaneInput( objects ){
 		message = "Please enter a valid email address";
 		offending_id = cur_id;
 	    }
+	}				   // Only want to validate if we're adding a business
+	else if( cur_id == "total_cost" ){ // Validate a value in dollars
+	    if( !validateBusiness.checked && !objects[i].value.match( /^\d+\.\d{2}$/ ) ){
+		message = "Please enter a value in the form '$xxxxx.yy'";
+		offending_id = cur_id;
+	    }
 	}
-	else if( cur_id == "total_cost" || cur_id.match( /^value\d+$/ )){ // Validate a value in dollars
-		if( !objects[i].value.match( /^\d+\.\d{2}$/ ) ){
+	else if( cur_id.match( /^value\d+$/ ) ){ // Validate a value in dollars
+	    if( !objects[i].value.match( /^\d+\.\d{2}$/ ) ){
 		message = "Please enter a value in the form '$xxxxx.yy'";
 		offending_id = cur_id;
 	    }
 	}
     }
 
-    return_data = new Array(message, offending_id);
     if( message != '' ){
+	return_data = new Array(message, offending_id);
 	return return_data;
     }
     
