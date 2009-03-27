@@ -18,7 +18,7 @@
 
 *}
 
-<H3>Create Purchase</h3>
+<h3>Create Purchase</h3>
 
 <form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
