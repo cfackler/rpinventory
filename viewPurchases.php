@@ -42,7 +42,7 @@ $smarty = new Smarty_Inv();
 //users
 $query= "SELECT purchases.purchase_id, purchases.business_id, purchases.purchase_date, company_name, total_price
 	 FROM purchases, businesses
-	 WHERE businesses.business_id=purchases.business_id ";
+	 WHERE businesses.business_id=purchases.business_id";
 $result = mysqli_query($link, $query);
 $purchases = array();
 $items = array();

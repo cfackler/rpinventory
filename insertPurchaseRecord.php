@@ -34,72 +34,79 @@ if($auth < 1)
 	die("You dont have permission to access this page");
 	
 // Business
-$bus_id = (int)$_POST["business_id"];
-
-$sql = "SELECT business_id FROM businesses";
-
-$result = mysqli_query($link, $sql);
-$numBusinesses = mysqli_num_rows($result);
-
-// Chose to insert a new business
-if($bus_id>$numBusinesses){
-        //Company name
-        $company = $_POST["company"];
-	if(strlen($company) == 0)
-	  die("Must have a company name");
-	
-	//Address
-	$address = $_POST["address"];
-	if(strlen($address) == 0)
-	  die("Must have an address");
-
-	$address2 = $_POST["address2"];
-	
-	//City
-	$city = $_POST["city"];
-	if(strlen($city) == 0)
-	  die("Must have a city");
-	
-	//State
-	$state = $_POST["state"];
-	if(strlen($state) == 0)
-	  die("Must have a state");
-	
-	//Zip Code
-	$zip = $_POST["zip"];
-	if(strlen($zip) == 0)
-	  die("Must have a zip code");
-	
-	//Contact info
-	$phone = $_POST["phone"];
-	$fax = $_POST["fax"];
-	$email = $_POST["email"];
-	if(strlen($phone) == 0 && strlen($fax) == 0 && strlen($email) == 0)
-	  die("Must have contact information");
-	
-	$website = $_POST["website"];
-	
-	//Insert the business address
-	$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "')";
-		
-	if(!mysqli_query($link, $query))
-	  die("Query failed first");
-	$address_id = mysqli_insert_id($link);
-
-	//Inser the business
-	$sql = "INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES (NULL, '" . $address_id . "' , '" . $company . "', '" . $fax . "', '" . $email . "', '" . $website . "')";
-
-	if(!mysqli_query($link, $sql))
-	  die("Query failed business insert");
-
-	// Get the ID of the new business
-	$bus_id = mysqli_insert_id($link);
-}//Incorrect business was selected
-elseif($bus_id == 0){
-	die("Invalid Business was chosen");
+$ignoreBusiness = false;
+if( isset( $_POST['ignoreBusiness'] ) ){
+  $ignoreBusiness = true;
 }
-elseif(!VerifyBusinessExists($bus_id, $link)){
-	die("Invalid Business");
+
+if( !$ignoreBusiness ){
+  $bus_id = (int)$_POST["business_id"];
+  
+  $sql = "SELECT business_id FROM businesses";
+  
+  $result = mysqli_query($link, $sql);
+  $numBusinesses = mysqli_num_rows($result);
+  
+  // Chose to insert a new business
+  if($bus_id>$numBusinesses){
+    //Company name
+    $company = $_POST["company"];
+    if(strlen($company) == 0)
+      die("Must have a company name");
+    
+    //Address
+    $address = $_POST["address"];
+    if(strlen($address) == 0)
+      die("Must have an address");
+    
+    $address2 = $_POST["address2"];
+    
+    //City
+    $city = $_POST["city"];
+    if(strlen($city) == 0)
+      die("Must have a city");
+    
+    //State
+    $state = $_POST["state"];
+    if(strlen($state) == 0)
+      die("Must have a state");
+    
+    //Zip Code
+    $zip = $_POST["zip"];
+    if(strlen($zip) == 0)
+      die("Must have a zip code");
+    
+    //Contact info
+    $phone = $_POST["phone"];
+    $fax = $_POST["fax"];
+    $email = $_POST["email"];
+    if(strlen($phone) == 0 && strlen($fax) == 0 && strlen($email) == 0)
+      die("Must have contact information");
+    
+    $website = $_POST["website"];
+    
+    //Insert the business address
+    $query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "')";
+    
+    if(!mysqli_query($link, $query))
+      die("Query failed first");
+    $address_id = mysqli_insert_id($link);
+    
+    //Inser the business
+    $sql = "INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES (NULL, '" . $address_id . "' , '" . $company . "', '" . $fax . "', '" . $email . "', '" . $website . "')";
+    
+    if(!mysqli_query($link, $sql))
+      die("Query failed business insert");
+    
+    // Get the ID of the new business
+    $bus_id = mysqli_insert_id($link);
+  }//Incorrect business was selected
+  elseif($bus_id == 0){
+    die("Invalid Business was chosen");
+  }
+  elseif(!VerifyBusinessExists($bus_id, $link)){
+    die("Invalid Business");
+  }
 }
 
 $count = (int)$_POST['count'];
@@ -112,19 +119,24 @@ $date = date("Y-m-d", $timestamp);
 
 
 //Total cost
-$cost = $_POST['total_cost'];	
+$total_cost = $_POST['total_cost'];	
 
-//echo $bus_id."<br />";
 
-	
+
 //Insert purchase
-$sql = "INSERT INTO purchases (purchase_id, business_id, purchase_date, total_price) VALUES
-	(NULL, " . $bus_id . ", '" . $date . "', '" . $cost . "')";
+$sql;
 
-//echo $sql . "<br>";
-		
+if( $ignoreBusiness ) {
+  $sql = "INSERT INTO purchases (purchase_id, business_id, purchase_date, total_price) VALUES
+	(NULL, " . -1 . ", '" . $date . "', " . -1 . ")";
+}
+else{
+  $sql = "INSERT INTO purchases (purchase_id, business_id, purchase_date, total_price) VALUES
+	(NULL, " . $bus_id . ", '" . $date . "', " . $total_cost . ")";
+}
+
 if(!mysqli_query($link, $sql))
-	die("Query failed");
+  die("Query failed");
 	
 //ID
 $purchase_id = mysqli_insert_id($link);
@@ -132,7 +144,6 @@ $purchase_id = mysqli_insert_id($link);
 //All items
 for($x=0; $x<$count; $x++)
 {
-  //  echo $x."<br />";
 	//Description
 	$itemdesc = $_POST["desc".$x];
 	if(strlen($itemdesc) == 0)
@@ -186,24 +197,19 @@ for($x=0; $x<$count; $x++)
 	
 	//Insert new inventory item
 	$sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $itemdesc . "', " . $location . ", '" . $condition . "', " . $value . ")";		
-	
-	//	echo $sql."<br />";
 
 	if(!mysqli_query($link, $sql))
-	  die("Query failed");
+	  die("Inventory Insert Query failed");
 	
 	$inv_id = mysqli_insert_id($link);
 		
 		
 	//Insert purchase record for new inventory item
 	$sql = "INSERT INTO purchase_items (purchase_id, inventory_id, cost) VALUES
-	(" . $purchase_id .", " . $inv_id .", " . $cost .")";
-	
-	//	echo $sql . "<br>";
-	
+	(" . $purchase_id .", " . $inv_id .", " . $value .")";
 	
 	if(!mysqli_query($link, $sql))
-		die("Query failed");
+		die("Purchase Record Query failed");
 }
 	
 
