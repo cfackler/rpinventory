@@ -58,7 +58,7 @@ require_once('modules/pdf-php/class.ezpdf.php');
 require_once( 'lib/pdf.lib.php' );
 
 
-$pdf =& new Cezpdf("paper='LETTER'");
+$pdf =& new Cezpdf('LETTER', 'landscape');
   
 //choose font
 $pdf->selectFont('modules/pdf-php/fonts/Helvetica.afm');
@@ -134,6 +134,7 @@ if ( $businesses != '' ){
   }
 
   $pdf->ezTable( $return[0] );
+  $pdf->ezText('');
   $pdf->ezTable( $return[1] );
   unset($data);
   $data= array();

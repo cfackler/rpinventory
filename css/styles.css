@@ -2,19 +2,19 @@
 * Attributes
 */
 a {
-    color:#444444;
+    color:#303030;
     text-decoration:underline;
 }
 
 
 a:hover {
-    color:#ff0000;
+    color:#505050;
 }
 
 
 body {
     font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-    background-color: #eeeeee;
+    background-color: #e4e4e4;
 }
 
 
@@ -197,9 +197,7 @@ span.TopOfTable h3{
     font-weight: bold;
     font-size: 11px;
     color: #ffffff;
-    border-top: 1px solid #cc3333;
-    border-right: 1px solid #cc3333;
-    border-bottom: 1px solid #cc3333;
+    border: 1px solid #bb3333;
     letter-spacing: 2px;
     text-transform: uppercase;
     text-align: left;
