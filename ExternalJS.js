@@ -331,6 +331,12 @@ function ValidateSaneInput( objects ){
 		offending_id = cur_id;
 	    }
 	}
+	else if( cur_id == "total_cost" || cur_id.match( /^value\d+$/ )){ // Validate a value in dollars
+		if( !objects[i].value.match( /^\d+\.\d{2}$/ ) ){
+		message = "Please enter a value in the form '$xxxxx.yy'";
+		offending_id = cur_id;
+	    }
+	}
     }
 
     return_data = new Array(message, offending_id);
