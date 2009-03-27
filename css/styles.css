@@ -1,214 +1,215 @@
+/*
+* Attributes
+*/
+a {
+    color:#444444;
+    text-decoration:underline;
+}
+
+
+a:hover {
+    color:#ff0000;
+}
+
+
+body {
+    font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    background-color: #eeeeee;
+}
+
 
 /**
  * Red color for header
  * sidebar background
  **/
-div.header, div.left_sidebar
-{
-	background-color: #d50000;
+div.header, div.left_sidebar{
+    background-color: #d50000;
 }
 
-div.header
-{	
-	/** Position of header **/
+
+div.header {	
+    /** Position of header **/
     position:absolute;
     left:0px;
-	top: 20px;
+    top: 20px;
     height:100px;
-	
-	/** Size of header **/
-	width: 100%;
-	
-	/** Header border **/
-	border-top: solid 3px;
-	border-bottom: solid 3px;
-}
-
-/**
- * header content is in this span
- **/
-span.headerContent
-{
-	font-size:35px;
-	position:relative;
-	top: 45px;
-	padding-left:170px;
-}
-
-div.main_body
-{
-    position: absolute;
-    top: 145px;
-    left:170px;
-}
-/**
- * This is the div for the stuff at the top of the table on the pages.
- * The span is inside always.
- **/
-div.TopOfTable
-{
-	margin-bottom:10px;
-}
-/**
- * This is the span that is inside the TopOfTable div.
- **/
-span.TopOfTable
-{
-	color:#000000;
-}
-a
-{
-	color:#d50000;
-	text-decoration:underline;
-}
-a:hover
-{
-	color:#ff0000;
-}
-span.TopOfTable h3
-{
-	margin-top:0;
-	margin-bottom:0;
+    
+    /** Size of header **/
+    width: 100%;
+    
+    /** Header border **/
+    border-top: solid 2px;
+    border-bottom: solid 2px;
 }
 
 
 /**
  * Sidebar border and background colors
  **/
-div.left_sidebar
-{
+div.left_sidebar {
     position: absolute;
-	border:solid 3px;
-/*	border-top: solid 3px;
-	border-right: solid 3px;*/
+    border:solid 2px;
     top:145px;
-	width: 140px;
-	left:0px
-}
-
-/**
- * List items in sidebar
- **/
-div.left_sidebar ul
-{
-	/** No Bullets **/
-    list-style-type: none;
-	
-	text-align:right;
-	
-	/** space them out vertically **/
-	line-height:30px;
-	
-	padding-left:0px;
-	margin-top: 0px;
-	margin-bottom:0px;
-}
-div.left_sidebar ul li
-{
-	padding-right:5px;
-	border-bottom: solid 1px;
-
-}
-/**
- * This is for any items in the sidebar that aren't links
- * Like the "Admin" section divider
- **/
-div.left_sidebar ul li.nonLinkSidebarItem
-{
-    padding-left: 5px;
-/*    text-align: left;*/
-	color: #FFFFFF;
-	font-size: 17px;
-	background-color: #aa0000;
-	border-bottom:solid 1px #000000;
-/*	font-style:italic;*/
-}
-
-body
-{
-    font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-/*   background-color: #969696;*/
-    background-color: #a9a9a9;
+    width: 140px;
+    left:0px
 }
 
 
 /* LINK styles */
-
-div.left_sidebar a
-{
-/*    color: #969696;*/
+div.left_sidebar a {
     color: #d4d4d4;
     font-size: 14px;
     text-decoration:none;
 }
 
-div.left_sidebar a:hover
-{
-/*    color: #cccccc;*/
+
+div.left_sidebar a:hover {
     color: #f0f0f0;
     text-decoration:underline;
 }
 
 
+/**
+ * List items in sidebar
+ **/
+div.left_sidebar ul {
+    /** No Bullets **/
+    list-style-type: none;
+    
+    text-align:right;
+    
+    /** space them out vertically **/
+    line-height:30px;
+    
+    padding-left:0px;
+    margin-top: 0px;
+    margin-bottom:0px;
+}
+
+
+div.left_sidebar ul li {
+    padding-right:5px;
+    border-bottom: solid 1px;
+    
+}
+
+
+/**
+ * This is for any items in the sidebar that aren't links
+ * Like the "Admin" section divider
+ **/
+div.left_sidebar ul li.nonLinkSidebarItem {
+    padding-left: 5px;
+    color: #FFFFFF;
+    font-size: 17px;
+    background-color: #aa0000;
+    border-bottom:solid 1px #000000;
+}
+
+
+div.main_body {
+    position: absolute;
+    top: 145px;
+    left:170px;
+}
+
+
+/**
+ * This is the div for the stuff at the top of the table on the pages.
+ * The span is inside always.
+ **/
+div.TopOfTable {
+	margin-bottom:10px;
+}
+
+
+/**
+ * header content is in this span
+ **/
+span.headerContent {
+    font-size:35px;
+    position:relative;
+    top: 45px;
+    padding-left:170px;
+}
+
+
+/**
+ * This is the span that is inside the TopOfTable div.
+ **/
+span.TopOfTable {
+    color:#000000;
+}
+
+span.TopOfTable h3{
+    margin-top:0;
+    margin-bottom:0;
+}
+
+
+
+.alt  td {
+    background: #dbdbdb;
+    border-right: 1px solid #cc3333;
+    border-bottom: 1px solid #cc3333;	
+}
+
+
+.indent {
+    position: relative;
+    left: 20px
+}
+
+
 /* Items table styling */
 .itemsTable {
-	padding: 0;
-	margin: 0;
-	border-left: 1px solid #d50000;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid #d50000;
 }
+
+
+.itemsTable td {
+    font-size: 11px;
+    border-right: 1px solid #cc3333;
+    border-bottom: 1px solid #cc3333;
+    background: #cccccc;
+    padding: 6px 6px 6px 12px;
+    color:000000;
+}
+
+
+.itemsTable td a {
+    color: #d50000;
+    text-decoration:underline;
+}
+
+
+.itemsTable td a:hover {
+    color: #ff0000;
+}
+
 
 /**
  * Table header 
  **/
 .itemsTable th {
-	font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-	color: #ffffff;
-	border-top: 1px solid #cc3333;
-	border-right: 1px solid #cc3333;
-	border-bottom: 1px solid #cc3333;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	text-align: left;
-	padding: 6px 6px 6px 12px;
-	background-color:#d50000;
-	/**background: #CAE8EA url(../images/bg_header.jpg) no-repeat;**/
+    font-weight: bold;
+    font-size: 11px;
+    color: #ffffff;
+    border-top: 1px solid #cc3333;
+    border-right: 1px solid #cc3333;
+    border-bottom: 1px solid #cc3333;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 6px 6px 6px 12px;
+    background-color:#d50000;
 }
 
-
-.itemsTable td {
-    font: 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-	border-right: 1px solid #cc3333;
-	border-bottom: 1px solid #cc3333;
-	background: #cccccc;
-	padding: 6px 6px 6px 12px;
-	/**color: #4f6b72;**/
-	color:000000;
-}
-
-.itemsTable td a
-{
-	color: #d50000;
-	text-decoration:underline;
-}
-
-.itemsTable td a:hover
-{
-	color: #ff0000;
-}
-
-.alt  td{
-	background: #dbdbdb;
-	border-right: 1px solid #cc3333;
-	border-bottom: 1px solid #cc3333;	
-}
 
 .nobullets {
     list-style-type: none;
     padding: 0px;
     margin: 0px;
-}
-
-.indent {
-    position: relative;
-    left: 20px
 }
