@@ -25,10 +25,18 @@
   <input type="hidden" name="count" id="count" value="1">
 
   <ul style="list-style-type:none">
+    <input type="checkbox" name="ignoreBusiness" id="ignoreBusiness" onclick="hideBusiness()"/>
+    <label for="ignoreBusiness">Ignore Business Information</label>
+    
+    <br />
+
+    <span id="businessInformation">
+    <br />
     <li>
-      Purchased From:
+        <table><tr>
+	<td>Purchased	From:</td>
       
-      <select id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
+	<td><select id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
 	<option value="-1">Select Business</option>
 	{section name=bus loop=$businesses}
 	<option value="{$businesses[bus]->business_id}">
@@ -40,10 +48,11 @@
 	  Add a New Business
 	</option>
       </select>
-    </li>
-    <li>
-      <table id="newBusiness" style="display:none;padding-left:1cm">	
-
+      </td>
+     </tr>
+     <tr id="newBusiness" style="display:none;">
+      <td colspan="2">
+      <table style="padding-left: 1cm">	
      	<tr>
 	  <td>Company Name:</td>
 	  <td><input type="text" name="company" size="30" id="company" class="validate_cond_bus" onchange="sendValidateRequest('company')"></td>
@@ -94,10 +103,13 @@
 	  <td><input type="text" name="website" size="30"></td>
      	</tr>
       </table>
-    </li>
-    <br />
-    <li>
-      Date: 
+     </td>
+    </tr>
+    <tr>
+      <td>
+	Date:
+      </td>
+      <td>
       <select name="months">
         <option value="1"{if $selectDate.mon == 1}selected{/if}>January</option>
         <option value="2"{if $selectDate.mon == 2}selected{/if}>February</option>
@@ -153,17 +165,21 @@
         <option value="2008"{if $selectDate.year == 2008}selected{/if}>2008</option>
 	<option value="2009"{if $selectDate.year == 2009}selected{/if}>2009</option>
       </select>
-      
-    </li>
+     </td>
+    </tr>
+
+    <tr>
+     <td>
+      Total Value of Purchase: 
+     </td>
+     <td>
+      <input type="text" name="total_cost" value="" id="total_cost" class="validate">
+     </td>
+    </tr>
+    </table>
+    </span>
 
     <br />
-
-    <li>
-      Total Value of Purchase: 
-      <input type="text" name="total_cost" value="" id="total_cost" class="validate">
-    </li>
-
-    <br>
 
     <div id="itemTable">
       <div id="item0">
@@ -220,14 +236,16 @@
 	  </tr>
 	</table>
       </div>
+    <br />
     </div>
     <div>
       <td><input type="button" onClick="addItemField();" value="Add Item">
 	<input type="button" id="removeButton" style="display:none;" onClick="removeItemField();" value="Remove Last Item"></td>
       <td></td>
     </div>
+
     
 </ul>
-<br>
+<br />
 <input type="submit" value="Purchase">
 </form>

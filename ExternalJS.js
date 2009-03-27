@@ -376,9 +376,11 @@ function addItemField() {
     var divs = t.getElementsByTagName("div");
     var nextnum = divs.length;
     var newrow = document.createElement('div');
+    var br = document.createElement('br');
     newrow.setAttribute('id', 'item' + nextnum);
     getItemBlockContents(newrow, nextnum);
     t.appendChild(newrow);
+    t.appendChild(br);
     var count = document.getElementById("count");
     count.setAttribute('value', nextnum + 1);
 
@@ -467,8 +469,21 @@ function saveLocation(name, description, result)
 			   method: 'post', 
 			   onSuccess: function(transport)
 			   {
-				     resultElement.innerHTML = "Successfully saved.";
-			 	 }
-			     
+			       resultElement.innerHTML = "Successfully saved.";
+			   }
+		      
 		  });
 }
+
+
+function hideBusiness() {
+    var checkbox = document.getElementById( 'ignoreBusiness' );
+    var span = document.getElementById( 'businessInformation' );
+    if( checkbox.checked ) {
+	span.style.display = "none";
+    }
+    else{
+	span.style.display = "";
+    }
+}
+
