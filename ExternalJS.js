@@ -447,22 +447,49 @@ function getLocationOptions(element)
 		     });
 }
 
-function saveLocation(name, description, result)
+function saveLocation(name, description, result, locationselect, locationTR, descriptionTR)
 {
     var resultElement = document.getElementById(result);
     
     var nameText = document.getElementById(name).value;
 
     var descText = document.getElementById(description).value;
-    
+    var locationselectelement = document.getElementById(locationselect);
+
 
     new Ajax.Request("ajax.php?operation=savelocation&location="+nameText+"&description="+descText, 
 		  { 
 			   method: 'post', 
 			   onSuccess: function(transport)
 			   {
-				     resultElement.innerHTML = "Successfully saved.";
+				    resultElement.innerHTML = "Successfully saved1sdf23.";
+              
+            //refresh elements in pulldown
+            //var oldIndex = locationselectelement.selectedIndex;
+            //alert("oldIndex = "+oldIndex);
+            locationselectelement.focus();
+            locationselectelement.blur();
+            //locationselectelement.selectedIndex = Number(oldIndex+1);
+            
+            //find newly inserted element and select it
+            
+            
+            var i;
+            for(i = 0; i<locationselectelement.length; i++){
+             var OptionText = locationselectelement.options[i].innerHTML;
+             
+             //alert(OptionText);
+            
+              if(OptionText == nameText){
+                alert(OptionText+" was found when i="+i); 
+
+                locationselectelement.selectedIndex = i;
+                break;
+              }
+            
+            }                   
+
 			 	 }
 			     
-		  });
+		  });		  
 }

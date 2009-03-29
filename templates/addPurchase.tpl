@@ -206,7 +206,7 @@
 	  <tr id="newLocation0" style="display:none">
 	    <td>New Location:</td>
 	    <td>
-	      <input type="text" name="newlocation0" id="newlocation0" size="40" onchange="sendValidateRequest('newlocation0')">
+	      <input type="text" name="newlocation0" id="newlocation0" size="40" onChange="sendValidateRequest('newlocation0')">
 	    </td>
 	  </tr>
 	  <tr id="newDescription0" style="display:none">
@@ -214,7 +214,7 @@
 	    <td>
 	      <input type="text" name="newdescription0" id="newdescription0" size="40">
 	    </td>
-	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation0', 'newdescription0', 'resultText0');">
+	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation0', 'newdescription0', 'resultText0', 'location0', 'newLocation0', 'newDescription0');">
 	        <div id="resultText0"></div>
 	    </td>
 	  </tr>
