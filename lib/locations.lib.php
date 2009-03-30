@@ -55,7 +55,7 @@ function getLocations()
   return $records;
 }
 
-function getLocationsOptions($id)
+function getLocationsOptions()
 {
 	$loc_select = '<option value="-1">Select Location</option>';
 	

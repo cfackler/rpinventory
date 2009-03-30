@@ -89,7 +89,7 @@ echo <<<END
   <input type="text" name="newdescription$id" id="newdescription$id" size="40">
   </td>
   	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation$id', 'newdescription$id', 'resultText$id', 'location$id', 'newLocation$id', 'newDescription$id');">
-	        <div id="resultText$id"></div>
+	        <span id="resultText$id"></span>
 	    </td>
   </tr>
   </table>
