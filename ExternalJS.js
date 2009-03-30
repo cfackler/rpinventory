@@ -340,14 +340,22 @@ function ValidateSaneInput( objects, validateBusiness ){
 	    }
 	}				   // Only want to validate if we're adding a business
 	else if( cur_id == "total_cost" ){ // Validate a value in dollars
-	    if( !validateBusiness.checked && !objects[i].value.match( /^\d+\.\d{2}$/ ) ){
-		message = "Please enter a value in the form '$xxxxx.yy'";
-		offending_id = cur_id;
+	    if( !validateBusiness.checked ) {
+		if( objects[i].value.match( /^\d+$/ ) ){
+		    objects[i].value += '.00';
+		}
+		else if( !objects[i].value.match( /^\d+\.\d{2}$/ ) ){
+		    message = "Please enter a value in the form 'xxxxx.yy'";
+		    offending_id = cur_id;
+		}
 	    }
 	}
 	else if( cur_id.match( /^value\d+$/ ) ){ // Validate a value in dollars
-	    if( !objects[i].value.match( /^\d+\.\d{2}$/ ) ){
-		message = "Please enter a value in the form '$xxxxx.yy'";
+	    if( objects[i].value.match( /^\d+$/ ) ){
+		objects[i].value += '.00';
+	    }
+	    else if( !objects[i].value.match( /^\d+\.\d{2}$/ ) ){
+		message = "Please enter a value in the form 'xxxxx.yy'";
 		offending_id = cur_id;
 	    }
 	}
