@@ -37,7 +37,7 @@ $id = (int)$_GET['id'];
 if($id == 0)
   die("Invalid ID");
 
-$loc_select = getLocationsOptions();
+$loc_select = getLocationsOptions( $id );
 
 echo <<<END
 <table>

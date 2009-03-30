@@ -370,9 +370,11 @@ function addItemField() {
     var divs = t.getElementsByTagName("div");
     var nextnum = divs.length;
     var newrow = document.createElement('div');
+
     newrow.setAttribute('id', 'item' + nextnum);
     getItemBlockContents(newrow, nextnum);
     t.appendChild(newrow);
+
     var count = document.getElementById("count");
     count.setAttribute('value', nextnum + 1);
 
