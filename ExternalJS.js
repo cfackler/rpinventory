@@ -452,65 +452,56 @@ function getLocationOptions(element)
 function saveLocation(name, description, result, locationselect, locationTR, descriptionTR)
 {
     var resultElement = document.getElementById(result);
-    
     var nameText = document.getElementById(name).value;
-
     var descText = document.getElementById(description).value;
     var locationselectelement = document.getElementById(locationselect);
-
 
     new Ajax.Request("ajax.php?operation=savelocation&location="+nameText+"&description="+descText, 
 		  { 
 		      method: 'post', 
 			  onSuccess: function(transport)
 			  {
-			      resultElement.innerHTML = "Successfully saved.";
-			      
-			      //refresh elements in pulldown
-			      //var oldIndex = locationselectelement.selectedIndex;
-			      //alert("oldIndex = "+oldIndex);
-			      
-			      //locationselectelement.selectedIndex = Number(oldIndex+1);
-			      
-			      //find newly inserted element and select it
-			      //alert( "hi" );
+			      // Set status text
+			      resultElement.innerHTML = 'Successfully saved.';
+
+			      // Hide the new location fields
 			      document.getElementById( locationTR ).style.display = 'none';
 			      document.getElementById( descriptionTR ).style.display = 'none';
-			      //alert( 'hi2' );
+
+			      // Select the new location in the dropdown
 			      highlightEntry( locationselectelement, nameText );
-			      //locationselectelement.focus();
-			      //locationselectelement.blur();
-			      //var i;//, OptionText;
-			      //alert( nameText );
-			      //alert(locationselectelement.options[0]);
-			      //for(i = 0; i<locationselectelement.length; i++){
-			      //OptionText = locationselectelement.options[i].text;
-			      //	alert( i );
-			      //alert(OptionText);
-			      
-			      /*if(locationselectelement.options[i].text == nameText){
-			      //alert(OptionText+" was found when i="+i); 
-			      
-			      locationselectelement.selectedIndex = i;
-			      break;
-			      }
-			      }     */
+
 			  },
 			  onFailure: function()
-			  {
-			      alert( "Error saving location!" );
+			  {	// Alert on failure
+			      resultElement.innerHTML = 'Error saving location!';
 			  }
 		  });	     	  
 }
 
 function highlightEntry( selectElement, nameText ){
-    //    selectElement.focus();
-    //selectElement.blur();
-    //alert( "Item Saved!" );
+    // Reload the drop down, not asynchronously
+    getLocationOptionsNonAsynch( selectElement );
+
+    // Find the new location in the dropdown list and select it
     for( var i = 0; i < selectElement.length ; i++ ) {
 	if( selectElement.options[i].text == nameText ){
 	    selectElement.selectedIndex = i;
-	    return;
+	    break;
 	}
     }
+}
+
+// Same as getLocationOptions, just not asynchronous
+function getLocationOptionsNonAsynch(element)
+{
+	 new Ajax.Request("ajax.php?operation=locations", 
+		     { 
+			 method: 'post', asynchronous:false,
+			     onSuccess: function(transport)
+			     {
+				     var response = transport.responseText;
+				     element.innerHTML = response;
+			 	 }
+		     });
 }
