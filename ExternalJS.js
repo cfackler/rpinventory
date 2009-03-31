@@ -403,6 +403,7 @@ function addItemField() {
     getItemBlockContents(newrow, nextnum);
     t.appendChild(newrow);
     t.appendChild(br);
+
     var count = document.getElementById("count");
     count.setAttribute('value', nextnum + 1);
 
@@ -477,26 +478,61 @@ function getLocationOptions(element)
 		     });
 }
 
-function saveLocation(name, description, result)
+function saveLocation(name, description, result, locationselect, locationTR, descriptionTR)
 {
     var resultElement = document.getElementById(result);
-    
     var nameText = document.getElementById(name).value;
-
     var descText = document.getElementById(description).value;
-    
+    var locationselectelement = document.getElementById(locationselect);
 
     new Ajax.Request("ajax.php?operation=savelocation&location="+nameText+"&description="+descText, 
-		  { 
-			   method: 'post', 
-			   onSuccess: function(transport)
-			   {
-			       resultElement.innerHTML = "Successfully saved.";
-			   }
-		      
-		  });
+		     method: 'post', 
+		     onSuccess: function(transport)
+		     {
+			 // Set status text
+			 resultElement.innerHTML = 'Successfully saved.';
+
+			 // Hide the new location fields
+			 document.getElementById( locationTR ).style.display = 'none';
+			 document.getElementById( descriptionTR ).style.display = 'none';
+			 
+			 // Select the new location in the dropdown
+			 highlightEntry( locationselectelement, nameText );
+			 
+		     },
+		     onFailure: function()
+		     {	// Alert on failure
+			 resultElement.innerHTML = 'Error saving location!';
+		     }
+		     });	     	  
 }
 
+function highlightEntry( selectElement, nameText ){
+    // Reload the drop down, not asynchronously
+    getLocationOptionsNonAsynch( selectElement );
+
+    // Find the new location in the dropdown list and select it
+    for( var i = 0; i < selectElement.length ; i++ ) {
+	if( selectElement.options[i].text == nameText ){
+	    selectElement.selectedIndex = i;
+	    break;
+	}
+    }
+}
+
+// Same as getLocationOptions, just not asynchronous
+function getLocationOptionsNonAsynch(element)
+{
+	 new Ajax.Request("ajax.php?operation=locations", 
+		     { 
+			 method: 'post', asynchronous:false,
+			     onSuccess: function(transport)
+			     {
+				     var response = transport.responseText;
+				     element.innerHTML = response;
+			 	 }
+		     });
+}
 
 function hideBusiness() {
     var checkbox = document.getElementById( 'ignoreBusiness' );
@@ -508,4 +544,3 @@ function hideBusiness() {
 	span.style.display = "";
     }
 }
-
