@@ -461,37 +461,56 @@ function saveLocation(name, description, result, locationselect, locationTR, des
 
     new Ajax.Request("ajax.php?operation=savelocation&location="+nameText+"&description="+descText, 
 		  { 
-			   method: 'post', 
-			   onSuccess: function(transport)
-			   {
-				    resultElement.innerHTML = "Successfully saved1sdf23.";
-              
-            //refresh elements in pulldown
-            //var oldIndex = locationselectelement.selectedIndex;
-            //alert("oldIndex = "+oldIndex);
-            locationselectelement.focus();
-            locationselectelement.blur();
-            //locationselectelement.selectedIndex = Number(oldIndex+1);
-            
-            //find newly inserted element and select it
-            
-            
-            var i;
-            for(i = 0; i<locationselectelement.length; i++){
-             var OptionText = locationselectelement.options[i].innerHTML;
-             
-             //alert(OptionText);
-            
-              if(OptionText == nameText){
-                alert(OptionText+" was found when i="+i); 
+		      method: 'post', 
+			  onSuccess: function(transport)
+			  {
+			      resultElement.innerHTML = "Successfully saved.";
+			      
+			      //refresh elements in pulldown
+			      //var oldIndex = locationselectelement.selectedIndex;
+			      //alert("oldIndex = "+oldIndex);
+			      
+			      //locationselectelement.selectedIndex = Number(oldIndex+1);
+			      
+			      //find newly inserted element and select it
+			      //alert( "hi" );
+			      document.getElementById( locationTR ).style.display = 'none';
+			      document.getElementById( descriptionTR ).style.display = 'none';
+			      //alert( 'hi2' );
+			      highlightEntry( locationselectelement, nameText );
+			      //locationselectelement.focus();
+			      //locationselectelement.blur();
+			      //var i;//, OptionText;
+			      //alert( nameText );
+			      //alert(locationselectelement.options[0]);
+			      //for(i = 0; i<locationselectelement.length; i++){
+			      //OptionText = locationselectelement.options[i].text;
+			      //	alert( i );
+			      //alert(OptionText);
+			      
+			      /*if(locationselectelement.options[i].text == nameText){
+			      //alert(OptionText+" was found when i="+i); 
+			      
+			      locationselectelement.selectedIndex = i;
+			      break;
+			      }
+			      }     */
+			  },
+			  onFailure: function()
+			  {
+			      alert( "Error saving location!" );
+			  }
+		  });	     	  
+}
 
-                locationselectelement.selectedIndex = i;
-                break;
-              }
-            
-            }                   
-
-			 	 }
-			     
-		  });		  
+function highlightEntry( selectElement, nameText ){
+    //    selectElement.focus();
+    //selectElement.blur();
+    //alert( "Item Saved!" );
+    for( var i = 0; i < selectElement.length ; i++ ) {
+	if( selectElement.options[i].text == nameText ){
+	    selectElement.selectedIndex = i;
+	    return;
+	}
+    }
 }

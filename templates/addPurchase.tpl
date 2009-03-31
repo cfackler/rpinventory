@@ -199,7 +199,7 @@
 			{$locations}
 		
 	      </select>
-
+	    <span id="resultText0"></span>
 	    </td>
 	  </tr>
 
@@ -215,7 +215,6 @@
 	      <input type="text" name="newdescription0" id="newdescription0" size="40">
 	    </td>
 	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation0', 'newdescription0', 'resultText0', 'location0', 'newLocation0', 'newDescription0');">
-	        <span id="resultText0"></span>
 	    </td>
 	  </tr>
 	</table>
