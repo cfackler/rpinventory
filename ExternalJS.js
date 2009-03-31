@@ -485,25 +485,26 @@ function saveLocation(name, description, result, locationselect, locationTR, des
     var descText = document.getElementById(description).value;
     var locationselectelement = document.getElementById(locationselect);
 
-    new Ajax.Request("ajax.php?operation=savelocation&location="+nameText+"&description="+descText, 
-		     method: 'post', 
-		     onSuccess: function(transport)
-		     {
-			 // Set status text
-			 resultElement.innerHTML = 'Successfully saved.';
-
-			 // Hide the new location fields
-			 document.getElementById( locationTR ).style.display = 'none';
-			 document.getElementById( descriptionTR ).style.display = 'none';
-			 
-			 // Select the new location in the dropdown
-			 highlightEntry( locationselectelement, nameText );
-			 
-		     },
-		     onFailure: function()
-		     {	// Alert on failure
-			 resultElement.innerHTML = 'Error saving location!';
-		     }
+    new Ajax.Request("ajax.php?operation=savelocation&location="+nameText+"&description="+descText,
+		     { 
+			 method: 'post', 
+			     onSuccess: function(transport)
+			     {
+				 // Set status text
+				 resultElement.innerHTML = 'Successfully saved.';
+				 
+				 // Hide the new location fields
+				 document.getElementById( locationTR ).style.display = 'none';
+				 document.getElementById( descriptionTR ).style.display = 'none';
+				 
+				 // Select the new location in the dropdown
+				 highlightEntry( locationselectelement, nameText );
+				 
+			     },
+			     onFailure: function()
+			     {	// Alert on failure
+				 resultElement.innerHTML = 'Error saving location!';
+			     }
 		     });	     	  
 }
 
