@@ -2,8 +2,8 @@
 * Attributes
 */
 a {
-    color:#303030;
-    text-decoration:underline;
+    color: #303030;
+    text-decoration: underline;
 }
 
 
@@ -57,7 +57,7 @@ div.left_sidebar {
 
 /* LINK styles */
 div.left_sidebar a {
-    color: #d4d4d4;
+    color: #e0e0e0;
     font-size: 14px;
     text-decoration:none;
 }
