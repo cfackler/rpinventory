@@ -66,6 +66,8 @@
 {if $authority >= 1}
 
 <br />
-<a href="makeInventorySummary.php"><img border="0" src="images/pdficon_small.gif" />&nbsp;&nbsp;Download PDF</a>
 
 {/if}
+
+<a href="makeInventorySummary.php"><img border="0" src="images/pdficon_small.gif" />&nbsp;&nbsp;Download PDF</a>
+
