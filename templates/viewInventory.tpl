@@ -26,8 +26,10 @@
 			<th width="20"> </th>
 		{/if}
 		<th width="250">Item</th>
-		<th width="100">Condition</th>
-		<th>Value</th>
+		{if $authority >= 1}
+		    <th width="100">Condition</th>
+		    <th>Value</th>
+		{/if}
 		<th>Location</th>
 	</tr>
 
@@ -37,8 +39,10 @@
 		<td><input type="checkbox" name="{$items[itemLoop]->inventory_id}" id="{$items[itemLoop]->inventory_id}"></td>
 	{/if}
 	<td>{$items[itemLoop]->description}</td>
-	<td>{$items[itemLoop]->current_condition}</td>
-	<td>{$items[itemLoop]->current_value}</td>
+	{if $authority >= 1}
+		<td>{$items[itemLoop]->current_condition}</td>
+		<td>{$items[itemLoop]->current_value}</td>
+	{/if}
 	<td align="center">{$items[itemLoop]->location}</td>
 </tr>
 {/section}	
