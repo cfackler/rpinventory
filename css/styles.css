@@ -22,7 +22,7 @@ body {
  * Red color for header
  * sidebar background
  **/
-div.header, div.left_sidebar{
+div.header, div.navigationBar{
     background-color: #d50000;
 }
 
@@ -46,7 +46,7 @@ div.header {
 /**
  * Sidebar border and background colors
  **/
-div.left_sidebar {
+div.navigationBar {
     position: absolute;
     border:solid 2px;
     top:145px;
@@ -60,14 +60,14 @@ div.left_sidebar {
 
 
 /* LINK styles */
-div.left_sidebar a {
+div.navigationBar a {
     color: #e0e0e0;
     font-size: 12px;
     text-decoration:none;
 }
 
 
-div.left_sidebar a:hover {
+div.navigationBar a:hover {
     color: #f0f0f0;
 }
 
@@ -75,7 +75,7 @@ div.left_sidebar a:hover {
 /**
  * List items in sidebar
  **/
-div.left_sidebar ul {
+div.navigationBar ul {
     /** No Bullets **/
     list-style-type: none;
     
@@ -90,7 +90,7 @@ div.left_sidebar ul {
 }
 
 
-div.left_sidebar ul li {
+div.navigationBar ul li {
     padding-right:5px;
     border-bottom: solid 1px;
     
@@ -101,7 +101,7 @@ div.left_sidebar ul li {
  * This is for any items in the sidebar that aren't links
  * Like the "Admin" section divider
  **/
-div.left_sidebar ul li.SidebarSectionHeader {
+div.navigationBar ul li.SidebarSectionHeader {
     padding-left: 5px;
     color: #FFFFFF;
     font-size: 14px;

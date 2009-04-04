@@ -34,10 +34,10 @@
   jQuery.noConflict()
 
 jQuery(document).ready(function(){
-  jQuery('div.left_sidebar a').mouseover(function(){
+  jQuery('div.navigationBar a').mouseover(function(){
     jQuery(this).parent("li").addClass("naviOver");
   });
-  jQuery('div.left_sidebar a').mouseout(function(){
+  jQuery('div.navigationBar a').mouseout(function(){
     jQuery(this).parent("li").removeClass("naviOver");
   });
 });
@@ -63,7 +63,7 @@ jQuery(document).ready(function(){
 			<span class="headerContent">{$clubName}</span>
 	    </div>
 		
-	    <div class="left_sidebar">
+	    <div class="navigationBar">
 	    	 <ul>
 			<li class="SidebarSectionHeader">Home</li>
 			<li><a href="viewInventory.php">View Inventory</a></li>
