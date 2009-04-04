@@ -22,10 +22,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>RPI Inventory</title>
-<link rel="stylesheet" href="css/styles.css" type="text/css" />
 
+<link rel="stylesheet" href="css/styles.css" type="text/css" />
 <script src="ExternalJS.js" language="javascript" type="text/javascript"></script>
 <script src="prototype.js" language="javascript" type="text/javascript"></script>
+
+<script type="text/javascript" src="modules/jquery/jquery.js"></script>
+
+{literal}
+<script type="text/javascript">
+  jQuery.noConflict()
+
+jQuery(document).ready(function(){
+  jQuery('div.left_sidebar a').mouseover(function(){
+    jQuery(this).parent("li").addClass("naviOver");
+  });
+  jQuery('div.left_sidebar a').mouseout(function(){
+    jQuery(this).parent("li").removeClass("naviOver");
+  });
+});
+</script>
+{/literal}
+
+
+
+
+
+
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
@@ -42,7 +65,7 @@
 		
 	    <div class="left_sidebar">
 	    	 <ul>
-			<li class="nonLinkSidebarItem">Home</li>
+			<li class="SidebarSectionHeader">Home</li>
 			<li><a href="viewInventory.php">View Inventory</a></li>
 			{if $authority >= 1}
 		             <li><a href="viewBorrowers.php">View Borrowers</a></li>
@@ -54,7 +77,7 @@
 			     {/if}
 			     
 			     <li><br /></li>
-			     <li class="nonLinkSidebarItem">Admin</li>
+			     <li class="SidebarSectionHeader">Admin</li>
 			     <li><a href="manageLocations.php">Manage Locations</a></li>
 			{/if}
 			
