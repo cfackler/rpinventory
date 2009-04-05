@@ -18,11 +18,13 @@
 
 *}
 
+<div class="TopOfTable">
+<span class="TopOfTable">
+     <h3>Select Items to be Included</h3>
+</span>
+</div>
 
 <form name="makeSummary" id="checkBoxForm" action="makeSummary.php" onsubmit="return ValidateForm()" METHOD="post">
-
-
-<h3>Select Items to be Included</h3>
 
 <ul class="nobullets">
 	<li>
