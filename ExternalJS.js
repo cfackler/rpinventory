@@ -558,3 +558,21 @@ function hideBusiness() {
 	span.style.display = "";
     }
 }
+
+
+function checkUsername( keyevent )
+{
+    keyEvent = (keyEvent) ? keyEvent: window.event;
+    input = (keyEvent.target) ? keyEvent.target :
+	keyEvent.srcElement;
+    
+    if( keyEvent.type == "keyup" ) {
+	var targetDiv = document.getElementById( 'targetDiv' );
+	targetDiv.innerHTML = "<div></div>";
+
+
+	if( input.value ) {
+	    //	    getData( "login.php?qu=" + input.value );
+	}
+    }
+}

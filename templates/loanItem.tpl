@@ -121,14 +121,8 @@
 	<td>Loan To: </td>
 	<td>
 	
-	<select id="user_id" name="user_id" class="validate" onchange="sendAddressRequest({$users[usr]->id});">
-		<option value="-1">Select User</option>
-	{section name=usr loop=$users}
-		<option value="{$users[usr]->id}">
-			{$users[usr]->username}
-		</option>
-	{/section}
-	</select>
+	<input id="user_id" name="user_id" class="validate" type="text" onkeyup="checkUsername(event)"/>
+	<div id="targetDiv"></div>
 	
 	</td>
 </tr>
