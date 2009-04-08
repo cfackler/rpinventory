@@ -24,4 +24,6 @@ database_password = inventory
 database_name = rpinventory
 
 ; club name for this RPInventory installation
-club_name = clubname
+; This is used for the header text on each page and also in the PDF
+; report.
+club_name = RPInventory
