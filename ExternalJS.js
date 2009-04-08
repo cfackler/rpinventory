@@ -93,10 +93,10 @@ function recieveAddress(oReq, oJSN){
     if(oJSN.Found == "False"){
 	$('address').value = "";
 	$('address2').value = "";
-	$('City').value = "";
-	$('State').value = "";
-	$('Zipcode').value = "";
-	$('Phone').value = "";
+	$('city').value = "";
+	$('state').value = "";
+	$('zipcode').value = "";
+	$('phone').value = "";
 	$('useOld').checked = false;
 	$('useOld').disabled = true;
 	useAddress();
@@ -105,10 +105,10 @@ function recieveAddress(oReq, oJSN){
     
     $('address').value = oJSN.Address;
     $('address2').value = oJSN.Address2;
-    $('City').value = oJSN.City;
-    $('State').value = oJSN.State;
-    $('Zipcode').value = oJSN.Zipcode;
-    $('Phone').value = oJSN.Phone;
+    $('city').value = oJSN.City;
+    $('state').value = oJSN.State;
+    $('zipcode').value = oJSN.Zipcode;
+    $('phone').value = oJSN.Phone;
     
     $('useOld').checked = true;
     $('useOld').disabled = false;
