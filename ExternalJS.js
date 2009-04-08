@@ -125,10 +125,10 @@ function useAddress(){
     
     $('address').disabled = status;
     $('address2').disabled = status;
-    $('City').disabled = status;
-    $('State').disabled = status;
-    $('Zipcode').disabled = status;
-    $('Phone').disabled = status;
+    $('city').disabled = status;
+    $('state').disabled = status;
+    $('zipcode').disabled = status;
+    $('phone').disabled = status;
 }
 
 function sendValidateRequest(itemID){
