@@ -18,9 +18,14 @@
 
 *}
 
-<h3>
+<div class="TopOfTable">
+  <span class="TopOfTable">
+    <h3>
 	Use this link to create a backup of your current installation
-</h3>
+    </h3>
+  </span>
+</div>
+
 <p>
 	<a class="indent" href="createBackup.php">Create a database backup</a>
 </p>

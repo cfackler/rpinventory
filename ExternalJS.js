@@ -480,6 +480,7 @@ function getLocationOptions(element)
 
 function saveLocation(name, description, result, locationselect, locationTR, descriptionTR)
 {
+    
     var resultElement = document.getElementById(result);
     var nameText = document.getElementById(name).value;
     var descText = document.getElementById(description).value;
@@ -496,6 +497,18 @@ function saveLocation(name, description, result, locationselect, locationTR, des
 				 // Hide the new location fields
 				 document.getElementById( locationTR ).style.display = 'none';
 				 document.getElementById( descriptionTR ).style.display = 'none';
+				 
+				 //Clear the new location fields
+
+				 //gets inventory count to concatenate ids with
+				 var newLocNum = document.getElementById("itemTable").getElementsByTagName("div").length-1;
+          //clears fields
+          document.getElementById("newlocation"+newLocNum).value = "";
+          document.getElementById("newdescription"+newLocNum).value = "";
+          
+				 
+
+				 
 				 
 				 // Select the new location in the dropdown
 				 highlightEntry( locationselectelement, nameText );
