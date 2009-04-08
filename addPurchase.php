@@ -67,8 +67,6 @@ $locations = getLocationsOptions();
 $smarty->assign('title', "Purchase Items");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'addPurchase');
-//$smarty->assign('items', $items);
-//$smarty->assign('count', $count);
 $smarty->assign('businesses', $businesses);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('locations', $locations);
