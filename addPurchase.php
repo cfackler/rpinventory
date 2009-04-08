@@ -38,8 +38,6 @@ if($auth < 1)
 require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
-//$count = (int)$_GET['count'];
-
 //Business List
 
 $businessQuery = "SELECT business_id, company_name FROM businesses";
@@ -49,17 +47,8 @@ $businesses = array();
 while($business = mysqli_fetch_object($businessResult))
   $businesses [] = $business;
 
-//inventory list
-//$itemQuery= "SELECT inventory_id, description FROM inventory";
-//$itemResult = mysqli_query($link, $itemQuery);
-//$items = array();
-
-//while($item = mysqli_fetch_object($itemResult))
-//  $items [] = $item;
-
 //Locations
 $locations = getLocationsOptions();
-
 
 //BEGIN Page
 	
