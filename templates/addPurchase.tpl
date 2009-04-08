@@ -36,7 +36,7 @@
         <table><tr>
 	<td>Purchased	From:</td>
       
-	<td><select id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
+	<td><select class="dropDown" id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
 	<option value="-1">Select Business</option>
 	{section name=bus loop=$businesses}
 	<option value="{$businesses[bus]->business_id}">
@@ -110,7 +110,7 @@
 	Date:
       </td>
       <td>
-      <select name="months">
+      <select class="dropDown" name="months">
         <option value="1"{if $selectDate.mon == 1}selected{/if}>January</option>
         <option value="2"{if $selectDate.mon == 2}selected{/if}>February</option>
         <option value="3"{if $selectDate.mon == 3}selected{/if}>March</option>
@@ -125,7 +125,7 @@
         <option value="12"{if $selectDate.mon == 12}selected{/if}>December</option>
       </select>
 
-      <select name="days">
+      <select class="dropDown" name="days">
         <option value="1"{if $selectDate.mday == 1}selected{/if}>1</option>
         <option value="2"{if $selectDate.mday == 2}selected{/if}>2</option>
         <option value="3"{if $selectDate.mday == 3}selected{/if}>3</option>
@@ -160,7 +160,7 @@
       </select>
       
       
-      <select name="year">
+      <select class="dropDown" name="year">
         <option value="2007"{if $selectDate.year == 2007}selected{/if}>2007</option>
         <option value="2008"{if $selectDate.year == 2008}selected{/if}>2008</option>
 	<option value="2009"{if $selectDate.year == 2009}selected{/if}>2009</option>
@@ -197,7 +197,7 @@
 	  <tr>
 	    <td>Condition: </td>
 	    <td>
-	      <select name="condition0">
+	      <select class="dropDown" name="condition0">
 		<option value="Excellent">Excellent</option>
 		<option value="Good">Good</option>
 		<option value="Fair">Fair</option>
@@ -210,7 +210,7 @@
 	    <td>Location: </td>
 
 	    <td>
-	      <select id="location0" name="location0" onChange="OnChangeDouble('location0', 'newLocation0', 'newDescription0')" onFocus="getLocationOptions(this);">
+	      <select class="dropDown" id="location0" name="location0" onChange="OnChangeDouble('location0', 'newLocation0', 'newDescription0')" onFocus="getLocationOptions(this);">
 
 			{$locations}
 		
@@ -238,8 +238,8 @@
     <br />
     </div>
     <div>
-      <td><input type="button" onClick="addItemField();" value="Add Item">
-	<input type="button" id="removeButton" style="display:none;" onClick="removeItemField();" value="Remove Last Item"></td>
+      <td><input type="button" class="button" onClick="addItemField();" value="Add Item">
+	<input type="button" class="button" id="removeButton" style="display:none;" onClick="removeItemField();" value="Remove Last Item"></td>
       <td></td>
     </div>
 

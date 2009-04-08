@@ -158,16 +158,17 @@
 
 {if $authority >= 1}
 	
-<select name="action_list" id="action_list">
+<select class="dropDown" name="action_list" id="action_list">
 	<option value="Loan">Loan</option>
 	<option value="Checkout">Checkout</option>
 	<option value="Edit">Edit</option>
 	<option value="Repair">Repair</option>
 	<option value="Delete">Delete</option>
+
 </select>
 
 
-<input type="button" onclick="submitItems()" value="Go">
+<input type="button" class="button" onclick="submitItems()" value="Go">
 {/if}
 
 </form>

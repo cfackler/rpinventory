@@ -1,3 +1,5 @@
+
+
 /*
 * Attributes
 */
@@ -54,21 +56,20 @@ div.navigationBar {
     left:0px
 }
 
-.naviOver {
-  background-color:#ff0000;
-}
-
 
 /* LINK styles */
 div.navigationBar a {
     color: #e0e0e0;
     font-size: 12px;
     text-decoration:none;
+    display:block;
+    padding-right:5px;
 }
 
 
 div.navigationBar a:hover {
     color: #f0f0f0;
+    background-color:#ff0000;
 }
 
 
@@ -91,9 +92,7 @@ div.navigationBar ul {
 
 
 div.navigationBar ul li {
-    padding-right:5px;
-    border-bottom: solid 1px;
-    
+    border-bottom: solid 1px;    
 }
 
 
@@ -214,6 +213,7 @@ span.TopOfTable h3{
     padding: 0px;
     margin: 0px;
 }
+<<<<<<< HEAD:css/styles.css
 
 
 #userAutoComplete {
@@ -228,3 +228,24 @@ span.TopOfTable h3{
 #userAutoComplete span:hover{
     background-color: #b5b5b5;
 }
+=======
+.naviOver {
+  background-color:#ff0000;
+}
+
+.button {
+  background-color:#d50000;
+  border: 2px solid black;
+  color: #ffffff;
+}
+
+.dropDown {
+  background-color: #d50000;
+  border:2px solid black;
+  color: #ffffff;
+}
+.dropDown option{
+  border-top:1px dotted black;
+  color: #ffffff;
+}
+>>>>>>> Worked on design a bit...Created nice looking pulldown boxes and buttons.:css/styles.css

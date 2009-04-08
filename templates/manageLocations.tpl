@@ -81,7 +81,7 @@
 	<td align="center">{$locations[num]->description}</td>
 	<td align="center">
 	<a href="editLocation.php?id={$locations[num]->location_id}">Edit</a> or  
-	<input type="button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')" value="Delete">
+	<input type="button" class="button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')" value="Delete">
 	</td>
 </tr>
 {/section}	

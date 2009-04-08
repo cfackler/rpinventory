@@ -149,7 +149,7 @@
 	<td align="center">{$users[userLoop]->rin}</td>
 	<td align="center">{$users[userLoop]->email}</td>
 	
-	<td align="center"><a href="editUser.php?id={$users[userLoop]->id}">Edit</a> or <input type="button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')" value="Delete User"></td>
+	<td align="center"><a href="editUser.php?id={$users[userLoop]->id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')" value="Delete User"></td>
 </tr>
 {/section}	
 
