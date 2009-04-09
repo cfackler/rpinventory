@@ -55,20 +55,53 @@ function getLocations()
   return $records;
 }
 
+function getCommonLocation()
+{
+  require_once( 'lib/connect.lib.php' );
+  require_once( 'lib/auth.lib.php' );
+
+  // Connect
+  $link = connect();
+  if( $link == null )
+    die( "Database connection failed" );
+  
+  // Authenticate
+  $auth = GetAuthority();
+  if($auth < 1)
+    die("You dont have permission to access this page");
+
+  $sql = 'SELECT count(locations.location_id) AS counts, locations.location_id, location FROM inventory, locations
+ WHERE locations.location_id = inventory.location_id ORDER BY counts desc LIMIT 1';
+  $result = mysqli_query( $link, $sql ) or
+    die( 'Could not determine most common location' );
+ 
+  $result = mysqli_fetch_object( $result );
+
+  return $result;
+}
+
 function getLocationsOptions()
 {
-	$loc_select = '<option value="-1">Select Location</option>';
+  $loc_select;
 	
-	//get locations array
-	$locations = getLocations();
-		
-	foreach($locations as $location) {
-	  $loc_select .= '<option value="' . $location->location_id . '">';
-	  $loc_select .= $location->location . "</option>";
-	}
-	$loc_select .= "<option>New Location</option>";
-	
-	return $loc_select;
+  //get locations array
+  $locations = getLocations();
+
+  /* Gets the most common location_id */
+  $commonLocation = getCommonLocation();
+
+  $loc_select = '<option value="'.$commonLocation->location_id . '">';
+  $loc_select .= $commonLocation->location . "</option>";
+  
+  foreach($locations as $location) {
+    if( $location->location_id != $commonLocation->location_id ){
+      $loc_select .= '<option value="' . $location->location_id . '">';
+      $loc_select .= $location->location . "</option>";
+    }
+  }
+  $loc_select .= "<option>New Location</option>";
+  
+  return $loc_select;
 }
 
 function insertLocation($location, $desc)

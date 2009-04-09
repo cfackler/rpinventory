@@ -76,27 +76,34 @@ if (!file_exists('config/config.ini.php') || $retry) {
   }
   
   /* create database */
-  mysqli_query($link, "CREATE DATABASE IF NOT EXISTS `" . $database . "`");
+  mysqli_query($link, "CREATE DATABASE IF NOT EXISTS `" . $database . "`") || die("Could not create database");
 
   /* add user */
-  mysqli_query($link, 'GRANT SELECT,INSERT,UPDATE,DELETE ON ' . $database . ".* TO '" . $username . "'@'" . $hostname . "' IDENTIFIED BY '" . $password . "'");
+  mysqli_query($link, 'GRANT SELECT,INSERT,UPDATE,DELETE ON ' . $database . ".* TO '" . $username . "'@'" . $hostname . "' IDENTIFIED BY '" . $password . "'") || die("Could not add database user");
 
-  mysqli_select_db($link, $database);
+  mysqli_select_db($link, $database) || die("Could not select database");
 
   /* read in setup sql and create database structure */
   $sql = file_get_contents('sql/setup.sql');
-  mysqli_multi_query($link, $sql);
+  mysqli_multi_query($link, $sql) || die("Could not create table structure");
+  echo('<p>Created table structure.</p>');
+
+  /* process results of multi_query to flush empty result sets */
+  do {
+    mysqli_use_result($link);
+  } while(mysqli_next_result($link));
 
   /* create admin user for application */
   $sql = 'INSERT INTO logins (id, username, password, access_level, rin, email, name) VALUES ';
   $sql .= "(NULL, '" . $adminuser . "', '" . md5($adminpass) . "', 2, '0', 'admin', 'admin')";
 
-  mysqli_query($link, $sql);
+  mysqli_query($link, $sql) || die("Could not create admin account.");
+  echo('<p>Admin account creation successful.</p>');
 
   /* close connection */
   mysqli_close($link);
 
-  echo('Installation successful. <a href="index.php">Use RPInventory</a>');
+  echo('<p>Installation successful. <a href="index.php">Use RPInventory</a></p>');
 } else {
   /* GO AWAY! Shouldn't be here if no need to install */
   header('Location: index.php');
