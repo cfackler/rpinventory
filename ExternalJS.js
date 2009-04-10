@@ -502,12 +502,9 @@ function saveLocation(name, description, result, locationselect, locationTR, des
 
 				 //gets inventory count to concatenate ids with
 				 var newLocNum = document.getElementById("itemTable").getElementsByTagName("div").length-1;
-          //clears fields
-          document.getElementById("newlocation"+newLocNum).value = "";
-          document.getElementById("newdescription"+newLocNum).value = "";
-          
-				 
-
+				 //clears fields
+				 document.getElementById("newlocation"+newLocNum).value = "";
+				 document.getElementById("newdescription"+newLocNum).value = "";
 				 
 				 
 				 // Select the new location in the dropdown
@@ -560,19 +557,28 @@ function hideBusiness() {
 }
 
 
-function checkUsername( keyevent )
-{
-    keyEvent = (keyEvent) ? keyEvent: window.event;
-    input = (keyEvent.target) ? keyEvent.target :
-	keyEvent.srcElement;
-    
-    if( keyEvent.type == "keyup" ) {
-	var targetDiv = document.getElementById( 'targetDiv' );
-	targetDiv.innerHTML = "<div></div>";
-
-
-	if( input.value ) {
-	    //	    getData( "login.php?qu=" + input.value );
-	}
+function checkUsername() {
+    input = document.getElementById( 'username' );
+    if( input.value != "") {
+	new Ajax.Request( 'ajax.php?operation=username&name=' + input.value, 
+			  { 
+			      method: 'post',
+				  onSuccess: showUsernames
+				  });
+    }
+    else{
+	document.getElementById( 'targetDiv' ).style.display = "none";
     }
 }
+
+function showUsernames(oReq, oJSN){
+    var targetDiv = document.getElementById( 'targetDiv' );
+    var i;
+    targetDiv.innerHTML = "";
+    for( i = 0; i < oJSN.records.length; i++ ){
+	targetDiv.innerHTML = targetDiv.innerHTML + oJSN.records[i] + '<br />';
+    }
+    
+    targetDiv.style.display = "";
+}
+

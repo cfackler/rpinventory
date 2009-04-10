@@ -121,7 +121,13 @@
 	<td>Loan To: </td>
 	<td>
 	
-	<input id="user_id" name="user_id" class="validate" type="text" onkeyup="checkUsername(event)"/>
+	<input id="username" name="username" class="validate" type="text" onkeyup="checkUsername()"/>
+	
+	</td>
+</tr>
+<tr>
+	<td>
+	
 	<div id="targetDiv"></div>
 	
 	</td>

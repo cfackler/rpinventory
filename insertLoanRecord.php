@@ -36,9 +36,18 @@ if($auth < 1)
 
 	
 //User
-$user_id = (int)$_POST["user_id"];
-if($user_id == 0)
-	die("Invalid ID");
+$user_name = mysqli_real_escape_string( $link, $_POST["user_name"] );
+if($user_name == "")
+	die("Invalid Username");
+
+$user_id;
+
+$sql = 'SELECT id FROM logins WHERE username = "'.$user_name.'" LIMIT 1';
+
+$result = mysqli_query( $link, $sql ) or
+  die( 'Invalid user id found'.mysqli_error($link) );
+$result = mysqli_fetch_object( $result );
+$user_id = $result->id;
 
 if(!VerifyUserExists($user_id, $link))
 	die("Invalid User");
