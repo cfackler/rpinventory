@@ -50,11 +50,6 @@ while($user = mysqli_fetch_object($userResult))
 	$users [] = $user;
 }
 
-//BEGIN Page
-
-
-
-	
 //Assign vars
 $smarty->assign('title', "Manage Users");
 $smarty->assign('authority', $auth);
