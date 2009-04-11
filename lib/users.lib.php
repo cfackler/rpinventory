@@ -52,4 +52,41 @@ function getUsers()
   return $records;
 }
 
+function getUsernames( $name )
+{
+  require_once( 'modules/json/JSON.php' );
+  require_once( 'lib/connect.lib.php' );
+  require_once( 'lib/auth.lib.php' );
+
+  // Connect
+  $link = connect();
+  if( $link == null )
+    die( "Database connection failed" );
+  
+  // Authenticate
+  $auth = GetAuthority();
+  if($auth < 1)
+	  die("You dont have permission to access this page");
+
+  $sql = 'SELECT username FROM logins';
+
+  $result = mysqli_query( $link, $sql ) or
+    die( 'Could not get the usernames' );
+
+  $records = array();
+ 
+  while ( $record = mysqli_fetch_object( $result ) ){
+    if ( preg_match( '!^'.$name.'!', $record->username ) ) {
+      $records[] = $record->username;
+    }
+  }
+
+  $data = array( "records" => $records );
+  mysqli_close( $link );
+ 
+  $json = new Services_JSON();
+  
+  header('X-JSON: ('.$json->encode( $data ).')');
+}
+
 ?>

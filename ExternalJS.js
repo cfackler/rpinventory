@@ -556,7 +556,7 @@ function hideBusiness() {
     }
 }
 
-
+// Ajax call to get the usernames
 function checkUsername() {
     input = document.getElementById( 'username' );
     if( input.value != "") {
@@ -566,19 +566,26 @@ function checkUsername() {
 				  onSuccess: showUsernames
 				  });
     }
-    else{
-	document.getElementById( 'targetDiv' ).style.display = "none";
+    else{			// If there's no text, make sure the drop-down is hidden
+	document.getElementById( 'userAutoComplete' ).style.display = "none";
     }
 }
 
+// Populate the drop-down
 function showUsernames(oReq, oJSN){
-    var targetDiv = document.getElementById( 'targetDiv' );
+    var targetDiv = document.getElementById( 'userAutoComplete' );
     var i;
     targetDiv.innerHTML = "";
     for( i = 0; i < oJSN.records.length; i++ ){
-	targetDiv.innerHTML = targetDiv.innerHTML + oJSN.records[i] + '<br />';
+	targetDiv.innerHTML = targetDiv.innerHTML + '<span style="display:block" onclick="fillText( \'' +  oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
     }
     
     targetDiv.style.display = "";
 }
 
+// Take the clicked value, and put it in the textbox
+function fillText( text ){
+    var targetTextbox = document.getElementById( 'username' );
+    targetTextbox.value = text;
+    document.getElementById( 'userAutoComplete' ).style.display = "none";
+}

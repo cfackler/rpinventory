@@ -35,7 +35,7 @@
 
 
 {else}
-<table width="400">
+<table width="500">
 
 <input type="hidden" name="inventory_ids" size="40" value="{$idString}">
 
@@ -121,14 +121,15 @@
 	<td>Loan To: </td>
 	<td>
 	
-	<input id="username" name="username" class="validate" type="text" onkeyup="checkUsername()"/>
+	<input id="username" name="username" class="validate" type="text" onkeyup="checkUsername()" autocomplete="off"/>
 	
 	</td>
 </tr>
 <tr>
+	<td />
 	<td>
 	
-	<div id="targetDiv"></div>
+	<div id="userAutoComplete" style="display:none"></div>
 	
 	</td>
 </tr>

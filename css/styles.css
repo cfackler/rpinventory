@@ -211,3 +211,17 @@ span.TopOfTable h3{
     padding: 0px;
     margin: 0px;
 }
+
+
+#userAutoComplete {
+    width: 152px;
+    border: solid 1px;
+    background-color: #FFFFFF;
+    color: #303030;
+    position: relative;
+    top: -5px;
+}
+
+#userAutoComplete span:hover{
+    background-color: #b5b5b5;
+}

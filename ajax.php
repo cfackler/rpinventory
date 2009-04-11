@@ -22,7 +22,7 @@
 */
 
 require_once( 'lib/locations.lib.php' );
-require_once( 'lib/usernames.lib.php' );
+require_once( 'lib/users.lib.php' );
 
 switch ($_GET["operation"])
   {
