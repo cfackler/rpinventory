@@ -579,8 +579,10 @@ function showUsernames(oReq, oJSN){
     for( i = 0; i < oJSN.records.length; i++ ){
 	targetDiv.innerHTML = targetDiv.innerHTML + '<span style="display:block" onclick="fillText( \'' +  oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
     }
-    
-    targetDiv.style.display = "";
+
+    if( oJSN.records.length > 0 ){
+	targetDiv.style.display = "";
+    }
 }
 
 // Take the clicked value, and put it in the textbox
