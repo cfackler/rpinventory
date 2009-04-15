@@ -235,13 +235,13 @@ span.TopOfTable h3{
 
 .button {
   background-color:#d50000;
-  border: 2px solid black;
+  border: 1px solid black;
   color: #ffffff;
 }
 
 .dropDown {
   background-color: #d50000;
-  border:2px solid black;
+  border: 1px solid black;
   color: #ffffff;
 }
 .dropDown option{
