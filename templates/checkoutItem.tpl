@@ -62,7 +62,7 @@
 
 
 <tr>
-	<td>Loan To: </td>
+	<td>Checkout To: </td>
 	<td>
 	
 	<input id="username" name="username" class="validate" type="text" onkeyup="checkUsername()" autocomplete="off"/>
@@ -134,7 +134,7 @@
 
 <br>
 
-<input type="submit" value="Loan">
+<input type="submit" value="Checkout">
 {/if}
 
 
