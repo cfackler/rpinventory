@@ -29,22 +29,22 @@
 		<th>
 		{* Default *}
 		{if !isset($sort) }
-		  <a class="tableHeaderLink" href="?sort=name&sortdir=DESC">
+		  <a href="?sort=name&sortdir=DESC">
 		    Name
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'name' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="?sort=name&sortdir=DESC">
+		  <a href="?sort=name&sortdir=DESC">
 		    Name
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'name' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="?sort=name">
+		  <a href="?sort=name">
 		    Name
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="?sort=name">
+		  <a href="?sort=name">
 		    Name
 		  </a>
 		{/if}
@@ -53,17 +53,17 @@
 		{* Username *}
 		<th width="100">
 		{if isset($sort) && $sort == 'username' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="?sort=username&sortdir=DESC">
+		  <a href="?sort=username&sortdir=DESC">
 		    Username
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
       </a>
     {elseif isset($sort) && $sort == 'username' && $sortdir=='DESC'}
-      <a class="tableHeaderLink" href="?sort=username">
+      <a href="?sort=username">
 		    Username
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
       </a>
     {else}
-      <a class="tableHeaderLink" href="?sort=username">
+      <a href="?sort=username">
 		    Username
       </a>
     {/if}
@@ -72,17 +72,17 @@
     {* Access *}
 		<th width="100">
 		{if isset($sort) && $sort == 'access_level' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="?sort=access_level&sortdir=DESC">
+		  <a href="?sort=access_level&sortdir=DESC">
 		    Access
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'access_level' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="?sort=access_level">
+		  <a href="?sort=access_level">
 		    Access
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="?sort=access_level">
+		  <a href="?sort=access_level">
 		    Access
 		  </a>
 		{/if}
@@ -91,17 +91,17 @@
 		{* RIN *}
 		<th width="100">
 		{if isset($sort) && $sort =='rin' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="?sort=rin&sortdir=DESC">
+		  <a href="?sort=rin&sortdir=DESC">
 		    RIN
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort =='rin' && $sortdir=='DESC'}
-		  <a class="tableHeaderLink" href="?sort=rin">
+		  <a href="?sort=rin">
 		    RIN
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="?sort=rin">
+		  <a href="?sort=rin">
 		    RIN
 		  </a>
 		{/if}
@@ -110,17 +110,17 @@
 		{* Email *}
 		<th width="150">
 		{if isset($sort) && $sort == 'email' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="?sort=email&sortdir=DESC">
+		  <a href="?sort=email&sortdir=DESC">
 		    Email
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'email' && $sortdir=='DESC'}
-		  <a class="tableHeaderLink" href="?sort=email">
+		  <a href="?sort=email">
 		    Email
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="?sort=email">
+		  <a href="?sort=email">
 		    Email
 		  </a>
 		{/if}

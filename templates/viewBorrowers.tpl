@@ -31,22 +31,22 @@
     <th width="150">
     {* Default sorting option for all columns *}
     {if !isset($sort) }
-      <a class="tableHeaderLink" href="viewBorrowers.php?sort=name&sortdir=DESC">
+      <a href="viewBorrowers.php?sort=name&sortdir=DESC">
         Name
-        <img src="images/sortTriangleUp.png" />
+        <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
       </a>
     {elseif $sort == 'name' && !isset($sortdir)}
-      <a class="tableHeaderLink" href="viewBorrowers.php?sort=name&sortdir=DESC">
+      <a href="viewBorrowers.php?sort=name&sortdir=DESC">
         Name
-        <img src="images/sortTriangleUp.png" />
+        <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
       </a>
     {elseif $sort == 'name' && $sortdir == 'DESC'}
-      <a class="tableHeaderLink" href="viewBorrowers.php?sort=name">
+      <a href="viewBorrowers.php?sort=name">
         Name
-        <img src="images/sortTriangleDown.png" />
+        <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
       </a>
     {else}
-      <a class="tableHeaderLink" href="viewBorrowers.php?sort=name">
+      <a href="viewBorrowers.php?sort=name">
         Name
       </a>
     {/if}
@@ -55,17 +55,17 @@
     {* RIN *}
 		<th width="100">
 		{if isset($sort) && $sort == 'rin' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=rin&sortdir=DESC">
+		  <a href="viewBorrowers.php?sort=rin&sortdir=DESC">
 		    RIN
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'rin' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=rin">
+		  <a href="viewBorrowers.php?sort=rin">
 		    RIN
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		    <a class="tableHeaderLink" href="viewBorrowers.php?sort=rin">
+		    <a href="viewBorrowers.php?sort=rin">
 		    RIN
 		  </a>
 		{/if}
@@ -74,17 +74,17 @@
 		{* Email *}
 		<th width="150">
 		{if isset($sort) && $sort == 'email' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=email&sortdir=DESC">
+		  <a href="viewBorrowers.php?sort=email&sortdir=DESC">
 		    Email
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'email' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=email">
+		  <a href="viewBorrowers.php?sort=email">
 		    Email
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=email">
+		  <a href="viewBorrowers.php?sort=email">
 		    Email
 		  </a>
 		{/if}
@@ -93,17 +93,17 @@
 		{* Address *}
 		<th>
 		{if isset($sort) && $sort == 'address' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=address&sortdir=DESC">
+		  <a href="viewBorrowers.php?sort=address&sortdir=DESC">
 		    Address
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'address' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=address">
+		  <a href="viewBorrowers.php?sort=address">
 		    Address
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=address">
+		  <a href="viewBorrowers.php?sort=address">
 		    Address
 		  </a>
 		{/if}		
@@ -112,17 +112,17 @@
 		{* Phone *}
 		<th width="100">
 		{if isset($sort) && $sort == 'phone' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=phone&sortdir=DESC">
+		  <a href="viewBorrowers.php?sort=phone&sortdir=DESC">
 		    Phone
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'phone' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=phone">
+		  <a href="viewBorrowers.php?sort=phone">
 		    Phone
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="viewBorrowers.php?sort=phone">
+		  <a href="viewBorrowers.php?sort=phone">
 		    Phone
 		  </a>
 		{/if}

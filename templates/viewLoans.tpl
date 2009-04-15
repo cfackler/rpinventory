@@ -48,99 +48,99 @@ Show:
 	 {* Item *}
 		<th width="250">
 		{if isset($sort) && $sort == 'description' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=description&sortdir=DESC">
+		  <a href="viewLoans.php?sort=description&sortdir=DESC">
 		    Item
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'description' && $sortdir == 'DESC'}
-		    <a class="tableHeaderLink" href="viewLoans.php?sort=description">
+		    <a href="viewLoans.php?sort=description">
 		    Item
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=description">
+		  <a href="viewLoans.php?sort=description">
 		    Item
 		  </a>
 		{/if}
 		</th>
 		
 		{* Starting Condition *}
-		<th>
+		<th width="175">
 		{if isset($sort) && $sort == 'starting_condition' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=starting_condition&sortdir=DESC">
+		  <a href="viewLoans.php?sort=starting_condition&sortdir=DESC">
 		    Starting Condition
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'starting_condition' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=starting_condition">
+		  <a href="viewLoans.php?sort=starting_condition">
 		    Starting Condition
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=starting_condition">
+		  <a href="viewLoans.php?sort=starting_condition">
 		    Starting Condition
 		  </a>
 		{/if}
 		</th>
 		
 		{* Borrower *}
-		<th>
+		<th width="100">
 		{if isset($sort) && $sort == 'username' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=username&sortdir=DESC">
+		  <a href="viewLoans.php?sort=username&sortdir=DESC">
 		    Borrower
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'username' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=username">
+		  <a href="viewLoans.php?sort=username">
 		    Borrower
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=username">
+		  <a href="viewLoans.php?sort=username">
 		    Borrower
 		  </a>
 		{/if}
 		</th>
 		
 		{* Loan Date *}
-		<th>
+		<th width="100">
 		{* Default sorting method for table *}
 		{if !isset($sort) }
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=issue_date">
+		  <a href="viewLoans.php?sort=issue_date">
 		    Loan Date
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'issue_date' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=issue_date&sortdir=DESC">
+		  <a href="viewLoans.php?sort=issue_date&sortdir=DESC">
 		    Loan Date
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'issue_date' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=issue_date">
+		  <a href="viewLoans.php?sort=issue_date">
 		    Loan Date
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=issue_date">
+		  <a href="viewLoans.php?sort=issue_date">
 		    Loan Date
 		  </a>
 		{/if}
 		</th>
 		
 		{* Return date *}
-		<th width="100">
+		<th width="120">
 		{if isset($sort) && $sort == 'return_date' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=return_date&sortdir=DESC">
+		  <a href="viewLoans.php?sort=return_date&sortdir=DESC">
 		    Return Date
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'return_date' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=return_date">
+		  <a href="viewLoans.php?sort=return_date">
 		    Return Date
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="viewLoans.php?sort=return_date">
+		  <a href="viewLoans.php?sort=return_date">
 		    Return Date
 		  </a>
 		{/if}		

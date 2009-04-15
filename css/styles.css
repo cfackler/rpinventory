@@ -101,7 +101,7 @@ div.navigationBar ul li {
  * Like the "Admin" section divider
  **/
 div.navigationBar ul li.SidebarSectionHeader {
-    padding-left: 5px;
+    padding-right: 5px;
     color: #FFFFFF;
     font-size: 14px;
     background-color: #aa0000;
@@ -207,13 +207,26 @@ span.TopOfTable h3{
     background-color:#d50000;
 }
 
+/**
+ * Table header link
+ **/
+.itemsTable a {
+  text-decoration: none;
+  display: block;
+  color: #ffffff;
+}
+
+.tableHeaderSortTriangle
+{
+  border: 0px;
+}
+
 
 .nobullets {
     list-style-type: none;
     padding: 0px;
     margin: 0px;
 }
-<<<<<<< HEAD:css/styles.css
 
 
 #userAutoComplete {
@@ -228,7 +241,6 @@ span.TopOfTable h3{
 #userAutoComplete span:hover{
     background-color: #b5b5b5;
 }
-=======
 .naviOver {
   background-color:#ff0000;
 }
@@ -248,4 +260,4 @@ span.TopOfTable h3{
   border-top:1px dotted black;
   color: #ffffff;
 }
->>>>>>> Worked on design a bit...Created nice looking pulldown boxes and buttons.:css/styles.css
+
