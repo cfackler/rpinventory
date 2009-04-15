@@ -87,3 +87,16 @@ CREATE TABLE logins (
        name varchar(100) NOT NULL,
        PRIMARY KEY (id)
 ) type = MyISAM;
+
+CREATE TABLE checkouts (
+       checkout_id int(5) NOT NULL auto_increment,
+       inventory_id int(5) NOT NULL,
+       borrower_id int(5) NOT NULL,
+       time_taken datetime NOT NULL,
+       time_returned datetime,
+       event_name varchar(50) NOT NULL,
+       event_location varchar(50) NOT NULL,
+       starting_condition varchar(100) NOT NULL,
+       ending_condition varchar(100),
+       PRIMARY KEY (checkout_id)
+) type = MyISAM;

@@ -47,8 +47,12 @@ function submitItems(){
     var dropdown = $('action_list');
     var action = dropdown.options[dropdown.selectedIndex].value;
     
-    if(action == "Loan")
+    if(action == "Loan"){
 	window.location="loanItem.php?ids=" + ids;
+    }
+    else if( action == 'Checkout' ){
+	window.location="checkoutItem.php?ids=" + ids;
+    }
     else if(action == "Delete"){
 	confirmation("Are you sure you want to delete these items?", "deleteItem.php?ids=" + ids);
     }
