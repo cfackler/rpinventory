@@ -38,8 +38,18 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
+//sort
+if(isset($_GET['sort']) && isset($_GET['sortdir']))
+  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
+else if(isset($_GET['sort']))
+  $sortBy = $_GET['sort'];
+else
+  $sortBy = "issue_date DESC";
+  
 //items
-$query= "SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description  FROM logins, loans, inventory WHERE loans.borrower_id = logins.id and inventory.inventory_id = loans.inventory_id";
+$query=   "SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description
+          FROM logins, loans, inventory 
+          WHERE loans.borrower_id = logins.id and inventory.inventory_id = loans.inventory_id ORDER BY ".$sortBy;
 
 
 //Filter
@@ -57,10 +67,10 @@ else if($view == "returned")
 	$query .= " and return_date IS NOT NULL";
 }
 
-$query .= " order by issue_date desc";
 
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+    
 
-$result = mysqli_query($link, $query);
 $items = array();
 
 while($item = mysqli_fetch_object($result))
@@ -72,8 +82,12 @@ while($item = mysqli_fetch_object($result))
 
 
 
-	
 //Assign vars
+if(isset($_GET['sort']) )
+  $smarty->assign('sort', $_GET['sort']);
+if(isset($_GET['sortdir']))
+  $smarty->assign('sortdir', $_GET['sortdir']);
+
 $smarty->assign('title', "View Loans");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewLoans');

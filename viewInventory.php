@@ -39,8 +39,15 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
+
 //items
-$items = getInventory();
+if(isset($_GET['sort']) && isset($_GET['sortdir']))
+  $items = getInventory($_GET['sort'], $_GET['sortdir']);
+else if( isset($_GET['sort']) )
+  $items = getInventory($_GET['sort']);
+else
+  $items = getInventory();
+
 
 //BEGIN Page
 
@@ -48,6 +55,8 @@ $items = getInventory();
 
 	
 //Assign vars
+$smarty->assign('sort', $_GET['sort']);
+$smarty->assign('sortdir', $_GET['sortdir']);
 $smarty->assign('title', "View Inventory");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewInventory');

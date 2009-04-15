@@ -36,11 +36,20 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
+//Sorting method
+if(isset($_GET['sort']) && isset($_GET['sortdir']))
+  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
+else if(isset($_GET['sort']))
+  $sortBy = $_GET['sort'];
+else
+  $sortBy = "name";
+
 //items
 $query = "SELECT username, name, rin, email, address, city, state, zipcode, phone
-                 FROM logins, borrower_addresses, addresses
+    FROM logins, borrower_addresses, addresses
 		 WHERE addresses.address_id=borrower_addresses.address_id AND
-		       borrower_addresses.user_id=logins.id";
+		       borrower_addresses.user_id=logins.id
+		      ORDER BY ".$sortBy;
                  
 $result = mysqli_query($link, $query);
 $borrowers = array();
@@ -51,8 +60,11 @@ while($item = mysqli_fetch_object($result))
 }
 
 //BEGIN Page
-
-
+if(isset($_GET['sort']))
+  $smarty->assign('sort', $_GET['sort']);
+if(isset($_GET['sortdir']))
+  $smarty->assign('sortdir', $_GET['sortdir']);
+  
 $smarty->assign('title', "View Borrowers");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewBorrowers');

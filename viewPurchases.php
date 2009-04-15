@@ -39,10 +39,17 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
+if(isset($_GET['sort']) && isset($_GET['sortdir']))
+  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
+else if(isset($_GET['sort']))
+  $sortBy = $_GET['sort'];
+else
+  $sortBy = "purchase_id";
+
 //users
 $query= "SELECT purchases.purchase_id, purchases.business_id, purchases.purchase_date, company_name, total_price
 	 FROM purchases, businesses
-	 WHERE businesses.business_id=purchases.business_id";
+	 WHERE businesses.business_id=purchases.business_id ORDER BY ".$sortBy;
 $result = mysqli_query($link, $query);
 $purchases = array();
 $items = array();
@@ -75,6 +82,11 @@ while($purchase = mysqli_fetch_object($result))
 
 	
 //Assign vars
+if(isset($_GET['sort']))
+  $smarty->assign('sort', $_GET['sort']);
+if(isset($_GET['sortdir']))
+  $smarty->assign('sortdir', $_GET['sortdir']);
+  
 $smarty->assign('title', "View Purchases");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewPurchases');

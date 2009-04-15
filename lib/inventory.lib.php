@@ -20,7 +20,7 @@
 
 */
 
-function getInventory()
+function getInventory($sortBy="description", $sortdir="")
 {
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session
@@ -36,7 +36,8 @@ function getInventory()
   //items
   $query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
 				FROM inventory, locations
-				WHERE locations.location_id=inventory.location_id";
+				WHERE locations.location_id=inventory.location_id
+				ORDER BY ".$sortBy." ".$sortdir;
   $result = mysqli_query($link, $query) or
     die( 'Could not retrieve the inventory' );
   $items = array();

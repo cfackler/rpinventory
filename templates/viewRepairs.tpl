@@ -24,12 +24,108 @@
 </div>
 {if $authority>1}
     <table width="800" border="0" class="itemsTable" cellspacing="0">
-    	<tr>		
-		<th width="200">Item</th>
-		<th>Company Name</th>
-		<th>Date</th>
-		<th>Cost</th>
-		<th width="250">Description</th>
+    	<tr>
+    {* Item *}		
+		<th width="200">
+		{* Default sorting option for table *}
+		{if !isset($sort) }
+		  <a href="viewRepairs.php?sort=inv_description&sortdir=DESC">
+		    Item
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'inv_description' && !isset($sortdir)}
+		  <a href="viewRepairs.php?sort=inv_description&sortdir=DESC">
+		    Item
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'inv_description' && $sortdir == 'DESC'}
+		  <a href="viewRepairs.php?sort=inv_description">
+		    Item
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a href="viewRepairs.php?sort=inv_description">
+		    Item
+		  </a>
+		{/if}
+		</th>
+		
+		{* Company name *}
+		<th>
+		{if isset($sort) && $sort == 'company_name' && !isset($sortdir)}
+		  <a href="viewRepairs.php?sort=company_name&sortdir=DESC">
+		    Company Name
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'company_name' && $sortdir == 'DESC'}
+		  <a href="viewRepairs.php?sort=company_name">
+		    Company Name
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a href="viewRepairs.php?sort=company_name">
+		    Company Name
+		  </a>
+		{/if}
+		</th>
+		
+		{* Repair Date *}
+		<th>
+		{if isset($sort) && $sort == 'repair_date' && !isset($sortdir)}
+		  <a href="viewRepairs.php?sort=repair_date&sortdir=DESC">
+		    Date
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'repair_date' && $sortdir == 'DESC'}
+		  <a href="viewRepairs.php?sort=repair_date">
+		    Date
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a href="viewRepairs.php?sort=repair_date">
+		    Date
+		  </a>
+		{/if}
+		</th>
+		
+		{* Repair Cost *}
+		<th>
+		{if isset($sort) && $sort == 'repair_cost' && !isset($sortdir)}
+		  <a href="viewRepairs.php?sort=repair_cost&sortdir=DESC">
+		    Cost
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'repair_cost' && $sortdir == 'DESC'}
+		  <a href="viewRepairs.php?sort=repair_cost">
+		    Cost
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a href="viewRepairs.php?sort=repair_cost">
+		    Cost
+		  </a>
+		{/if}
+		</th>
+		
+		{* Description *}
+		<th width="250">
+		{if isset($sort) && $sort == 'rep_description' && !isset($sortdir)}
+		  <a href="viewRepairs.php?sort=rep_description&sortdir=DESC">
+		    Description
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'rep_description' && $sortdir == 'DESC'}
+		  <a href="viewRepairs.php?sort=rep_description">
+		    Description
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a href="viewRepairs.php?sort=rep_description">
+		    Description
+		  </a>
+		{/if}
+		</th>
+		
 	</tr>
 
     {section name=itemLoop loop=$items}
