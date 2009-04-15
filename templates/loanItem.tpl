@@ -46,7 +46,7 @@
 	
 		<ul>
 			{section name=items loop=$itemDesc}
-			<li>{$itemDesc[items]}</li>
+			<li style="position: relative; left: -25px">{$itemDesc[items]}</li>
 			{/section}
 		</ul>
 	
