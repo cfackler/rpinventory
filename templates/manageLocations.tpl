@@ -25,8 +25,52 @@
 
 <table width="700" border="0" cellspacing="0" class="itemsTable">
 	<tr>
-		<th width="200">Location</th>
-		<th width="300">Description</th>
+	   
+    {* Location *}
+		<th width="200">
+		{* Default sorting option *}
+		{if !isset($sort) }
+		  <a class="tableHeaderLink" href="?sort=location&sortdir=DESC">
+		    Location
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'location' && !isset($sortdir)}
+		  <a class="tableHeaderLink" href="?sort=location&sortdir=DESC">
+		    Location
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'location' && $sortdir == 'DESC'}
+		  <a class="tableHeaderLink" href="?sort=location">
+		    Location
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a class="tableHeaderLink" href="?sort=location">
+		    Location
+		  </a>
+		{/if}
+		</th>
+		
+		{* Description *}
+		<th width="300">
+		{if isset($sort) && $sort == 'description' && !isset($sortdir)}
+		  <a class="tableHeaderLink" href="?sort=description&sortdir=DESC">
+		    Description
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'description' && $sortdir == 'DESC'}
+		  <a class="tableHeaderLink" href="?sort=description">
+		    Description
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a class="tableHeaderLink" href="?sort=description">
+		    Description
+		  </a>
+		{/if}
+		</th>
+		
+		{* Actions do not need to be sorted. *}
 		<th>Actions</th>
 	</tr>
 

@@ -24,11 +24,109 @@
 
 <table width="900" border="0" class="itemsTable" cellspacing="0">
 	<tr>
-		<th>Name</th>
-		<th width="100">Username</th>
-		<th width="100">Access</th>
-		<th width="100">RIN</th>
-		<th width="150">Email</th>
+		
+		{* Name *}
+		<th>
+		{* Default *}
+		{if !isset($sort) }
+		  <a class="tableHeaderLink" href="?sort=name&sortdir=DESC">
+		    Name
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'name' && !isset($sortdir)}
+		  <a class="tableHeaderLink" href="?sort=name&sortdir=DESC">
+		    Name
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'name' && $sortdir == 'DESC'}
+		  <a class="tableHeaderLink" href="?sort=name">
+		    Name
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a class="tableHeaderLink" href="?sort=name">
+		    Name
+		  </a>
+		{/if}
+		</th>
+		
+		{* Username *}
+		<th width="100">
+		{if isset($sort) && $sort == 'username' && !isset($sortdir)}
+		  <a class="tableHeaderLink" href="?sort=username&sortdir=DESC">
+		    Username
+		    <img src="images/sortTriangleUp.png" />
+      </a>
+    {elseif isset($sort) && $sort == 'username' && $sortdir=='DESC'}
+      <a class="tableHeaderLink" href="?sort=username">
+		    Username
+		    <img src="images/sortTriangleDown.png" />
+      </a>
+    {else}
+      <a class="tableHeaderLink" href="?sort=username">
+		    Username
+      </a>
+    {/if}
+    </th>
+    
+    {* Access *}
+		<th width="100">
+		{if isset($sort) && $sort == 'access_level' && !isset($sortdir)}
+		  <a class="tableHeaderLink" href="?sort=access_level&sortdir=DESC">
+		    Access
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'access_level' && $sortdir == 'DESC'}
+		  <a class="tableHeaderLink" href="?sort=access_level">
+		    Access
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a class="tableHeaderLink" href="?sort=access_level">
+		    Access
+		  </a>
+		{/if}
+		</th>
+		
+		{* RIN *}
+		<th width="100">
+		{if isset($sort) && $sort =='rin' && !isset($sortdir)}
+		  <a class="tableHeaderLink" href="?sort=rin&sortdir=DESC">
+		    RIN
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort =='rin' && $sortdir=='DESC'}
+		  <a class="tableHeaderLink" href="?sort=rin">
+		    RIN
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a class="tableHeaderLink" href="?sort=rin">
+		    RIN
+		  </a>
+		{/if}
+		</th>
+		
+		{* Email *}
+		<th width="150">
+		{if isset($sort) && $sort == 'email' && !isset($sortdir)}
+		  <a class="tableHeaderLink" href="?sort=email&sortdir=DESC">
+		    Email
+		    <img src="images/sortTriangleUp.png" />
+		  </a>
+		{elseif isset($sort) && $sort == 'email' && $sortdir=='DESC'}
+		  <a class="tableHeaderLink" href="?sort=email">
+		    Email
+		    <img src="images/sortTriangleDown.png" />
+		  </a>
+		{else}
+		  <a class="tableHeaderLink" href="?sort=email">
+		    Email
+		  </a>
+		{/if}
+		</th>
+		
+		{* Actions does not need to be a sorting column *}
 		<th width="150">Actions</th>
 	</tr>
 

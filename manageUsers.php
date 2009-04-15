@@ -40,8 +40,16 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
+//Sort method
+if(isset($_GET['sort']) && isset($_GET['sortdir']))
+  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
+else if(isset($_GET['sort']))
+  $sortBy = $_GET['sort'];
+else
+  $sortBy = 'name';
+
 //users
-$userQuery= "SELECT * from logins";
+$userQuery= "SELECT * from logins ORDER BY ".$sortBy;
 $userResult = mysqli_query($link, $userQuery);
 $users = array();
 
@@ -56,6 +64,11 @@ while($user = mysqli_fetch_object($userResult))
 
 	
 //Assign vars
+if(isset($_GET['sort']))
+  $smarty->assign('sort', $_GET['sort']);
+if(isset($_GET['sortdir']))
+  $smarty->assign('sortdir', $_GET['sortdir']);
+
 $smarty->assign('title', "Manage Users");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'manageUsers');

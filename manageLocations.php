@@ -40,8 +40,15 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
+if(isset($_GET['sort']) && isset($_GET['sortdir']))
+  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
+else if(isset($_GET['sort']))
+  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
+else
+  $sortBy = 'location';
+
 //users
-$locQuery= "SELECT * from locations";
+$locQuery= "SELECT * from locations ORDER BY ".$sortBy;
 $locResult = mysqli_query($link, $locQuery);
 $locations = array();
 
@@ -52,6 +59,11 @@ while($loc = mysqli_fetch_object($locResult))
 
 	
 //Assign vars
+if(isset($_GET['sort']))
+  $smarty->assign('sort', $_GET['sort']);
+if(isset($_GET['sortdir']))
+  $smarty->assign('sortdir', $_GET['sortdir']);
+  
 $smarty->assign('title', "Manage Locations");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'manageLocations');
