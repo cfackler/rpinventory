@@ -155,9 +155,10 @@ for($x=0; $x<$count; $x++)
 	  die("Must have a condition");	
 	
 	//Value
+	$valueStr = $_POST["value".$x];
 	$value = (double)$_POST["value".$x];
-	if($value == 0)
-	  die("Invalid Value");
+	if(strlen($valueStr) == 0)
+	  die("Must have a value");
 	
 	//Location	
 	$location = (int)$_POST["location" . $x];
