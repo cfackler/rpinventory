@@ -30,22 +30,22 @@
 		<th width="200">
 		{* Default sorting option *}
 		{if !isset($sort) }
-		  <a class="tableHeaderLink" href="?sort=location&sortdir=DESC">
+		  <a href="?sort=location&sortdir=DESC">
 		    Location
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'location' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="?sort=location&sortdir=DESC">
+		  <a href="?sort=location&sortdir=DESC">
 		    Location
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'location' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="?sort=location">
+		  <a href="?sort=location">
 		    Location
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="?sort=location">
+		  <a href="?sort=location">
 		    Location
 		  </a>
 		{/if}
@@ -54,24 +54,24 @@
 		{* Description *}
 		<th width="300">
 		{if isset($sort) && $sort == 'description' && !isset($sortdir)}
-		  <a class="tableHeaderLink" href="?sort=description&sortdir=DESC">
+		  <a href="?sort=description&sortdir=DESC">
 		    Description
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'description' && $sortdir == 'DESC'}
-		  <a class="tableHeaderLink" href="?sort=description">
+		  <a href="?sort=description">
 		    Description
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
-		  <a class="tableHeaderLink" href="?sort=description">
+		  <a href="?sort=description">
 		    Description
 		  </a>
 		{/if}
 		</th>
 		
 		{* Actions do not need to be sorted. *}
-		<th>Actions</th>
+		<th width="150">Actions</th>
 	</tr>
 
 {section name=num loop=$locations}
@@ -80,8 +80,7 @@
 	<td align="center">{$locations[num]->location}</td>
 	<td align="center">{$locations[num]->description}</td>
 	<td align="center">
-	<a href="editLocation.php?id={$locations[num]->location_id}">Edit</a> or  
-	<input type="button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')" value="Delete">
+	<a href="editLocation.php?id={$locations[num]->location_id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')" value="Delete">
 	</td>
 </tr>
 {/section}	

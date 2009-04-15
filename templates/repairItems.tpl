@@ -49,7 +49,7 @@
 	<td>Date: </td>
 	<td>
 	
-				<select name="months{$smarty.section.num.index}">
+				<select class="dropDown" name="months{$smarty.section.num.index}">
                     <option value="1"{if $selectDate.mon == 1} selected{/if}>January</option>
                     <option value="2"{if $selectDate.mon == 2}selected{/if}>February</option>
                     <option value="3"{if $selectDate.mon == 3}selected{/if}>March</option>
@@ -64,7 +64,7 @@
                     <option value="12"{if $selectDate.mon == 12}selected{/if}>December</option>
                 </select>
 
-                <select name="days{$smarty.section.num.index}">
+                <select class="dropDown" name="days{$smarty.section.num.index}">
                     <option value="1"{if $selectDate.mday == 1}selected{/if}>1</option>
                     <option value="2"{if $selectDate.mday == 2}selected{/if}>2</option>
                     <option value="3"{if $selectDate.mday == 3}selected{/if}>3</option>
@@ -99,7 +99,7 @@
                 </select>
 				
 				
-                <select name="year{$smarty.section.num.index}">
+                <select class="dropDown" name="year{$smarty.section.num.index}">
                     <option value="2007"{if $selectDate.year == 2007}selected{/if}>2007</option>
                     <option value="2008"{if $selectDate.year == 2008}selected{/if}>2008</option>
 					<option value="2009"{if $selectDate.year == 2009}selected{/if}>2009</option>
@@ -112,7 +112,7 @@
 	<td>Business: </td>
 	<td>
 	
-	<select id="business_id" name="businessId{$smarty.section.num.index}" onChange="OnChange('business_id', 'newBusiness')">
+	<select class="dropDown" id="business_id" name="businessId{$smarty.section.num.index}" onChange="OnChange('business_id', 'newBusiness')">
 	{section name=biz loop=$businesses}
 		<option value="{$businesses[biz]->business_id}">
 			{$businesses[biz]->company_name}

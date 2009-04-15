@@ -1,3 +1,5 @@
+
+
 /*
 * Attributes
 */
@@ -14,7 +16,7 @@ a:hover {
 
 body {
     font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-    background-color: #e4e4e4;
+    background-color: #b9b9b9;
 }
 
 
@@ -22,7 +24,7 @@ body {
  * Red color for header
  * sidebar background
  **/
-div.header, div.left_sidebar{
+div.header, div.navigationBar{
     background-color: #d50000;
 }
 
@@ -46,33 +48,35 @@ div.header {
 /**
  * Sidebar border and background colors
  **/
-div.left_sidebar {
+div.navigationBar {
     position: absolute;
     border:solid 2px;
     top:145px;
-    width: 140px;
+    width: 120px;
     left:0px
 }
 
 
 /* LINK styles */
-div.left_sidebar a {
+div.navigationBar a {
     color: #e0e0e0;
-    font-size: 14px;
+    font-size: 12px;
     text-decoration:none;
+    display:block;
+    padding-right:5px;
 }
 
 
-div.left_sidebar a:hover {
+div.navigationBar a:hover {
     color: #f0f0f0;
-    text-decoration:underline;
+    background-color:#ff0000;
 }
 
 
 /**
  * List items in sidebar
  **/
-div.left_sidebar ul {
+div.navigationBar ul {
     /** No Bullets **/
     list-style-type: none;
     
@@ -87,10 +91,8 @@ div.left_sidebar ul {
 }
 
 
-div.left_sidebar ul li {
-    padding-right:5px;
-    border-bottom: solid 1px;
-    
+div.navigationBar ul li {
+    border-bottom: solid 1px;    
 }
 
 
@@ -98,10 +100,10 @@ div.left_sidebar ul li {
  * This is for any items in the sidebar that aren't links
  * Like the "Admin" section divider
  **/
-div.left_sidebar ul li.nonLinkSidebarItem {
-    padding-left: 5px;
+div.navigationBar ul li.SidebarSectionHeader {
+    padding-right: 5px;
     color: #FFFFFF;
-    font-size: 17px;
+    font-size: 14px;
     background-color: #aa0000;
     border-bottom:solid 1px #000000;
 }
@@ -110,7 +112,7 @@ div.left_sidebar ul li.nonLinkSidebarItem {
 div.main_body {
     position: absolute;
     top: 145px;
-    left:170px;
+    left:150px;
 }
 
 
@@ -148,11 +150,6 @@ span.TopOfTable h3{
 
 
 
-.alt  td {
-    background: #dbdbdb;
-    border-right: 1px solid #cc3333;
-    border-bottom: 1px solid #cc3333;	
-}
 
 
 .indent {
@@ -165,7 +162,7 @@ span.TopOfTable h3{
 .itemsTable {
     padding: 0;
     margin: 0;
-    border-left: 1px solid #d50000;
+    border-left: 1px solid #cc3333;
 }
 
 
@@ -176,6 +173,11 @@ span.TopOfTable h3{
     background: #cccccc;
     padding: 6px 6px 6px 12px;
     color:000000;
+}
+
+
+.alt  td {
+    background: #dfdfdf;	
 }
 
 
@@ -197,12 +199,26 @@ span.TopOfTable h3{
     font-weight: bold;
     font-size: 11px;
     color: #ffffff;
-    border: 1px solid #bb3333;
+    border-right: 1px solid #cc3333;
     letter-spacing: 2px;
     text-transform: uppercase;
     text-align: left;
     padding: 6px 6px 6px 12px;
     background-color:#d50000;
+}
+
+/**
+ * Table header link
+ **/
+.itemsTable a {
+  text-decoration: none;
+  display: block;
+  color: #ffffff;
+}
+
+.tableHeaderSortTriangle
+{
+  border: 0px;
 }
 
 
@@ -225,3 +241,23 @@ span.TopOfTable h3{
 #userAutoComplete span:hover{
     background-color: #b5b5b5;
 }
+.naviOver {
+  background-color:#ff0000;
+}
+
+.button {
+  background-color:#d50000;
+  border: 1px solid black;
+  color: #ffffff;
+}
+
+.dropDown {
+  background-color: #d50000;
+  border: 1px solid black;
+  color: #ffffff;
+}
+.dropDown option{
+  border-top:1px dotted black;
+  color: #ffffff;
+}
+

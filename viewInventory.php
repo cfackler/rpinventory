@@ -52,7 +52,6 @@ else
 //BEGIN Page
 
 
-
 	
 //Assign vars
 $smarty->assign('sort', $_GET['sort']);

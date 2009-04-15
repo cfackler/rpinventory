@@ -40,7 +40,7 @@
 <tr>
 	<td>Condition: </td>
 	<td>
-		<select name="condition">
+		<select class="dropDown" name="condition">
 			<option value="Excellent">Excellent</option>
 			<option value="Good">Good</option>
 			<option value="Fair">Fair</option>
@@ -53,7 +53,7 @@
 	<td>Location: </td>
 	<td>
 	
-	<select id = "location_id" name="location_id" onChange="OnChange('location_id', 'newLocation')">
+	<select class="dropDown" id = "location_id" name="location_id" onChange="OnChange('location_id', 'newLocation')">
         {section name=loc loop=$locations}
             <option value="{$locations[loc]->location_id}">
                 {$locations[loc]->location}

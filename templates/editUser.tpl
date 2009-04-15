@@ -54,7 +54,7 @@
 <tr>
 	<td>Permissions: </td>
 	<td>
-	<select name="access_level">
+	<select class="dropDown" name="access_level">
 		<option value="2" {if $user->access_level == 2}selected{/if}>Administrator</option>
 		<option value="1" {if $user->access_level == 1}selected{/if}>Manager</option>
 		<option value="0" {if $user->access_level == 0}selected{/if}>User</option>

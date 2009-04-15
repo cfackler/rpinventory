@@ -33,17 +33,17 @@
 		{if !isset($sort) }
 		  <a href="viewPurchases.php?sort=purchase_id&sortdir=DESC">
 		    Items
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'purchase_id' && !isset($sortdir)}
 		  <a href="viewPurchases.php?sort=purchase_id&sortdir=DESC">
 		    Items
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'purchase_id' && $sortdir == 'DESC'}
 		  <a href="viewPurchases.php?sort=purchase_id">
 		    Items
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else} 
 		  <a href="viewPurchases.php?sort=purchase_id">
@@ -53,16 +53,16 @@
 		</th>
 		
 		{* Company Name *}
-		<th>
+		<th width="250">
 		{if isset($sort) && $sort == 'company_name' && !isset($sortdir)}
 		  <a href="viewPurchases.php?sort=company_name&sortdir=DESC">
 		    Company Name
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'company_name' && $sortdir == 'DESC'}
 		  <a href="viewPurchases.php?sort=company_name">
 		    Company Name
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
 		  <a href="viewPurchases.php?sort=company_name">
@@ -72,16 +72,16 @@
 		</th>
 		
 		{* Purchase Date *}
-		<th>
+		<th width="125">
 		{if isset($sort) && $sort == 'purchase_date' && !isset($sortdir)}
 		  <a href="viewPurchases.php?sort=purchase_date&sortdir=DESC">
 		    Date
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'purchase_date' && $sortdir == 'DESC'}
 		  <a href="viewPurchases.php?sort=purchase_date">
 		    Date
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
 		  <a href="viewPurchases.php?sort=purchase_date">
@@ -91,16 +91,16 @@
 		</th>
 		
 		{* Total Cost *}
-		<th>
+		<th width="150">
 		{if isset($sort) && $sort == 'total_price' && !isset($sortdir)}
 		  <a href="viewPurchases.php?sort=total_price&sortdir=DESC">
 		    Total Cost
-		    <img src="images/sortTriangleUp.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'total_price' && $sortdir == 'DESC'}
 		  <a href="viewPurchases.php?sort=total_price">
 		    Total Cost
-		    <img src="images/sortTriangleDown.png" />
+		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
 		  <a href="viewPurchases.php?sort=total_price">

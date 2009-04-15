@@ -44,7 +44,7 @@
 <tr>
 	<td>Condition: </td>
 	<td>
-		<select name="condition{$smarty.section.num.index}">
+		<select class="dropDown" name="condition{$smarty.section.num.index}">
 			<option value="Excellent" {if $items[num]->current_condition == "Excellent"}selected{/if}>Excellent</option>
 			<option value="Good" {if $items[num]->current_condition == "Good"}selected{/if}>Good</option>
 			<option value="Fair" {if $items[num]->current_condition == "Fair"}selected{/if}>Fair</option>
@@ -57,7 +57,7 @@
 	<td>Location: </td>
 	<td>
 	
-	<select name="location{$smarty.section.num.index}" id="location{$smarty.section.num.index}" onChange="OnChangeDouble('location{$smarty.section.num.index}', 'newLocation{$smarty.section.num.index}', 'newDescription{$smarty.section.num.index}')">   
+	<select class="dropDown" name="location{$smarty.section.num.index}" id="location{$smarty.section.num.index}" onChange="OnChangeDouble('location{$smarty.section.num.index}', 'newLocation{$smarty.section.num.index}', 'newDescription{$smarty.section.num.index}')">   
     {section name=loc loop=$locations}
 		<option value="{$locations[loc]->location_id}">
 			{$locations[loc]->location}

@@ -52,7 +52,7 @@
 <tr>
 	<td>Permissions: </td>
 	<td>
-	<select name="access_level">
+	<select class="dropDown" name="access_level">
 		<option value="2">Administrator</option>
 		<option value="1">Manager</option>
 		<option value="0" selected>User</option>

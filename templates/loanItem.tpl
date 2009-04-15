@@ -58,7 +58,7 @@
 	<td>Date: </td>
 	<td>
 	
-				<select name="months">
+				<select class="dropDown" name="months">
                     <option value="1"{if $selectDate.mon == 1} selected{/if}>January</option>
                     <option value="2"{if $selectDate.mon == 2}selected{/if}>February</option>
                     <option value="3"{if $selectDate.mon == 3}selected{/if}>March</option>
@@ -73,7 +73,7 @@
                     <option value="12"{if $selectDate.mon == 12}selected{/if}>December</option>
                 </select>
 
-                <select name="days">
+                <select class="dropDown" name="days">
                     <option value="1"{if $selectDate.mday == 1}selected{/if}>1</option>
                     <option value="2"{if $selectDate.mday == 2}selected{/if}>2</option>
                     <option value="3"{if $selectDate.mday == 3}selected{/if}>3</option>
@@ -108,7 +108,7 @@
                 </select>
 				
 				
-                <select name="year">
+                <select class="dropDown" name="year">
                     <option value="2007"{if $selectDate.year == 2007}selected{/if}>2007</option>
                     <option value="2008"{if $selectDate.year == 2008}selected{/if}>2008</option>
 					<option value="2009"{if $selectDate.year == 2009}selected{/if}>2009</option>
@@ -121,6 +121,7 @@
 	<td>Loan To: </td>
 	<td>
 	
+<<<<<<< HEAD:templates/loanItem.tpl
 	<input id="username" name="username" class="validate" type="text" onkeyup="checkUsername()" autocomplete="off"/>
 	
 	</td>
@@ -130,6 +131,16 @@
 	<td>
 	
 	<div id="userAutoComplete" style="display:none"></div>
+=======
+	<select class="dropDown" id="user_id" name="user_id" class="validate" onchange="sendAddressRequest({$users[usr]->id});">
+		<option value="-1">Select User</option>
+	{section name=usr loop=$users}
+		<option value="{$users[usr]->id}">
+			{$users[usr]->username}
+		</option>
+	{/section}
+	</select>
+>>>>>>> Worked on design a bit...Created nice looking pulldown boxes and buttons.:templates/loanItem.tpl
 	
 	</td>
 </tr>

@@ -54,7 +54,7 @@ echo <<<END
   <tr>
   <td>Condition: </td>
   <td>
-  <select name="condition$id">
+  <select class="dropDown" name="condition$id">
   <option value="Excellent">Excellent</option>
   <option value="Good">Good</option>
   <option value="Fair">Fair</option>
@@ -67,7 +67,7 @@ echo <<<END
   <td>Location: </td>
 
   <td>
-  <select id="location$id" name="location$id" onChange="OnChangeDouble('location$id', 'newLocation$id', 'newDescription$id')" onFocus="getLocationOptions(this);">
+  <select class="dropDown" id="location$id" name="location$id" onChange="OnChangeDouble('location$id', 'newLocation$id', 'newDescription$id')" onFocus="getLocationOptions(this);">
   $loc_select
   <option>
   New Location
