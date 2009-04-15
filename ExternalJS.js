@@ -47,8 +47,12 @@ function submitItems(){
     var dropdown = $('action_list');
     var action = dropdown.options[dropdown.selectedIndex].value;
     
-    if(action == "Loan")
+    if(action == "Loan"){
 	window.location="loanItem.php?ids=" + ids;
+    }
+    else if( action == 'Checkout' ){
+	window.location="checkoutItem.php?ids=" + ids;
+    }
     else if(action == "Delete"){
 	confirmation("Are you sure you want to delete these items?", "deleteItem.php?ids=" + ids);
     }
@@ -93,10 +97,10 @@ function recieveAddress(oReq, oJSN){
     if(oJSN.Found == "False"){
 	$('address').value = "";
 	$('address2').value = "";
-	$('City').value = "";
-	$('State').value = "";
-	$('Zipcode').value = "";
-	$('Phone').value = "";
+	$('city').value = "";
+	$('state').value = "";
+	$('zipcode').value = "";
+	$('phone').value = "";
 	$('useOld').checked = false;
 	$('useOld').disabled = true;
 	useAddress();
@@ -105,10 +109,10 @@ function recieveAddress(oReq, oJSN){
     
     $('address').value = oJSN.Address;
     $('address2').value = oJSN.Address2;
-    $('City').value = oJSN.City;
-    $('State').value = oJSN.State;
-    $('Zipcode').value = oJSN.Zipcode;
-    $('Phone').value = oJSN.Phone;
+    $('city').value = oJSN.City;
+    $('state').value = oJSN.State;
+    $('zipcode').value = oJSN.Zipcode;
+    $('phone').value = oJSN.Phone;
     
     $('useOld').checked = true;
     $('useOld').disabled = false;
@@ -125,10 +129,10 @@ function useAddress(){
     
     $('address').disabled = status;
     $('address2').disabled = status;
-    $('City').disabled = status;
-    $('State').disabled = status;
-    $('Zipcode').disabled = status;
-    $('Phone').disabled = status;
+    $('city').disabled = status;
+    $('state').disabled = status;
+    $('zipcode').disabled = status;
+    $('phone').disabled = status;
 }
 
 function sendValidateRequest(itemID){
@@ -502,12 +506,9 @@ function saveLocation(name, description, result, locationselect, locationTR, des
 
 				 //gets inventory count to concatenate ids with
 				 var newLocNum = document.getElementById("itemTable").getElementsByTagName("div").length-1;
-          //clears fields
-          document.getElementById("newlocation"+newLocNum).value = "";
-          document.getElementById("newdescription"+newLocNum).value = "";
-          
-				 
-
+				 //clears fields
+				 document.getElementById("newlocation"+newLocNum).value = "";
+				 document.getElementById("newdescription"+newLocNum).value = "";
 				 
 				 
 				 // Select the new location in the dropdown
@@ -557,4 +558,40 @@ function hideBusiness() {
     else{
 	span.style.display = "";
     }
+}
+
+// Ajax call to get the usernames
+function checkUsername() {
+    input = document.getElementById( 'username' );
+    if( input.value != "") {
+	new Ajax.Request( 'ajax.php?operation=username&name=' + input.value, 
+			  { 
+			      method: 'post',
+				  onSuccess: showUsernames
+				  });
+    }
+    else{			// If there's no text, make sure the drop-down is hidden
+	document.getElementById( 'userAutoComplete' ).style.display = "none";
+    }
+}
+
+// Populate the drop-down
+function showUsernames(oReq, oJSN){
+    var targetDiv = document.getElementById( 'userAutoComplete' );
+    var i;
+    targetDiv.innerHTML = "";
+    for( i = 0; i < oJSN.records.length; i++ ){
+	targetDiv.innerHTML = targetDiv.innerHTML + '<span style="display:block" onclick="fillText( \'' +  oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
+    }
+
+    if( oJSN.records.length > 0 ){
+	targetDiv.style.display = "";
+    }
+}
+
+// Take the clicked value, and put it in the textbox
+function fillText( text ){
+    var targetTextbox = document.getElementById( 'username' );
+    targetTextbox.value = text;
+    document.getElementById( 'userAutoComplete' ).style.display = "none";
 }

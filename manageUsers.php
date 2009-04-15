@@ -58,11 +58,6 @@ while($user = mysqli_fetch_object($userResult))
 	$users [] = $user;
 }
 
-//BEGIN Page
-
-
-
-	
 //Assign vars
 if(isset($_GET['sort']))
   $smarty->assign('sort', $_GET['sort']);

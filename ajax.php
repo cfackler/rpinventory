@@ -21,16 +21,21 @@
 
 */
 
-require_once('lib/locations.lib.php');
+require_once( 'lib/locations.lib.php' );
+require_once( 'lib/users.lib.php' );
 
 switch ($_GET["operation"])
- {
+  {
   case "locations":
     print getLocationsOptions();
     break;
-
+    
   case "savelocation":
     insertLocation($_GET["location"], $_GET["description"]);
+    break;
+    
+  case "username":
+    print getUsernames( $_GET['name'] );
     break;
   }
 

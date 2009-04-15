@@ -35,7 +35,7 @@
 
 
 {else}
-<table width="400">
+<table width="500">
 
 <input type="hidden" name="inventory_ids" size="40" value="{$idString}">
 
@@ -46,7 +46,7 @@
 	
 		<ul>
 			{section name=items loop=$itemDesc}
-			<li>{$itemDesc[items]}</li>
+			<li style="position: relative; left: -25px">{$itemDesc[items]}</li>
 			{/section}
 		</ul>
 	
@@ -121,14 +121,15 @@
 	<td>Loan To: </td>
 	<td>
 	
-	<select id="user_id" name="user_id" class="validate" onchange="sendAddressRequest({$users[usr]->id});">
-		<option value="-1">Select User</option>
-	{section name=usr loop=$users}
-		<option value="{$users[usr]->id}">
-			{$users[usr]->username}
-		</option>
-	{/section}
-	</select>
+	<input id="username" name="username" class="validate" type="text" onkeyup="checkUsername()" autocomplete="off"/>
+	
+	</td>
+</tr>
+<tr>
+	<td />
+	<td>
+	
+	<div id="userAutoComplete" style="display:none"></div>
 	
 	</td>
 </tr>

@@ -123,12 +123,12 @@ else
 		$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zipcode . "', '" . $phone . "')";
 		
 		if(!mysqli_query($link, $query))
-			die("Query failed");
+			die("Query failed insert address");
 		$address_id = mysqli_insert_id($link);
 		
 		$query = "insert into borrower_addresses (user_id, address_id) VALUES(" . $user_id . ", " . $address_id . ")";
 		if(!mysqli_query($link, $query))
-			die("Query failed");
+			die("Query failed insert borrower");
 	}
 	else
 	{
@@ -136,27 +136,24 @@ else
 		
 		
 		if(!mysqli_query($link, $query))
-			die("Query failed");
+			die("Query failed Update Address");
 	}	
 		
 }
 	
-
-
-$timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
-$date = date("Y-m-d", $timestamp);
+$date = mysqli_real_escape_string( $link, $_POST['time_taken'] );
+$event_name = mysqli_real_escape_string( $link, $_POST['event_name'] );
+$event_location = mysqli_real_escape_string( $link, $_POST['event_location'] );
 
 foreach ($items as $item)
 {
     
 	
-	$sql = "INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition) VALUES
-	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "'	)";	
+	$sql = "INSERT INTO checkouts (checkout_id, inventory_id, borrower_id, time_taken, time_returned, event_name, event_location, starting_condition, ending_condition) VALUES
+	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '". $event_location ."', '". $event_name ."', '" . $item->current_condition . "', NULL )";	
 
-    //echo $sql;
-		
 	if(!mysqli_query($link, $sql))
-		die("Query failed");
+	  die("Query failed Checkouts ". mysql_error());
 	
 }
 

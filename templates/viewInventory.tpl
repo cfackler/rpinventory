@@ -60,59 +60,62 @@
       </a>
 		  {/if}
 		</th>
-		  
-		{* Current Condition *}
-		<th width="100">
 		
-		{*  if we are sorting by the current condition, ascending, 
-		    display link to sort descending *}
-		{if isset($sort) && $sort == 'current_condition' && !isset($sortdir)}
-		<a class="tableHeaderLink" href="viewInventory.php?sort=current_condition&sortdir=DESC">
-		  Condition
-		  <img src="images/sortTriangleUp.png" />
-		</a>
+		{if $authority >= 1}
+
+  		{* Current Condition *}
+  		<th width="100">
+  		
+  		{*  if we are sorting by the current condition, ascending, 
+  		    display link to sort descending *}
+  		{if isset($sort) && $sort == 'current_condition' && !isset($sortdir)}
+  		<a class="tableHeaderLink" href="viewInventory.php?sort=current_condition&sortdir=DESC">
+  		  Condition
+  		  <img src="images/sortTriangleUp.png" />
+  		</a>
+  		
+  		{*  if we are sorting by the current condition, descending,
+  		    display link to sort ascending *}
+  		{elseif $sort == 'current_condition' && $sortdir == 'DESC'}
+  		<a class="tableHeaderLink" href="viewInventory.php?sort=current_condition">
+  		  Condition
+  		  <img src="images/sortTriangleDown.png" />
+  		</a>
+  		
+  		{*  else, we are sorting by another column so display the link
+  		    without the sorting indicator *}
+  		{else}
+  		<a class="tableHeaderLink" href="viewInventory.php?sort=current_condition">
+  		  Condition
+  		</a>
+  		{/if}
+  		</th>
+  		
+  		{* Current Value *}
+  		<th>
+  		{*  if we are sorting by the current value, ascending,
+  		    display link to sort descending *}
+  		{if isset($sort) && $sort == 'current_value' && !isset($sortdir) }
+  		  <a class="tableHeaderLink" href="viewInventory.php?sort=current_value&sortdir=DESC">
+  		    Value
+  		    <img src="images/sortTriangleUp.png" />
+  		  </a>
+  		{*  if we are sorting by current value descending
+  		    display link to sort ascending *}
+  		{elseif $sort == 'current_value' && $sortdir == 'DESC'}
+  	    <a class="tableHeaderLink" href="viewInventory.php?sort=current_value">
+  	      Value
+  	      <img src="images/sortTriangleDown.png" />
+  	    </a>
+  		{*  else, we are sorting by a different column *}
+  		{else}
+  		  <a class="tableHeaderLink" href="viewInventory.php?sort=current_value">
+  		    Value
+  		  </a>
+  		{/if}
+  		</th>
 		
-		{*  if we are sorting by the current condition, descending,
-		    display link to sort ascending *}
-		{elseif $sort == 'current_condition' && $sortdir == 'DESC'}
-		<a class="tableHeaderLink" href="viewInventory.php?sort=current_condition">
-		  Condition
-		  <img src="images/sortTriangleDown.png" />
-		</a>
-		
-		{*  else, we are sorting by another column so display the link
-		    without the sorting indicator *}
-		{else}
-		<a class="tableHeaderLink" href="viewInventory.php?sort=current_condition">
-		  Condition
-		</a>
 		{/if}
-		</th>
-		
-		{* Current Value *}
-		<th>
-		{*  if we are sorting by the current value, ascending,
-		    display link to sort descending *}
-		{if isset($sort) && $sort == 'current_value' && !isset($sortdir) }
-		  <a class="tableHeaderLink" href="viewInventory.php?sort=current_value&sortdir=DESC">
-		    Value
-		    <img src="images/sortTriangleUp.png" />
-		  </a>
-		{*  if we are sorting by current value descending
-		    display link to sort ascending *}
-		{elseif $sort == 'current_value' && $sortdir == 'DESC'}
-	    <a class="tableHeaderLink" href="viewInventory.php?sort=current_value">
-	      Value
-	      <img src="images/sortTriangleDown.png" />
-	    </a>
-		{*  else, we are sorting by a different column *}
-		{else}
-		  <a class="tableHeaderLink" href="viewInventory.php?sort=current_value">
-		    Value
-		  </a>
-		{/if}
-		</th>
-		
 		{* Location *}
 		<th>
 		{if isset($sort) && $sort == 'location' && !isset($sortdir)}
@@ -140,8 +143,10 @@
 		<td><input type="checkbox" name="{$items[itemLoop]->inventory_id}" id="{$items[itemLoop]->inventory_id}"></td>
 	{/if}
 	<td>{$items[itemLoop]->description}</td>
-	<td>{$items[itemLoop]->current_condition}</td>
-	<td>{$items[itemLoop]->current_value}</td>
+	{if $authority >= 1}
+		<td>{$items[itemLoop]->current_condition}</td>
+		<td>{$items[itemLoop]->current_value}</td>
+	{/if}
 	<td align="center">{$items[itemLoop]->location}</td>
 </tr>
 {/section}	
@@ -153,11 +158,11 @@
 {if $authority >= 1}
 	
 <select name="action_list" id="action_list">
-
-<option value="Loan">Loan</option>
-<option value="Edit">Edit</option>
-<option value="Repair">Repair</option>
-<option value="Delete">Delete</option>
+	<option value="Loan">Loan</option>
+	<option value="Checkout">Checkout</option>
+	<option value="Edit">Edit</option>
+	<option value="Repair">Repair</option>
+	<option value="Delete">Delete</option>
 </select>
 
 
@@ -169,6 +174,8 @@
 {if $authority >= 1}
 
 <br />
-<a href="makeInventorySummary.php"><img border="0" src="images/pdficon_small.gif" />&nbsp;&nbsp;Download PDF</a>
 
 {/if}
+
+<a href="makeInventorySummary.php"><img border="0" src="images/pdficon_small.gif" />&nbsp;&nbsp;Download PDF</a>
+
