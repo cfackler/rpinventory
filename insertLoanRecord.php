@@ -36,7 +36,7 @@ if($auth < 1)
 
 	
 //User
-$user_name = mysqli_real_escape_string( $link, $_POST["user_name"] );
+$user_name = mysqli_real_escape_string( $link, $_POST["username"] );
 if($user_name == "")
 	die("Invalid Username");
 
