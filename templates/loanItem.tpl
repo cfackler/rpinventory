@@ -121,8 +121,7 @@
 	<td>Loan To: </td>
 	<td>
 	
-<<<<<<< HEAD:templates/loanItem.tpl
-	<input id="username" name="username" class="validate" type="text" onkeyup="checkUsername()" autocomplete="off"/>
+	<input id="username" name="username" class="validate" type="text" onblur="sendAddressRequest({$users[usr]->id});" onkeyup="checkUsername()" autocomplete="off"/>
 	
 	</td>
 </tr>
@@ -131,17 +130,6 @@
 	<td>
 	
 	<div id="userAutoComplete" style="display:none"></div>
-=======
-	<select class="dropDown" id="user_id" name="user_id" class="validate" onchange="sendAddressRequest({$users[usr]->id});">
-		<option value="-1">Select User</option>
-	{section name=usr loop=$users}
-		<option value="{$users[usr]->id}">
-			{$users[usr]->username}
-		</option>
-	{/section}
-	</select>
->>>>>>> Worked on design a bit...Created nice looking pulldown boxes and buttons.:templates/loanItem.tpl
-	
 	</td>
 </tr>
 

@@ -75,14 +75,10 @@ function confirmation(msg, url) {
 
 
 function sendAddressRequest() {
-    var options = $('user_id');
-    var id = options.options[options.selectedIndex].value;
+    document.getElementById( 'userAutoComplete' ).style.display = "none";
+    var name = $('username');
     
-    //Dont send invalid id
-    if(id == -1)
-	return;
-    
-    new Ajax.Request("getAddress.php?id=" + id, 
+    new Ajax.Request("getAddress.php?username=" + name.value, 
 		     { 
 			 method: 'post', 
 			     parameters: $('AjaxForm').serialize(true),
@@ -92,8 +88,6 @@ function sendAddressRequest() {
 
 
 function recieveAddress(oReq, oJSN){
-    //alert(oJSN.Address);
-    
     if(oJSN.Found == "False"){
 	$('address').value = "";
 	$('address2').value = "";
@@ -592,6 +586,10 @@ function showUsernames(oReq, oJSN){
 // Take the clicked value, and put it in the textbox
 function fillText( text ){
     var targetTextbox = document.getElementById( 'username' );
-    targetTextbox.value = text;
     document.getElementById( 'userAutoComplete' ).style.display = "none";
+    targetTextbox.value = text;
+
+    targetTextbox.focus();
+    targetTextbox.blur();
+    sendAddressRequest();
 }

@@ -38,13 +38,13 @@ if($link == null)
 $data = array("Found" => 'False', "Address" => '', "Address2" => '', "City" => '', "State" => '', "Zipcode" => '', "Phone" => '');
 
 //GET ID
-$id = (int)$_GET['id'];
-if($id == 0)
-  die("Invalid ID");	
+$username = mysqli_real_escape_string( $link, $_GET['username'] );
+if( strlen( $username ) == 0)
+  die("Invalid Username");	
 	
 //Address
-$query= "SELECT *  FROM addresses, borrower_addresses WHERE addresses.address_id = borrower_addresses.address_id and borrower_addresses.user_id = " . $id;
-$result = mysqli_query($link, $query);
+$query= "SELECT *  FROM addresses, borrower_addresses, logins WHERE logins.id = borrower_addresses.user_id AND addresses.address_id = borrower_addresses.address_id and logins.username = '". $username."'";
+$result = mysqli_query($link, $query) or die( "Error finding address".mysql_error() );
 
 if(mysqli_num_rows($result) != 0)
   {
