@@ -16,7 +16,7 @@ a:hover {
 
 body {
     font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-    background-color: #b9b9b9;
+    background-color: #e0e0e0;
 }
 
 
@@ -246,13 +246,15 @@ span.TopOfTable h3{
 }
 
 .button {
-  background-color:#d50000;
-  border: 1px solid black;
+  background-color:#333333;
+  border: 2px solid black;
+  border-style:outset;
   color: #ffffff;
+  
 }
 
 .dropDown {
-  background-color: #d50000;
+  background-color: #333333;
   border: 1px solid black;
   color: #ffffff;
 }
