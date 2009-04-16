@@ -1,1 +1,13 @@
 Options -Indexes
+
+# Block files in the directories
+RewriteEngine On
+
+RewriteRule \.git/ - [F] 
+RewriteRule templates/ - [F]
+RewriteRule cache/ - [F]
+RewriteRule config/ - [F]
+RewriteRule lib/ - [F]
+RewriteRule modules/ - [F]
+RewriteRule sql/ - [F]
+RewriteRule templates_c/ [F]
