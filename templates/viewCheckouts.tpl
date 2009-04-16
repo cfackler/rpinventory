@@ -107,22 +107,22 @@ Show:
 		{* Default sorting method for table *}
 		{if !isset($sort) }
 		  <a href="viewCheckouts.php?sort=time_taken">
-		    Loan Date
+		    Time Taken
 		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'time_taken' && !isset($sortdir)}
 		  <a href="viewCheckouts.php?sort=time_taken&sortdir=DESC">
-		    Loan Date
+		    Time Taken
 		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
 		  </a>
 		{elseif isset($sort) && $sort == 'time_taken' && $sortdir == 'DESC'}
 		  <a href="viewCheckouts.php?sort=time_taken">
-		    Loan Date
+		    Time Taken
 		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
 		  </a>
 		{else}
 		  <a href="viewCheckouts.php?sort=time_taken">
-		    Loan Date
+		    Time Taken
 		  </a>
 		{/if}
 		</th>
@@ -141,7 +141,7 @@ Show:
 		  </a>
 		{else}
 		  <a href="viewCheckouts.php?sort=time_returned">
-		    Return Date
+		    Time Returned
 		  </a>
 		{/if}		
 		</th>
@@ -157,7 +157,7 @@ Show:
 	<td>{$items[itemLoop]->time_taken}</td>
 	<td align="center">
 	{if $items[itemLoop]->time_returned == NULL && $authority >= 1}
-		<a href="returnItem.php?id={$items[itemLoop]->checkout_id}">Return</a>
+		<a href="returnCheckoutItem.php?id={$items[itemLoop]->checkout_id}">Return</a>
 	{elseif $items[itemLoop]->time_returned == NULL}
 		Out
 	{else}

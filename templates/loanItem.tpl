@@ -19,8 +19,10 @@
 *}
 
 <form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" onsubmit="return ValidateForm()" METHOD="post">
-
+<div class="TopOfTable">
+<span class="TopOfTable">
 <h3>Loan Items</h3>
+</span></div>
 
 {if $loanedOut == true }
 <h4>The following item(s) have already been loaned out:</h4>

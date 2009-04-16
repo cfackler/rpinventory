@@ -19,10 +19,10 @@
 *}
 
 <form name="loanItem" action="updateLoanRecord.php" METHOD="post">
-
+<div class="TopOfTable">
+<span class="TopOfTable">
 <h3>Return Loan Item</h3>
-
-
+</span></div>
 
 <table width="400">
 
