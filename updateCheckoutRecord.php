@@ -50,7 +50,7 @@ if( $time_returned == '' ){
 }
 	
 //Create query for returning item
-$sql = "Update checkouts set time_returned = '" . $date . "' where checkout_id = " . $checkout_id;
+$sql = "Update checkouts set time_returned = '" . $time_returned . "' where checkout_id = " . $checkout_id;
 
 //Run update
 if(!mysqli_query($link, $sql))
