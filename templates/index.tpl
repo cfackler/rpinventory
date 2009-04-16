@@ -53,6 +53,7 @@ $this->assign('clubName', Config::get('club_name'));
 			{if $authority >= 1}
 		             <li><a href="viewBorrowers.php">View Borrowers</a></li>
 		    	     <li><a href="viewLoans.php">View Loans</a></li>
+			     <li><a href="viewCheckouts.php">View Checkouts</a></li>
 			     {if $authority == 2}
 		    	     <li><a href="viewRepairs.php">View Repairs</a></li>
 		    	     <li><a href="viewPurchases.php">View Purchases</a></li>

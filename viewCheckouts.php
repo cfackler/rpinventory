@@ -44,12 +44,12 @@ if(isset($_GET['sort']) && isset($_GET['sortdir']))
 else if(isset($_GET['sort']))
   $sortBy = $_GET['sort'];
 else
-  $sortBy = "issue_date DESC";
+  $sortBy = "time_taken DESC";
   
 //items
-$query=   "SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description
-          FROM logins, loans, inventory 
-          WHERE loans.borrower_id = logins.id and inventory.inventory_id = loans.inventory_id ";
+$query=   "SELECT checkout_id, checkouts.inventory_id, username, borrower_id, time_taken, time_returned, starting_condition, username, description
+          FROM logins, checkouts, inventory 
+          WHERE checkouts.borrower_id = logins.id and inventory.inventory_id = checkouts.inventory_id ";
 
 
 //Filter
@@ -60,15 +60,14 @@ else
 
 if($view == "outstanding")
 {
-	$query .= " and return_date IS NULL ";
+	$query .= " and time_returned IS NULL ";
 }
 else if($view == "returned")
 {
-	$query .= " and return_date IS NOT NULL ";
+	$query .= " and time_returned IS NOT NULL ";
 }
 
 $query .= "ORDER BY ".$sortBy;
-
 
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
     
@@ -90,9 +89,9 @@ if(isset($_GET['sort']) )
 if(isset($_GET['sortdir']))
   $smarty->assign('sortdir', $_GET['sortdir']);
 
-$smarty->assign('title', "View Loans");
+$smarty->assign('title', "View Checkouts");
 $smarty->assign('authority', $auth);
-$smarty->assign('page_tpl', 'viewLoans');
+$smarty->assign('page_tpl', 'viewCheckouts');
 $smarty->assign('items', $items);
 $smarty->assign('filter', $view);
 
