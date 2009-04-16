@@ -575,13 +575,14 @@ function showUsernames(oReq, oJSN){
     var i;
     targetDiv.innerHTML = "";
     for( i = 0; i < oJSN.records.length; i++ ){
-	targetDiv.innerHTML = targetDiv.innerHTML + '<span style="display:block" onclick="fillText( \'' +  oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
+	targetDiv.innerHTML = targetDiv.innerHTML + '<span style="display:block" onclick="fillText(\''+ oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
     }
 
     if( oJSN.records.length > 0 ){
 	targetDiv.style.display = "";
     }
 }
+
 
 // Take the clicked value, and put it in the textbox
 function fillText( text ){
@@ -592,4 +593,6 @@ function fillText( text ){
     targetTextbox.focus();
     targetTextbox.blur();
     sendAddressRequest();
+
 }
+

@@ -122,8 +122,8 @@
 <tr>
 	<td>Loan To: </td>
 	<td>
-	
-	<input id="username" name="username" class="validate" type="text" onblur="sendAddressRequest({$users[usr]->id});" onkeyup="checkUsername()" autocomplete="off"/>
+	{*onblur="sendAddressRequest({$users[usr]->id});"*}
+	<input id="username" name="username" class="validate" type="text" onkeyup="checkUsername()" autocomplete="off"/>
 	
 	</td>
 </tr>
