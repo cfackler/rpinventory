@@ -75,7 +75,6 @@ function confirmation(msg, url) {
 
 
 function sendAddressRequest() {
-    document.getElementById( 'userAutoComplete' ).style.display = "none";
     var name = $('username');
     
     new Ajax.Request("getAddress.php?username=" + name.value, 
@@ -586,13 +585,23 @@ function showUsernames(oReq, oJSN){
 
 // Take the clicked value, and put it in the textbox
 function fillText( text ){
-    var targetTextbox = document.getElementById( 'username' );
+    if(text.length > 0)
+	document.getElementById( 'username' ).value = text;
+    leaveUsername();
+}
+
+function leaveUsername( ){
     document.getElementById( 'userAutoComplete' ).style.display = "none";
-    targetTextbox.value = text;
-
-    targetTextbox.focus();
-    targetTextbox.blur();
+    sleep( 500 );
     sendAddressRequest();
+}
 
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
 
