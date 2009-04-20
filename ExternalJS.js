@@ -557,6 +557,7 @@ function hideBusiness() {
 function checkUsername() {
     input = document.getElementById( 'username' );
     if( input.value != "") {
+	document.getElementById( 'tempUsername' ).value = input.value; // Updat the stored username
 	new Ajax.Request( 'ajax.php?operation=username&name=' + input.value, 
 			  { 
 			      method: 'post',
@@ -574,7 +575,7 @@ function showUsernames(oReq, oJSN){
     var i;
     targetDiv.innerHTML = "";
     for( i = 0; i < oJSN.records.length; i++ ){
-	targetDiv.innerHTML = targetDiv.innerHTML + '<span style="display:block" onclick="fillText(\''+ oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
+	targetDiv.innerHTML = targetDiv.innerHTML + '<span style="display:block" onmouseover="setUsername(\''+ oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
     }
 
     if( oJSN.records.length > 0 ){
@@ -583,25 +584,20 @@ function showUsernames(oReq, oJSN){
 }
 
 
-// Take the clicked value, and put it in the textbox
-function fillText( text ){
-    if(text.length > 0)
-	document.getElementById( 'username' ).value = text;
-    leaveUsername();
+// Set the username to be the stored username
+function fillText(){
+    document.getElementById( 'username' ).value = document.getElementById( 'tempUsername' ).value;
 }
 
+// Store the name into the hidden field on the page
+function setUsername( name ){
+    document.getElementById( 'tempUsername' ).value = name;
+}
+
+// Hide the drop down, set the username, update the address
 function leaveUsername( ){
     document.getElementById( 'userAutoComplete' ).style.display = "none";
-    sleep( 500 );
+    fillText();
     sendAddressRequest();
-}
-
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
 }
 
