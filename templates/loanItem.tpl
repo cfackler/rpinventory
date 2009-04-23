@@ -40,6 +40,7 @@
 <table width="500">
 
 <input type="hidden" name="inventory_ids" size="40" value="{$idString}">
+<input type="hidden" id="tempUsername" size="50" value=""/>
 
 <tr>
 	<td valign="top">Items: </td>
@@ -113,30 +114,28 @@
                 <select class="dropDown" name="year">
                     <option value="2007"{if $selectDate.year == 2007}selected{/if}>2007</option>
                     <option value="2008"{if $selectDate.year == 2008}selected{/if}>2008</option>
-					<option value="2009"{if $selectDate.year == 2009}selected{/if}>2009</option>
+		    <option value="2009"{if $selectDate.year == 2009}selected{/if}>2009</option>
                 </select>
 	
 	<td>
 </tr>
 
 <tr>
-	<td>Loan To: </td>
+	<td>Loan to: </td>
 	<td>
-	{*onblur="sendAddressRequest({$users[usr]->id});"*}
-	<input id="username" name="username" class="validate" type="text" onblur="fillText('')" onkeyup="checkUsername()" autocomplete="off"/>
-	
+		<input id="username" name="username" class="validate" type="text" onblur="leaveUsername()" onkeyup="checkUsername()" autocomplete="off"/>
 	</td>
 </tr>
-<tr>
-	<td />
+
+<tr>	
+	<td/>
 	<td>
-	
-	<div id="userAutoComplete" style="display:none"></div>
+		<div id="userAutoComplete" style="display:none"></div>
 	</td>
 </tr>
 
 <tr>
-	<td valign="top">Address</td>
+	<td valign="top">Address:</td>
 	<td valign="top">
 		<table width="350">
 		<tr>

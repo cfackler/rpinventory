@@ -241,6 +241,7 @@ span.TopOfTable h3{
 #userAutoComplete span:hover{
     background-color: #b5b5b5;
 }
+
 .naviOver {
   background-color:#ff0000;
 }
@@ -258,8 +259,12 @@ span.TopOfTable h3{
   border: 1px solid black;
   color: #ffffff;
 }
+
 .dropDown option{
   border-top:1px dotted black;
   color: #ffffff;
 }
 
+#userAutoComplete:hover{
+  cursor: default
+}

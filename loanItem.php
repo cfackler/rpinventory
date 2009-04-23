@@ -73,8 +73,9 @@ foreach ($idList as $id) {
   }
 
   $checkoutQuery = "SELECT description from checkouts, inventory WHERE time_returned is NULL and checkouts.inventory_id = inventory.inventory_id and checkouts.inventory_id = " . $id;
-  $checkoutResult = mysqli_query( $link, $checkoutQuery );
-  if( mysqli_num_rows( $checkoutResult) != 0 ){
+  $checkoutResult = mysqli_query( $link, $checkoutQuery ) or
+    die( 'Error getting inventory '.mysql_error() );
+  if( mysqli_num_rows( $checkoutResult ) != 0 ){
     $item = mysqli_fetch_object( $checkoutResult );
     $itemsOut[] = $item->description;
     $loanedOut = true;
