@@ -24,6 +24,7 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once("lib/interface.lib.php"); //interface functions
 
 $link = connect();
 if($link == null)
@@ -40,14 +41,44 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-//Sort method
-if(isset($_GET['sort']) && isset($_GET['sortdir']))
-  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
-else if(isset($_GET['sort']))
-  $sortBy = $_GET['sort'];
-else
-  $sortBy = 'name';
 
+// Decide sorting method
+if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
+  $currentSortIndex = $_GET['sort'];
+else
+  $currentSortIndex = 0;
+
+//Decide sorting direction
+if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
+  $currentSortDir = 1;
+else
+  $currentSortDir = 0;
+
+
+
+
+/**
+ * SQL Stuff
+ **/
+ 
+ /* Determine query argument for sorting */
+if($currentSortIndex == 0)
+  $sortBy = 'name';
+else if($currentSortIndex == 1)
+  $sortBy = 'username';
+else if($currentSortIndex == 2)
+  $sortBy = 'access_level';
+else if($currentSortIndex == 3)
+  $sortBy = 'rin';
+else if($currentSortIndex == 4)
+  $sortBy = 'email';
+
+/*  Determine query argument for sort direction
+    Ascending is default    */
+if($currentSortDir == 1)
+  $sortBy .= ' DESC';
+  
+  
 //users
 $userQuery= "SELECT * from logins ORDER BY ".$sortBy;
 $userResult = mysqli_query($link, $userQuery);
@@ -57,12 +88,25 @@ while($user = mysqli_fetch_object($userResult))
 {
 	$users [] = $user;
 }
+mysqli_close($link);
+
+
+
+
+
+/* Table column headers */
+$headers = array();
+$headers[0] = array('label' => 'Name', 'width' => 150);
+$headers[1] = array('label' => 'Username', 'width' => 100);
+$headers[2] = array('label' => 'Access', 'width' => 100);
+$headers[3] = array('label' => 'RIN', 'width' => 100);
+$headers[4] = array('label' => 'Email', 'width' => 150);
 
 //Assign vars
-if(isset($_GET['sort']))
-  $smarty->assign('sort', $_GET['sort']);
-if(isset($_GET['sortdir']))
-  $smarty->assign('sortdir', $_GET['sortdir']);
+$smarty->assign('headers', $headers);
+$smarty->assign('currentSortIndex', $currentSortIndex);
+$smarty->assign('currentSortDir', $currentSortDir);
+$smarty->register_function('generateTableHeader', 'generateTableHeader');
 
 $smarty->assign('title', "Manage Users");
 $smarty->assign('authority', $auth);
@@ -74,6 +118,5 @@ $smarty->display('index.tpl');
 
 
 
-mysqli_close($link);
 
 ?>

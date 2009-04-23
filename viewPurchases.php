@@ -24,6 +24,7 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once("lib/interface.lib.php"); //interface functions
 
 $link = connect();
 if($link == null)
@@ -39,12 +40,38 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-if(isset($_GET['sort']) && isset($_GET['sortdir']))
-  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
-else if(isset($_GET['sort']))
-  $sortBy = $_GET['sort'];
+// Decide sorting method
+if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
+  $currentSortIndex = $_GET['sort'];
 else
-  $sortBy = "purchase_id";
+  $currentSortIndex = 0;
+
+//Decide sorting direction
+if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
+  $currentSortDir = 1;
+else
+  $currentSortDir = 0;
+  
+  
+  
+/**
+ * SQL
+ **/
+ 
+ /* Determine query argument for sorting */
+if($currentSortIndex == 0)
+  $sortBy = 'purchase_id';
+else if($currentSortIndex == 1)
+  $sortBy = 'company_name';
+else if($currentSortIndex == 2)
+  $sortBy = 'purchase_date';
+else if($currentSortIndex == 3)
+  $sortBy = 'total_price';
+
+/*  Determine query argument for sort direction
+    Ascending is default    */
+if($currentSortDir == 1)
+  $sortBy .= ' DESC';
 
 //users
 $query= "SELECT purchases.purchase_id, purchases.business_id, purchases.purchase_date, company_name, total_price
@@ -75,17 +102,29 @@ while($purchase = mysqli_fetch_object($result))
 	$items[] = $string;
 	
 }
+mysqli_close($link);
+
+
+
+
+
 
 
 //BEGIN Page
 
+/* Table column headers */
+$headers = array();
+$headers[0] = array('label' => 'Items', 'width' => 150);
+$headers[1] = array('label' => 'Company Name', 'width' => 250);
+$headers[2] = array('label' => 'Date', 'width' => 125);
+$headers[3] = array('label' => 'Total Cost', 'width' => 150);
 
 	
 //Assign vars
-if(isset($_GET['sort']))
-  $smarty->assign('sort', $_GET['sort']);
-if(isset($_GET['sortdir']))
-  $smarty->assign('sortdir', $_GET['sortdir']);
+$smarty->assign('headers', $headers);
+$smarty->assign('currentSortIndex', $currentSortIndex);
+$smarty->assign('currentSortDir', $currentSortDir);
+$smarty->register_function('generateTableHeader', 'generateTableHeader');
   
 $smarty->assign('title', "View Purchases");
 $smarty->assign('authority', $auth);
@@ -97,6 +136,5 @@ $smarty->display('index.tpl');
 
 
 
-mysqli_close($link);
 
 ?>

@@ -20,7 +20,7 @@
 
 */
 
-function getInventory($sortBy="description", $sortdir="")
+function getInventory($sortIndex, $sortdir)
 {
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session
@@ -32,6 +32,21 @@ function getInventory($sortBy="description", $sortdir="")
   //Authenticate
   $auth = GetAuthority();
   
+  //Determine which column to sort by
+  if($sortIndex == 0)
+    $sortBy = 'description';
+  else if($sortIndex == 1)
+    $sortBy = 'current_condition';
+  else if($sortIndex == 2)
+    $sortBy = 'current_value';
+  else if($sortIndex == 3)
+    $sortBy = 'location';
+  
+  //Determine which direction to sort in
+  if($sortdir == 0)
+    $sortdir = ''; //query ascends by default
+  else
+    $sortdir = "DESC";
   
   //items
   $query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value

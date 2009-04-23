@@ -24,6 +24,7 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once("lib/interface.lib.php"); //interface functions
 
 $link = connect();
 if($link == null)
@@ -39,12 +40,51 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-if(isset($_GET['sort']) && isset($_GET['sortdir']))
-  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
-else if(isset($_GET['sort']))
-  $sortBy = $_GET['sort'];
+// Decide sorting method
+if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 9))
+  $currentSortIndex = $_GET['sort'];
 else
-  $sortBy = "company_name";
+  $currentSortIndex = 0;
+
+//Decide sorting direction
+if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
+  $currentSortDir = 1;
+else
+  $currentSortDir = 0;
+  
+  
+/**
+ * SQL
+ **/
+ 
+ /* Determine query argument for sorting */
+if($currentSortIndex == 0)
+  $sortBy = 'company_name';
+else if($currentSortIndex == 1)
+  $sortBy = 'address';
+else if($currentSortIndex == 2)
+  $sortBy = 'address2';
+else if($currentSortIndex == 3)
+  $sortBy = 'city';
+else if($currentSortIndex == 4)
+  $sortBy = 'state';
+else if($currentSortIndex == 5)
+  $sortBy = 'zipcode';
+else if($currentSortIndex == 6)
+  $sortBy = 'phone';  
+else if($currentSortIndex == 7)
+  $sortBy = 'fax';
+else if($currentSortIndex == 8)
+  $sortBy = 'email';
+else if($currentSortIndex == 9)
+  $sortBy = 'website';
+
+/*  Determine query argument for sort direction
+    Ascending is default    */
+if($currentSortDir == 1)
+  $sortBy .= ' DESC';
+
+ 
 
 //users
 $query= "SELECT company_name, address, address2, city, state, zipcode, phone, fax, email, website
@@ -59,17 +99,35 @@ while($business = mysqli_fetch_object($result))
 {
 	$businesses [] = $business;
 }
+mysqli_close($link);
+
+
+
+
+
+
 
 //BEGIN Page
 
-
+/* Table column headers */
+$headers = array();
+$headers[0] = array('label' => 'Company Name', 'width' => 300);
+$headers[1] = array('label' => 'Address', 'width' => 150);
+$headers[2] = array('label' => 'Address 2', 'width' => 160);
+$headers[3] = array('label' => 'City', 'width' => 100);
+$headers[4] = array('label' => 'State', 'width' => 50);
+$headers[5] = array('label' => 'Zip Code', 'width' => 100);
+$headers[6] = array('label' => 'Phone Number', 'width' => 100);
+$headers[7] = array('label' => 'Fax Number', 'width' => 100);
+$headers[8] = array('label' => 'Email', 'width' => 100);
+$headers[9] = array('label' => 'Website', 'width' => 150);
 
 	
 //Assign vars
-if(isset($_GET['sort']))
-  $smarty->assign('sort', $_GET['sort']);
-if(isset($_GET['sortdir']))
-  $smarty->assign('sortdir', $_GET['sortdir']);
+$smarty->assign('headers', $headers);
+$smarty->assign('currentSortIndex', $currentSortIndex);
+$smarty->assign('currentSortDir', $currentSortDir);
+$smarty->register_function('generateTableHeader', 'generateTableHeader');
   
 $smarty->assign('title', "Manage Businesses");
 $smarty->assign('authority', $auth);
@@ -81,6 +139,5 @@ $smarty->display('index.tpl');
 
 
 
-mysqli_close($link);
 
 ?>

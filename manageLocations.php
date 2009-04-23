@@ -24,6 +24,7 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once("lib/interface.lib.php"); //interface functions
 
 $link = connect();
 if($link == null)
@@ -40,12 +41,33 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-if(isset($_GET['sort']) && isset($_GET['sortdir']))
-  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
-else if(isset($_GET['sort']))
-  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
+// Decide sorting method
+if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
+  $currentSortIndex = $_GET['sort'];
 else
+  $currentSortIndex = 0;
+
+//Decide sorting direction
+if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
+  $currentSortDir = 1;
+else
+  $currentSortDir = 0;
+  
+  
+/**
+ * SQL stuff
+ **/
+ 
+ /* Determine query argument for sorting */
+if($currentSortIndex == 0)
   $sortBy = 'location';
+else if($currentSortIndex == 1)
+  $sortBy = 'description';
+
+/*  Determine query argument for sort direction
+    Ascending is default    */
+if($currentSortDir == 1)
+  $sortBy .= ' DESC';
 
 //users
 $locQuery= "SELECT * from locations ORDER BY ".$sortBy;
@@ -56,13 +78,25 @@ while($loc = mysqli_fetch_object($locResult))
 {
 	$locations [] = $loc;
 }
+mysqli_close($link);
 
-	
+
+
+
+
+
+/* Table column headers */
+$headers = array();
+$headers[0] = array('label' => 'Location', 'width' => 200);
+$headers[1] = array('label' => 'Description', 'width' => 300);
+
+
+
 //Assign vars
-if(isset($_GET['sort']))
-  $smarty->assign('sort', $_GET['sort']);
-if(isset($_GET['sortdir']))
-  $smarty->assign('sortdir', $_GET['sortdir']);
+$smarty->assign('headers', $headers);
+$smarty->assign('currentSortIndex', $currentSortIndex);
+$smarty->assign('currentSortDir', $currentSortDir);
+$smarty->register_function('generateTableHeader', 'generateTableHeader');
   
 $smarty->assign('title', "Manage Locations");
 $smarty->assign('authority', $auth);
@@ -74,6 +108,5 @@ $smarty->display('index.tpl');
 
 
 
-mysqli_close($link);
 
 ?>

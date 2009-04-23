@@ -26,49 +26,8 @@
 <table width="700" border="0" cellspacing="0" class="itemsTable">
 	<tr>
 	   
-    {* Location *}
-		<th width="200">
-		{* Default sorting option *}
-		{if !isset($sort) }
-		  <a href="?sort=location&sortdir=DESC">
-		    Location
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
-		  </a>
-		{elseif isset($sort) && $sort == 'location' && !isset($sortdir)}
-		  <a href="?sort=location&sortdir=DESC">
-		    Location
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
-		  </a>
-		{elseif isset($sort) && $sort == 'location' && $sortdir == 'DESC'}
-		  <a href="?sort=location">
-		    Location
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
-		  </a>
-		{else}
-		  <a href="?sort=location">
-		    Location
-		  </a>
-		{/if}
-		</th>
-		
-		{* Description *}
-		<th width="300">
-		{if isset($sort) && $sort == 'description' && !isset($sortdir)}
-		  <a href="?sort=description&sortdir=DESC">
-		    Description
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
-		  </a>
-		{elseif isset($sort) && $sort == 'description' && $sortdir == 'DESC'}
-		  <a href="?sort=description">
-		    Description
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
-		  </a>
-		{else}
-		  <a href="?sort=description">
-		    Description
-		  </a>
-		{/if}
-		</th>
+       {* Table header *}
+    {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
 		
 		{* Actions do not need to be sorted. *}
 		<th width="150">Actions</th>

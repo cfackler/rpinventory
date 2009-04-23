@@ -27,87 +27,9 @@
     <table width="800" border="0" class="itemsTable" cellspacing="0">
     	<tr>
     
-    {* Items *}
-		<th width="150">
-		{* Sorting default *}
-		{if !isset($sort) }
-		  <a href="viewPurchases.php?sort=purchase_id&sortdir=DESC">
-		    Items
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
-		  </a>
-		{elseif isset($sort) && $sort == 'purchase_id' && !isset($sortdir)}
-		  <a href="viewPurchases.php?sort=purchase_id&sortdir=DESC">
-		    Items
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
-		  </a>
-		{elseif isset($sort) && $sort == 'purchase_id' && $sortdir == 'DESC'}
-		  <a href="viewPurchases.php?sort=purchase_id">
-		    Items
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
-		  </a>
-		{else} 
-		  <a href="viewPurchases.php?sort=purchase_id">
-		    Items
-		  </a>
-		{/if}
-		</th>
-		
-		{* Company Name *}
-		<th width="250">
-		{if isset($sort) && $sort == 'company_name' && !isset($sortdir)}
-		  <a href="viewPurchases.php?sort=company_name&sortdir=DESC">
-		    Company Name
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
-		  </a>
-		{elseif isset($sort) && $sort == 'company_name' && $sortdir == 'DESC'}
-		  <a href="viewPurchases.php?sort=company_name">
-		    Company Name
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
-		  </a>
-		{else}
-		  <a href="viewPurchases.php?sort=company_name">
-		    Company Name
-		  </a>
-		{/if}
-		</th>
-		
-		{* Purchase Date *}
-		<th width="125">
-		{if isset($sort) && $sort == 'purchase_date' && !isset($sortdir)}
-		  <a href="viewPurchases.php?sort=purchase_date&sortdir=DESC">
-		    Date
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
-		  </a>
-		{elseif isset($sort) && $sort == 'purchase_date' && $sortdir == 'DESC'}
-		  <a href="viewPurchases.php?sort=purchase_date">
-		    Date
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
-		  </a>
-		{else}
-		  <a href="viewPurchases.php?sort=purchase_date">
-		    Date
-		  </a>
-		{/if}
-		</th>
-		
-		{* Total Cost *}
-		<th width="150">
-		{if isset($sort) && $sort == 'total_price' && !isset($sortdir)}
-		  <a href="viewPurchases.php?sort=total_price&sortdir=DESC">
-		    Total Cost
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleUp.png" />
-		  </a>
-		{elseif isset($sort) && $sort == 'total_price' && $sortdir == 'DESC'}
-		  <a href="viewPurchases.php?sort=total_price">
-		    Total Cost
-		    <img class="tableHeaderSortTriangle" src="images/sortTriangleDown.png" />
-		  </a>
-		{else}
-		  <a href="viewPurchases.php?sort=total_price">
-		    Total Cost
-		  </a>
-		{/if}
-		</th>
+            {* Table header *}
+    {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
+
 		
 	</tr>
 

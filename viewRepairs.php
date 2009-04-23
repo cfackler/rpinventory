@@ -23,6 +23,7 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once("lib/interface.lib.php"); //interface functions
 
 $link = connect();
 if($link == null)
@@ -37,12 +38,41 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-if(isset($_GET['sort']) && isset($_GET['sortdir']))
-  $sortBy = $_GET['sort']." ".$_GET['sortdir'];
-else if(isset($_GET['sort']))
-  $sortBy = $_GET['sort'];
+// Decide sorting method
+if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
+  $currentSortIndex = $_GET['sort'];
 else
-  $sortBy = "inv_description";
+  $currentSortIndex = 0;
+
+//Decide sorting direction
+if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
+  $currentSortDir = 1;
+else
+  $currentSortDir = 0;
+  
+  
+  
+  
+/**
+ * SQL
+ **/
+ 
+ /* Determine query argument for sorting */
+if($currentSortIndex == 0)
+  $sortBy = 'inv_description';
+else if($currentSortIndex == 1)
+  $sortBy = 'company_name';
+else if($currentSortIndex == 2)
+  $sortBy = 'repair_date';
+else if($currentSortIndex == 3)
+  $sortBy = 'repair_cost';
+else if($currentSortIndex == 4)
+  $sortBy = 'rep_description';
+  
+/*  Determine query argument for sort direction
+    Ascending is default    */
+if($currentSortDir == 1)
+  $sortBy .= ' DESC';
 
 //items
 $query= "SELECT inventory.description AS inv_description, company_name, repairs.business_id, repair_date, repair_cost, repairs.description AS rep_description
@@ -57,17 +87,28 @@ while($item = mysqli_fetch_object($result))
 {
 	$items [] = $item;
 }
+mysqli_close($link);
+
+
+
+
 
 //BEGIN Page
 
-
+/* Table column headers */
+$headers = array();
+$headers[0] = array('label' => 'Item', 'width' => 200);
+$headers[1] = array('label' => 'Company Name', 'width' => 150);
+$headers[2] = array('label' => 'Date', 'width' => 75);
+$headers[3] = array('label' => 'Cost', 'width' =>50);
+$headers[4] = array('label' => 'Description', 'width' => 250);
 
 	
 //Assign vars
-if(isset($_GET['sort']))
-  $smarty->assign('sort', $_GET['sort']);
-if(isset($_GET['sortdir']))
-  $smarty->assign('sortdir', $_GET['sortdir']);
+$smarty->assign('headers', $headers);
+$smarty->assign('currentSortIndex', $currentSortIndex);
+$smarty->assign('currentSortDir', $currentSortDir);
+$smarty->register_function('generateTableHeader', 'generateTableHeader');
   
 $smarty->assign('title', "View Repairs");
 $smarty->assign('authority', $auth);
@@ -80,6 +121,5 @@ $smarty->display('index.tpl');
 
 
 
-mysqli_close($link);
 
 ?>
