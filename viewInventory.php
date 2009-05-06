@@ -33,11 +33,16 @@ if($link == null)
 //Authenticate
 $auth = GetAuthority();
 
+session_start();
 
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
+require_once('lib/SmartyPaginate.class.php');
 
 $smarty = new Smarty_Inv();
+
+SmartyPaginate::connect();
+SmartyPaginate::setLimit( 25 );
 
 /*  Determine wether or not to default sort column headers,
     Make sure no one messed with the URL by checking the $_GET vars */
@@ -82,9 +87,18 @@ $smarty->register_function('generateTableHeader', 'generateTableHeader');
 $smarty->assign('title', "View Inventory");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewInventory');
-$smarty->assign('items', $items);
-
-
+//$smarty->assign('items', $items);
+$smarty->assign( 'items', getPaginatedResults( $currentSortIndex, $currentSortDir ) );
+SmartyPaginate::assign( $smarty );
 $smarty->display('index.tpl');
+
+function getPaginatedResults( $currentSortIndex, $currentSortDir ){
+  $items = getInventory( $currentSortindex, $currentSortDir );
+
+
+  SmartyPaginate::setTotal( count( $items ) );
+  return array_slice( $items, SmartyPaginate::getCurrentindex(), 
+		      SmartyPaginate::getLimit());
+}
 
 ?>
