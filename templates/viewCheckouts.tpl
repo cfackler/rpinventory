@@ -72,3 +72,7 @@ Show:
 
 
 </table>
+
+<br />
+
+<div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>

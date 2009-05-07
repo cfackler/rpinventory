@@ -25,10 +25,8 @@
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once("lib/interface.lib.php"); //interface functions
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
+require_once( 'lib/paginate.lib.php' );
+require_once( 'lib/checkouts.lib.php' );
 
 //Authenticate
 $auth = GetAuthority();	
@@ -51,66 +49,7 @@ if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
 else
   $currentSortDir = 0;
   
-  
-  
-  
-/**
- * Move query to file eventually
- **/  
-//items
-$query=   'SELECT checkout_id, checkouts.inventory_id, username, borrower_id, time_taken, time_returned, starting_condition, username, description
-          FROM logins, checkouts, inventory 
-          WHERE checkouts.borrower_id = logins.id and inventory.inventory_id = checkouts.inventory_id';
-
-
-//Filter
-if(!isset($_GET['view']))
-	$view = "all";
-else
-	$view = $_GET['view'];
-
-if($view == "outstanding")
-{
-	$query .= ' and time_returned IS NULL';
-}
-else if($view == "returned")
-{
-	$query .= ' and time_returned IS NOT NULL';
-}
-
-$query .= ' ORDER BY';
-
-/* Determine what column to sort by for SQL query */
-if($currentSortIndex == 0)
-  $query .= ' description';
-else if($currentSortIndex == 1)
-  $query .= ' starting_condition';
-else if($currentSortIndex == 2)
-  $query .= ' username';
-else if($currentSortIndex == 3)
-  $query .= ' time_taken';
-else if($currentSortIndex == 4)
-  $query .= ' time_returned';
-  
-/*  Determine query argument for sort direction
-    Ascending is default    */
-if($currentSortDir == 1)
-  $query .= ' DESC';
-
-$result = mysqli_query($link, $query) or die(mysqli_error($link));
-    
-
-$items = array();
-
-while($item = mysqli_fetch_object($result))
-{
-	$items [] = $item;
-}
-mysqli_close($link);
-
-
-
-
+paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'checkouts' );
 
 
 //BEGIN Page
@@ -133,7 +72,6 @@ $smarty->register_function('generateTableHeader', 'generateTableHeader');
 $smarty->assign('title', "View Checkouts");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewCheckouts');
-$smarty->assign('items', $items);
 $smarty->assign('filter', $view);
 
 

@@ -55,6 +55,13 @@ function getPaginatedResults( $itemVarName, $currentSortIndex, $currentSortDir, 
 	$_SESSION['SmartyPaginate']['default']['url'] .= '?view=' . $_GET['view'];
       }
       break;
+
+    case 'checkouts':
+      $items = getViewCheckouts( $currentSortIndex, $currentSortDir );
+      if( isset( $_GET['view'] ) ){ /* Save the view we're currently on */
+	$_SESSION['SmartyPaginate']['default']['url'] .= '?view=' . $_GET['view'];
+      }
+      break;
     }
   
   SmartyPaginate::setTotal( count( $items ) );
