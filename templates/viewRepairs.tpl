@@ -44,6 +44,10 @@
 
 
     </table>
+
+    <br />
+
+    <div id="paginate">{paginate_prev} {paginate_middle} {paginate_next} </div>    
 {else}
     <h3>Repairs</h3>
 

@@ -64,6 +64,7 @@ function getViewLoans( $currentSortIndex, $currentSortDir ){
     die("Database connection failed");
 
   $auth = getAuthority();
+
   //items
   $query=   'SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description
           FROM logins, loans, inventory 

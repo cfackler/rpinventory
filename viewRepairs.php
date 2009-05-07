@@ -21,13 +21,10 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once("lib/interface.lib.php"); //interface functions
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
+require_once( 'lib/paginate.lib.php' );
+require_once( 'lib/repairs.lib.php' );
 
 //Authenticate
 $auth = GetAuthority();	
@@ -42,56 +39,15 @@ $smarty = new Smarty_Inv();
 if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
   $currentSortIndex = $_GET['sort'];
 else
-  $currentSortIndex = 0;
+  $currentSortIndex = 2;
 
 //Decide sorting direction
-if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
-  $currentSortDir = 1;
-else
+if(isset($_GET['sortdir']) && $_GET['sortdir'] == 0)
   $currentSortDir = 0;
-  
-  
-  
-  
-/**
- * SQL
- **/
- 
- /* Determine query argument for sorting */
-if($currentSortIndex == 0)
-  $sortBy = 'inv_description';
-else if($currentSortIndex == 1)
-  $sortBy = 'company_name';
-else if($currentSortIndex == 2)
-  $sortBy = 'repair_date';
-else if($currentSortIndex == 3)
-  $sortBy = 'repair_cost';
-else if($currentSortIndex == 4)
-  $sortBy = 'rep_description';
-  
-/*  Determine query argument for sort direction
-    Ascending is default    */
-if($currentSortDir == 1)
-  $sortBy .= ' DESC';
+else
+  $currentSortDir = 1;
 
-//items
-$query= "SELECT inventory.description AS inv_description, company_name, repairs.business_id, repair_date, repair_cost, repairs.description AS rep_description
-	 FROM repairs, inventory, businesses
-	 WHERE repairs.inventory_id=inventory.inventory_id AND repairs.business_id=businesses.business_id ORDER BY ".$sortBy;
-
-
-$result = mysqli_query($link, $query);
-$items = array();
-
-while($item = mysqli_fetch_object($result))
-{
-	$items [] = $item;
-}
-mysqli_close($link);
-
-
-
-
+paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'repairs' );
 
 //BEGIN Page
 
@@ -113,13 +69,8 @@ $smarty->register_function('generateTableHeader', 'generateTableHeader');
 $smarty->assign('title', "View Repairs");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewRepairs');
-$smarty->assign('items', $items);
 $smarty->assign('filter', $view);
 
-
 $smarty->display('index.tpl');
-
-
-
 
 ?>

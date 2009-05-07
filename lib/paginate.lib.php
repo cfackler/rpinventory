@@ -28,7 +28,7 @@ function paginate( $smarty, $itemVarName, $currentSortIndex, $currentSortDir, $m
 
   SmartyPaginate::disconnect();	/* Remove the old session data first, or URL's are wrong */
   SmartyPaginate::connect();
-  SmartyPaginate::setLimit( 2 );
+  SmartyPaginate::setLimit( 25 );
 
   $smarty->assign( $itemVarName, getPaginatedResults( $itemVarName, 
 						 $currentSortIndex,
@@ -61,6 +61,10 @@ function getPaginatedResults( $itemVarName, $currentSortIndex, $currentSortDir, 
       if( isset( $_GET['view'] ) ){ /* Save the view we're currently on */
 	$_SESSION['SmartyPaginate']['default']['url'] .= '?view=' . $_GET['view'];
       }
+      break;
+
+    case 'repairs':
+      $items = getViewRepairs( $currentSortIndex, $currentSortDir );
       break;
     }
   
