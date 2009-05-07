@@ -21,16 +21,11 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once("lib/inventory.lib.php"); //inventory functions
 require_once("lib/interface.lib.php"); //interface functions
 require_once( 'lib/paginate.lib.php' ); // paginate
 
-$link = connect();
-if($link == null)
-	die("Database connection failed");
-	
 //Authenticate
 $auth = GetAuthority();
 
@@ -53,11 +48,6 @@ if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
 else
   $currentSortDir = 0;
   
-//Get items
-$items = getInventory($currentSortIndex, $currentSortDir);
-
-
-//BEGIN Page
 
 /*  Table headers, to be sent to the generateTableHeader function from
     the template file. */
@@ -70,8 +60,8 @@ if( $auth >= 1 ){
 
 $headers[3] = array('label' => 'Location', 'width' => 150);
 
-/* Paginate the items */
-paginate( $smarty, 'items', 'inventory' );
+/* Paginate the results */
+paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'inventory' );
 	
 //Assign vars
 $smarty->assign('currentSortIndex', $currentSortIndex);
@@ -84,6 +74,5 @@ $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewInventory');
 
 $smarty->display('index.tpl');
-
 
 ?>

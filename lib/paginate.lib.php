@@ -23,13 +23,13 @@
 
 /* Takes the smarty variable and the name of the variable storing 
    the information to be displayed */
-function paginate( $smarty, $itemVarName, $mode ){
+function paginate( $smarty, $itemVarName, $currentSortIndex, $currentSortDir, $mode ){
   require_once('lib/SmartyPaginate.class.php');
 
   SmartyPaginate::connect();
   SmartyPaginate::setLimit( 25 );
 
-  $smarty->assign( 'items', getPaginatedResults( $itemVarName, 
+  $smarty->assign( $itemVarName, getPaginatedResults( $itemVarName, 
 						 $currentSortIndex,
 						 $currentSortDir,
 						 $mode ) );
@@ -40,8 +40,12 @@ function paginate( $smarty, $itemVarName, $mode ){
 function getPaginatedResults( $itemVarName, $currentSortIndex, $currentSortDir, $mode ){
   switch( $mode )
     {
-    case "inventory":
-      $items = getInventory( $currentSortindex, $currentSortDir );
+    case 'inventory':
+      $items = getInventory( $currentSortIndex, $currentSortDir );
+      break;
+      
+    case 'borrowers':
+      $items = getBorrowers( $currentSortIndex, $currentSortDir );
       break;
     }
   

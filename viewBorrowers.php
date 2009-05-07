@@ -21,16 +21,12 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
-require_once("lib/auth.lib.php");   //Session
-require_once("lib/interface.lib.php"); //interface functions
+require_once( 'lib/auth.lib.php' );	 //Authentication
+require_once( 'lib/interface.lib.php' ); //interface functions
+require_once( 'lib/paginate.lib.php' ); //Pagination
+require_once( 'lib/borrowers.lib.php' ); //Borrowers functions
 
-$link = connect();
-if($link == null)
-   die("Database connection failed");
-
-// Authenticate
-$auth = GetAuthority();
+$auth = getAuthority();
 
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
@@ -50,47 +46,10 @@ else
   $currentSortDir = 0;
 
 
+//$borrowers = getBorrowers( $currentSortIndex, $currentSortDir );
 
-
-
-/**
- * Move all of this to a function eventually
- **/
- 
-/* Determine query argument for sorting */
-if($currentSortIndex == 0)
-  $sortBy = 'name';
-else if($currentSortIndex == 1)
-  $sortBy = 'rin';
-else if($currentSortIndex == 2)
-  $sortBy = 'email';
-else if($currentSortIndex == 3)
-  $sortBy = 'address';
-else if($currentSortIndex == 4)
-  $sortBy = 'phone';
-
-/*  Determine query argument for sort direction
-    Ascending is default    */
-if($currentSortDir == 1)
-  $sortBy .= ' DESC';
-
-//items
-$query = "SELECT username, name, rin, email, address, city, state, zipcode, phone
-    FROM logins, borrower_addresses, addresses
-		 WHERE addresses.address_id=borrower_addresses.address_id AND
-		       borrower_addresses.user_id=logins.id
-		      ORDER BY ".$sortBy;
-                 
-$result = mysqli_query($link, $query);
-$borrowers = array();
-
-while($item = mysqli_fetch_object($result))
-{
-	$borrowers [] = $item;
-}
-
-
-
+/* Paginate the results */
+paginate( $smarty, 'borrowers', $currentSortIndex, $currentSortDir, 'borrowers' );
 
 
 /* Table column headers */
@@ -110,11 +69,8 @@ $smarty->register_function('generateTableHeader', 'generateTableHeader');
 $smarty->assign('title', "View Borrowers");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewBorrowers');
-$smarty->assign('borrowers', $borrowers);
 
 
 $smarty->display('index.tpl');
-
-mysqli_close($link);
 
 ?>
