@@ -25,6 +25,7 @@ require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once("lib/inventory.lib.php"); //inventory functions
 require_once("lib/interface.lib.php"); //interface functions
+require_once( 'lib/paginate.lib.php' ); // paginate
 
 $link = connect();
 if($link == null)
@@ -33,16 +34,11 @@ if($link == null)
 //Authenticate
 $auth = GetAuthority();
 
-session_start();
-
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
-require_once('lib/SmartyPaginate.class.php');
 
 $smarty = new Smarty_Inv();
 
-SmartyPaginate::connect();
-SmartyPaginate::setLimit( 25 );
 
 /*  Determine wether or not to default sort column headers,
     Make sure no one messed with the URL by checking the $_GET vars */
@@ -67,16 +63,15 @@ $items = getInventory($currentSortIndex, $currentSortDir);
     the template file. */
 $headers = array();
 $headers[0] = array('label' => 'Item', 'width' => 250);
-if($auth >= 1)
-{
+if( $auth >= 1 ){
   $headers[1] = array('label' => 'Condition', 'width' => 100);
   $headers[2] = array('label' => 'Current Value', 'width' => 150);
-
-
 }
+
 $headers[3] = array('label' => 'Location', 'width' => 150);
 
-
+/* Paginate the items */
+paginate( $smarty, 'items', 'inventory' );
 	
 //Assign vars
 $smarty->assign('currentSortIndex', $currentSortIndex);
@@ -87,18 +82,8 @@ $smarty->register_function('generateTableHeader', 'generateTableHeader');
 $smarty->assign('title', "View Inventory");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewInventory');
-//$smarty->assign('items', $items);
-$smarty->assign( 'items', getPaginatedResults( $currentSortIndex, $currentSortDir ) );
-SmartyPaginate::assign( $smarty );
+
 $smarty->display('index.tpl');
 
-function getPaginatedResults( $currentSortIndex, $currentSortDir ){
-  $items = getInventory( $currentSortindex, $currentSortDir );
-
-
-  SmartyPaginate::setTotal( count( $items ) );
-  return array_slice( $items, SmartyPaginate::getCurrentindex(), 
-		      SmartyPaginate::getLimit());
-}
 
 ?>
