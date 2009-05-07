@@ -66,6 +66,10 @@ function getPaginatedResults( $itemVarName, $currentSortIndex, $currentSortDir, 
     case 'repairs':
       $items = getViewRepairs( $currentSortIndex, $currentSortDir );
       break;
+
+    case 'purchases':
+      $items = getViewPurchases( $currentSortIndex, $currentSortDir );
+      break;
     }
   
   SmartyPaginate::setTotal( count( $items ) );

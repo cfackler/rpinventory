@@ -35,16 +35,19 @@
 
     {section name=itemLoop loop=$purchases}
     <tr{cycle values=" class=\"alt\","}>
-
-	<td>{$purchaseItems[itemLoop]}</td>
+	<td>{$purchases[itemLoop]->items}</td>
 	<td>{$purchases[itemLoop]->company_name}</td>
 	<td>{$purchases[itemLoop]->purchase_date}</td>
-	<td>${$purchases[itemLoop]->total_price}</td>
+	<td>{$purchases[itemLoop]->total_price}</td>
     </tr>
     {/section}	
 
 
     </table>
+
+    <br />
+
+    <div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>
 {else}
     <h3>Purchases</h3>
 

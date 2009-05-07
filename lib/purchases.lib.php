@@ -55,4 +55,62 @@ function getPurchases( $startDate, $endDate )
   return $records;
 }
 
+function getViewPurchases( $currentSortIndex, $currentSortDir ){
+  require_once( 'lib/connect.lib.php' );
+  require_once( 'lib/auth.lib.php' );
+
+  $link = connect();
+  if( $link == null )
+    die( "Database connection failed" );
+  
+  // Authenticate
+  $auth = GetAuthority();
+
+  /* Determine query argument for sorting */
+  if($currentSortIndex == 0)
+    $sortBy = 'purchase_id';
+  else if($currentSortIndex == 1)
+    $sortBy = 'company_name';
+  else if($currentSortIndex == 2)
+    $sortBy = 'purchase_date';
+  else if($currentSortIndex == 3)
+    $sortBy = 'total_price';
+  
+  /*  Determine query argument for sort direction
+      Ascending is default    */
+  if($currentSortDir == 1)
+    $sortBy .= ' DESC';
+  
+  //users
+  $query= "SELECT purchases.purchase_id, purchases.business_id, purchases.purchase_date, company_name, total_price
+	 FROM purchases, businesses
+	 WHERE businesses.business_id=purchases.business_id ORDER BY ".$sortBy;
+  $result = mysqli_query($link, $query);
+  $purchases = array();
+  $items = array();
+  
+  while($purchase = mysqli_fetch_object($result)){
+    $itemQuery = "select purchase_id, description from inventory, purchase_items where inventory.inventory_id = purchase_items.inventory_id and purchase_items.purchase_id = " . $purchase->purchase_id;
+    
+    $itemResult = mysqli_query($link, $itemQuery);
+    $string = "";
+    
+    while($item = mysqli_fetch_object($itemResult)){
+      if(strlen($string) != 0)
+	$string .= ", ";
+      
+      $string .= $item->description;
+    }
+    
+    $purchase->items = $string;
+    
+    $purchases[] = $purchase;
+    
+  }
+  
+  mysqli_close($link);
+  
+  return $purchases;  
+}
+
 ?>

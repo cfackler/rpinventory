@@ -21,14 +21,10 @@
 
 */
 
-
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once("lib/interface.lib.php"); //interface functions
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
+require_once( 'lib/paginate.lib.php' );
+require_once( 'lib/purchases.lib.php' );
 
 //Authenticate
 $auth = GetAuthority();	
@@ -51,66 +47,10 @@ if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
   $currentSortDir = 1;
 else
   $currentSortDir = 0;
-  
-  
-  
-/**
- * SQL
- **/
- 
- /* Determine query argument for sorting */
-if($currentSortIndex == 0)
-  $sortBy = 'purchase_id';
-else if($currentSortIndex == 1)
-  $sortBy = 'company_name';
-else if($currentSortIndex == 2)
-  $sortBy = 'purchase_date';
-else if($currentSortIndex == 3)
-  $sortBy = 'total_price';
-
-/*  Determine query argument for sort direction
-    Ascending is default    */
-if($currentSortDir == 1)
-  $sortBy .= ' DESC';
-
-//users
-$query= "SELECT purchases.purchase_id, purchases.business_id, purchases.purchase_date, company_name, total_price
-	 FROM purchases, businesses
-	 WHERE businesses.business_id=purchases.business_id ORDER BY ".$sortBy;
-$result = mysqli_query($link, $query);
-$purchases = array();
-$items = array();
-
-while($purchase = mysqli_fetch_object($result))
-{
-	$purchases [] = $purchase;
-	
-	
-	$itemQuery = "select purchase_id, description from inventory, purchase_items where inventory.inventory_id = purchase_items.inventory_id and purchase_items.purchase_id = " . $purchase->purchase_id;
-
-	$itemResult = mysqli_query($link, $itemQuery);
-	$string = "";
-	
-	while($item = mysqli_fetch_object($itemResult))
-	{
-		if(strlen($string) != 0)
-			$string .= ", ";
-			
-		$string .= $item->description;
-	}
-	
-	$items[] = $string;
-	
-}
-mysqli_close($link);
-
-
-
-
-
-
 
 //BEGIN Page
+
+paginate( $smarty, 'purchases', $currentSortIndex, $currentSortDir, 'purchases' );
 
 /* Table column headers */
 $headers = array();
@@ -129,8 +69,8 @@ $smarty->register_function('generateTableHeader', 'generateTableHeader');
 $smarty->assign('title', "View Purchases");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewPurchases');
-$smarty->assign('purchases', $purchases);
-$smarty->assign('purchaseItems', $items);
+//$smarty->assign('purchases', $purchases);
+//$smarty->assign('purchaseItems', $items);
 
 $smarty->display('index.tpl');
 
