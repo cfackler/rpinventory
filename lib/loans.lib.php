@@ -55,4 +55,64 @@ function getLoans( $startDate, $endDate )
   return $records;
 }
 
+function getViewLoans( $currentSortIndex, $currentSortDir ){
+  require_once("lib/connect.lib.php");  //mysql
+  require_once("lib/auth.lib.php");  //Session
+
+  $link = connect();
+  if($link == null)
+    die("Database connection failed");
+
+  $auth = getAuthority();
+  //items
+  $query=   'SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description
+          FROM logins, loans, inventory 
+          WHERE loans.borrower_id = logins.id and inventory.inventory_id = loans.inventory_id ';
+  
+  
+  //Filter
+  if(!isset($_GET['view']))
+    $view = "all";
+  else
+    $view = $_GET['view'];
+  
+  if($view == "outstanding"){
+    $query .= 'and return_date IS NULL ';
+  }
+  else if($view == "returned"){
+    $query .= 'and return_date IS NOT NULL ';
+  }
+  
+  $query .= 'ORDER BY ';
+  
+  /* Determine query argument for sorting */
+  if($currentSortIndex == 0)
+    $query .= 'description';
+  else if($currentSortIndex == 1)
+    $query .= 'starting_condition';
+  else if($currentSortIndex == 2)
+    $query .= 'username';
+  else if($currentSortIndex == 3)
+    $query .= 'issue_date';
+  else if($currentSortIndex == 4)
+    $query .= 'return_date';
+  
+  /* Determine sort direction */
+  if($currentSortDir == 1)
+    $query .= ' DESC';
+  
+  $result = mysqli_query($link, $query) or die(mysqli_error($link));
+  
+  
+  $items = array();
+  
+  while($item = mysqli_fetch_object($result)) {
+      $items [] = $item;
+  }
+
+  mysqli_close($link);
+  
+  return $items;
+}
+
 ?>

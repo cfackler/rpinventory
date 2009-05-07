@@ -26,8 +26,9 @@
 function paginate( $smarty, $itemVarName, $currentSortIndex, $currentSortDir, $mode ){
   require_once('lib/SmartyPaginate.class.php');
 
+  SmartyPaginate::disconnect();	/* Remove the old session data first, or URL's are wrong */
   SmartyPaginate::connect();
-  SmartyPaginate::setLimit( 25 );
+  SmartyPaginate::setLimit( 2 );
 
   $smarty->assign( $itemVarName, getPaginatedResults( $itemVarName, 
 						 $currentSortIndex,
@@ -46,6 +47,13 @@ function getPaginatedResults( $itemVarName, $currentSortIndex, $currentSortDir, 
       
     case 'borrowers':
       $items = getBorrowers( $currentSortIndex, $currentSortDir );
+      break;
+    
+    case 'loans':
+      $items = getViewLoans( $currentSortIndex, $currentSortDir );
+      if( isset( $_GET['view'] ) ){ /* Save the view we're currently on */
+	$_SESSION['SmartyPaginate']['default']['url'] .= '?view=' . $_GET['view'];
+      }
       break;
     }
   
