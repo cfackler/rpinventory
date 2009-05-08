@@ -36,6 +36,10 @@
 		<label for="loans">Loans</label>
 	</li>
 	<li>
+		<input type="checkbox" name="checkouts" value="Checkouts" />
+		<label for="checkouts">Checkouts</label>
+	</li>
+	<li>
 		<input type="checkbox" name="repairs" value="Repairs" />
 		<label for="repairs">Repairs</label>
 	</li>

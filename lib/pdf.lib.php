@@ -81,6 +81,29 @@ function getRepairData( $startDate, $endDate )
   return $data;
 }
 
+function getCheckoutData( $startDate, $endDate ){
+  require_once( 'lib/checkouts.lib.php' );
+  
+  $records = getCheckouts( $startDate, $endDate );
+  
+  $data = array();
+  foreach( $records as $value ) {
+    if( $value->return_date == '' ){
+      $value->return_date = "Outstanding";
+    }
+
+    $data[] = array('Item' => $value->description,
+		    'Starting Condition' => $value->starting_condition,
+		    'Ending Condition' => $value->ending_condition,
+		    'Event Used' => $value->event_name,
+		    'User' => $value->username,
+		    'Time Issued' => $value->time_taken,
+		    'Time Returned' => $value->time_returned );
+  }
+
+  return $data;
+}
+
 function getPurchasesData( $startDate, $endDate )
 {
   require_once( 'lib/purchases.lib.php' );

@@ -20,6 +20,41 @@
 
 */
 
+function getCheckouts( $startDate, $endDate ){
+  require_once("lib/connect.lib.php");  //mysql
+  require_once("lib/auth.lib.php");  //Session
+
+  // Connect
+  $link = connect();
+  if( $link == null )
+    die( "Database connection failed" );
+  
+  // Authenticate
+  $auth = GetAuthority();
+
+  $startDate = mysqli_real_escape_string( $link, $startDate );
+  $endDate = mysqli_real_escape_string( $link, $endDate);
+  
+  // Checkout History
+  $query= "SELECT time_taken, time_returned, event_name, starting_condition, ending_condition, inventory.description, username FROM checkouts, inventory, logins WHERE logins.id = checkouts.borrower_id AND checkouts.inventory_id = inventory.inventory_id AND time_taken >= '". $startDate ."' AND (time_returned <= '". $endDate ."' OR time_returned IS NULL)";
+
+  //  echo $query;
+  $result = mysqli_query($link, $query) or
+    die( 'Could not get the checkout history' );
+
+  $records = array();
+  
+  while($record = mysqli_fetch_object($result))
+    {
+      $records [] = $record;
+    }
+  
+  mysqli_close($link);	
+  
+  return $records;
+
+}
+
 function getViewCheckouts( $currentSortIndex, $currentSortDir ){
   require_once( 'lib/connect.lib.php' );
 

@@ -40,6 +40,7 @@ if ( !isset( $_POST['startdate'] ) || !isset( $_POST['enddate'] ) ){
 /* Get block data */
 $inventory = mysqli_real_escape_string( $link, $_POST['inventory'] );
 $loans = mysqli_real_escape_string( $link, $_POST['loans'] );
+$checkouts = mysqli_real_escape_string( $link, $_POST['checkouts'] );
 $repairs = mysqli_real_escape_string( $link, $_POST['repairs'] );
 $purchases = mysqli_real_escape_string( $link, $_POST['purchases'] );
 $businesses = mysqli_real_escape_string( $link, $_POST['businesses'] );
@@ -83,7 +84,7 @@ if ( $inventory != '' ){
   $pdf->ezText('');
 }
 
-if ( $loans != ''){
+if ( $loans != '' ){
   //add text
   $pdf->ezText('<u>Loan History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
@@ -93,6 +94,18 @@ if ( $loans != ''){
   $pdf->ezTable( $return );
   unset($data);
   $data= array();
+  $pdf->ezText('');
+}
+
+if ( $checkouts != '' ){
+  $pdf->ezText('<u>Checkout History</u>', 10, array('justification'=>'center'));
+  $pdf->ezText('');
+
+  $return = getCheckoutData( $startDate, $endDate );
+
+  $pdf->ezTable( $return );
+  unset( $data );
+  $data = array();
   $pdf->ezText('');
 }
 
