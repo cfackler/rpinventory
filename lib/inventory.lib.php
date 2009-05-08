@@ -20,7 +20,7 @@
 
 */
 
-function getInventory($sortIndex, $sortdir)
+function getInventory($sortIndex = 0, $sortdir = 0)
 {
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session

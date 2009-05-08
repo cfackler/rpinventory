@@ -65,7 +65,7 @@ $pdf =& new Cezpdf('LETTER', 'landscape');
 $pdf->selectFont('modules/pdf-php/fonts/Helvetica.afm');
 
 //start page numbers
-$pdf->ezStartPageNumbers(300, 50, 10);
+$pdf->ezStartPageNumbers(410, 10, 10);
 $pdf->ezText('<u>'.$clubName.'</u>', 14, array('justification'=>'center') );
 $pdf->ezText('<u>'. $startDate .' to '. $endDate .'</u>', 12, array('justification'=>'center'));
 $pdf->ezText('');
