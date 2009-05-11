@@ -47,20 +47,20 @@ $idList = array();
 $itemDesc = array();
 
 while ($token !== false) {
-	$idList[] = (int)$token;
-    $token = strtok(",");
+  $idList[] = (int)$token;
+  $token = strtok(",");
 }
 
 //Verify all ids are valid,  get item description
 $items = array();
 foreach ($idList as $id)
 {
-	$result = mysqli_query($link, "select * from inventory where inventory_id = " . $id);
-	if(mysqli_num_rows($result) == 0)
-		die("Invalid item ID");
-	
-	$item = mysqli_fetch_object($result);
-	$items[] = $item;
+  $result = mysqli_query($link, "select * from inventory where inventory_id = " . $id);
+  if(mysqli_num_rows($result) == 0)
+    die("Invalid item ID");
+  
+  $item = mysqli_fetch_object($result);
+  $items[] = $item;
 }
 
 

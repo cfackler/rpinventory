@@ -43,7 +43,7 @@ if( $checkout_id  == 0 ){
 //Inventory ID
 $inv_id = (int)$_POST["inv_id"];
 
-$time_returned = $_POST["time_returned"];
+$time_returned = mysqli_real_escape_string( $link, $_POST["time_returned"] );
 
 if( $time_returned == '' ){
   die( 'Invalid Return Time' );

@@ -38,7 +38,7 @@ require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
 //id
-$id = (int)$_GET["id"];
+$id = (int)$_GET["id");
 if($id == 0)
   die("Invalid ID");
 

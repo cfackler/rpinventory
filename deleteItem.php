@@ -34,7 +34,7 @@ if($link == null)
   die("Database connection failed");
 	
 //grab all ids
-$idString = mysqli_real_escape_string( $link, $_GET["ids"] );
+$idString = $link, $_GET["ids"];
 $token = strtok($idString, ",");
 $idList = array();
 

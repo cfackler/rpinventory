@@ -84,6 +84,19 @@ if( !$ignoreBusiness ){
       die("Must have contact information");
     
     $website = $_POST["website"];
+
+    /* Sanitize */
+    $company = mysqli_real_escape_string( $link, $company );
+    $address = mysqli_real_escape_string( $link, $address );
+    $address2 = mysqli_real_escape_string( $link, $address2 );
+    $city = mysqli_real_escape_string( $link, $city );
+    $state = mysqli_real_escape_string( $link, $state );
+    $zip = mysqli_real_escape_string( $link, $zip );
+    $phone = mysqli_real_escape_string( $link, $phone );
+    $fax = mysqli_real_escape_string( $link, $fax );
+    $email = mysqli_real_escape_string( $link, $email );
+    $website = mysqli_real_escape_string( $link, $website );
+      
     
     //Insert the business address
     $query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "')";
@@ -119,8 +132,7 @@ $date = date("Y-m-d", $timestamp);
 
 
 //Total cost
-$total_cost = $_POST['total_cost'];	
-
+$total_cost = (double)$_POST['total_cost'];	
 
 
 //Insert purchase
@@ -144,73 +156,80 @@ $purchase_id = mysqli_insert_id($link);
 //All items
 for($x=0; $x<$count; $x++)
 {
-	//Description
-	$itemdesc = $_POST["desc".$x];
-	if(strlen($itemdesc) == 0)
-	  die("Must have a description");
-	
-	//Condition
-	$condition = $_POST["condition".$x];
-	if(strlen($condition) == 0)
-	  die("Must have a condition");	
-	
-	//Value
-	$valueStr = $_POST["value".$x];
-	$value = (double)$_POST["value".$x];
-	if(strlen($valueStr) == 0)
-	  die("Must have a value");
-	
-	//Location	
-	$location = (int)$_POST["location" . $x];
-	
-	//Check location exists
-	$result=mysqli_query($link, "select * from locations where location_id=" . $location);
-	$checkRows = mysqli_num_rows($result);
-	
-	//if not in database, new location was specified
-	if($checkRows == 0){
-		
-	  $newLocation = $_POST["newlocation" . $x];
-	  if(strlen($newLocation) == 0)
-		die("New location must have a name.");	
-	  $locDescription = $_POST["newdescription" . $x];
-	  if(strlen($locDescription) == 0)
-		die("New location must have a description.");	
-	  
-	  $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $newLocation . "', '" . $locDescription . "')";
-	  
-	  if(!mysqli_query($link, $sql))
-	  	die("New Location Insert Query Failed");
-	
-	  $location = mysqli_insert_id($link);  
-		
-	  if($location == 0)
-		die("Must have a location");
-	}
-	//stuff they entered already exists in the table
-	else if($checkRows == 1){
-	  $loc = mysqli_fetch_object($result);
-	  $location = $loc->location_id;
-	}
-	else
-	  die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
-	
-	
-	//Insert new inventory item
-	$sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $itemdesc . "', " . $location . ", '" . $condition . "', " . $value . ")";		
+  //Description
+  $itemdesc = $_POST["desc".$x];
+  if(strlen($itemdesc) == 0)
+    die("Must have a description");
 
-	if(!mysqli_query($link, $sql))
-	  die("Inventory Insert Query failed");
-	
-	$inv_id = mysqli_insert_id($link);
-		
-		
-	//Insert purchase record for new inventory item
-	$sql = "INSERT INTO purchase_items (purchase_id, inventory_id, cost) VALUES
+  //Condition
+  $condition = $_POST["condition".$x];
+  if(strlen($condition) == 0)
+    die("Must have a condition");	
+  
+  //Value
+  $valueStr = $_POST["value".$x];
+  $value = (double)$_POST["value".$x];
+  if(strlen($valueStr) == 0)
+    die("Must have a value");
+  
+  //Location	
+  $location = (int)$_POST["location" . $x];
+  
+  $itemdesc = mysqli_real_escape_string( $itemdesc );
+  $condition = mysqli_real_escape_string( $condition );
+  $valueStr = mysqli_real_escape_string( $valueStr );
+  
+  //Check location exists
+  $result=mysqli_query($link, "select * from locations where location_id=" . $location);
+  $checkRows = mysqli_num_rows($result);
+  
+  //if not in database, new location was specified
+  if($checkRows == 0){
+    
+    $newLocation = $_POST["newlocation" . $x];
+    if(strlen($newLocation) == 0)
+      die("New location must have a name.");	
+    $locDescription = $_POST["newdescription" . $x];
+    if(strlen($locDescription) == 0)
+      die("New location must have a description.");
+
+    $newLocation = mysqli_real_escape_string( $link, $newLocation );
+    $locDescription = mysqli_real_escape_string( $link, $newLocation );
+    
+    $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $newLocation . "', '" . $locDescription . "')";
+    
+    if(!mysqli_query($link, $sql))
+      die("New Location Insert Query Failed");
+    
+    $location = mysqli_insert_id($link);  
+    
+    if($location == 0)
+      die("Must have a location");
+  }
+  //stuff they entered already exists in the table
+  else if($checkRows == 1){
+    $loc = mysqli_fetch_object($result);
+    $location = $loc->location_id;
+  }
+  else
+    die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
+  
+  
+  //Insert new inventory item
+  $sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $itemdesc . "', " . $location . ", '" . $condition . "', " . $value . ")";		
+  
+  if(!mysqli_query($link, $sql))
+    die("Inventory Insert Query failed");
+  
+  $inv_id = mysqli_insert_id($link);
+  
+  
+  //Insert purchase record for new inventory item
+  $sql = "INSERT INTO purchase_items (purchase_id, inventory_id, cost) VALUES
 	(" . $purchase_id .", " . $inv_id .", " . $value .")";
-	
-	if(!mysqli_query($link, $sql))
-		die("Purchase Record Query failed");
+  
+  if(!mysqli_query($link, $sql))
+    die("Purchase Record Query failed");
 }
 	
 

@@ -59,7 +59,7 @@ $email = $_POST["email"];
 if(strlen($email) == 0)
 	die("Must have a email");
 	
-//email
+//name
 $name = $_POST["name"];
 if(strlen($name) == 0)
 	die("Must have a name");
@@ -68,8 +68,14 @@ if(strlen($name) == 0)
 $id = (int)$_POST["id"];
 if($id == 0)
 	die("Invalid ID");
-	
-	
+
+/* Sanitize */
+$username = mysqli_real_escape_string( $link, $username );
+$password = mysqli_real_escape_string( $link, $password );
+$rin = mysqli_real_escape_string( $link, $rin );
+$email = mysqli_real_escape_string( $link, $email );
+$name = mysqli_real_escape_string( $link, $name );
+
 //Create query
 $sql = "Update logins set username = '" . $username . "', access_level = '" . $access . "', rin = '" . $rin . "', email = '" . $email . "', name = '" . $name . "'";
 

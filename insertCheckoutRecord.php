@@ -26,19 +26,19 @@ require_once("lib/auth.lib.php");  //Session
 
 $link = connect();
 if($link == null)
-	die("Database connection failed");
+  die("Database connection failed");
 
 //Authenticate
 $auth = GetAuthority();	
 if($auth < 1)
-	die("You dont have permission to access this page");
+  die("You dont have permission to access this page");
 
 
-	
+
 //User
 $user_name = mysqli_real_escape_string( $link, $_POST["username"] );
 if($user_name == "")
-	die("Invalid Username");
+  die("Invalid Username");
 
 $user_id;
 
@@ -50,8 +50,7 @@ $result = mysqli_fetch_object( $result );
 $user_id = $result->id;
 
 if(!VerifyUserExists($user_id, $link))
-	die("Invalid User");
-	
+  die("Invalid User");
 
 
 //grab all ids
@@ -60,22 +59,22 @@ $token = strtok($idString, ",");
 $idList = array();
 
 while ($token !== false) {
-	$idList[] = (int)$token;
-    $token = strtok(",");
+  $idList[] = (int)$token;
+  $token = strtok(",");
 }
 
 $items = array();
 
 //Verify all ids are valid
 foreach ($idList as $id)
-{
-	$result = mysqli_query($link, "select current_condition, inventory_id from inventory where inventory_id = " . $id);
-	if(mysqli_num_rows($result) == 0)
-		die("Invalid item ID:");
-        
+  {
+    $result = mysqli_query($link, "select current_condition, inventory_id from inventory where inventory_id = " . $id);
+    if(mysqli_num_rows($result) == 0)
+      die("Invalid item ID:");
+    
     $item = mysqli_fetch_object($result);
     $items[] = $item;
-}
+  }
 
 
 //Address INFO
@@ -90,72 +89,70 @@ $result = mysqli_query($link, $query);
 $addyResult = null;
 if(mysqli_num_rows($result) != 0)
 {
-	$oldExists = true;
-	$addyResult = mysqli_fetch_object($result);
+  $oldExists = true;
+  $addyResult = mysqli_fetch_object($result);
 }
 
 if($useOld == "on")
-{
+  {
     if($oldExists == false)
-        die("Old address doesnt exist");
-}   
+      die("Old address doesnt exist");
+  }   
 else
-{
+  {
+    
+    $address = $_POST["address"];
+    $address2 = $_POST["address2"];
+    if($address2 == null)
+      $address2="";
+    
+    $city = $_POST["city"];
+    $state = $_POST["state"];
+    $zipcode = $_POST["zipcode"];
+    $phone = $_POST["phone"];
+    
+    
+    
+    
+    if(strlen($address) == 0 || strlen($city) == 0 || strlen($state) == 0 || strlen($zipcode) == 0 || strlen($phone) == 0)
+      die("Null values not allowed");
+    
+    if(!$oldExists)
+      {
+	$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zipcode . "', '" . $phone . "')";
+	
+	if(!mysqli_query($link, $query))
+	  die("Query failed insert address");
+	$address_id = mysqli_insert_id($link);
+	
+	$query = "insert into borrower_addresses (user_id, address_id) VALUES(" . $user_id . ", " . $address_id . ")";
+	if(!mysqli_query($link, $query))
+	  die("Query failed insert borrower");
+      }
+    else
+      {
+	$query = "update addresses set address='" . $address . "', address2='" . $address2 . "', city='" . $city . "', state='" . $state . "', zipcode='" . $zipcode . "', phone='" . $phone . "' where address_id = " . $addyResult->address_id;
+	
+	
+	if(!mysqli_query($link, $query))
+	  die("Query failed Update Address");
+      }	
+    
+  }
 
-	$address = $_POST["address"];
-	$address2 = $_POST["address2"];
-	if($address2 == null)
-		$address2="";
-	
-	$city = $_POST["city"];
-	$state = $_POST["state"];
-	$zipcode = $_POST["zipcode"];
-	$phone = $_POST["phone"];
-	
-	
-	
-	
-	if(strlen($address) == 0 || strlen($city) == 0 || strlen($state) == 0 || strlen($zipcode) == 0 || strlen($phone) == 0)
-		die("Null values not allowed");
-		
-	if(!$oldExists)
-	{
-		$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zipcode . "', '" . $phone . "')";
-		
-		if(!mysqli_query($link, $query))
-			die("Query failed insert address");
-		$address_id = mysqli_insert_id($link);
-		
-		$query = "insert into borrower_addresses (user_id, address_id) VALUES(" . $user_id . ", " . $address_id . ")";
-		if(!mysqli_query($link, $query))
-			die("Query failed insert borrower");
-	}
-	else
-	{
-		$query = "update addresses set address='" . $address . "', address2='" . $address2 . "', city='" . $city . "', state='" . $state . "', zipcode='" . $zipcode . "', phone='" . $phone . "' where address_id = " . $addyResult->address_id;
-		
-		
-		if(!mysqli_query($link, $query))
-			die("Query failed Update Address");
-	}	
-		
-}
-	
 $date = mysqli_real_escape_string( $link, $_POST['time_taken'] );
 $event_name = mysqli_real_escape_string( $link, $_POST['event_name'] );
 $event_location = mysqli_real_escape_string( $link, $_POST['event_location'] );
 
 foreach ($items as $item)
-{
-    
-	
-	$sql = "INSERT INTO checkouts (checkout_id, inventory_id, borrower_id, time_taken, time_returned, event_name, event_location, starting_condition, ending_condition) VALUES
+  {
+    $sql = "INSERT INTO checkouts (checkout_id, inventory_id, borrower_id, time_taken, time_returned, event_name, event_location, starting_condition, ending_condition) VALUES
 	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '". $event_location ."', '". $event_name ."', '" . $item->current_condition . "', NULL )";	
-
-	if(!mysqli_query($link, $sql))
-	  die("Query failed Checkouts ". mysql_error());
-	
-}
+    
+    if(!mysqli_query($link, $sql))
+      die("Query failed Checkouts ". mysql_error());
+    
+  }
 
 mysqli_close($link);
 header('Location: viewInventory.php');

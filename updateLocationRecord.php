@@ -54,7 +54,6 @@ if($location_id == 0)
 // Prevent injections	
 $desc = mysqli_real_escape_string( $link, $desc );
 $location = mysqli_real_escape_string( $link, $location );
-$location_id = mysqli_real_escape_string( $link, $location_id );
 
 // Location query, excluding itself
 $sql = "SELECT location FROM locations WHERE location_id != '" . $location_id . "'";

@@ -43,103 +43,121 @@ if($count == 0)
 //Create loan records
 for($x=0; $x<$count; $x++)
 {
-	//Date
-    $timestamp = mktime(0, 0, 0, (int)$_POST["months" . $x], (int)$_POST["days" . $x], (int)$_POST["year" . $x]);	
-	$date = date("Y-m-d", $timestamp);
-	
-	//Description
-	$desc = $_POST["desc" . $x];
-	if(strlen($desc) == 0)
-		die("Must have a description");
-		
-	//Item ID
-	$inventory_id = (int)$_POST["inventory_id" . $x];
-	if($inventory_id == 0)
-		die("Invalid item id");	
-		
-	//cost
-	$cost = (double)$_POST["cost" . $x];
-	if($cost == 0)
-		die("Invalid Cost");
-		
-	//Biz id
-	$businessId = (int)$_POST["businessId" . $x];
-	
-	// Chose to insert a new business
-	if($businessId == -1)
-	{
-		//Company name
-		$company = $_POST["company"];
-		if(strlen($company) == 0)
-		  die("Must have a company name");
-		
-		//Address
-		$address = $_POST["address"];
-		if(strlen($address) == 0)
-		  die("Must have an address");
-	
-		$address2 = $_POST["address2"];
-		
-		//City
-		$city = $_POST["city"];
-		if(strlen($city) == 0)
-		  die("Must have a city");
-		
-		//State
-		$state = $_POST["state"];
-		if(strlen($state) == 0)
-		  die("Must have a state");
-		
-		//Zip Code
-		$zip = $_POST["zip"];
-		if(strlen($zip) == 0)
-		  die("Must have a zip code");
-		
-		//Contact info
-		$phone = $_POST["phone"];
-		$fax = $_POST["fax"];
-		$email = $_POST["email"];
-		if(strlen($phone) == 0 && strlen($fax) == 0 && strlen($email) == 0)
-		  die("Must have contact information");
-		
-		$website = $_POST["website"];
-		
-		//Insert the business address
-		$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . 				$state . "', '" . $zip . "', '" . $phone . "')";
-			
-		if(!mysqli_query($link, $query))
-		  die("Query failed first");
-		$address_id = mysqli_insert_id($link);
-	
-		//Insert the business
-		$sql = "INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES (NULL, '" . $address_id . "' , '" . $company . "', '" . $fax . "', '" . $email . "', '" . $website . "')";
-	
-		if(!mysqli_query($link, $sql))
-		  die("Query failed business insert");
-	
-		// Get the ID of the new business
-		$businessId = mysqli_insert_id($link);
-	}
-	elseif($businessId == 0)
-	{
-	die("Invalid Business id");
-	}
-	elseif(!VerifyBusinessExists($businessId, $link))
-	{
-	die("Invalid Business");
-	}
-	
-		
-		
-	//insert repair
-	$sql = "INSERT INTO repairs (repair_id, inventory_id, business_id, repair_date, repair_cost, description) VALUES
-	(NULL, " . $inventory_id . ", " . $businessId . ", '" . $date . "', " . $cost . ", '" . $desc . "'	)";	
+  //Date
+  $timestamp = mktime(0, 0, 0, (int)$_POST["months" . $x], (int)$_POST["days" . $x], (int)$_POST["year" . $x]);	
+  $date = date("Y-m-d", $timestamp);
+  
+  //Description
+  $desc = $_POST["desc" . $x];
+  if(strlen($desc) == 0)
+    die("Must have a description");
+  
+  //Item ID
+  $inventory_id = (int)$_POST["inventory_id" . $x];
+  if($inventory_id == 0)
+    die("Invalid item id");	
+  
+  //cost
+  $cost = (double)$_POST["cost" . $x];
+  if($cost == 0)
+    die("Invalid Cost");
+  
+  //Biz id
+  $businessId = (int)$_POST["businessId" . $x];
 
-    //echo $sql . "<br>";
-		
-	if(!mysqli_query($link, $sql))
-		die("Query failed");
-	
+  /* Sanitize */
+  $desc = mysqli_real_escape_string( $link, $desc );
+  
+  // Chose to insert a new business
+  if($businessId == -1)
+    {
+      //Company name
+      $company = $_POST["company"];
+      if(strlen($company) == 0)
+	die("Must have a company name");
+      
+      //Address
+      $address = $_POST["address"];
+      if(strlen($address) == 0)
+	die("Must have an address");
+      
+      $address2 = $_POST["address2"];
+      
+      //City
+      $city = $_POST["city"];
+      if(strlen($city) == 0)
+	die("Must have a city");
+      
+      //State
+      $state = $_POST["state"];
+      if(strlen($state) == 0)
+	die("Must have a state");
+      
+      //Zip Code
+      $zip = $_POST["zip"];
+      if(strlen($zip) == 0)
+	die("Must have a zip code");
+      
+      //Contact info
+      $phone = $_POST["phone"];
+      $fax = $_POST["fax"];
+      $email = $_POST["email"];
+      if(strlen($phone) == 0 && strlen($fax) == 0 && strlen($email) == 0)
+	die("Must have contact information");
+      
+      $website = $_POST["website"];
+      
+      // Add correct 'http://' at beginning on URL 
+      $website = preg_replace('/^(http:\/\/)*(.+)$/i', 'http://$2', $website); 
+      
+      // Clean user input
+      $address = mysqli_real_escape_string($link, $address);
+      $address2 = mysqli_real_escape_string($link, $address2);
+      $city = mysqli_real_escape_string($link, $city);
+      $state = mysqli_real_escape_string($link, $state);
+      $zip = mysqli_real_escape_string($link, $zip);
+      $phone = mysqli_real_escape_string($link, $phone);
+      $company = mysqli_real_escape_string($link, $company);
+      $fax = mysqli_real_escape_string($link, $fax);
+      $email = mysqli_real_escape_string($link, $email);
+      $website = mysqli_real_escape_string($link, $website);
+      
+      $company = trim($company);
+
+      //Insert the business address
+      $query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . 				$state . "', '" . $zip . "', '" . $phone . "')";
+      
+      if(!mysqli_query($link, $query))
+	die("Query failed first");
+      $address_id = mysqli_insert_id($link);
+      
+      //Insert the business
+      $sql = "INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES (NULL, '" . $address_id . "' , '" . $company . "', '" . $fax . "', '" . $email . "', '" . $website . "')";
+      
+      if(!mysqli_query($link, $sql))
+	die("Query failed business insert");
+      
+      // Get the ID of the new business
+      $businessId = mysqli_insert_id($link);
+    }
+  elseif($businessId == 0)
+    {
+      die("Invalid Business id");
+    }
+  elseif(!VerifyBusinessExists($businessId, $link))
+    {
+      die("Invalid Business");
+    }
+  
+  
+  
+  //insert repair
+  $sql = "INSERT INTO repairs (repair_id, inventory_id, business_id, repair_date, repair_cost, description) VALUES
+	(NULL, " . $inventory_id . ", " . $businessId . ", '" . $date . "', " . $cost . ", '" . $desc . "'	)";
+  
+  if(!mysqli_query($link, $sql))
+    die("Query failed");
+  
 }
 
 mysqli_close($link);
