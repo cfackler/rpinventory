@@ -28,7 +28,7 @@ function paginate( $smarty, $itemVarName, $currentSortIndex, $currentSortDir, $m
 
   SmartyPaginate::reset();	/* Remove the old session data */
   SmartyPaginate::connect();
-  SmartyPaginate::setLimit( 2 );
+  SmartyPaginate::setLimit( 15 );
 
   $smarty->assign( $itemVarName, getPaginatedResults( $smarty,
 						      $itemVarName, 
