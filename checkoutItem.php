@@ -38,7 +38,7 @@ require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
 //grab all ids
-$idString = $_GET["ids"];
+$idString = mysqli_real_escape_string( $link, $_GET["ids"] );
 $token = strtok($idString, ",");
 $idList = array();
 $itemDesc = array();
