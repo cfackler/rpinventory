@@ -1,5 +1,8 @@
 Options -Indexes
 
+# Show the viewInventory page by default
+DirectoryIndex viewInventory.php index.php
+
 # Block files in the directories
 RewriteEngine On
 
