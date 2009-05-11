@@ -48,9 +48,9 @@
 
 
 </table>
+<br />
 
 {if $displayPaginate }
-<br />
 <div>
 <span id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</span>
 {elseif $authority >= 1}
