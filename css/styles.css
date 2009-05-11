@@ -268,3 +268,11 @@ span.TopOfTable h3{
 #userAutoComplete:hover{
   cursor: default
 }
+
+#paginate{
+  float: right;
+}
+
+#inventoryActions{
+  float: left;
+}

@@ -40,7 +40,7 @@
 	<td>{$items[itemLoop]->description}</td>
 	{if $authority >= 1}
 		<td>{$items[itemLoop]->current_condition}</td>
-		<td>{$items[itemLoop]->current_value}</td>
+		<td>${$items[itemLoop]->current_value}</td>
 	{/if}
 	<td align="center">{$items[itemLoop]->location}</td>
 </tr>
@@ -51,14 +51,16 @@
 
 {if $displayPaginate }
 <br />
+<div>
+<span id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</span>
+{elseif $authority >= 1}
+<div>
 
-<div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>
 {/if}
-
-<br />
 
 {if $authority >= 1}
 	
+<span id="inventoryActions">
 <select class="dropDown" name="action_list" id="action_list">
 	<option value="Loan">Loan</option>
 	<option value="Checkout">Checkout</option>
@@ -68,14 +70,16 @@
 
 </select>
 
-
 <input type="button" class="button" onclick="submitItems()" value="Go">
+</span>
+</div>
 {/if}
 
 </form>
 
 {if $authority >= 1}
 
+<br />
 <br />
 
 {/if}

@@ -38,7 +38,7 @@
 	<td>{$purchases[itemLoop]->items}</td>
 	<td>{$purchases[itemLoop]->company_name}</td>
 	<td>{$purchases[itemLoop]->purchase_date}</td>
-	<td>{$purchases[itemLoop]->total_price}</td>
+	<td>${$purchases[itemLoop]->total_price}</td>
     </tr>
     {/section}	
 

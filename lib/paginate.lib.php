@@ -28,7 +28,7 @@ function paginate( $smarty, $itemVarName, $currentSortIndex, $currentSortDir, $m
 
   SmartyPaginate::disconnect();	/* Remove the old session data first, or URL's are wrong */
   SmartyPaginate::connect();
-  SmartyPaginate::setLimit( 15 );
+  SmartyPaginate::setLimit( 2 );
 
   $smarty->assign( $itemVarName, getPaginatedResults( $smarty,
 						      $itemVarName, 
@@ -48,29 +48,14 @@ function getPaginatedResults( $smarty, $itemVarName, $currentSortIndex, $current
     }
   }
 
-  switch( $mode )
+  switch( $mode )		/* Get correct item list for page requested */
     {
-    case 'inventory':
-      $items = getInventory( $currentSortIndex, $currentSortDir );
-       break;
-      
     case 'borrowers':
       $items = getBorrowers( $currentSortIndex, $currentSortDir );
       break;
-    
-    case 'loans':
-      $items = getViewLoans( $currentSortIndex, $currentSortDir );
 
-      if( isset( $_GET['sort'] ) ){ /* Form correct GET request */
-	$_SESSION['SmartyPaginate']['defualt']['url'] .= '&';
-      }
-      else{
-	$_SESSION['SmartyPaginate']['default']['url'] .= '?';
-      }
-
-      if( isset( $_GET['view'] ) ){ /* Save the view we're currently on */
-	$_SESSION['SmartyPaginate']['default']['url'] .= 'view=' . $_GET['view'];
-      }
+    case 'businesses':
+      $items = getViewBusinesses( $currentSortIndex, $currentSortDir );
       break;
 
     case 'checkouts':
@@ -87,28 +72,50 @@ function getPaginatedResults( $smarty, $itemVarName, $currentSortIndex, $current
 	$_SESSION['SmartyPaginate']['default']['url'] .= 'view=' . $_GET['view'];
       }
       break;
+    
+    case 'inventory':
+      $items = getInventory( $currentSortIndex, $currentSortDir );
+       break;
+      
+    case 'loans':
+      $items = getViewLoans( $currentSortIndex, $currentSortDir );
 
-    case 'repairs':
-      $items = getViewRepairs( $currentSortIndex, $currentSortDir );
+      if( isset( $_GET['sort'] ) ){ /* Form correct GET request */
+	$_SESSION['SmartyPaginate']['defualt']['url'] .= '&';
+      }
+      else{
+	$_SESSION['SmartyPaginate']['default']['url'] .= '?';
+      }
+
+      if( isset( $_GET['view'] ) ){ /* Save the view we're currently on */
+	$_SESSION['SmartyPaginate']['default']['url'] .= 'view=' . $_GET['view'];
+      }
+      break;
+
+    case 'locations':
+      $items = getViewLocations( $currentSortIndex, $currentSortDir );
       break;
 
     case 'purchases':
       $items = getViewPurchases( $currentSortIndex, $currentSortDir );
       break;
 
-    case 'businesses':
-      $items = getViewBusinesses( $currentSortIndex, $currentSortDir );
+   case 'repairs':
+      $items = getViewRepairs( $currentSortIndex, $currentSortDir );
       break;
 
-    case 'locations':
-      $items = getViewLocations( $currentSortIndex, $currentSortDir );
+    case 'users':
+      $items = getViewUsers( $currentSortIndex, $currentSortDir );
       break;
     }
   
 
   
-  SmartyPaginate::setTotal( count( $items ) );
-  $smarty->assign('displayPaginate', SmartyPaginate::getLimit() < SmartyPaginate::getTotal() );
+  SmartyPaginate::setTotal( count( $items ) ); /* Set the total number of items */
+
+  $smarty->assign('displayPaginate', /* Set whether we need to display the pagination links */
+		  SmartyPaginate::getLimit() < SmartyPaginate::getTotal() ); 
+
   return array_slice( $items, SmartyPaginate::getCurrentindex(), 
 		      SmartyPaginate::getLimit());
 }

@@ -25,6 +25,8 @@
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once("lib/interface.lib.php"); //interface functions
+require_once( 'lib/paginate.lib.php' );
+require_once( 'lib/users.lib.php' );
 
 $link = connect();
 if($link == null)
@@ -54,45 +56,7 @@ if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
 else
   $currentSortDir = 0;
 
-
-
-
-/**
- * SQL Stuff
- **/
- 
- /* Determine query argument for sorting */
-if($currentSortIndex == 0)
-  $sortBy = 'name';
-else if($currentSortIndex == 1)
-  $sortBy = 'username';
-else if($currentSortIndex == 2)
-  $sortBy = 'access_level';
-else if($currentSortIndex == 3)
-  $sortBy = 'rin';
-else if($currentSortIndex == 4)
-  $sortBy = 'email';
-
-/*  Determine query argument for sort direction
-    Ascending is default    */
-if($currentSortDir == 1)
-  $sortBy .= ' DESC';
-  
-  
-//users
-$userQuery= "SELECT * from logins ORDER BY ".$sortBy;
-$userResult = mysqli_query($link, $userQuery);
-$users = array();
-
-while($user = mysqli_fetch_object($userResult))
-{
-	$users [] = $user;
-}
-mysqli_close($link);
-
-
-
-
+paginate( $smarty, 'users', $currentSortIndex, $currentSortDir, 'users' );
 
 /* Table column headers */
 $headers = array();
@@ -111,7 +75,6 @@ $smarty->register_function('generateTableHeader', 'generateTableHeader');
 $smarty->assign('title', "Manage Users");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'manageUsers');
-$smarty->assign('users', $users);
 
 
 $smarty->display('index.tpl');

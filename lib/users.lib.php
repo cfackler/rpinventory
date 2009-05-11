@@ -89,4 +89,47 @@ function getUsernames( $name )
   header('X-JSON: ('.$json->encode( $data ).')');
 }
 
+function getViewUsers( $currentSortIndex, $currentSortDir ){
+  require_once("lib/connect.lib.php");  //mysql
+  require_once("lib/auth.lib.php");  //Session
+
+  // Connect
+  $link = connect();
+  if( $link == null )
+    die( "Database connection failed" );
+  
+  // Authenticate
+  $auth = GetAuthority();
+
+  /* Determine query argument for sorting */
+  if($currentSortIndex == 0)
+    $sortBy = 'name';
+  else if($currentSortIndex == 1)
+    $sortBy = 'username';
+  else if($currentSortIndex == 2)
+    $sortBy = 'access_level';
+  else if($currentSortIndex == 3)
+    $sortBy = 'rin';
+  else if($currentSortIndex == 4)
+    $sortBy = 'email';
+  
+  /*  Determine query argument for sort direction
+      Ascending is default    */
+  if($currentSortDir == 1)
+    $sortBy .= ' DESC';
+  
+  
+  //users
+  $userQuery= "SELECT * from logins ORDER BY ".$sortBy;
+  $userResult = mysqli_query($link, $userQuery);
+  $users = array();
+  
+  while($user = mysqli_fetch_object($userResult))
+    {
+      $users [] = $user;
+    }
+  mysqli_close($link);
+
+  return $users;
+}
 ?>
