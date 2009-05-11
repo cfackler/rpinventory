@@ -51,9 +51,11 @@
 
 	</table>
 
-	<br />
+	{if $displayPaginate }
+		<br />
 
-	<div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>
+		<div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>
+	{/if}
 {else}
     <h3>Businesses</h3>
 

@@ -30,15 +30,16 @@ function paginate( $smarty, $itemVarName, $currentSortIndex, $currentSortDir, $m
   SmartyPaginate::connect();
   SmartyPaginate::setLimit( 15 );
 
-  $smarty->assign( $itemVarName, getPaginatedResults( $itemVarName, 
-						 $currentSortIndex,
-						 $currentSortDir,
-						 $mode ) );
+  $smarty->assign( $itemVarName, getPaginatedResults( $smarty,
+						      $itemVarName, 
+						      $currentSortIndex,
+						      $currentSortDir,
+						      $mode ) );
   SmartyPaginate::assign( $smarty );
 }
 
 
-function getPaginatedResults( $itemVarName, $currentSortIndex, $currentSortDir, $mode ){
+function getPaginatedResults( $smarty, $itemVarName, $currentSortIndex, $currentSortDir, $mode ){
   if( isset( $_GET['sort'] ) ){	/* Save the sorting direction if it exists */
     $_SESSION['SmartyPaginate']['default']['url'] .= '?sort=' . $_GET['sort'];
 
@@ -51,7 +52,7 @@ function getPaginatedResults( $itemVarName, $currentSortIndex, $currentSortDir, 
     {
     case 'inventory':
       $items = getInventory( $currentSortIndex, $currentSortDir );
-      break;
+       break;
       
     case 'borrowers':
       $items = getBorrowers( $currentSortIndex, $currentSortDir );
@@ -98,11 +99,16 @@ function getPaginatedResults( $itemVarName, $currentSortIndex, $currentSortDir, 
     case 'businesses':
       $items = getViewBusinesses( $currentSortIndex, $currentSortDir );
       break;
+
+    case 'locations':
+      $items = getViewLocations( $currentSortIndex, $currentSortDir );
+      break;
     }
   
 
   
   SmartyPaginate::setTotal( count( $items ) );
+  $smarty->assign('displayPaginate', SmartyPaginate::getLimit() < SmartyPaginate::getTotal() );
   return array_slice( $items, SmartyPaginate::getCurrentindex(), 
 		      SmartyPaginate::getLimit());
 }

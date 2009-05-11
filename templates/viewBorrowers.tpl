@@ -53,8 +53,10 @@
 	</tr>
 	{/section}
     </table>
-    <br />
-    <div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>
+    {if $displayPaginate }
+    	<br />
+    	<div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>
+    {/if}
 {else}
     <p>Please login if you wish to view information about borrowers</p>
 {/if}

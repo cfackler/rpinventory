@@ -152,5 +152,40 @@ function insertLocation($location, $desc)
 
 }
 
+function getViewLocations( $currentSortIndex, $currentSortDir ) {
+  require_once("lib/connect.lib.php");  //mysql
+  require_once("lib/auth.lib.php");  //Session
+  
+  $link = connect();
+  if($link == null)
+    die("Database connection failed");
+  
+  //Authenticate
+  $auth = GetAuthority();
+  
+  /* Determine query argument for sorting */
+  if($currentSortIndex == 0)
+    $sortBy = 'location';
+  else if($currentSortIndex == 1)
+    $sortBy = 'description';
+  
+  /*  Determine query argument for sort direction
+      Ascending is default    */
+  if($currentSortDir == 1)
+    $sortBy .= ' DESC';
+  
+  //users
+  $locQuery= "SELECT * from locations ORDER BY ".$sortBy;
+  $locResult = mysqli_query($link, $locQuery);
+  $locations = array();
+  
+  while($loc = mysqli_fetch_object($locResult))
+    {
+      $locations [] = $loc;
+    }
+  mysqli_close($link);
+  
+  return $locations;
+}
 
 ?>

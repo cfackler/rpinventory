@@ -34,7 +34,7 @@ if($link == null)
   die("Database connection failed");
 	
 //id
-$id = (int)$_GET["id"];
+$id = mysqli_real_escape_string( $link, (int)$_GET["id"] );
 if($id == 0)
   die("Invalid ID");
 

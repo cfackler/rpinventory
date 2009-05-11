@@ -30,7 +30,7 @@
     {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
 		
 		{* Actions do not need to be sorted. *}
-		<th width="150">Actions</th>
+		<th width="200">Actions</th>
 	</tr>
 
 {section name=num loop=$locations}
@@ -46,3 +46,8 @@
 
 
 </table>
+
+{if $displayPaginate }
+	<br />
+	<div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>
+{/if}

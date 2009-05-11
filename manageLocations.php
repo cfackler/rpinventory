@@ -25,6 +25,8 @@
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once("lib/interface.lib.php"); //interface functions
+require_once( 'lib/paginate.lib.php' );
+require_once( 'lib/locations.lib.php' );
 
 $link = connect();
 if($link == null)
@@ -53,44 +55,13 @@ if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
 else
   $currentSortDir = 0;
   
-  
-/**
- * SQL stuff
- **/
- 
- /* Determine query argument for sorting */
-if($currentSortIndex == 0)
-  $sortBy = 'location';
-else if($currentSortIndex == 1)
-  $sortBy = 'description';
-
-/*  Determine query argument for sort direction
-    Ascending is default    */
-if($currentSortDir == 1)
-  $sortBy .= ' DESC';
-
-//users
-$locQuery= "SELECT * from locations ORDER BY ".$sortBy;
-$locResult = mysqli_query($link, $locQuery);
-$locations = array();
-
-while($loc = mysqli_fetch_object($locResult))
-{
-	$locations [] = $loc;
-}
-mysqli_close($link);
-
-
-
-
-
 
 /* Table column headers */
 $headers = array();
 $headers[0] = array('label' => 'Location', 'width' => 200);
 $headers[1] = array('label' => 'Description', 'width' => 300);
 
-
+paginate( $smarty, 'locations', $currentSortIndex, $currentSortDir, 'locations' );
 
 //Assign vars
 $smarty->assign('headers', $headers);
@@ -101,7 +72,7 @@ $smarty->register_function('generateTableHeader', 'generateTableHeader');
 $smarty->assign('title', "Manage Locations");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'manageLocations');
-$smarty->assign('locations', $locations);
+//$smarty->assign('locations', $locations);
 
 
 $smarty->display('index.tpl');

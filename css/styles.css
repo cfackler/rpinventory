@@ -210,7 +210,7 @@ span.TopOfTable h3{
 /**
  * Table header link
  **/
-.itemsTable a {
+.itemsTable th a {
   text-decoration: none;
   display: block;
   color: #ffffff;
