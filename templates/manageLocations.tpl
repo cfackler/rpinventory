@@ -19,7 +19,7 @@
 *}
 
 <div class="TopOfTable"><span class="TopOfTable">
-<h3>Locations</h3>
+{*<h3>Locations</h3>*}
 <a href="addLocation.php">Add new location</a>
 </span></div>
 

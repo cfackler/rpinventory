@@ -18,7 +18,7 @@
 
 *}
 <div class="TopOfTable"><span class="TopOfTable">
-<h3>Users</h3>
+{*<h3>Users</h3>*}
 <a href="addUser.php">Add new user</a>
 </span></div>
 

@@ -17,11 +17,11 @@
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 *}
-<div class="TopOfTable">
+{*<div class="TopOfTable">
 <span class="TopOfTable">
 <h3>Borrowers</h3>
 </span>
-</div>
+</div>*}
 
 {if $authority >= 1}
     <table width="800" border="0" cellspacing="0" class="itemsTable">

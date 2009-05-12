@@ -37,7 +37,7 @@ $this->assign('clubName', Config::get('club_name'));
 
 </head>
 
-	<body>
+	<body onload="updateSidebar()">
 	    <div class="header">
 			{php}
 				require_once('lib/config.class.php');
@@ -49,26 +49,26 @@ $this->assign('clubName', Config::get('club_name'));
 	    <div class="navigationBar">
 	    	 <ul>
 			<li class="SidebarSectionHeader">Home</li>
-			<li><a href="viewInventory.php">View Inventory</a></li>
+			<li><a id="viewInventory" href="viewInventory.php">View Inventory</a></li>
 			{if $authority >= 1}
-		             <li><a href="viewBorrowers.php">View Borrowers</a></li>
-		    	     <li><a href="viewLoans.php">View Loans</a></li>
-			     <li><a href="viewCheckouts.php">View Checkouts</a></li>
+		             <li><a id="viewBorrowers" href="viewBorrowers.php">View Borrowers</a></li>
+		    	     <li><a id="viewLoans" href="viewLoans.php">View Loans</a></li>
+			     <li><a id="viewCheckouts" href="viewCheckouts.php">View Checkouts</a></li>
 			     {if $authority == 2}
-		    	     <li><a href="viewRepairs.php">View Repairs</a></li>
-		    	     <li><a href="viewPurchases.php">View Purchases</a></li>
-		    	     <li><a href="viewBusinesses.php">View Businesses</a></li>
+		    	     <li><a id="viewRepairs" href="viewRepairs.php">View Repairs</a></li>
+		    	     <li><a id="viewPurchases" href="viewPurchases.php">View Purchases</a></li>
+		    	     <li><a id="viewBusinesses" href="viewBusinesses.php">View Businesses</a></li>
 			     {/if}
 			     
 			     <li><br /></li>
 			     <li class="SidebarSectionHeader">Admin</li>
-			     <li><a href="manageLocations.php">Manage Locations</a></li>
+			     <li><a id="manageLocations" href="manageLocations.php">Manage Locations</a></li>
 			{/if}
 			
 			{if $authority == 2}
-			     <li><a href="manageUsers.php">Manage Users</a></li>
-			     <li><a href="generateSummary.php">Create Summary</a></li>
-			     <li><a href="backupDatabase.php">Create Backup</a></li>
+			     <li><a id="manageUsers" href="manageUsers.php">Manage Users</a></li>
+			     <li><a id="generateSummary" href="generateSummary.php">Create Summary</a></li>
+			     <li><a id="backupDatabase" href="backupDatabase.php">Create Backup</a></li>
 			{/if}
 			
 			<li><br /></li>

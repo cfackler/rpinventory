@@ -18,7 +18,7 @@
 
 *}
 
-<h3>View Address</h3>
+{*<h3>View Address</h3>*}
 
 <table width="400">
        <tr> 

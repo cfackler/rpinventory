@@ -19,7 +19,7 @@
 *}
 <div class="TopOfTable">
 <span class="TopOfTable">
-<h3>Loans</h3>
+{*<h3>Loans</h3>*}
 Show:
 
 {if $filter != "all"}

@@ -601,3 +601,10 @@ function leaveUsername( ){
     sendAddressRequest();
 }
 
+function updateSidebar() {
+    var location = document.location.pathname.match( /^.*?\/(\w*)\.php/ );
+
+    document.getElementById( location[1] ).style.display = '';
+    document.getElementById( location[1] ).style.backgroundColor = "#ff0000";
+    document.getElementById( location[1] ).style.color = "#f0f0f0";
+}

@@ -18,10 +18,10 @@
 
 *}
 
-<div class="TopOfTable"><span class="TopOfTable">
+{*<div class="TopOfTable"><span class="TopOfTable">
 <h3>Repairs</h3>
 </span>
-</div>
+</div>*}
 {if $authority>1}
     <table width="800" border="0" class="itemsTable" cellspacing="0">
     	<tr>
