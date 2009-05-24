@@ -604,7 +604,14 @@ function leaveUsername( ){
 function updateSidebar() {
     var location = document.location.pathname.match( /^.*?\/(\w*)\.php/ );
 
-    document.getElementById( location[1] ).style.display = '';
-    document.getElementById( location[1] ).style.backgroundColor = "#ff0000";
-    document.getElementById( location[1] ).style.color = "#f0f0f0";
+    // Make sure not to try to highlight pages not in the sidebar
+    if( location[1] != 'addPurchase' &&
+	location[1] != 'loanItem' &&
+	location[1] != 'checkoutItem' &&
+	location[1] != 'editItem' &&
+	location[1] != 'repairItems' ){
+	document.getElementById( location[1] ).style.display = '';
+	document.getElementById( location[1] ).style.backgroundColor = "#ff0000";
+	document.getElementById( location[1] ).style.color = "#f0f0f0";
+    }
 }
