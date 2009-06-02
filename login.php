@@ -1,7 +1,7 @@
 <?php
 /*
 
-    Copyright (C) 2008, All Rights Reserved.
+    Copyright (C) 2009, All Rights Reserved.
 
     This file is part of RPInventory.
 
