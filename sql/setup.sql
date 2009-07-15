@@ -101,3 +101,5 @@ CREATE TABLE checkouts (
        ending_condition varchar(100),
        PRIMARY KEY (checkout_id)
 ) type = MyISAM;
+
+INSERT INTO locations VALUES ( NULL, "On Loan", "This item is on loan" );
