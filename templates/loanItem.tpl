@@ -115,9 +115,38 @@
 	 </td>
 </tr>
 
+<tr>
+	<td>
+		<label>Location:</label>
+	</td>
+	<td>
+		<select class="dropDown" id="location0" name="location0" onChange="OnChangeDouble('location0', 'newLocation0', 'newDescription0')" onFocus="getLocationOptions(this);">
+
+			{$locations}
+
+		</select>
+		<span id="resultText0"></span>
+	</td>
+</tr>
+
+<tr id="newLocation0" style="display:none">
+   <td>New Location:</td>
+   <td>
+     <input type="text" name="newlocation0" id="newlocation0" size="40" onChange="sendValidateRequest('newlocation0')">
+   </td>
+</tr>
+<tr id="newDescription0" style="display:none">
+  <td>Location Description:</td>
+  <td>
+		<input type="text" name="newdescription0" id="newdescription0" size="40">
+	</td>
+  <td><input value="Save Location" type="button" onClick="saveLocation('newlocation0', 'newdescription0', 'resultText0', 'location0', 'newLocation0', 'newDescription0');">
+  </td>
+</tr>
+
 </table>
 
-<br>
+<br />
 
 <input type="submit" value="Loan">
 {/if}

@@ -23,6 +23,7 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/locations.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
@@ -91,6 +92,9 @@ while($user = mysqli_fetch_object($userResult)) {
   $users [] = $user;
 }
 
+//Locations
+$locations = getLocationsOptions();
+
 //BEGIN Page
 	
 //Assign vars
@@ -103,6 +107,7 @@ $smarty->assign('idString', $idString);
 $smarty->assign('users', $users);
 $smarty->assign('loanedOut', $loanedOut);
 $smarty->assign('selectDate', getdate(time()));
+$smarty->assign('locations', $locations);
 
 $smarty->display('index.tpl');
 
