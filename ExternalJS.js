@@ -604,8 +604,13 @@ function leaveUsername( ){
 function updateSidebar() {
     var location = document.location.pathname.match( /^.*?\/(\w*)\.php/ );
 
+		if( location == null ) {
+				return;
+		}
+
     // Make sure not to try to highlight pages not in the sidebar
     if( location[1] != 'addPurchase' &&
+	location[1] != 'index' &&
 	location[1] != 'loanItem' &&
 	location[1] != 'checkoutItem' &&
 	location[1] != 'editItem' &&
