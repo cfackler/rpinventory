@@ -29,7 +29,11 @@ switch ($_GET["operation"])
   case "locations":
     print getLocationsOptions();
     break;
-    
+  
+	case "loanlocations":
+		print getLoanLocationsOptions();
+		break;
+
   case "savelocation":
     insertLocation($_GET["location"], $_GET["description"]);
     break;

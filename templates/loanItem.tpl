@@ -120,7 +120,7 @@
 		<label>Location:</label>
 	</td>
 	<td>
-		<select class="dropDown" id="location0" name="location0" onChange="OnChangeDouble('location0', 'newLocation0', 'newDescription0')" onFocus="getLocationOptions(this);">
+		<select class="dropDown" id="location0" name="location0" onChange="OnChangeDouble('location0', 'newLocation0', 'newDescription0')" onFocus="getLoanLocationOptions(this);">
 
 			{$locations}
 

@@ -475,6 +475,19 @@ function getLocationOptions(element)
 		     });
 }
 
+function getLoanLocationOptions(element)
+{
+	 new Ajax.Request("ajax.php?operation=loanlocations", 
+		     { 
+			 method: 'post', 
+			     onSuccess: function(transport)
+			     {
+				     var response = transport.responseText;
+				     element.innerHTML = response;
+			 	 }
+		     });
+}
+
 function saveLocation(name, description, result, locationselect, locationTR, descriptionTR)
 {
     
