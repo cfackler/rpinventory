@@ -93,7 +93,7 @@ while($user = mysqli_fetch_object($userResult)) {
 }
 
 //Locations
-$locations = getLocationsOptions();
+$locations = getLoanLocationsOptions();
 
 //BEGIN Page
 	

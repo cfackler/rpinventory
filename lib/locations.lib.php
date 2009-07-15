@@ -80,6 +80,30 @@ function getCommonLocation()
   return $result;
 }
 
+function getOnLoanLocation()
+{
+	require_once( 'lib/connect.lib.php' );
+	require_once( 'lib/auth.lib.php' );
+
+	// Connect
+	$link = connect();
+	if( $link == null )
+		die( 'Database connection failed' );
+
+	// Authenticate
+	$auth = GetAuthority();
+	if( $auth < 1 )
+		die( "You don't have permission to access this page" );
+
+	$sql = 'SELECT * FROM locations WHERE location = "On Loan"';
+	$result = mysqli_query( $link, $sql ) or
+		die( 'Could not determine the id of the "On Loan" location' );
+
+	$result = mysqli_fetch_object( $result );
+
+	return $result;
+}
+
 function getLocationsOptions()
 {
   $loc_select;
@@ -89,6 +113,31 @@ function getLocationsOptions()
 
   /* Gets the most common location_id */
   $commonLocation = getCommonLocation();
+
+  $loc_select = '<option value="'.$commonLocation->location_id . '">';
+  $loc_select .= $commonLocation->location . "</option>";
+  
+  foreach($locations as $location) {
+    if( $location->location_id != $commonLocation->location_id ){
+      $loc_select .= '<option value="' . $location->location_id . '">';
+      $loc_select .= $location->location . "</option>";
+    }
+  }
+  $loc_select .= "<option>New Location</option>";
+  
+  return $loc_select;
+}
+
+/* Same as getLocationsOptions except places 'On Loan' as the first entry */
+function getLoanLocationsOptions()
+{
+  $loc_select;
+	
+  //get locations array
+  $locations = getLocations();
+
+  /* Gets the most common location_id */
+  $commonLocation = getOnLoanLocation();
 
   $loc_select = '<option value="'.$commonLocation->location_id . '">';
   $loc_select .= $commonLocation->location . "</option>";
