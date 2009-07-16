@@ -42,6 +42,12 @@ if($loan_id == 0)
 //Inventory ID
 $inv_id = (int)$_POST["inv_id"];
 
+//Original Location Id
+$orig_loc_id = (int)$_POST["orig_loc_id"];
+if( $orig_loc_id < 1 ) {
+	die( 'Invalid Location Id' );
+}
+
 //Time
 $timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
 $date = date("Y-m-d", $timestamp);
@@ -55,7 +61,7 @@ if(!mysqli_query($link, $sql))
 	die("Query failed");
 
 //Create query for updating item condition
-$sql = "UPDATE inventory SET current_condition = '". $_POST["condition"] . "' WHERE inventory_id = " . $inv_id;
+$sql = "UPDATE inventory SET current_condition = '". $_POST["condition"] . "', location_id = " . $orig_loc_id . " WHERE inventory_id = " . $inv_id;
 
 if(!mysqli_query($link, $sql))
         die("Query failed");

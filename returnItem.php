@@ -47,7 +47,7 @@ if($id == 0)
 
 
 //Loan status
-$loanQuery = "Select description, current_condition, inventory.inventory_id from inventory, loans where inventory.inventory_id = loans.inventory_id and loan_id = " . $id;
+$loanQuery = "Select description, current_condition, inventory.inventory_id, original_location_id from inventory, loans where inventory.inventory_id = loans.inventory_id and loan_id = " . $id;
 $loanResult = mysqli_query($link, $loanQuery);
 
 $status = "None";

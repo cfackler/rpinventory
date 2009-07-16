@@ -26,8 +26,9 @@
 
 <table width="400">
 
-<input type="hidden" name="loan_id" size="40" value="{$loan_id}">
-<input type="hidden" name="inv_id" size="40" value="{$item->inventory_id}">
+<input type="hidden" name="loan_id" size="40" value="{$loan_id}" />
+<input type="hidden" name="inv_id" size="40" value="{$item->inventory_id}" />
+<input type="hidden" name="orig_loc_id" size="40" value="{$item->original_location_id}" />
 
 <tr>
 	<td>Description: </td>
