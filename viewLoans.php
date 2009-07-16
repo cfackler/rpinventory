@@ -60,7 +60,6 @@ if( $viewLoanId > 0 ) {
 	$loanObj = getLoan( $viewLoanId );
 }
 
-
 //BEGIN Page
 /* table column headers */
 $headers = array();

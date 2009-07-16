@@ -31,7 +31,7 @@
 				<label>Item:</label>
 			</td>
 			<td>
-				<label>$loanObj->inventory_id</label>
+				<label>{$loanObj->description}</label>
 			</td>
 		</tr>
 		<tr>
@@ -39,7 +39,7 @@
 				<label>Borrower:</label>
 			</td>
 			<td>
-				<label>$loanObj->borrower_id</label>
+				<label>{$loanObj->username}</label>
 			</td>
 		</tr>
 		<tr>
@@ -47,7 +47,7 @@
 				<label>Date Taken:</label>
 			</td>
 			<td>
-				<label>$loanObj->issue_date</label>
+				<label>{$loanObj->issue_date}</label>
 			</td>
 		</tr>
 		<tr>
@@ -55,7 +55,7 @@
 				<label>Original Location:</label>
 			</td>
 			<td>
-				<label>$loanObj->original_location_id</label>
+				<label>{$loanObj->location}</label>
 			</td>
 		</tr>
 	</table>
