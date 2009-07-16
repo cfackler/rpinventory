@@ -17,8 +17,9 @@
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 *}
-
-<h3>Create Purchase</h3>
+<span class="TopOfTable">
+	<h3>Create Purchase</h3>
+</span>
 
 <form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
