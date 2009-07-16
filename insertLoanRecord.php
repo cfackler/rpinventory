@@ -73,7 +73,7 @@ $items = array();
 //Verify all ids are valid
 foreach ($idList as $id)
 {
-  $result = mysqli_query($link, "select current_condition, inventory_id from inventory where inventory_id = " . $id);
+  $result = mysqli_query($link, "select current_condition, inventory_id, location_id from inventory where inventory_id = " . $id);
   if(mysqli_num_rows($result) == 0)
     die("Invalid item ID:");
   
@@ -156,12 +156,18 @@ $date = date("Y-m-d", $timestamp);
 
 foreach ($items as $item)
   {
-    $sql = "INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition, on_loan_location_id) VALUES
-	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "', " . $onLoanLocationId . " )";	
+    $sql = "INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition, original_location_id) VALUES
+	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "', " . $item->location_id . " )";	
         
     if(!mysqli_query($link, $sql))
       die("Query failed");
-    
+
+		// Update the current location of the item
+		$sql = "UPDATE inventory SET location_id = " . $onLoanLocationId . " WHERE inventory_id = " . $item->inventory_id;
+
+		if( !mysqli_query( $link, $sql ) ) {
+			die( 'Update query failed' );
+		}    
 }
 
 mysqli_close($link);

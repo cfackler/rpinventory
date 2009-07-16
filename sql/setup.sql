@@ -57,7 +57,7 @@ CREATE TABLE loans (
        issue_date date NOT NULL,
        return_date date,
        starting_condition varchar(100),
-			 on_loan_location_id int(5) NOT NULL,
+			 original_location_id int(5) NOT NULL,
        PRIMARY KEY (loan_id)
 ) type = MyISAM;
 
