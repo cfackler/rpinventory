@@ -20,7 +20,11 @@
 
 <form name="editItem" action="updateItem.php" onsubmit="return ValidateEditForm(this)" METHOD="post">
 
-<h3>Edit Item</h3>
+<span class="TopOfTable">
+	<h3>Edit Item</h3>
+</span>
+
+<br />
 
 <input type="hidden" name="count" size="40" value="{$itemCount}">
 
