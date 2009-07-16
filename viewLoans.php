@@ -36,6 +36,12 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
+// Check to see if we want to see just one item
+$viewLoanId = 0;
+if( isset( $_GET['loanId'] ) ) {
+	$viewLoanId = (int)$_GET['loanId'];
+}
+
 // Decide sorting method
 if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
   $currentSortIndex = $_GET['sort'];
@@ -49,6 +55,10 @@ else
   $currentSortDir = 0;
 
 paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'loans' );
+
+if( $viewLoanId > 0 ) {
+	$loanObj = getLoan( $viewLoanId );
+}
 
 
 //BEGIN Page
@@ -67,6 +77,8 @@ $smarty->assign('headers', $headers);
 $smarty->assign('currentSortIndex', $currentSortIndex);
 $smarty->assign('currentSortDir', $currentSortDir);
 $smarty->register_function('generateTableHeader', 'generateTableHeader');
+$smarty->assign('viewLoanId', $viewLoanId);
+$smarty->assign('loanObj', $loanObj);
 
 $smarty->assign('title', "View Loans");
 $smarty->assign('authority', $auth);

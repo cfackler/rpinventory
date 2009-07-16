@@ -20,6 +20,29 @@
 
 */
 
+/* Returns the loan associated with the loanId given */
+function getLoan( $loanId )
+{
+	require_once( 'lib/connect.lib.php' );
+	require_once( 'lib/auth.lib.php' );
+
+	// Connect
+	$link = connect();
+	if( $link == null )
+		die( 'Database connection failed' );
+
+	// Authenticate
+	$auth = GetAuthority();
+
+	$sql = 'SELECT * FROM loans WHERE loan_id = ' . $loanId;
+
+	$result = mysqli_query( $link, $sql );
+
+	$loan = mysqli_fetch_object( $result ); 
+
+	return $loan;
+}
+
 /* Takes two dates, formatted as YYYY-MM-DD */
 function getLoans( $startDate, $endDate )
 {

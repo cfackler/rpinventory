@@ -17,6 +17,51 @@
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 *}
+
+{if $viewLoanId > 0}
+	<span class="TopOfTable">
+		<h3>Loan</h3>
+	</span>
+
+	<br />
+
+	<table>
+		<tr>
+			<td>
+				<label>Item:</label>
+			</td>
+			<td>
+				<label>$loanObj->inventory_id</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Borrower:</label>
+			</td>
+			<td>
+				<label>$loanObj->borrower_id</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Date Taken:</label>
+			</td>
+			<td>
+				<label>$loanObj->issue_date</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Original Location:</label>
+			</td>
+			<td>
+				<label>$loanObj->original_location_id</label>
+			</td>
+		</tr>
+	</table>
+{else}
+
+
 <div class="TopOfTable">
 <span class="TopOfTable">
 {*<h3>Loans</h3>*}
@@ -79,3 +124,5 @@ Show:
 
     <div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>
 {/if}
+{/if}
+	
