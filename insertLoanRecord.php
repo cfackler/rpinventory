@@ -52,7 +52,11 @@ $user_id = $result->id;
 if(!VerifyUserExists($user_id, $link))
   die("Invalid User");
 	
-
+//get on-loan location
+$onLoanLocationId = (int)$_POST['location0'];
+if( $onLoanLocationId < 1 ) {
+	die( 'Invalid location id' );
+}
 
 //grab all ids
 $idString = $_POST["inventory_ids"];
@@ -152,8 +156,8 @@ $date = date("Y-m-d", $timestamp);
 
 foreach ($items as $item)
   {
-    $sql = "INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition) VALUES
-	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "'	)";	
+    $sql = "INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition, on_loan_location_id) VALUES
+	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "', " . $onLoanLocationId . " )";	
         
     if(!mysqli_query($link, $sql))
       die("Query failed");
