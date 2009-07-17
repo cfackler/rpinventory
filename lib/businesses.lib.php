@@ -55,8 +55,20 @@ function getBusinesses()
   return $records;
 }
 
+// Returns HTML for the content of a drop-down 'select' box
 function getBusinessesOptions() {
-		;
+	$output = '';
+
+	$businesses = getBusinesses();	
+
+	foreach( $businesses as $business ) {
+		$output .= '<option value="'.$business->business_id.'">';
+		$output .= $business->company_name . "</option>\n";
+	}
+
+	$output .= "<option>New Business</option>\n";
+
+	return $output;
 }
 
 function getViewBusinesses( $currentSortIndex, $currentSortDir ){
