@@ -19,8 +19,9 @@
 *}
 
 <form name="addLocation" action="insertLocation.php" onsubmit="return ValidateForm()" METHOD="post">
-
-<h3>Add Location</h3>
+<span class="TopOfTable">
+	<h3>Add Location</h3>
+</span>
 
 <table width="400">
 

@@ -44,7 +44,8 @@ function submitItems(){
 	return;
     }
     
-    var dropdown = $('action_list');
+    //var dropdown = $('action_list');
+		var dropdown = document.getElementById( 'action_list' );
     var action = dropdown.options[dropdown.selectedIndex].value;
     
     if(action == "Loan"){
@@ -626,6 +627,8 @@ function updateSidebar() {
 	location[1] != 'index' &&
 	location[1] != 'login' && 
 	location[1] != 'loanItem' &&
+	location[1] != 'addUser' &&
+	location[1] != 'addLocation' &&
 	location[1] != 'checkoutItem' &&
 	location[1] != 'editItem' &&
 	location[1] != 'repairItems' ){

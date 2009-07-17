@@ -19,8 +19,9 @@
 *}
 
 <form name="storeTransaction" action="addUserRecord.php" onsubmit="return ValidateForm()" METHOD="post">
-
-<h3>Add User</h3>
+<span class="TopOfTable">
+	<h3>Add User</h3>
+</span>
 
 <table width="400">
 

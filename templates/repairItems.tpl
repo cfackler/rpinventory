@@ -19,8 +19,9 @@
 *}
 
 <form name="editItem" action="insertRepairRecord.php" onsubmit="return ValidateForm()" METHOD="post">
-
-<h3>Repair Items</h3>
+<span class="TopOfTable">
+	<h3>Repair Items</h3>
+</span>
 
 <input type="hidden" name="count" size="40" value="{$itemCount}">
 
