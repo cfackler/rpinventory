@@ -66,7 +66,7 @@ function getBusinessesOptions() {
 		$output .= $business->company_name . "</option>\n";
 	}
 
-	$output .= "<option>New Business</option>\n";
+	$output .= "<option>Add a New Business</option>\n";
 
 	return $output;
 }
@@ -130,7 +130,7 @@ function getViewBusinesses( $currentSortIndex, $currentSortDir ){
 function insertBusiness( $company, $address, $address2, $city, $state, $zip,
 	$phone, $fax, $email, $website ) {
 
-		;
+	
 }
 
 ?>

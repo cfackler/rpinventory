@@ -531,17 +531,29 @@ function saveLocation(name, description, result, locationselect, locationTR, des
 
 function saveBusiness(business_result, business_select, new_business, company_name, address, address2, city, state, zip, phone, fax, email, website) {
     var resultElement = document.getElementById(business_result);
-	var business_dropdown = document.getElementById(new_business);
-	var company = document.getElementById( company_name ).value;
-	var address_name = document.getElementById( address ).value;
-	var address2_name = document.getElementById( address2 ).value;
-	var city_name = document.getElementById( city ).value;
-	var state_name = document.getElementById( state ).value;
-	var zip_num = document.getElementById( zip ).value;
-	var phone_num = document.getElementById( phone ).value;
-	var fax_num = document.getElementById( fax ).value;
-	var email_name = document.getElementById( email ).value;
-	var website_name = document.getElementById( website ).value;
+	var business_dropdown = document.getElementById(business_select);
+	var company = document.getElementById( company_name ).value.toString();
+	var address_name = document.getElementById( address ).value.toString();
+	var address2_name = document.getElementById( address2 ).value.toString();
+	var city_name = document.getElementById( city ).value.toString();
+	var state_name = document.getElementById( state ).value.toString();
+	var zip_num = document.getElementById( zip ).value.toString();
+	var phone_num = document.getElementById( phone ).value.toString();
+	var fax_num = document.getElementById( fax ).value.toString();
+	var email_name = document.getElementById( email ).value.toString();
+	var website_name = document.getElementById( website ).value.toString();
+
+	if( company.length == 0 ||
+		address_name.length == 0 ||
+		city_name.length == 0 ||
+		state_name.length == 0 ||
+		zip_num.length == 0 ||
+		phone_num.length == 0 ) 
+	{
+		document.getElementById( business_result ).innerHTML = "Please enter the required information";
+		document.getElementById( business_result ).style.display = "";
+		return;
+	}
 
     new Ajax.Request("ajax.php?operation=saveBusiness&company_name="+company+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&fax_number="+fax_num+"&email="+email_name+"&website="+website_name,
 		     { 

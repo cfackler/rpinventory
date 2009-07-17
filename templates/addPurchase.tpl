@@ -49,10 +49,8 @@
 	  Add a New Business
 	</option>
       </select>
-      </td>
-	<td>
 		<span id="business_result" style="display:none"></span>
-	</td>
+      </td>
      </tr>
      <tr id="newBusiness" style="display:none;">
       <td colspan="2">
