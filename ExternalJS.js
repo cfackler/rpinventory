@@ -530,7 +530,6 @@ function saveLocation(name, description, result, locationselect, locationTR, des
 }
 
 function saveBusiness(business_result, business_select, new_business, company_name, address, address2, city, state, zip, phone, fax, email, website) {
-{
     var resultElement = document.getElementById(business_result);
 	var business_dropdown = document.getElementById(new_business);
 	var company = document.getElementById( company_name ).value;
@@ -544,7 +543,7 @@ function saveBusiness(business_result, business_select, new_business, company_na
 	var email_name = document.getElementById( email ).value;
 	var website_name = document.getElementById( website ).value;
 
-    new Ajax.Request("ajax.php?operation=saveBusiness&company_name="+company+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&fax_number="+fax_num+"&email="+email_name+"&website="+website_name)
+    new Ajax.Request("ajax.php?operation=saveBusiness&company_name="+company+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&fax_number="+fax_num+"&email="+email_name+"&website="+website_name,
 		     { 
 			 method: 'post', 
 			     onSuccess: function(transport)

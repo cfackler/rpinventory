@@ -115,4 +115,10 @@ function getViewBusinesses( $currentSortIndex, $currentSortDir ){
   return $businesses;
 }
 
+function insertBusiness( $company, $address, $address2, $city, $state, $zip,
+	$phone, $fax, $email, $website ) {
+
+		;
+}
+
 ?>
