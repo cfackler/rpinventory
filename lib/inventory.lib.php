@@ -59,6 +59,19 @@ function getInventory($sortIndex = 0, $sortdir = 0)
   
   while($item = mysqli_fetch_object($result))
     {
+			if( $item->location == "On Loan" ) {
+				$sql = 'SELECT loan_id FROM loans WHERE inventory_id = ' . $item->inventory_id . ' AND return_date is NULL';
+				$loan_result = mysqli_query( $link, $sql ) or
+					die( "Error: ". mysql_error() );
+
+				$loan_item = mysqli_fetch_object( $loan_result );
+
+				$item->loan_id = $loan_item->loan_id;
+			}
+			else {
+				$item->loan_id = 0;
+			}
+
       $items [] = $item;
     }
   

@@ -42,7 +42,11 @@
 		<td>{$items[itemLoop]->current_condition}</td>
 		<td>${$items[itemLoop]->current_value}</td>
 	{/if}
-	<td align="center">{$items[itemLoop]->location}</td>
+	{if $items[itemLoop]->loan_id == 0}
+		<td align="center">{$items[itemLoop]->location}</td>
+	{else}
+		<td align="center"><a href="viewLoans.php?loanId={$items[itemLoop]->loan_id}">{$items[itemLoop]->location}</a></td>
+	{/if}
 </tr>
 {/section}	
 
