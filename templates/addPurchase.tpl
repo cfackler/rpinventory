@@ -50,6 +50,9 @@
 	</option>
       </select>
       </td>
+	<td>
+		<span id="business_result" style="display:none"></span>
+	</td>
      </tr>
      <tr id="newBusiness" style="display:none;">
       <td colspan="2">
@@ -91,17 +94,18 @@
 
      	<tr>
 	  <td>Fax Number: </td>
-	  <td><input type="text" name="fax" size="20"></td>
+	  <td><input type="text" name="fax" id="fax" size="20"></td>
      	</tr>
 
      	<tr>
 	  <td>E-mail: </td>
-	  <td><input type="text" name="email" size="30"></td>
+	  <td><input type="text" name="email" id="email" size="30"></td>
      	</tr>
 
      	<tr>
 	  <td>Website: </td>
-	  <td><input type="text" name="website" size="30"></td>
+	  <td><input type="text" name="website" id="website" size="30"></td>
+	  <td><input type="button" value="Save Business" onclick="saveBusiness('business_result', 'business_id', 'newBusiness', 'company', 'address', 'address2', 'city', 'state', 'zip', 'phone', 'fax', 'email', 'website');" /></td>
      	</tr>
       </table>
      </td>

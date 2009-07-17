@@ -23,12 +23,17 @@
 
 require_once( 'lib/locations.lib.php' );
 require_once( 'lib/users.lib.php' );
+require_once( 'lib/businesses.lib.php' );
 
 switch ($_GET["operation"])
   {
   case "locations":
     print getLocationsOptions();
     break;
+	
+	case "businesses":
+			print getBusinessesOptions();
+			break;
   
 	case "loanlocations":
 		print getLoanLocationsOptions();

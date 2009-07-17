@@ -55,6 +55,10 @@ function getBusinesses()
   return $records;
 }
 
+function getBusinessesOptions() {
+		;
+}
+
 function getViewBusinesses( $currentSortIndex, $currentSortDir ){
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session

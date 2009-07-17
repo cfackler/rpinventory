@@ -519,7 +519,7 @@ function saveLocation(name, description, result, locationselect, locationTR, des
 				 
 				 
 				 // Select the new location in the dropdown
-				 highlightEntry( locationselectelement, nameText );
+				 highlightEntry( locationselectelement, nameText, 'locations' );
 				 
 			     },
 			     onFailure: function()
@@ -529,9 +529,58 @@ function saveLocation(name, description, result, locationselect, locationTR, des
 		     });	     	  
 }
 
-function highlightEntry( selectElement, nameText ){
+function saveBusiness(business_result, business_select, new_business, company_name, address, address2, city, state, zip, phone, fax, email, website) {
+{
+    var resultElement = document.getElementById(business_result);
+	var business_dropdown = document.getElementById(new_business);
+	var company = document.getElementById( company_name ).value;
+	var address_name = document.getElementById( address ).value;
+	var address2_name = document.getElementById( address2 ).value;
+	var city_name = document.getElementById( city ).value;
+	var state_name = document.getElementById( state ).value;
+	var zip_num = document.getElementById( zip ).value;
+	var phone_num = document.getElementById( phone ).value;
+	var fax_num = document.getElementById( fax ).value;
+	var email_name = document.getElementById( email ).value;
+	var website_name = document.getElementById( website ).value;
+
+    new Ajax.Request("ajax.php?operation=saveBusiness&company_name="+company+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&fax_number="+fax_num+"&email="+email_name+"&website="+website_name)
+		     { 
+			 method: 'post', 
+			     onSuccess: function(transport)
+			     {
+				 // Set status text
+				 resultElement.innerHTML = 'Successfully saved.';
+				 
+				 // Hide the new location fields
+				 document.getElementById( new_business ).style.display = 'none';
+				 
+				 // Select the new location in the dropdown
+				 highlightEntry( business_dropdown, company.value, 'businesses' );
+				 
+				 //clears fields
+				 company.value = '';
+				 address_name.value = '';
+				 address2_name.value = '';
+				 city_name.value = '';
+				 state_name.value = '';
+				 zip_num.value = '';
+				 phone_num.value = '';
+				 fax_num.value = '';
+				 email_name.value = '';
+				 website_name.value = '';
+
+			     },
+			     onFailure: function()
+			     {	// Alert on failure
+				 resultElement.innerHTML = 'Error saving location!';
+			     }
+		     });	     	  
+}
+
+function highlightEntry( selectElement, nameText, type ){
     // Reload the drop down, not asynchronously
-    getLocationOptionsNonAsynch( selectElement );
+    getLocationOptionsNonAsynch( selectElement, type );
 
     // Find the new location in the dropdown list and select it
     for( var i = 0; i < selectElement.length ; i++ ) {
@@ -543,8 +592,9 @@ function highlightEntry( selectElement, nameText ){
 }
 
 // Same as getLocationOptions, just not asynchronous
-function getLocationOptionsNonAsynch(element)
+function getLocationOptionsNonAsynch(element, type)
 {
+	if( type == 'locations' ) {
 	 new Ajax.Request("ajax.php?operation=locations", 
 		     { 
 			 method: 'post', asynchronous:false,
@@ -554,6 +604,18 @@ function getLocationOptionsNonAsynch(element)
 				     element.innerHTML = response;
 			 	 }
 		     });
+	}
+	else if( type == 'businesses' ) {
+		new Ajax.Request("ajax.php?operation=businesses",
+				{
+					method: 'post', asynchronous:false,
+					onSuccess: function(transport)
+					{
+						var response = transport.responseText;
+						element.innerHTML = response;
+					}
+				});
+	}
 }
 
 function hideBusiness() {
