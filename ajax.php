@@ -37,6 +37,12 @@ switch ($_GET["operation"])
   case "savelocation":
     insertLocation($_GET["location"], $_GET["description"]);
     break;
+
+	case "saveBusiness":
+		insertBusiness($_GET["company_name"], $_GET['address'], $_GET['address2'],
+									 $_GET['city'], $_GET['state'], $_GET['zipcode'], $_GET['phone'],
+									 $_GET['phone_number'], $_GET['fax_number'], $_GET['email'], $_GET['website']);
+		break;
     
   case "username":
     print getUsernames( $_GET['name'] );
