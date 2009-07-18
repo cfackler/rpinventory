@@ -23,12 +23,17 @@
 
 require_once( 'lib/locations.lib.php' );
 require_once( 'lib/users.lib.php' );
+require_once( 'lib/businesses.lib.php' );
 
 switch ($_GET["operation"])
   {
   case "locations":
     print getLocationsOptions();
     break;
+	
+	case "businesses":
+			print getBusinessesOptions();
+			break;
   
 	case "loanlocations":
 		print getLoanLocationsOptions();
@@ -37,6 +42,13 @@ switch ($_GET["operation"])
   case "savelocation":
     insertLocation($_GET["location"], $_GET["description"]);
     break;
+
+	case "saveBusiness":
+		print_r ( $_GET );
+		insertBusiness($_GET["company_name"], $_GET['address'], $_GET['address2'],
+									 $_GET['city'], $_GET['state'], $_GET['zipcode'], $_GET['phone'],
+									 $_GET['fax_number'], $_GET['email'], $_GET['website']);
+		break;
     
   case "username":
     print getUsernames( $_GET['name'] );

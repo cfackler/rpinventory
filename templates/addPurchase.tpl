@@ -20,7 +20,8 @@
 <span class="TopOfTable">
 	<h3>Create Purchase</h3>
 </span>
-
+<DIV id="TipLayer" style="visibility:hidden;position:absolute;z-index:1000;top:-100;background-color:white"></DIV>
+{*<script language="JavaScript" src="style.js" type="text/javascript"></SCRIPT>  *}
 <form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
   <input type="hidden" name="count" id="count" value="1">
@@ -28,7 +29,8 @@
   <ul style="list-style-type:none">
     <input type="checkbox" name="ignoreBusiness" id="ignoreBusiness" onclick="hideBusiness()"/>
     <label for="ignoreBusiness">Ignore Business Information</label>
-    
+    <span id="caller" onMouseOver="show()" onMOuseOut="hide()">Test</span>
+
     <br />
 
     <span id="businessInformation">
@@ -38,7 +40,7 @@
 	<td>Purchased	From:</td>
       
 	<td><select class="dropDown" id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
-	<option value="-1">Select Business</option>
+	<option value="-1">Select a Business</option>
 	{section name=bus loop=$businesses}
 	<option value="{$businesses[bus]->business_id}">
 	  {$businesses[bus]->company_name}
@@ -49,6 +51,7 @@
 	  Add a New Business
 	</option>
       </select>
+		<span id="business_result" style="display:none"></span>
       </td>
      </tr>
      <tr id="newBusiness" style="display:none;">
@@ -66,7 +69,7 @@
 
      	<tr>
 	  <td>Address 2:</td>
-	  <td><input type="text" name="address2" size="30"></td>
+	  <td><input type="text" name="address2" id="address2" size="30"></td>
      	</tr>
 
      	<tr>
@@ -91,17 +94,18 @@
 
      	<tr>
 	  <td>Fax Number: </td>
-	  <td><input type="text" name="fax" size="20"></td>
+	  <td><input type="text" name="fax" id="fax" size="20"></td>
      	</tr>
 
      	<tr>
 	  <td>E-mail: </td>
-	  <td><input type="text" name="email" size="30"></td>
+	  <td><input type="text" name="email" id="email" size="30"></td>
      	</tr>
 
      	<tr>
 	  <td>Website: </td>
-	  <td><input type="text" name="website" size="30"></td>
+	  <td><input type="text" name="website" id="website" size="30"></td>
+	  <td><input type="button" value="Save Business" onclick="saveBusiness('business_result', 'business_id', 'newBusiness', 'company', 'address', 'address2', 'city', 'state', 'zip', 'phone', 'fax', 'email', 'website');" /></td>
      	</tr>
       </table>
      </td>
