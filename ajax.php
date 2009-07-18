@@ -44,9 +44,10 @@ switch ($_GET["operation"])
     break;
 
 	case "saveBusiness":
+		print_r ( $_GET );
 		insertBusiness($_GET["company_name"], $_GET['address'], $_GET['address2'],
 									 $_GET['city'], $_GET['state'], $_GET['zipcode'], $_GET['phone'],
-									 $_GET['phone_number'], $_GET['fax_number'], $_GET['email'], $_GET['website']);
+									 $_GET['fax_number'], $_GET['email'], $_GET['website']);
 		break;
     
   case "username":

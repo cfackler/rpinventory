@@ -38,7 +38,7 @@
 	<td>Purchased	From:</td>
       
 	<td><select class="dropDown" id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
-	<option value="-1">Select Business</option>
+	<option value="-1">Select a Business</option>
 	{section name=bus loop=$businesses}
 	<option value="{$businesses[bus]->business_id}">
 	  {$businesses[bus]->company_name}
