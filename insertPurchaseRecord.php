@@ -175,9 +175,9 @@ for($x=0; $x<$count; $x++)
   //Location	
   $location = (int)$_POST["location" . $x];
   
-  $itemdesc = mysqli_real_escape_string( $itemdesc );
-  $condition = mysqli_real_escape_string( $condition );
-  $valueStr = mysqli_real_escape_string( $valueStr );
+  $itemdesc = mysqli_real_escape_string( $link, $itemdesc );
+  $condition = mysqli_real_escape_string( $link, $condition );
+  $valueStr = mysqli_real_escape_string( $link, $valueStr );
   
   //Check location exists
   $result=mysqli_query($link, "select * from locations where location_id=" . $location);
