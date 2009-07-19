@@ -128,7 +128,7 @@ function getLocationsOptions()
 	}
   
   foreach($locations as $location) {
-    if( $location->location_id != $commonLocation->location_id ){
+    if( $location->location_id != $commonLocation->location_id && $location->location != 'On Loan'){
       $loc_select .= '<option value="' . $location->location_id . '">';
       $loc_select .= $location->location . "</option>";
     }
@@ -153,7 +153,7 @@ function getLoanLocationsOptions()
   $loc_select .= $firstLocation->location . "</option>";
   
   foreach($locations as $location) {
-    if( $location->location_id != $commonLocation->location_id ){
+    if( $location->location_id != $commonLocation->location_id && $location->location != 'On Loan'){
       $loc_select .= '<option value="' . $location->location_id . '">';
       $loc_select .= $location->location . "</option>";
     }
