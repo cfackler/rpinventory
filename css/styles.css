@@ -276,3 +276,14 @@ span.TopOfTable h3{
 #inventoryActions{
   float: left;
 }
+
+#helpToolTip{
+	visibility: hidden;
+	position: absolute;
+	z-index: 1000;
+	top: -100;
+	background-color: white;
+	max-width: 150px;
+	padding: 2px;
+	font-size: 12px;
+}

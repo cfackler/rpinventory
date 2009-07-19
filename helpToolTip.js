@@ -1,5 +1,5 @@
-function show( caller_id ) {
-var element = document.getElementById('tipLayer');
+function showToolTip( caller_id ) {
+var element = document.getElementById('helpToolTip');
 var caller = document.getElementById(caller_id);
 
 element.style.display = "block";
@@ -16,8 +16,8 @@ element.style.left = pos[0] + 20 + 'px';
 element.style.top = ( pos[1] - 10 ) + 'px';
 }
 
-function hide() {
-var element = document.getElementById('tipLayer');
+function hideToolTip() {
+var element = document.getElementById('helpToolTip');
 
 element.style.display = "none";
 }
