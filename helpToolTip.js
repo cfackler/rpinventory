@@ -35,6 +35,12 @@ function findPos(obj) {
 	}
 }
 
+/* Returns the basename of the current page
+ *
+ * i.e. If on 'addPurchase.php'
+ *
+ * basenameLocation() => 'addPurchase'
+	*/
 function basenameLocation( ) {
 	var loc = document.location.pathname.match( /^.*?\/(\w*)\.php/ );
 
@@ -46,6 +52,22 @@ function basenameLocation( ) {
 	}
 }
 
+/* Datastructure to hold all of help data 
+ *
+ * An associative array of associative arrays
+ *
+ * help[ basename-of-page ][ id-of-caller-element ]
+ *
+ * i.e. For the page addPurchase.php with a help image with id="caller", the appropriate
+ * line would be:
+ *
+ * help['addPurchase']['caller'] 
+ *    or
+ * help[basenameLocation()]['caller']
+ *
+ * The basenameLocation() function will get the name of the page and grab just the basename
+ * 
+*/
 var help = new Array();
 
 help['addPurchase'] = new Array();
