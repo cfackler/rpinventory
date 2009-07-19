@@ -55,6 +55,7 @@ function getLocations()
   return $records;
 }
 
+/* Gets the most commonly used location. Returns false upon failure */
 function getCommonLocation()
 {
   require_once( 'lib/connect.lib.php' );
@@ -77,9 +78,14 @@ function getCommonLocation()
  
   $result = mysqli_fetch_object( $result );
 
+	if( $result->location_id == NULL ) {
+		return false;
+	}
+
   return $result;
 }
 
+/* Gets the "On Loan" location*/
 function getOnLoanLocation()
 {
 	require_once( 'lib/connect.lib.php' );
@@ -104,6 +110,7 @@ function getOnLoanLocation()
 	return $result;
 }
 
+/* Gets the html for the location select object */
 function getLocationsOptions()
 {
   $loc_select;
@@ -114,8 +121,11 @@ function getLocationsOptions()
   /* Gets the most common location_id */
   $commonLocation = getCommonLocation();
 
-  $loc_select = '<option value="'.$commonLocation->location_id . '">';
-  $loc_select .= $commonLocation->location . "</option>";
+	/* Make sure we found a common location */
+  if( $commonLocation ) {
+		$loc_select = '<option value="'.$commonLocation->location_id . '">';
+  	$loc_select .= $commonLocation->location . "</option>";
+	}
   
   foreach($locations as $location) {
     if( $location->location_id != $commonLocation->location_id ){
@@ -136,11 +146,11 @@ function getLoanLocationsOptions()
   //get locations array
   $locations = getLocations();
 
-  /* Gets the most common location_id */
-  $commonLocation = getOnLoanLocation();
+  /* Gets the item to put first in the list: the "On Loan" location */
+  $firstLocation = getOnLoanLocation();
 
-  $loc_select = '<option value="'.$commonLocation->location_id . '">';
-  $loc_select .= $commonLocation->location . "</option>";
+  $loc_select = '<option value="'.$firstLocation->location_id . '">';
+  $loc_select .= $firstLocation->location . "</option>";
   
   foreach($locations as $location) {
     if( $location->location_id != $commonLocation->location_id ){
