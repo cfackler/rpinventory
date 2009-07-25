@@ -23,9 +23,11 @@
 
 function getToolTips($page) {
 	$html = array();
+	$html['helpDiv'] = '<div id="helpToolTip"></div>';	// Where the message is displayed
+
 	switch($page) {
 		case "addPurchase":
-			$html['ignoreBusiness'] = '<img id="ignoreBusinessHelp" onMouseOver="showToolTip(\'ignoreBusinessHelp\', \'Check this option if you do not want to enter any business information\')" onMouseOut="hideToolTip()" src="images/questionmark.png" alt="Help" />';
+			$html['ignoreBusiness'] = generate( 'ignoreBusinessHelp', 'Check this option if you do not want to enter any business information' );
 
 			break;
 	}
@@ -33,7 +35,9 @@ function getToolTips($page) {
 	return $html;
 }
 
-
+function generate( $id, $message ) {
+	return '<img id="'. $id .'" onMouseOver="showToolTip(\''. $id .'\', \''. $message .'\')" onMouseOut="hideToolTip()" src="images/questionmark.png" alt="Help" />';
+}
 
 
 

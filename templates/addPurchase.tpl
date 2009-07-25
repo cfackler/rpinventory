@@ -20,7 +20,7 @@
 <span class="TopOfTable">
 	<h3>Create Purchase</h3>
 </span>
-<div id="helpToolTip"></div>
+{$tooltip.helpDiv}
 <form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
   <input type="hidden" name="count" id="count" value="1">
@@ -29,8 +29,6 @@
     <input type="checkbox" name="ignoreBusiness" id="ignoreBusiness" onclick="hideBusiness()"/>
     <label for="ignoreBusiness">Ignore Business Information</label>
 		{$tooltip.ignoreBusiness}
-{*    <img id="ignoreBusinessHelp" onMouseOver="showToolTip('ignoreBusinessHelp')" onMouseOut="hideToolTip()" src="images/questionmark.png" alt="Help" />
-*}
     <br />
 
     <span id="businessInformation">
