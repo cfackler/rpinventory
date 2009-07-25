@@ -62,7 +62,6 @@ $smarty->assign('businesses', $businesses);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('locations', $locations);
 $smarty->assign('tooltip', $tooltip_html);
-//print_r($tooltip_html);
 
 $smarty->display('index.tpl');
 
