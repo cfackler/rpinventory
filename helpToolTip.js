@@ -11,9 +11,10 @@ element.style.visibility = 'visible';
 
 var pos;
 pos = findPos( caller );
+scroll = getScrollXY();
 
-element.style.left = pos[0] + 20 + 'px';
-element.style.top = ( pos[1] - 10 ) + 'px';
+element.style.left = (pos[0] + 20 - scroll[0]) + 'px';
+element.style.top = (( pos[1] - 10 ) - scroll[1]) + 'px';
 }
 
 function hideToolTip() {
@@ -50,6 +51,24 @@ function basenameLocation( ) {
 	else {
 		return loc[1];
 	}
+}
+
+function getScrollXY() {
+	var scrOfX = 0, scrOfY = 0;
+	if( typeof( window.pageYOffset ) == 'number' ) {
+		//Netscape compliant
+		scrOfY = window.pageYOffset;
+		scrOfX = window.pageXOffset;
+	} else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
+		//              //DOM compliant
+		scrOfY = document.body.scrollTop;
+		scrOfX = document.body.scrollLeft;
+	} else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
+		//                            //IE6 standards compliant mode
+		scrOfY = document.documentElement.scrollTop;
+		scrOfX = document.documentElement.scrollLeft;
+	}
+	return [ scrOfX, scrOfY ];
 }
 
 /* Datastructure to hold all of help data 
