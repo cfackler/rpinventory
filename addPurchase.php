@@ -24,6 +24,7 @@
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/locations.lib.php'); //locations funciton
+require_once('lib/tooltip.lib.php');
 
 $link = connect();
 if($link == null)
@@ -49,6 +50,7 @@ while($business = mysqli_fetch_object($businessResult))
 
 //Locations
 $locations = getLocationsOptions();
+$tooltip_html = getToolTips('addPurchase');
 
 //BEGIN Page
 	
@@ -59,6 +61,8 @@ $smarty->assign('page_tpl', 'addPurchase');
 $smarty->assign('businesses', $businesses);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('locations', $locations);
+$smarty->assign('tooltip', $tooltip_html);
+//print_r($tooltip_html);
 
 $smarty->display('index.tpl');
 

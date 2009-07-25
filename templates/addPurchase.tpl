@@ -28,8 +28,9 @@
   <ul style="list-style-type:none">
     <input type="checkbox" name="ignoreBusiness" id="ignoreBusiness" onclick="hideBusiness()"/>
     <label for="ignoreBusiness">Ignore Business Information</label>
-    <img id="ignoreBusinessHelp" onMouseOver="showToolTip('ignoreBusinessHelp')" onMouseOut="hideToolTip()" src="images/questionmark.png" alt="Help" />
-
+		{$tooltip.ignoreBusiness}
+{*    <img id="ignoreBusinessHelp" onMouseOver="showToolTip('ignoreBusinessHelp')" onMouseOut="hideToolTip()" src="images/questionmark.png" alt="Help" />
+*}
     <br />
 
     <span id="businessInformation">
