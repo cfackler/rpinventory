@@ -20,8 +20,7 @@
 <span class="TopOfTable">
 	<h3>Create Purchase</h3>
 </span>
-<DIV id="TipLayer" style="visibility:hidden;position:absolute;z-index:1000;top:-100;background-color:white"></DIV>
-{*<script language="JavaScript" src="style.js" type="text/javascript"></SCRIPT>  *}
+<div id="helpToolTip"></div>
 <form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
   <input type="hidden" name="count" id="count" value="1">
@@ -29,8 +28,9 @@
   <ul style="list-style-type:none">
     <input type="checkbox" name="ignoreBusiness" id="ignoreBusiness" onclick="hideBusiness()"/>
     <label for="ignoreBusiness">Ignore Business Information</label>
-    <span id="caller" onMouseOver="show()" onMOuseOut="hide()">Test</span>
-
+		{$tooltip.ignoreBusiness}
+{*    <img id="ignoreBusinessHelp" onMouseOver="showToolTip('ignoreBusinessHelp')" onMouseOut="hideToolTip()" src="images/questionmark.png" alt="Help" />
+*}
     <br />
 
     <span id="businessInformation">
