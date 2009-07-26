@@ -62,8 +62,8 @@ CREATE TABLE loans (
 ) type = MyISAM;
 
 CREATE TABLE borrowers (
-			 borrower_id int(5) NOT NULL,
-			 rin char(9) NOT NULL,
+			 borrower_id int(5) NOT NULL auto_increment,
+			 rin varchar(9) NOT NULL,
 			 email varchar(100) NOT NULL,
 			 name varchar(100) NOT NULL,
 			 PRIMARY KEY (borrower_id)
