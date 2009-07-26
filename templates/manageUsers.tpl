@@ -17,12 +17,13 @@
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 *}
-<div class="TopOfTable"><span class="TopOfTable">
-{*<h3>Users</h3>*}
-<a href="addUser.php">Add new user</a>
-</span></div>
+<div class="TopOfTable">
+	<span class="TopOfTable">
+		<a href="addUser.php">Add new user</a>
+	</span>
+</div>
 
-<table width="900" border="0" class="itemsTable" cellspacing="0">
+<table width="700" border="0" class="itemsTable" cellspacing="0">
 	<tr>
 		
     {* Table header *}
@@ -34,7 +35,6 @@
 
 {section name=userLoop loop=$users}
 <tr{cycle values=" class=\"alt\","}>
-	<td align="center">{$users[userLoop]->name}</td>
 	<td align="center">{$users[userLoop]->username}</td>
 	<td align="center">
 	{if $users[userLoop]->access_level == 2}
@@ -47,8 +47,6 @@
 		
 	</td>
 	
-	
-	<td align="center">{$users[userLoop]->rin}</td>
 	<td align="center"><a href="mailto:{$users[userLoop]->email}">{$users[userLoop]->email}</a></td>
 	
 	<td align="center"><a href="editUser.php?id={$users[userLoop]->id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')" value="Delete User"></td>

@@ -34,8 +34,8 @@ function getUsers()
   // Authenticate
   $auth = GetAuthority();
   
-  // Loan History
-  $query= "SELECT name, username, rin, email FROM logins";
+  // Users
+  $query= "SELECT username, email, access_level FROM logins";
 
   $result = mysqli_query($link, $query) or
     die( 'Could not get the users' );
@@ -103,14 +103,10 @@ function getViewUsers( $currentSortIndex, $currentSortDir ){
 
   /* Determine query argument for sorting */
   if($currentSortIndex == 0)
-    $sortBy = 'name';
-  else if($currentSortIndex == 1)
     $sortBy = 'username';
-  else if($currentSortIndex == 2)
+  else if($currentSortIndex == 1)
     $sortBy = 'access_level';
-  else if($currentSortIndex == 3)
-    $sortBy = 'rin';
-  else if($currentSortIndex == 4)
+  else if($currentSortIndex == 2)
     $sortBy = 'email';
   
   /*  Determine query argument for sort direction

@@ -60,11 +60,9 @@ paginate( $smarty, 'users', $currentSortIndex, $currentSortDir, 'users' );
 
 /* Table column headers */
 $headers = array();
-$headers[0] = array('label' => 'Name', 'width' => 150);
-$headers[1] = array('label' => 'Username', 'width' => 100);
-$headers[2] = array('label' => 'Access', 'width' => 100);
-$headers[3] = array('label' => 'RIN', 'width' => 100);
-$headers[4] = array('label' => 'Email', 'width' => 150);
+$headers[0] = array('label' => 'Username', 'width' => 100);
+$headers[1] = array('label' => 'Access', 'width' => 100);
+$headers[2] = array('label' => 'Email', 'width' => 150);
 
 //Assign vars
 $smarty->assign('headers', $headers);
