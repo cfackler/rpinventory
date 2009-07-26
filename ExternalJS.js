@@ -702,6 +702,7 @@ function updateSidebar() {
 	location[1] != 'login' && 
 	location[1] != 'loanItem' &&
 	location[1] != 'addUser' &&
+	location[1] != 'addBorrower' &&
 	location[1] != 'addLocation' &&
 	location[1] != 'checkoutItem' &&
 	location[1] != 'editItem' &&
