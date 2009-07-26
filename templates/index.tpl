@@ -63,6 +63,7 @@ $this->assign('clubName', Config::get('club_name'));
 			     <li><br /></li>
 			     <li class="SidebarSectionHeader">Admin</li>
 			     <li><a id="manageLocations" href="manageLocations.php">Manage Locations</a></li>
+					 <li><a id="manageBorrowers" href="manageBorrowers.php">Manage Borrowers</a></li>
 			{/if}
 			
 			{if $authority == 2}
