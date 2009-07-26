@@ -26,21 +26,6 @@
 <table width="400">
 
 <tr>
-	<td>Name: </td>
-	<td><input type="text" name="name" size="40" id="name" class="validate"></td>
-</tr>
-
-<tr>
-	<td>RIN: </td>
-	<td><input type="text" name="rin" size="40" id="RIN" class="validate"></td>
-</tr>
-
-<tr>
-	<td>Email: </td>
-	<td><input type="text" name="email" size="40" id="email" class="validate"></td>
-</tr>
-
-<tr>
 	<td>Username: </td>
 	<td><input type="text" name="username" size="40" id="username" class="validate"></td>
 </tr>
@@ -51,13 +36,18 @@
 </tr>
 
 <tr>
+	<td>Email: </td>
+	<td><input type="text" name="email" size="40" id="email" class="validate"></td>
+</tr>
+
+<tr>
 	<td>Permissions: </td>
 	<td>
-	<select class="dropDown" name="access_level">
-		<option value="2">Administrator</option>
-		<option value="1">Manager</option>
-		<option value="0" selected>User</option>
-	</select>	
+		<select class="dropDown" name="access_level">
+			<option value="0">User</option>
+			<option value="1">Manager</option>
+			<option value="2">Administrator</option>
+		</select>	
 	</td>
 </tr>
 
@@ -65,7 +55,7 @@
 
 </table>
 
-<br>
-<input type="submit" value="Add User">
+<br />
+<input type="submit" value="Add User" />
 
 <form>
