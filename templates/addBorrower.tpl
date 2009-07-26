@@ -40,9 +40,48 @@
 	<td><input type="text" name="email" size="40" id="email" class="validate"></td>
 </tr>
 
+<tr>
+	<td></td>
+</tr>
+
+<tr>
+	<td></td>
+</tr>
+
+<tr>
+	<td>Address:</td>
+	<td><input type="text" name="address" size="40" id="address" class="validate"></td>
+</tr>
+
+<tr>
+	<td>Address2:</td>
+	<td><input type="text" name="address2" size="40" id="address2"></td>
+</tr>
+
+<tr>
+	<td>City:</td>
+	<td><input type="text" name="city" size="40" id="city" class="validate"></td>
+</tr>
+
+<tr>
+	<td>State:</td>
+	<td><input type="text" name="state" size="40" id="state" class="validate"></td>
+</tr>
+
+<tr>
+	<td>Zipcode:</td>
+	<td><input type="text" name="zip" size="40" id="zip" class="validate"></td>
+</tr>
+
+<tr>
+	<td>Phone:</td>
+	<td><input type="text" name="phone" size="40" id="phone" class="validate"></td>
+</tr>
+
 </table>
 
 <br />
+
 <input type="submit" value="Add Borrower" />
 
 <form>
