@@ -45,7 +45,7 @@ $smarty = new Smarty_Inv();
 
 
 // Decide sorting method
-if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
+if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 2))
   $currentSortIndex = $_GET['sort'];
 else
   $currentSortIndex = 0;

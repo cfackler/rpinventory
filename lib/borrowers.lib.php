@@ -1,37 +1,106 @@
 <?php
-
 /*
 
-    Copyright (C) 2009, All Rights Reserved.
+  Copyright (C) 2009, All Rights Reserved.
 
-    This file is part of RPInventory.
+  This file is part of RPInventory.
 
-    RPInventory is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+  RPInventory is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-    RPInventory is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  RPInventory is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
+  You should have received a copy of the GNU General Public License
+  along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-function getBorrowers( $currentSortIndex, $currentSortDir ){
-  require_once( 'lib/connect.lib.php' );  //mysql
-  require_once( 'lib/auth.lib.php' );   //Session
 
+function getBorrowers()
+{
+  require_once("lib/connect.lib.php");  //mysql
+  require_once("lib/auth.lib.php");  //Session
+
+  // Connect
   $link = connect();
-  if($link == null)
-    die("Database connection failed");
+  if( $link == null )
+    die( "Database connection failed" );
   
   // Authenticate
   $auth = GetAuthority();
   
+  // Borrowers
+  $query= "SELECT name, rin, email FROM borrowers";
+
+  $result = mysqli_query($link, $query) or
+    die( 'Could not get the borrowers' );
+
+  $records = array();
+  
+  while($record = mysqli_fetch_object($result))
+    {
+      $records [] = $record;
+    }
+  
+  mysqli_close($link);	
+  
+  return $records;
+}
+
+function getUsernames( $name )
+{
+  require_once( 'modules/json/JSON.php' );
+  require_once( 'lib/connect.lib.php' );
+  require_once( 'lib/auth.lib.php' );
+
+  // Connect
+  $link = connect();
+  if( $link == null )
+    die( "Database connection failed" );
+  
+  // Authenticate
+  $auth = GetAuthority();
+  if($auth < 1)
+	  die("You dont have permission to access this page");
+
+  $sql = 'SELECT username FROM logins';
+
+  $result = mysqli_query( $link, $sql ) or
+    die( 'Could not get the usernames' );
+
+  $records = array();
+ 
+  while ( $record = mysqli_fetch_object( $result ) ){
+    if ( preg_match( '!^'.$name.'!', $record->username ) ) {
+      $records[] = $record->username;
+    }
+  }
+
+  $data = array( "records" => $records );
+  mysqli_close( $link );
+ 
+  $json = new Services_JSON();
+  
+  header('X-JSON: ('.$json->encode( $data ).')');
+}
+
+function getViewBorrowers( $currentSortIndex, $currentSortDir ){
+  require_once("lib/connect.lib.php");  //mysql
+  require_once("lib/auth.lib.php");  //Session
+
+  // Connect
+  $link = connect();
+  if( $link == null )
+    die( "Database connection failed" );
+  
+  // Authenticate
+  $auth = GetAuthority();
+
   /* Determine query argument for sorting */
   if($currentSortIndex == 0)
     $sortBy = 'name';
@@ -39,36 +108,24 @@ function getBorrowers( $currentSortIndex, $currentSortDir ){
     $sortBy = 'rin';
   else if($currentSortIndex == 2)
     $sortBy = 'email';
-  else if($currentSortIndex == 3)
-    $sortBy = 'address';
-  else if($currentSortIndex == 4)
-    $sortBy = 'phone';
   
   /*  Determine query argument for sort direction
       Ascending is default    */
   if($currentSortDir == 1)
     $sortBy .= ' DESC';
   
-  //items
-  $query = "SELECT username, name, rin, email, address, city, state, zipcode, phone
-    FROM logins, borrower_addresses, addresses
-		 WHERE addresses.address_id=borrower_addresses.address_id AND
-		       borrower_addresses.user_id=logins.id
-		      ORDER BY ".$sortBy;
   
-  $result = mysqli_query($link, $query);
+  //users
+  $borrowersQuery= "SELECT * from borrowers ORDER BY ".$sortBy;
+  $borrowerResult = mysqli_query($link, $borrowersQuery);
   $borrowers = array();
   
-  while($item = mysqli_fetch_object($result))
+  while($borrower = mysqli_fetch_object($borrowerResult))
     {
-      $borrowers [] = $item;
+      $borrowers [] = $borrower;
     }
+  mysqli_close($link);
 
-  mysqli_close( $link );
-  
   return $borrowers;
 }
-
-
-
 ?>

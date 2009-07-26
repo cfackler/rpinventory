@@ -96,6 +96,10 @@ function getPaginatedResults( $smarty, $itemVarName, $currentSortIndex, $current
       $items = getViewLocations( $currentSortIndex, $currentSortDir );
       break;
 
+		case 'manageBorrowers':
+			$items = getBorrowers( $currentSortIndex, $currentSortDir );
+			break;
+
     case 'purchases':
       $items = getViewPurchases( $currentSortIndex, $currentSortDir );
       break;
