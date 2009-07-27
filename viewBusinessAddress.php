@@ -55,9 +55,9 @@ $address = mysqli_fetch_object($result);
 
 	
 //Assign vars
-$smarty->assign('title', "View Address");
+$smarty->assign('title', "View Business Address");
 $smarty->assign('authority', $auth);
-$smarty->assign('page_tpl', 'viewAddress');
+$smarty->assign('page_tpl', 'viewBusinessAddress');
 $smarty->assign('address', $address);
 
 

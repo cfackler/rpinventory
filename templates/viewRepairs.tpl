@@ -35,7 +35,7 @@
     <tr{cycle values=" class=\"alt\","}>
 
 	<td>{$items[itemLoop]->inv_description}</td>
-	<td><a href="viewAddress.php?id={$items[itemLoop]->business_id}">{$items[itemLoop]->company_name}</td>
+	<td><a href="viewBusinessAddress.php?id={$items[itemLoop]->business_id}">{$items[itemLoop]->company_name}</td>
 	<td>{$items[itemLoop]->repair_date}</td>
 	<td>${$items[itemLoop]->repair_cost}</td>
 	<td>{$items[itemLoop]->rep_description}</td>
