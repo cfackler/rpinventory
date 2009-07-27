@@ -35,7 +35,7 @@ function getBorrowers()
   $auth = GetAuthority();
   
   // Borrowers
-  $query= "SELECT name, rin, email FROM borrowers";
+  $query= "SELECT * FROM borrowers";
 
   $result = mysqli_query($link, $query) or
     die( 'Could not get the borrowers' );
@@ -128,4 +128,28 @@ function getViewBorrowers( $currentSortIndex, $currentSortDir ){
 
   return $borrowers;
 }
+
+function getBorrower( $id ) {
+	require_once('lib/connect.lib.php');
+	require_once('lib/auth.lib.php');
+
+	// Database
+	$link = connect();
+	if( $link == null )
+		die( 'Database connection failed' );
+
+	// Authority
+	$auth = GetAuthority();
+
+	// Sanitize
+	$id = (int)$id;
+
+	$sql = 'SELECT * FROM borrowers WHERE borrower_id = ' . $id;
+
+	$result = mysqli_query($link, $sql);
+	$borrower = mysqli_fetch_object($result);
+
+	return $borrower;
+}
+
 ?>

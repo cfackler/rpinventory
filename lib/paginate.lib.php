@@ -51,7 +51,7 @@ function getPaginatedResults( $smarty, $itemVarName, $currentSortIndex, $current
   switch( $mode )		/* Get correct item list for page requested */
     {
     case 'borrowers':
-      $items = getBorrowers( $currentSortIndex, $currentSortDir );
+      $items = getViewBorrowers( $currentSortIndex, $currentSortDir );
       break;
 
     case 'businesses':
@@ -97,7 +97,7 @@ function getPaginatedResults( $smarty, $itemVarName, $currentSortIndex, $current
       break;
 
 		case 'manageBorrowers':
-			$items = getBorrowers( $currentSortIndex, $currentSortDir );
+			$items = getViewBorrowers( $currentSortIndex, $currentSortDir );
 			break;
 
     case 'purchases':
