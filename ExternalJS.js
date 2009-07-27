@@ -442,7 +442,6 @@ function validateState(str) {
 	    return true;
 	}
     }
-    alert('returns false');
     
     return false;
 }
