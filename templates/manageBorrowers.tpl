@@ -23,13 +23,13 @@
 	</span>
 </div>
 
-<table width="700" border="0" class="itemsTable" cellspacing="0">
+<table width="800" border="0" class="itemsTable" cellspacing="0">
 	<tr>
 		
     {* Table header *}
     {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
 		{* Actions does not need to be a sorting column *}
-		<th width="150">Actions</th>
+		<th width="200">Actions</th>
 		
 	</tr>
 
@@ -40,7 +40,7 @@
 	<td align="center"><a href="mailto:{$borrowers[borrowerLoop]->email}">{$borrowers[borrowerLoop]->email}</a></td>
 	<td align="center"><a href="viewBorrowerAddress.php?id={$borrowers[borrowerLoop]->borrower_id}">Address</a></td>
 	
-	<td align="center"><a href="editBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete user \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')" value="Delete User"></td>
+	<td align="center"><a href="editBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete borrower \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')" value="Delete Borrower"></td>
 </tr>
 {/section}	
 

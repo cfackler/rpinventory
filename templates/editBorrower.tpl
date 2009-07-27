@@ -78,6 +78,6 @@
 </table>
 
 <br>
-<input type="submit" value="Update User">
+<input type="submit" value="Update Borrower">
 
 <form>
