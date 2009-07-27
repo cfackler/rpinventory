@@ -28,6 +28,8 @@ require_once('lib/addresses.lib.php');
 
 //Authenticate
 $auth = GetAuthority();	
+if( $auth < 1 )
+	die( 'Permission Denied' );
 
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
@@ -43,7 +45,8 @@ $borrower = getBorrower( $id );
 if($borrower == false)
   die("Invalid ID");
 
-$address = getAddress( getAddressFromBorrower( $id ) );
+$address_id = getAddressFromBorrower( $id );
+$address = getAddress( getAddressFromBorrower( $address_id ) );
 
 //BEGIN Page
 	
@@ -53,6 +56,7 @@ $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'editBorrower');
 $smarty->assign('borrower', $borrower);
 $smarty->assign('address', $address);
+$smarty->assign('address_id', $address_id);
 
 $smarty->display('index.tpl');
 

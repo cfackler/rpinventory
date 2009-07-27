@@ -20,11 +20,14 @@
 
 <form name="storeTransaction" action="updateBorrowerRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
+<div class="TopOfTable"><span class="TopOfTable">
 <h3>Edit Borrower</h3>
+</span></div>
 
 <table width="400">
 
-<input type="hidden" name="id" size="40" value="{$borrower->id}">
+<input type="hidden" name="id" size="40" value="{$borrower->borrower_id}"/>
+<input type="hidden" name="address_id" size="40" value="{$address_id}"/>
 
 <tr>
 	<td>Name: </td>
