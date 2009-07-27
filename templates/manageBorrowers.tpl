@@ -38,6 +38,7 @@
 	<td align="center">{$borrowers[borrowerLoop]->name}</td>
 	<td align="center">{$borrowers[borrowerLoop]->rin}</td>
 	<td align="center"><a href="mailto:{$borrowers[borrowerLoop]->email}">{$borrowers[borrowerLoop]->email}</a></td>
+	<td align="center"><a href="viewBorrowerAddress.php?id={$borrowers[borrowerLoop]->borrower_id}">Address</a></td>
 	
 	<td align="center"><a href="editBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete user \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')" value="Delete User"></td>
 </tr>

@@ -52,6 +52,37 @@ function getBorrowers()
   return $records;
 }
 
+/* Return the name of the borrower given an id */
+function getBorrowerName($id) {
+  require_once("lib/connect.lib.php");  //mysql
+	require_once("lib/auth.lib.php");  //Session
+
+	// Connect
+	$link = connect();
+	if( $link == null )
+		die( "Database connection failed" );
+
+	// Authenticate
+	$auth = GetAuthority();
+
+	$id = (int)$id;
+	if($id == 0)
+		die('ID cannot be zero');
+
+	// Borrowers
+	$query= "SELECT name FROM borrowers WHERE borrower_id = ". $id;
+
+	$result = mysqli_query($link, $query) or
+		die( 'Could not get the borrowers' );
+
+	$name = mysqli_fetch_object($result);
+
+	mysqli_close($link);
+
+	return $name->name;
+}
+
+
 function getUsernames( $name )
 {
   require_once( 'modules/json/JSON.php' );

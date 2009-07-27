@@ -35,6 +35,8 @@ function getAddressFromBorrower( $id ) {
 
 	// Sanitize
 	$id = (int)$id;
+	if($id == 0)
+		die('Invalid ID');
 
 	$sql = 'SELECT address_id FROM borrower_addresses WHERE user_id = ' . $id;
 
@@ -61,6 +63,8 @@ function getAddress( $id ) {
 
 	// Sanitize
 	$id = (int)$id;
+	if($id == 0)
+		die('Invalid ID');
 
 	$sql = 'SELECT * FROM addresses WHERE address_id = ' . $id;
 

@@ -63,6 +63,7 @@ $headers = array();
 $headers[0] = array('label' => 'Name', 'width' => 150);
 $headers[1] = array('label' => 'RIN', 'width' => 100);
 $headers[2] = array('label' => 'Email', 'width' => 150);
+$headers[3] = array('label' => 'Address', 'width' => 100);
 
 //Assign vars
 $smarty->assign('headers', $headers);

@@ -51,7 +51,6 @@ $this->assign('clubName', Config::get('club_name'));
 			<li class="SidebarSectionHeader">Home</li>
 			<li><a id="viewInventory" href="viewInventory.php">View Inventory</a></li>
 			{if $authority >= 1}
-		             <li><a id="viewBorrowers" href="viewBorrowers.php">View Borrowers</a></li>
 		    	     <li><a id="viewLoans" href="viewLoans.php">View Loans</a></li>
 			     <li><a id="viewCheckouts" href="viewCheckouts.php">View Checkouts</a></li>
 			     {if $authority == 2}
