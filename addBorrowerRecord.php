@@ -30,7 +30,7 @@ if($link == null)
 
 //Authenticate
 $auth = GetAuthority();
-if($auth != 2)
+if($auth < 1)
   die("You dont have permission to access this page");
 	
 

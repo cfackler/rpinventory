@@ -25,7 +25,7 @@ require_once("lib/auth.lib.php");  //Session
 
 //Authenticate
 $auth = GetAuthority();
-if($auth != 2)
+if($auth < 1)
   die("You dont have permission to access this page");
 
 // SMARTY Setup
