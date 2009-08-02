@@ -183,4 +183,77 @@ function getBorrower( $id ) {
 	return $borrower;
 }
 
+function insertBorrower( $name, $rin, $email, $address, $address2, $city, $state, $zip, $phone ) {
+	require_once( 'modules/json/JSON.php' );
+	require_once('lib/connect.lib.php');
+	require_once('lib/auth.lib.php');
+
+	// Database
+	$link = connect();
+	if( $link == null )
+		die( 'Database connection failed' );
+
+	// Authority
+	$auth = GetAuthority();
+
+	$data = Array( "response" => '' );
+	$json = new Services_JSON();
+
+	// Sanitize
+	$name			= mysqli_real_escape_string($link, $name);
+	$rin			= mysqli_real_escape_string($link, $rin);
+	$email		= mysqli_real_escape_string($link, $email);
+	$address	=	mysqli_real_escape_string($link, $address);
+	$address2	=	mysqli_real_escape_string($link, $address2);
+	$city			=	mysqli_real_escape_string($link, $city);
+	$state		=	mysqli_real_escape_string($link, $state);
+	$zip			=	mysqli_real_escape_string($link, $zip);
+	$phone		=	mysqli_real_escape_string($link, $phone);
+
+	// Duplicate check
+	$sql = 'SELECT rin, email FROM borrowers WHERE rin = "'. $rin .'" OR email = "'. $email .'" LIMIT 1';
+	$result = mysqli_query($link, $sql);
+
+	// Check to make sure a duplicate RIN or email is not given
+	if( mysqli_num_rows($result) != 0 ) {
+		$obj = mysqli_fetch_object($result);
+		
+		if( $obj->rin == $rin ) {
+			$data['response'] = 'Duplicate RIN entered!';
+		}
+		else {
+			$data['response'] = 'Duplicate email entered!';
+		}
+		
+		header('X-JSON: ('.$json->encode($data ).')');
+		exit();
+	}
+
+	// Insert the borrower
+	$sql = 'INSERT INTO borrowers (borrower_id, name, rin, email) VALUES (NULL, "'. $name .'", "'. $rin .'", "'. $email .'")';
+	$result = mysqli_query($link, $sql);
+	if( !$result ) {
+		die('Could not insert the borrower');
+	}
+
+	// Get the ID back
+	$borrower_id = mysqli_insert_id($link);
+
+	$sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES (NULL, "'. $address .'", "'. $address2 .'", "'. $city .'", "'. $state .'", "'. $zip .'", "'. $phone .'")';
+	$result = mysqli_query($link, $sql);
+	if( !$result ){
+		die('Could not insert the address');
+	}
+
+	$address_id = mysqli_insert_id($link);
+
+	$sql = 'INSERT INTO borrower_addresses (user_id, address_id) VALUES ('. $borrower_id .', '. $address_id .')';
+	if( !mysqli_query($link, $sql) ){
+		print_r($sql);
+		die('Could not insert the address link');
+	}
+
+	header('X-JSON: ('.$json->encode($data).')');
+}
+
 ?>

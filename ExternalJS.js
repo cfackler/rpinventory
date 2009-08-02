@@ -740,9 +740,11 @@ function showNewBorrower() {
 }
 		
 
-function saveBorrower(borrower_result, borrower_text, new_borrower, borrower_checkbox, name, rin, email, address, address2, city, state, zip, phone) {
+function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrower_info, name, rin, email, address, address2, city, state, zip, phone) {
 	var resultElement = document.getElementById(borrower_result);
-	var business_dropdown = document.getElementById(borrower_text);
+	var borrower_text = document.getElementById(borrower_text);
+	var borrower_checkbox = document.getElementById(borrower_checkbox);
+	var borrower_info = document.getElementById(borrower_info);
 	var borrower_name = document.getElementById( name ).value.toString();
 	var rin_name = document.getElementById( rin ).value.toString();
 	var address_name = document.getElementById( address ).value.toString();
@@ -762,42 +764,58 @@ function saveBorrower(borrower_result, borrower_text, new_borrower, borrower_che
 		zip_num.length == 0 ||
 		phone_num.length == 0 ) 
 	{
-		resultElement.innerHTML = " | Please enter the required information";
+		resultElement.innerHTML = " - Please enter the required information";
 		resultElement.style.display = "";
 		return;
 	}
 
 
-    new Ajax.Request("ajax.php?operation=saveBusiness&borrower_name="+borrower_name+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&email="+email_name+"&rin="+rin_name,
+    new Ajax.Request("ajax.php?operation=saveBorrower&borrower_name="+borrower_name+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&email="+email_name+"&rin="+rin_name,
 		     { 
 			 method: 'post', 
-			     onSuccess: function(transport)
-			     {
-				 // Set status text
-				 resultElement.innerHTML = 'Successfully saved.';
-				 
-				 // Hide the new location fields
-				 document.getElementById( new_business ).style.display = 'none';
-				 
-				 // Select the new location in the dropdown
-				 highlightEntry( business_dropdown, company.value, 'businesses' );
-				 
-				 //clears fields
-				 company.value = '';
-				 address_name.value = '';
-				 address2_name.value = '';
-				 city_name.value = '';
-				 state_name.value = '';
-				 zip_num.value = '';
-				 phone_num.value = '';
-				 fax_num.value = '';
-				 email_name.value = '';
-				 website_name.value = '';
+			   onSuccess: function(transport, json)
+			   {
+							if( json.response != '' ) {	 
+								if( json.response == 'Duplicate RIN entered!' ) {
+									$(rin).focus();
+									$(rin).select();
+								}
+								else if( json.response == 'Duplicate email entered!' ) {
+									$(email).focus();
+									$(email).select();
+								}
 
-			     },
-			     onFailure: function()
+								resultElement.innerHTML = " - "+ json.response;
+								resultElement.style.display = '';
+								return;
+							}
+
+						 	// Set status text
+						 	resultElement.innerHTML = ' - Successfully saved.';
+							resultElement.style.display = '';
+							borrower_checkbox.checked = '';
+				 
+							// Hide the new location fields
+							borrower_info.style.display = 'none';
+				 
+				 			// Set the new name
+							borrower_text.value = borrower_name;
+
+							//clears fields
+							document.getElementById(name).value = '';
+							document.getElementById(rin).value = '';
+							document.getElementById(email).value = '';
+							document.getElementById(address).value = '';
+							document.getElementById(address2).value = '';
+							document.getElementById(city).value = '';
+							document.getElementById(state).value = '';
+							document.getElementById(zip).value = '';
+							document.getElementById(phone).value = '';
+
+		     },
+		     onFailure: function()
 			     {	// Alert on failure
-				 resultElement.innerHTML = ' | Error saving location!';
+						 resultElement.innerHTML = ' | Error saving borrower!';
 			     }
 		     });	     	  
 }
