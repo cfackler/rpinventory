@@ -23,12 +23,16 @@
 
 function getToolTips($page) {
 	$html = array();
-	$html['helpDiv'] = '<div id="helpToolTip"></div>';	// Where the message is displayed
+	$html['helpDiv'] = '<div id="helpToolTip" style="border: thin solid black;"></div>';	// Where the message is displayed
 
 	switch($page) {
 		case "addPurchase":
 			$html['ignoreBusiness'] = generate( 'ignoreBusinessHelp', 'Check this option if you do not want to enter any business information' );
+			break;
 
+		case 'loanItem':
+			$html['loanTo'] = generate( 'loanToHelp', 'Begin to type the name of the user to loan to, and, if the user already exists, an autocompletion menu will appear');
+			$html['newBorrower'] = generate( 'newBorrowerHelp', 'Check this box, and then enter the required information to create the user');
 			break;
 	}
 

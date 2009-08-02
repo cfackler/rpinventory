@@ -24,6 +24,7 @@
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/locations.lib.php');
+require_once('lib/tooltip.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
@@ -95,6 +96,9 @@ while($user = mysqli_fetch_object($userResult)) {
 //Locations
 $locations = getLoanLocationsOptions();
 
+//Tooltips
+$tooltips_html = getToolTips('loanItem');
+
 //BEGIN Page
 	
 //Assign vars
@@ -108,6 +112,7 @@ $smarty->assign('users', $users);
 $smarty->assign('loanedOut', $loanedOut);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('locations', $locations);
+$smarty->assign('toolTipHelp', $tooltips_html);
 
 $smarty->display('index.tpl');
 

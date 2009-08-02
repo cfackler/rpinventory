@@ -23,6 +23,7 @@
 <span class="TopOfTable">
 <h3>Loan Items</h3>
 </span></div>
+{$toolTipHelp.helpDiv}
 
 {if $loanedOut == true }
 <h4>The following item(s) have already been loaned out:</h4>
@@ -68,6 +69,7 @@
 	<td>Loan to: </td>
 	<td>
 		<input id="username" name="username" class="validate" type="text" onblur="leaveUsername()" onkeyup="checkUsername()" autocomplete="off"/>
+		{$toolTipHelp.loanTo}
 	</td>
 	<td>
 		<span id="borrowerResult" style="display:none"></span>
@@ -86,6 +88,7 @@
 	<td colspan="2">
 		<input type="checkbox" id="newBorrower" name="newBorrower" onclick="showNewBorrower()" />
 		<span>Create a new borrower</span>
+		{$toolTipHelp.newBorrower}
 		<span id="newBorrowerResult" style="display:none"></span>
 	</td>
 </tr>
