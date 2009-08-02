@@ -86,6 +86,17 @@ function sendAddressRequest() {
 			     });
 }
 
+function sendAddressBorrowerRequest() {
+	var name = $('username');
+
+	new Ajax.Request('getBorrowerAddress.php?username=' + name.value,
+		{
+			method: 'post',
+			parameters: $('AjaxForm').serialize(true),
+			onSuccess: recieveAddress
+			});
+}
+
 
 function recieveAddress(oReq, oJSN){
     if(oJSN.Found == "False"){
@@ -642,18 +653,18 @@ function hideBusiness() {
 
 // Ajax call to get the usernames
 function checkUsername() {
-    input = document.getElementById( 'username' );
-    if( input.value != "") {
-	document.getElementById( 'tempUsername' ).value = input.value; // Updat the stored username
-	new Ajax.Request( 'ajax.php?operation=username&name=' + input.value, 
-			  { 
-			      method: 'post',
-				  onSuccess: showUsernames
-				  });
-    }
-    else{			// If there's no text, make sure the drop-down is hidden
-	document.getElementById( 'userAutoComplete' ).style.display = "none";
-    }
+	input = document.getElementById( 'username' );
+	if( input.value != "") {
+		document.getElementById( 'tempUsername' ).value = input.value; // Update the stored username
+		new Ajax.Request( 'ajax.php?operation=borrowerNames&name=' + input.value, 
+				{ 
+					method: 'post',
+					onSuccess: showUsernames
+				});
+  }
+  else{			// If there's no text, make sure the drop-down is hidden
+		document.getElementById( 'userAutoComplete' ).style.display = "none";
+  }
 }
 
 // Populate the drop-down
@@ -685,7 +696,7 @@ function setUsername( name ){
 function leaveUsername( ){
     document.getElementById( 'userAutoComplete' ).style.display = "none";
     fillText();
-    sendAddressRequest();
+		sendAddressBorrowerRequest();
 }
 
 function updateSidebar() {

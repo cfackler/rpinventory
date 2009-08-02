@@ -83,7 +83,7 @@ function getBorrowerName($id) {
 }
 
 
-function getUsernames( $name )
+function getBorrowerNames( $name )
 {
   require_once( 'modules/json/JSON.php' );
   require_once( 'lib/connect.lib.php' );
@@ -99,16 +99,16 @@ function getUsernames( $name )
   if($auth < 1)
 	  die("You dont have permission to access this page");
 
-  $sql = 'SELECT username FROM logins';
+  $sql = 'SELECT name FROM borrowers';
 
   $result = mysqli_query( $link, $sql ) or
-    die( 'Could not get the usernames' );
+    die( 'Could not get the names' );
 
   $records = array();
  
   while ( $record = mysqli_fetch_object( $result ) ){
-    if ( preg_match( '!^'.$name.'!', $record->username ) ) {
-      $records[] = $record->username;
+    if ( preg_match( '!^'.$name.'!', $record->name ) ) {
+      $records[] = $record->name;
     }
   }
 

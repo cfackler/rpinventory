@@ -24,6 +24,7 @@
 require_once( 'lib/locations.lib.php' );
 require_once( 'lib/users.lib.php' );
 require_once( 'lib/businesses.lib.php' );
+require_once( 'lib/borrowers.lib.php' );
 
 switch ($_GET["operation"])
   {
@@ -53,7 +54,11 @@ switch ($_GET["operation"])
   case "username":
     print getUsernames( $_GET['name'] );
     break;
-  }
+
+	case "borrowerNames":
+		print getBorrowerNames( $_GET['name'] );
+		break;
+	}
 
 
 ?>
