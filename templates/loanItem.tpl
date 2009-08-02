@@ -69,12 +69,85 @@
 	<td>
 		<input id="username" name="username" class="validate" type="text" onblur="leaveUsername()" onkeyup="checkUsername()" autocomplete="off"/>
 	</td>
+	<td>
+		<span id="borrowerResult" style="display:none"></span>
+	</td>
 </tr>
 
 <tr>	
 	<td/>
 	<td>
 		<div id="userAutoComplete" style="display:none"></div>
+	</td>
+</tr>
+
+<tr>
+	<td/>
+	<td colspan="2">
+		<input type="checkbox" id="newBorrower" name="newBorrower" onclick="showNewBorrower()" />
+		<span>Create a new borrower</span>
+		<span id="newBorrowerResult" style="display:none"></span>
+	</td>
+</tr>
+
+<tr id="addNewBorrower" style="display:none;">
+	<td colspan="2">
+		<table style="padding-left:1cm;">
+			<tr>
+				<td>Name: </td>
+				<td><input type="text" name="name" size="30" id="name"/></td>
+			</tr>
+
+			<tr>
+				<td>RIN:</td>
+				<td><input type="text" name="RIN" size="30" id="RIN"/></td>
+			</tr>
+
+			<tr>
+				<td>Email: </td>
+				<td><input type="text" name="email" size="30" id="email"/></td>
+			</tr>
+
+			<tr>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td>Address:</td>
+				<td><input type="text" name="address" size="30" id="newaddress"/></td>
+			</tr>
+
+			<tr>
+				<td>Address2:</td>
+				<td><input type="text" name="address2" size="30" id="newaddress2"/></td>
+			</tr>
+
+			<tr>
+				<td>City:</td>
+				<td><input type="text" name="city" size="30" id="newcity"/></td>
+			</tr>
+
+			<tr>
+				<td>State:</td>
+				<td><input type="text" name="state" size="30" id="newstate"/></td>
+			</tr>
+
+			<tr>
+				<td>Zipcode:</td>
+				<td><input type="text" name="zip" size="30" id="newzip"/></td>
+			</tr>
+
+			<tr>
+				<td>Phone:</td>
+				<td><input type="text" name="phone" size="30" id="newphone"/></td>
+				<td><input type="button" value="Save Borrower" onclick="saveBorrower('newBorrowerResult', 'username', 'newBorrower', 'addNewBorrower', 'name', 'RIN', 'email', 'newaddress', 'newaddress2', 'newcity', 'newstate', 'newzip', 'newphone')"/></td>
+			</tr>
+
+		</table>
 	</td>
 </tr>
 

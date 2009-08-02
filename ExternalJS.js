@@ -595,7 +595,7 @@ function saveBusiness(business_result, business_select, new_business, company_na
 			     },
 			     onFailure: function()
 			     {	// Alert on failure
-				 resultElement.innerHTML = 'Error saving location!';
+				 resultElement.innerHTML = 'Error saving business!';
 			     }
 		     });	     	  
 }
@@ -726,3 +726,79 @@ function updateSidebar() {
 			document.getElementById( 'username' ).focus();
 		}
 }
+
+
+function showNewBorrower() {
+	if( document.getElementById( 'newBorrower' ).checked ) {
+		document.getElementById( 'username' ).disabled = true;
+		document.getElementById( 'addNewBorrower' ).style.display = "";
+	}
+	else {
+		document.getElementById( 'username' ).disabled = false;
+		document.getElementById( 'addNewBorrower' ).style.display = "none";
+	}
+}
+		
+
+function saveBorrower(borrower_result, borrower_text, new_borrower, borrower_checkbox, name, rin, email, address, address2, city, state, zip, phone) {
+	var resultElement = document.getElementById(borrower_result);
+	var business_dropdown = document.getElementById(borrower_text);
+	var borrower_name = document.getElementById( name ).value.toString();
+	var rin_name = document.getElementById( rin ).value.toString();
+	var address_name = document.getElementById( address ).value.toString();
+	var address2_name = document.getElementById( address2 ).value.toString();
+	var city_name = document.getElementById( city ).value.toString();
+	var state_name = document.getElementById( state ).value.toString();
+	var zip_num = document.getElementById( zip ).value.toString();
+	var phone_num = document.getElementById( phone ).value.toString();
+	var email_name = document.getElementById( email ).value.toString();
+
+	if( borrower_name.length == 0 ||
+		rin_name.length == 0 ||
+		email_name.length == 0 ||
+		address_name.length == 0 ||
+		city_name.length == 0 ||
+		state_name.length == 0 ||
+		zip_num.length == 0 ||
+		phone_num.length == 0 ) 
+	{
+		resultElement.innerHTML = " | Please enter the required information";
+		resultElement.style.display = "";
+		return;
+	}
+
+
+    new Ajax.Request("ajax.php?operation=saveBusiness&borrower_name="+borrower_name+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&email="+email_name+"&rin="+rin_name,
+		     { 
+			 method: 'post', 
+			     onSuccess: function(transport)
+			     {
+				 // Set status text
+				 resultElement.innerHTML = 'Successfully saved.';
+				 
+				 // Hide the new location fields
+				 document.getElementById( new_business ).style.display = 'none';
+				 
+				 // Select the new location in the dropdown
+				 highlightEntry( business_dropdown, company.value, 'businesses' );
+				 
+				 //clears fields
+				 company.value = '';
+				 address_name.value = '';
+				 address2_name.value = '';
+				 city_name.value = '';
+				 state_name.value = '';
+				 zip_num.value = '';
+				 phone_num.value = '';
+				 fax_num.value = '';
+				 email_name.value = '';
+				 website_name.value = '';
+
+			     },
+			     onFailure: function()
+			     {	// Alert on failure
+				 resultElement.innerHTML = ' | Error saving location!';
+			     }
+		     });	     	  
+}
+
