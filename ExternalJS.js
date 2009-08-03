@@ -769,9 +769,51 @@ function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrowe
 		return;
 	}
 
+	// Regexp's
+	if( !$(rin).value.match( /^\d{9}$/ ) ){
+		alert("Please enter a RIN in the form 'xxxyyzzzz'");
+		$(rin).focus();
+		$(rin).select();
+		return;
+	}
 
-    new Ajax.Request("ajax.php?operation=saveBorrower&borrower_name="+borrower_name+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&email="+email_name+"&rin="+rin_name,
-		     { 
+	if( !$(email).value.match( /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i ) ){
+		alert("Please enter a valid email address");
+		$(email).focus();
+		$(email).select();
+		return;
+	}
+	
+	if( !validateState($(state).value) ) {
+		alert("Please enter a state as a two-letter abbreviation");
+		$(state).focus();
+		$(state).select();
+		return;
+	}
+	else{		// Stores the state as capital letters
+		$(state).value = $(state).value.toUpperCase();
+	}
+
+	if( !$(zip).value.match( /^\d{5}$/ ) ){
+		alert( "Please enter a zip code in the form 'xxxxx'" );
+		$(zip).focus();
+		$(zip).select();
+		return;
+	}
+
+	if( !$(phone).value.match( /^\d{3}(\.|-)?\d{3}(\.|-)?\d{4}$/ ) ){
+		alert( "Please enter a phone number in the form 'xxx-xxx-xxxx', 'xxx.xxx.xxxx', or 'xxxyyyzzzz'" );
+		$(phone).focus();
+		$(phone).select();
+		return;
+	}
+	else{		// Removes extra formatting for uniform phone number storage
+		$(phone).value = $(phone).value.replace( /[-\.]/g, '' );
+	}
+
+
+	new Ajax.Request("ajax.php?operation=saveBorrower&borrower_name="+borrower_name+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&email="+email_name+"&rin="+rin_name,
+			{ 
 			 method: 'post', 
 			   onSuccess: function(transport, json)
 			   {
