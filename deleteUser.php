@@ -42,22 +42,6 @@ $sql = "DELETE FROM logins WHERE id = '" . $id . "'";
 if(!mysqli_query($link, $sql))
   die("Query failed");
 	
-//Remove Address
-$sql = "SELECT address_id FROM borrower_addresses WHERE user_id = '" . $id . "'";
-$result = mysqli_query($link, $sql);
-	
-if(mysqli_num_rows($result) != 0)
-  {
-    $item = mysqli_fetch_object($result);
-    $addyId = $item->address_id;
-	
-    if(!mysqli_query($link, "DELETE FROM borrower_addresses WHERE user_id = " . $id))
-      die("Query failed");
-		
-    if(!mysqli_query($link, "DELETE FROM addresses WHERE address_id = " . $addyId))
-      die("Query failed");
-  }
-
 mysqli_close($link);
 header('Location: manageUsers.php');
 	
