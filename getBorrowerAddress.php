@@ -43,7 +43,7 @@ if( strlen( $username ) == 0)
   die("Invalid Username");	
 	
 //Address
-$query= "SELECT *  FROM addresses, borrower_addresses, borrowers WHERE borrowers.borrower_id = borrower_addresses.user_id AND addresses.address_id = borrower_addresses.address_id and borrowers.name = '". $username."'";
+$query= "SELECT *  FROM addresses, borrowers WHERE addresses.address_id = borrower.address_id and borrowers.name = '". $username."'";
 $result = mysqli_query($link, $query) or die( "Error finding address".mysql_error() );
 
 if(mysqli_num_rows($result) != 0)
