@@ -38,7 +38,7 @@ function getAddressFromBorrower( $id ) {
 	if($id == 0)
 		die('Invalid ID');
 
-	$sql = 'SELECT address_id FROM borrower_addresses WHERE user_id = ' . $id;
+	$sql = 'SELECT address_id FROM borrowers WHERE borrower_id = ' . $id;
 
 	$result = mysqli_query($link, $sql) or
 		die( 'Query Failed' );
