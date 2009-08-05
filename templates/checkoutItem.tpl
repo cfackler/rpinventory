@@ -35,6 +35,8 @@
 
 
 {else}
+<input type="hidden" id="tempUsername" size="50" value=""/>
+
 <table width="500">
 
 <input type="hidden" name="inventory_ids" size="40" value="{$idString}">
