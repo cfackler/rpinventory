@@ -126,14 +126,12 @@ else
 			  die("Query failed insert address");
 		  $address_id = mysqli_insert_id($link);
 	  }
-	else
-	{
-		$query = "update addresses set address='" . $address . "', address2='" . $address2 . "', city='" . $city . "', state='" . $state . "', zipcode='" . $zipcode . "', phone='" . $phone . "' where address_id = " . $address_id;
+
+	$query = "update addresses set address='" . $address . "', address2='" . $address2 . "', city='" . $city . "', state='" . $state . "', zipcode='" . $zipcode . "', phone='" . $phone . "' where address_id = " . $address_id;
 
 
-		if(!mysqli_query($link, $query))
-			die("Query failed Update Address");
-	}	
+	if(!mysqli_query($link, $query))
+		die("Query failed Update Address");
 
   }
 

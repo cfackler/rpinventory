@@ -89,13 +89,15 @@ $useOld = $_POST["useOld"];
 $oldExists = false;
 //Check if old address exists
 
-$query= "SELECT *  FROM addresses, borrower_addresses WHERE addresses.address_id = borrower_addresses.address_id and borrower_addresses.user_id = " . $user_id . " LIMIT 1";
+$query= "SELECT *  FROM addresses, borrowers WHERE addresses.address_id = borrowers.address_id and borrowers.borrower_id = " . $user_id . " LIMIT 1";
 $result = mysqli_query($link, $query);
 $addyResult = null;
+$address_id;
 if(mysqli_num_rows($result) != 0)
   {
     $oldExists = true;
     $addyResult = mysqli_fetch_object($result);
+	$address_id = $addyResult->address_id;
   }
 
 if($useOld == "on")
@@ -130,24 +132,19 @@ else
     
     if(!$oldExists)
       {
-	$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zipcode . "', '" . $phone . "')";
-	
+		  $query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zipcode . "', '" . $phone . "')";
+
+		  if(!mysqli_query($link, $query))
+			  die("Query failed");
+		  $address_id = mysqli_insert_id($link);
+
+	  }
+
+	$query = "update addresses set address='" . $address . "', address2='" . $address2 . "', city='" . $city . "', state='" . $state . "', zipcode='" . $zipcode . "', phone='" . $phone . "' where address_id = " . $address_id;
+
+
 	if(!mysqli_query($link, $query))
-	  die("Query failed");
-	$address_id = mysqli_insert_id($link);
-	
-	$query = "insert into borrower_addresses (user_id, address_id) VALUES(" . $user_id . ", " . $address_id . ")";
-	if(!mysqli_query($link, $query))
-	  die("Query failed");
-      }
-    else
-      {
-	$query = "update addresses set address='" . $address . "', address2='" . $address2 . "', city='" . $city . "', state='" . $state . "', zipcode='" . $zipcode . "', phone='" . $phone . "' where address_id = " . $addyResult->address_id;
-	
-	
-	if(!mysqli_query($link, $query))
-	  die("Query failed");
-      }	
+		die("Query failed");
   }
 
 
