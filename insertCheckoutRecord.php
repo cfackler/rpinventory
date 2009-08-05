@@ -42,7 +42,7 @@ if($user_name == "")
 
 $user_id;
 
-$sql = 'SELECT id FROM logins WHERE username = "'.$user_name.'" LIMIT 1';
+$sql = 'SELECT borrower_id FROM borrowers WHERE name = "'.$user_name.'" LIMIT 1';
 
 $result = mysqli_query( $link, $sql ) or
   die( 'Invalid user id found'.mysqli_error($link) );
@@ -84,14 +84,18 @@ $useOld = $_POST["useOld"];
 $oldExists = false;
 //Check if old address exists
 
-$query= "SELECT *  FROM addresses, borrower_addresses WHERE addresses.address_id = borrower_addresses.address_id and borrower_addresses.user_id = " . $user_id . " LIMIT 1";
+$query= "SELECT *  FROM addresses, borrowers WHERE addresses.address_id = borrowers.address_id and borrowers.borrower = " . $user_id . " LIMIT 1";
 $result = mysqli_query($link, $query);
 $addyResult = null;
+$address_id;
 if(mysqli_num_rows($result) != 0)
 {
   $oldExists = true;
   $addyResult = mysqli_fetch_object($result);
+  $address_id = $addyResult->address_id;
 }
+
+
 
 if($useOld == "on")
   {
@@ -111,33 +115,26 @@ else
     $zipcode = $_POST["zipcode"];
     $phone = $_POST["phone"];
     
-    
-    
-    
     if(strlen($address) == 0 || strlen($city) == 0 || strlen($state) == 0 || strlen($zipcode) == 0 || strlen($phone) == 0)
       die("Null values not allowed");
     
     if(!$oldExists)
       {
-	$query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zipcode . "', '" . $phone . "')";
+		  $query = "insert into addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, '" . $address . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $zipcode . "', '" . $phone . "')";
 	
-	if(!mysqli_query($link, $query))
-	  die("Query failed insert address");
-	$address_id = mysqli_insert_id($link);
-	
-	$query = "insert into borrower_addresses (user_id, address_id) VALUES(" . $user_id . ", " . $address_id . ")";
-	if(!mysqli_query($link, $query))
-	  die("Query failed insert borrower");
-      }
-    else
-      {
-	$query = "update addresses set address='" . $address . "', address2='" . $address2 . "', city='" . $city . "', state='" . $state . "', zipcode='" . $zipcode . "', phone='" . $phone . "' where address_id = " . $addyResult->address_id;
-	
-	
-	if(!mysqli_query($link, $query))
-	  die("Query failed Update Address");
-      }	
-    
+		  if(!mysqli_query($link, $query))
+			  die("Query failed insert address");
+		  $address_id = mysqli_insert_id($link);
+	  }
+	else
+	{
+		$query = "update addresses set address='" . $address . "', address2='" . $address2 . "', city='" . $city . "', state='" . $state . "', zipcode='" . $zipcode . "', phone='" . $phone . "' where address_id = " . $address_id;
+
+
+		if(!mysqli_query($link, $query))
+			die("Query failed Update Address");
+	}	
+
   }
 
 $date = mysqli_real_escape_string( $link, $_POST['time_taken'] );
