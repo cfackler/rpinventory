@@ -67,7 +67,7 @@
 	<td>Checkout To: </td>
 	<td>
 	
-	<input id="username" name="username" class="validate" type="text" onkeyup="checkUsername()" autocomplete="off"/>
+	<input id="username" name="username" class="validate" type="text" onblur="leaveUsername()" onkeyup="checkUsername()" autocomplete="off"/>
 	
 	</td>
 </tr>
