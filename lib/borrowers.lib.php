@@ -229,29 +229,20 @@ function insertBorrower( $name, $rin, $email, $address, $address2, $city, $state
 		exit();
 	}
 
-	// Insert the borrower
-	$sql = 'INSERT INTO borrowers (borrower_id, name, rin, email) VALUES (NULL, "'. $name .'", "'. $rin .'", "'. $email .'")';
-	$result = mysqli_query($link, $sql);
-	if( !$result ) {
-		die('Could not insert the borrower');
-	}
-
-	// Get the ID back
-	$borrower_id = mysqli_insert_id($link);
-
 	$sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES (NULL, "'. $address .'", "'. $address2 .'", "'. $city .'", "'. $state .'", "'. $zip .'", "'. $phone .'")';
 	$result = mysqli_query($link, $sql);
 	if( !$result ){
 		die('Could not insert the address');
 	}
 
-	$address_id = mysqli_insert_id($link);
+	$address_id = mysql_insert_id($link);	// Insert the borrower
 
-	$sql = 'INSERT INTO borrower_addresses (user_id, address_id) VALUES ('. $borrower_id .', '. $address_id .')';
-	if( !mysqli_query($link, $sql) ){
-		print_r($sql);
-		die('Could not insert the address link');
+	$sql = 'INSERT INTO borrowers (borrower_id, address_id, name, rin, email) VALUES (NULL, '. $address_id .', "'. $name .'", "'. $rin .'", "'. $email .'")';
+	$result = mysqli_query($link, $sql);
+	if( !$result ) {
+		die('Could not insert the borrower');
 	}
+
 
 	header('X-JSON: ('.$json->encode($data).')');
 }
