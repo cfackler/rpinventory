@@ -43,7 +43,7 @@ if( strlen( $username ) == 0)
   die("Invalid Username");	
 	
 //Address
-$query= "SELECT *  FROM addresses, borrower_addresses, logins WHERE logins.id = borrower_addresses.user_id AND addresses.address_id = borrower_addresses.address_id and logins.username = '". $username."'";
+$query= "SELECT *  FROM addresses, borrowers WHERE AND addresses.address_id = borrowers.address_id and borrowers.name = '". $username."'";
 $result = mysqli_query($link, $query) or die( "Error finding address".mysql_error() );
 
 if(mysqli_num_rows($result) != 0)
@@ -73,9 +73,5 @@ if(mysqli_num_rows($result) != 0)
 $json = new Services_JSON(); 
 
 header('X-JSON: ('.$json->encode($data).')');
-
-//echo $json->encode($data);
-
-//print_r($data);
 
 ?>
