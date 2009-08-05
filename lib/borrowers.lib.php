@@ -235,7 +235,7 @@ function insertBorrower( $name, $rin, $email, $address, $address2, $city, $state
 		die('Could not insert the address');
 	}
 
-	$address_id = mysql_insert_id($link);	// Insert the borrower
+	$address_id = mysqli_insert_id($link);	// Insert the borrower
 
 	$sql = 'INSERT INTO borrowers (borrower_id, address_id, name, rin, email) VALUES (NULL, '. $address_id .', "'. $name .'", "'. $rin .'", "'. $email .'")';
 	$result = mysqli_query($link, $sql);
