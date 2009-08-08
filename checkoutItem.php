@@ -23,6 +23,7 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/tooltip.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
@@ -83,14 +84,8 @@ foreach ($idList as $id) {
   }
 }
 
-//User list
-$userQuery= "SELECT id, username FROM logins";
-$userResult = mysqli_query($link, $userQuery);
-$users = array();
-
-while($user = mysqli_fetch_object($userResult)) {
-  $users [] = $user;
-}
+// Tooltips
+$tooltips_html = getToolTips('checkoutItem');
 
 //BEGIN Page
 	
@@ -101,10 +96,10 @@ $smarty->assign('page_tpl', 'checkoutItem');
 $smarty->assign('itemDesc', $itemDesc);
 $smarty->assign('itemsOut', $itemsOut);
 $smarty->assign('idString', $idString);
-$smarty->assign('users', $users);
 $smarty->assign('loanedOut', $loanedOut);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('dateTime', date('Y-m-d H:i:s') );
+$smarty->assign('toolTipHelp', $tooltips_html);
 
 $smarty->display('index.tpl');
 
