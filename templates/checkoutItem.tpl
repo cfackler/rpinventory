@@ -20,7 +20,12 @@
 
 <form id="AjaxForm" name="checkoutItem" action="insertCheckoutRecord.php" onsubmit="return ValidateForm()" METHOD="post">
 
-<h3>Checkout Items</h3>
+<div class="TopOfTable">
+    <span class="TopOfTable">
+        <h3>Checkout Items</h3>
+    </span>
+</div>
+{$toolTipHelp.helpDiv}
 
 {if $loanedOut == true }
 <h4>The following item(s) have already been taken:</h4>
@@ -66,9 +71,8 @@
 <tr>
 	<td>Checkout To: </td>
 	<td>
-	
-	<input id="username" name="username" class="validate" type="text" onblur="leaveUsername()" onkeyup="checkUsername()" autocomplete="off"/>
-	
+	    <input id="username" name="username" class="validate" type="text" onblur="leaveUsername()" onkeyup="checkUsername()" autocomplete="off"/>
+        {$toolTipHelp.checkoutTo}
 	</td>
     <td>
 		<span id="borrowerResult" style="display:none"></span>
