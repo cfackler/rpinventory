@@ -84,15 +84,6 @@ foreach ($idList as $id) {
   }
 }
 
-//User list
-$userQuery= "SELECT id, username FROM logins";
-$userResult = mysqli_query($link, $userQuery);
-$users = array();
-
-while($user = mysqli_fetch_object($userResult)) {
-  $users [] = $user;
-}
-
 //Locations
 $locations = getLoanLocationsOptions();
 
@@ -108,7 +99,6 @@ $smarty->assign('page_tpl', 'loanItem');
 $smarty->assign('itemDesc', $itemDesc);
 $smarty->assign('itemsOut', $itemsOut);
 $smarty->assign('idString', $idString);
-$smarty->assign('users', $users);
 $smarty->assign('loanedOut', $loanedOut);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('locations', $locations);
