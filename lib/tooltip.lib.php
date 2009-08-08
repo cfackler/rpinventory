@@ -34,6 +34,12 @@ function getToolTips($page) {
 			$html['loanTo'] = generate( 'loanToHelp', 'Begin to type the name of the user to loan to, and, if the user already exists, an autocompletion menu will appear');
 			$html['newBorrower'] = generate( 'newBorrowerHelp', 'Check this box, and then enter the required information to create the user');
 			break;
+    
+        case 'checkoutItem':
+			$html['checkoutTo'] = generate( 'checkoutToHelp', 'Begin to type the name of the user to checkout to, and, if the user already exists, an autocompletion menu will appear');
+			$html['newBorrower'] = generate( 'newBorrowerHelp', 'Check this box, and then enter the required information to create the user');
+			break;
+
 	}
 
 	return $html;
