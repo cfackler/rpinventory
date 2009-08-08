@@ -79,7 +79,7 @@ if (!file_exists('config/config.ini.php') || $retry) {
   mysqli_query($link, "CREATE DATABASE IF NOT EXISTS `" . $database . "`") || die("Could not create database");
 
   /* add user */
-  mysqli_query($link, 'GRANT SELECT,INSERT,UPDATE,DELETE ON ' . $database . ".* TO '" . $username . "'@'" . $hostname . "' IDENTIFIED BY '" . $password . "'") || die("Could not add database user");
+  mysqli_query($link, 'GRANT SELECT,INSERT,UPDATE,DELETE,LOCK TABLES ON ' . $database . ".* TO '" . $username . "'@'" . $hostname . "' IDENTIFIED BY '" . $password . "'") || die("Could not add database user");
 
   mysqli_select_db($link, $database) || die("Could not select database");
 
