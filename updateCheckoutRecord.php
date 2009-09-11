@@ -42,10 +42,8 @@ if( $checkout_id  == 0 ){
 
 //Inventory ID
 $inv_id = (int)$_POST["inv_id"];
-print_r($_POST);
 
 $orig_loc_id = (int)$_POST["orig_loc_id"];
-print_r($orig_loc_id);
 if( $orig_loc_id < 1 ) {
 	die( 'Invalid Location Id' );
 }

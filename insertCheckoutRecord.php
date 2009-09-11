@@ -68,7 +68,7 @@ $items = array();
 //Verify all ids are valid
 foreach ($idList as $id)
   {
-    $result = mysqli_query($link, "select current_condition, inventory_id from inventory where inventory_id = " . $id);
+    $result = mysqli_query($link, "select current_condition, inventory_id, location_id from inventory where inventory_id = " . $id);
     if(mysqli_num_rows($result) == 0)
       die("Invalid item ID:");
     
