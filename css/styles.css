@@ -222,6 +222,59 @@ span.TopOfTable h3{
 }
 
 
+/* Items table styling */
+.loanTable {
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid #cc3333;
+}
+
+
+.loanTable td {
+    font-size: 11px;
+    border-right: 1px solid #cc3333;
+    border-bottom: 1px solid #cc3333;
+    background: #cccccc;
+    padding: 6px 6px 6px 12px;
+    color: #000000;
+}
+
+
+.loanTable td a {
+    color: #d50000;
+    text-decoration:underline;
+}
+
+
+.loanTable td a:hover {
+    color: #ff0000;
+}
+
+.loanTable th {
+    font-weight: bold;
+    font-size: 11px;
+    color: #ffffff;
+    border-right: 1px solid #cc3333;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 6px 6px 6px 12px;
+    background-color:#d50000;
+}
+
+/**
+ * Table header link
+ **/
+.loanTable th a {
+  text-decoration: none;
+  display: block;
+  color: #ffffff;
+}
+
+.loanAlt td {
+    background: #dfdfdf;
+}
+
 .nobullets {
     list-style-type: none;
     padding: 0px;

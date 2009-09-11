@@ -19,13 +19,12 @@
 *}
 
 {if $viewLoanId > 0}
-	<span class="TopOfTable">
-		<h3>Loan</h3>
-	</span>
-
-	<br />
-
-	<table>
+	<table class="loanTable" cellspacing="0">
+        <tr>
+            <th colspan="2">
+                Loan
+            </th>
+        </tr>
 		<tr>
 			<td>
 				<label>Item:</label>
@@ -34,7 +33,7 @@
 				<label>{$loanObj->description}</label>
 			</td>
 		</tr>
-		<tr>
+		<tr class="loanAlt">
 			<td>
 				<label>Borrower:</label>
 			</td>
@@ -50,7 +49,7 @@
 				<label>{$loanObj->issue_date}</label>
 			</td>
 		</tr>
-		<tr>
+		<tr class="loanAlt">
 			<td>
 				<label>Original Location:</label>
 			</td>
