@@ -147,7 +147,7 @@ foreach ($items as $item)
     if(!mysqli_query($link, $sql))
       die("Query failed Checkouts ". mysql_error());
 
-    $sql = 'UPDATE inventory SET location_id = -1 WHERE inventory_id = ' . $item->inventory_id;
+    $sql = 'UPDATE inventory SET location_id = 2 WHERE inventory_id = ' . $item->inventory_id;
 
     if(!mysqli_query($link, $sql)){ 
         die('Update query failed');
