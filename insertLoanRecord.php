@@ -150,19 +150,19 @@ $date = date("Y-m-d", $timestamp);
 
 foreach ($items as $item)
   {
-    $sql = "INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition, original_location_id) VALUES
-	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "', " . $item->location_id . " )";	
-        
-    if(!mysqli_query($link, $sql))
-      die("Query failed");
+      $sql = "INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition, original_location_id) VALUES
+          (NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '" . $item->current_condition . "', " . $item->location_id . " )";	
 
-		// Update the current location of the item
-		$sql = "UPDATE inventory SET location_id = " . $onLoanLocationId . " WHERE inventory_id = " . $item->inventory_id;
+      if(!mysqli_query($link, $sql))
+          die("Query failed");
 
-		if( !mysqli_query( $link, $sql ) ) {
-			die( 'Update query failed' );
-		}    
-}
+      // Update the current location of the item
+      $sql = "UPDATE inventory SET location_id = " . $onLoanLocationId . " WHERE inventory_id = " . $item->inventory_id;
+
+      if( !mysqli_query( $link, $sql ) ) {
+          die( 'Update query failed' );
+      }    
+  }
 
 mysqli_close($link);
 header('Location: viewInventory.php');

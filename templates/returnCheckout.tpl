@@ -18,7 +18,7 @@
 
 *}
 
-<form name="returnC1heckoutItem" action="updateCheckoutRecord.php" METHOD="post">
+<form name="returnCheckoutItem" action="updateCheckoutRecord.php" METHOD="post">
 <div class="TopOfTable">
 <span class="TopOfTable">
 <h3>Return Checkout Item</h3>
@@ -26,8 +26,9 @@
 
 <table width="400">
 
-<input type="hidden" name="checkout_id" size="40" value="{$item->checkout_id}">
-<input type="hidden" name="inv_id" size="40" value="{$item->inventory_id}">
+<input type="hidden" name="checkout_id" size="40" value="{$item->checkout_id}"/>
+<input type="hidden" name="inv_id" size="40" value="{$item->inventory_id}" />
+<input type="hidden" name="orig_loc_id" size="40"value="{$item->original_location_id}" />
 
 <tr>
 	<td>Description: </td>

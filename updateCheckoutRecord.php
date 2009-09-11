@@ -42,6 +42,13 @@ if( $checkout_id  == 0 ){
 
 //Inventory ID
 $inv_id = (int)$_POST["inv_id"];
+print_r($_POST);
+
+$orig_loc_id = (int)$_POST["orig_loc_id"];
+print_r($orig_loc_id);
+if( $orig_loc_id < 1 ) {
+	die( 'Invalid Location Id' );
+}
 
 $time_returned = mysqli_real_escape_string( $link, $_POST["time_returned"] );
 
@@ -57,7 +64,7 @@ if(!mysqli_query($link, $sql))
 	die("Query failed");
 
 //Create query for updating item condition
-$sql = "UPDATE inventory SET current_condition = '". $_POST["condition"] . "' WHERE inventory_id = " . $inv_id;
+$sql = "UPDATE inventory SET current_condition = '". $_POST["condition"] . "', location_id = ". $orig_loc_id . " WHERE inventory_id = " . $inv_id;
 
 if(!mysqli_query($link, $sql))
         die("Query failed");

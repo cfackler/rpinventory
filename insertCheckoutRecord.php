@@ -141,12 +141,17 @@ $event_location = mysqli_real_escape_string( $link, $_POST['event_location'] );
 
 foreach ($items as $item)
   {
-    $sql = "INSERT INTO checkouts (checkout_id, inventory_id, borrower_id, time_taken, time_returned, event_name, event_location, starting_condition, ending_condition) VALUES
-	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '". $event_location ."', '". $event_name ."', '" . $item->current_condition . "', NULL )";	
+    $sql = "INSERT INTO checkouts (checkout_id, inventory_id, borrower_id, time_taken, time_returned, event_name, event_location, starting_condition, ending_condition, original_location_id) VALUES
+	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '". $event_location ."', '". $event_name ."', '" . $item->current_condition . "', NULL, '". $item->location_id ."' )";	
     
     if(!mysqli_query($link, $sql))
       die("Query failed Checkouts ". mysql_error());
-    
+
+    $sql = 'UPDATE inventory SET location_id = -1 WHERE inventory_id = ' . $item->inventory_id;
+
+    if(!mysqli_query($link, $sql)){ 
+        die('Update query failed');
+    }    
   }
 
 mysqli_close($link);
