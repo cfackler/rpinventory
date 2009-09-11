@@ -103,4 +103,6 @@ CREATE TABLE checkouts (
        PRIMARY KEY (checkout_id)
 ) type = MyISAM;
 
-INSERT INTO locations VALUES ( NULL, "On Loan", "This item is on loan" );
+-- Adds the default locations for loans and checkouts
+INSERT INTO locations VALUES ( 1, "On Loan", "This item is on loan" );
+INSERT INTO locations VALUES ( 2, "Checked Out", "This item is checked out" );
