@@ -47,7 +47,7 @@ $sql = 'SELECT borrower_id FROM borrowers WHERE name = "'.$user_name.'" LIMIT 1'
 $result = mysqli_query( $link, $sql ) or
   die( 'Invalid user id found'.mysqli_error($link) );
 $result = mysqli_fetch_object( $result );
-$user_id = $result->id;
+$user_id = $result->borrower_id;
 
 if(!VerifyUserExists($user_id, $link))
   die("Invalid User");
@@ -84,7 +84,7 @@ $useOld = $_POST["useOld"];
 $oldExists = false;
 //Check if old address exists
 
-$query= "SELECT *  FROM addresses, borrowers WHERE addresses.address_id = borrowers.address_id and borrowers.borrower = " . $user_id . " LIMIT 1";
+$query= "SELECT *  FROM addresses, borrowers WHERE addresses.address_id = borrowers.address_id and borrowers.borrower_id = " . $user_id . " LIMIT 1";
 $result = mysqli_query($link, $query);
 $addyResult = null;
 $address_id;

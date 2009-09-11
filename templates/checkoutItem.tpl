@@ -82,7 +82,7 @@
 	<td />
 	<td>
 	
-		<div id="userAutoComplete" style="display:none"></div>
+		<div id="userAutoComplete" style="display:none; width: 173px"></div>
 	
 	</td>
 </tr>

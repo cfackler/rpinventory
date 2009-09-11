@@ -82,7 +82,7 @@ function VerifyUserExists($id, $link)
 {
 	
 	//Find user
-	$result=mysqli_query($link, "select * from `logins` where id=" . $id);
+	$result=mysqli_query($link, "select * from logins where id=" . $id);
 
 	//verify count
 	if(mysqli_num_rows($result) == 0)
