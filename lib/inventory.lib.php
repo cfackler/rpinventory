@@ -59,24 +59,36 @@ function getInventory($sortIndex = 0, $sortdir = 0)
   
   while($item = mysqli_fetch_object($result))
     {
-			if( $item->location == "On Loan" ) {
-				$sql = 'SELECT loan_id FROM loans WHERE inventory_id = ' . $item->inventory_id . ' AND return_date is NULL';
-				$loan_result = mysqli_query( $link, $sql ) or
-					die( "Error: ". mysql_error() );
+        if( $item->location == "On Loan" ) {
+            $sql = 'SELECT loan_id FROM loans WHERE inventory_id = ' . $item->inventory_id . ' AND return_date is NULL';
+            $loan_result = mysqli_query( $link, $sql ) or
+                die( "Error: ". mysql_error() );
 
-				$loan_item = mysqli_fetch_object( $loan_result );
+            $loan_item = mysqli_fetch_object( $loan_result );
 
-				$item->loan_id = $loan_item->loan_id;
-			}
-			else {
-				$item->loan_id = 0;
-			}
+            $item->loan_id = $loan_item->loan_id;
+            $item->checkout_id = 0;
+        }
+        else if($item->location == "Checked Out") {
+            $sql = 'SELECT checkout_id FROM checkouts WHERE inventory_id = ' . $item->inventory_id .' AND time_returned is NULL';
+            $checkout_result = mysqli_query($link, $sql) or
+                die('Error: '.mysql_error());
 
-      $items [] = $item;
+            $checkout_item = mysqli_fetch_object($checkout_result);
+
+            $item->checkout_id = $checkout_item->checkout_id;
+            $item->loan_id = 0;
+        }
+        else {
+            $item->loan_id = 0;
+            $item->checkout_id = 0;
+        }
+
+        $items [] = $item;
     }
-  
+
   mysqli_close($link);	
-  
+
   return $items;
 }
 

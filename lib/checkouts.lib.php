@@ -20,6 +20,28 @@
 
 */
 
+function getCheckout($checkoutId){
+  require_once("lib/connect.lib.php");  //mysql
+  require_once("lib/auth.lib.php");  //Session
+
+  // Connect
+  $link = connect();
+  if( $link == null )
+    die( "Database connection failed" );
+  
+  // Authenticate
+  $auth = GetAuthority();
+
+  $sql = 'SELECT inventory.description, borrowers.name, checkouts.time_taken, locations.location FROM checkouts, inventory, borrowers, locations WHERE checkouts.checkout_id = '. $checkoutId .' AND checkouts.inventory_id = inventory.inventory_id AND checkouts.borrower_id = borrowers.borrower_id AND checkouts.original_location_id = locations.location_id';
+
+  $result = mysqli_query($link, $sql) or
+    die( 'Error: '.mysqli_error($link));
+
+  $checkout = mysqli_fetch_object($result);
+
+  return $checkout;
+}
+
 function getCheckouts( $startDate, $endDate ){
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session

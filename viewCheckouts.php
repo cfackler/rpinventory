@@ -37,6 +37,11 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
+$viewCheckoutId = 0;
+if(isset($_GET['checkoutId'])){
+    $viewCheckoutId = (int)$_GET['checkoutId'];
+}
+
 // Decide sorting method
 if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
   $currentSortIndex = $_GET['sort'];
@@ -51,6 +56,9 @@ else
   
 paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'checkouts' );
 
+if($viewCheckoutId > 0) {
+    $checkoutObj = getCheckout($viewCheckoutId);
+}
 
 //BEGIN Page
 
@@ -69,6 +77,8 @@ $smarty->assign('currentSortIndex', $currentSortIndex);
 $smarty->assign('currentSortDir', $currentSortDir);
 $smarty->register_function('generateTableHeader', 'generateTableHeader');
 
+$smarty->assign('viewCheckoutId', $viewCheckoutId);
+$smarty->assign('checkoutObj', $checkoutObj);
 $smarty->assign('title', "View Checkouts");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewCheckouts');

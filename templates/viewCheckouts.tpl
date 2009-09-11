@@ -17,6 +17,53 @@
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 *}
+
+{if $viewCheckoutId > 0}
+	<table class="loanTable" cellspacing="0">
+        <tr>
+            <th colspan="2">
+                Checkout
+            </th>
+        </tr>
+		<tr>
+			<td>
+				<label>Item:</label>
+			</td>
+			<td>
+				<label>{$checkoutObj->description}</label>
+			</td>
+		</tr>
+		<tr class="loanAlt">
+			<td>
+				<label>Borrower:</label>
+			</td>
+			<td>
+				<label>{$checkoutObj->name}</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>Date Taken:</label>
+			</td>
+			<td>
+				<label>{$checkoutObj->time_taken}</label>
+			</td>
+		</tr>
+		<tr class="loanAlt">
+			<td>
+				<label>Original Location:</label>
+			</td>
+			<td>
+				<label>{$checkoutObj->location}</label>
+			</td>
+		</tr>
+	</table>
+
+	<br />
+
+	<a href="javascript:history.go(-1)">Go back</a>
+{else}
+
 <div class="TopOfTable">
 <span class="TopOfTable">
 {*<h3>Checkouts</h3>*}
@@ -77,4 +124,5 @@ Show:
     <br />
 
     <div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>
+{/if}
 {/if}
