@@ -43,6 +43,8 @@ if ($_POST['install'] && !file_exists('config/config.ini.php')) {
 } else if ($_POST['adminpass1'] != $_POST['adminpass2']) {
   $retry = true;
   $error = 'Passwords do not match.';
+} else if(!isset($_POST['adminEmail']) || $_POST['adminEmail'] == '') {
+  $error = 'Must enter an email address.';
 }
   
 if (!file_exists('config/config.ini.php') || $retry) {
@@ -63,8 +65,9 @@ if (!file_exists('config/config.ini.php') || $retry) {
   $superpass = $_POST['superpass'];
   $adminuser = $_POST['adminuser'];
   $adminpass = $_POST['adminpass1'];
+  $adminEmail = $_POST['adminEmail'];
 
-  if (!$superuser || !$superpass || !$adminuser || !$adminpass) {
+  if (!$superuser || !$superpass || !$adminuser || !$adminpass || !$adminEmail) {
     header('Location: install.php?error=missing');
     die();
   }
@@ -94,10 +97,10 @@ if (!file_exists('config/config.ini.php') || $retry) {
   } while(mysqli_next_result($link));
 
   /* create admin user for application */
-  $sql = 'INSERT INTO logins (id, username, password, access_level, rin, email, name) VALUES ';
-  $sql .= "(NULL, '" . $adminuser . "', '" . md5($adminpass) . "', 2, '0', 'admin', 'admin')";
+  $sql = 'INSERT INTO logins (id, username, password, email, access_level) VALUES ';
+  $sql .= '(NULL, "' . mysqli_real_escape_string($link, $adminuser) . '", "' . mysqli_real_escape_string($link, md5($adminpass)) . '", "'.mysqli_real_escape_string($link, $adminEmail).'", 2)';
 
-  mysqli_query($link, $sql) || die("Could not create admin account.");
+  mysqli_query($link, $sql) || die("Could not create admin account: ".mysqli_error($link));
   echo('<p>Admin account creation successful.</p>');
 
   /* close connection */

@@ -52,6 +52,8 @@ along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 	<hr />
 	<p>This installer will create a user for the RPInventory system, giving them administrative privileges. Please enter a username to create.<br />
 	  <input type="text" name="adminuser" id="adminuser" size="20" /></p>
+  <p>Please enter an email for this user.<br />
+    <input type="text" name="adminEmail" id="adminEmail" size="20" /></p>
 	<p>Please enter a password to create for the administrative user.<br />
 	  <input type="password" name="adminpass1" id="adminpass1" size="20" /></p>
 	<p>Retype password.<br />
