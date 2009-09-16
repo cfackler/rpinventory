@@ -162,13 +162,13 @@ function sendValidateRequest(itemID){
 				 });
     }
     else{
-	new Ajax.Request("validateFormItem.php?itemValue=" + itemValue + "&itemID=" + itemID,
-			 { 
-			     method: 'post', 
-				 parameters: $(itemID).serialize(true),
-				 onSuccess: validateAction
-				 });
-    }
+			(jQuery).ajax({
+				url: 'validateFormItem.php',
+				type: 'POST',
+				data: {itemValue: itemValue, itemID: itemID},
+				success: validateAction
+			});
+  }
 }
 
 
