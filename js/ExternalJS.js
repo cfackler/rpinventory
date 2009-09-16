@@ -583,7 +583,7 @@ function saveBusiness(business_result, business_select, new_business, company_na
 					 document.getElementById( new_business ).style.display = 'none';
 
 					 // Refresh the dropdown, and select the new business.
-					getSelectOptions(business_dropdown.id, 'businesses', company.value);
+					getSelectOptions(business_dropdown.id, 'businesses', company);
 
 					 //clears fields
 					 company.value = '';
@@ -660,20 +660,25 @@ function getLocationOptionsNonAsynch(element, type, selectText)
  **/
 function getSelectOptions(selectID, type, postSelectedOptionText)
 {
+	//this is a business pulldown
 	if(type == 'businesses'){
+		//get options
 		(jQuery).ajax({
 			url: 'ajax.php?operation=businesses',
 			type: 'POST',
+			asynchronous: true,
 			success: function(msg)
 			{
+				//load the options into the <select> object
 				(jQuery)('#'+selectID).html(msg);
 				
-				if(postSelectedOptionText != '')
+				//select a certain option
+				if(postSelectedOptionText)
 				{
 					makeSelection(selectID, postSelectedOptionText);
 				}
 			}
-		})
+		});
 	}
 }
 
@@ -907,12 +912,12 @@ function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrowe
  **/
 function makeSelection(id, text)
 {
-  var options = $('#'+id).attr('options');
+  var options = (jQuery)('#'+id).attr('options');
   for(i = 0; i<options.length; i++)
   {
     if(options[i].text == text)
     {
-      $('#'+id).attr('selectedIndex', i);
+      (jQuery)('#'+id).attr('selectedIndex', i);
       break;
     }
   }
@@ -926,12 +931,12 @@ function makeSelection(id, text)
  **/
 function makeSelectionValue(id, value)
 {
-  var options = $('#'+id).attr('options');
+  var options = (jQuery)('#'+id).attr('options');
   for(i = 0; i<options.length; i++)
   {
     if(options[i].value == value)
     {
-      $('#'+id).attr('selectedIndex', i);
+      (jQuery)('#'+id).attr('selectedIndex', i);
       break;
     }
   }

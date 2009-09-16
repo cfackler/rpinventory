@@ -41,7 +41,7 @@ function getBusinesses()
   $query= 'SELECT business_id, company_name, fax, email, website, address, address2, city, state, zipcode, phone FROM businesses, addresses WHERE businesses.address_id = addresses.address_id';
 
   $result = mysqli_query($link, $query) or
-    die( 'Could not get the busineses' );
+    die( 'Could not get the businesses' );
 
   $records = array();
   
@@ -61,14 +61,14 @@ function getBusinessesOptions() {
 
 	$businesses = getBusinesses();	
 
-	$output .= '<option value="-1">Select a Business</option>'.'\n';
+	$output .= '<option value="-1">Select a Business</option>';
 
 	foreach( $businesses as $business ) {
 		$output .= '<option value="'.$business->business_id.'">';
-		$output .= $business->company_name . '</option>\n';
+		$output .= $business->company_name . '</option>';
 	}
 
-	$output .= '<option value="newBusiness">Add a New Business</option>\n';
+	$output .= '<option value="newBusiness">Add a New Business</option>';
 
 	return $output;
 }
