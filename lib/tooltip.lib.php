@@ -27,7 +27,7 @@ function getToolTips($page) {
 
 	switch($page) {
 		case "addPurchase":
-			$html['ignoreBusiness'] = generate( 'ignoreBusinessHelp', 'Check this option if you do not want to enter any business information' );
+			$html['ignoreBusiness'] = generate( 'ignoreBusinessHelp', 'Check this option if you do not want to keep track of the purchase information for this item, and want to just enter an item into the inventory.' );
 			break;
 
 		case 'loanItem':
