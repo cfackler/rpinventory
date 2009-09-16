@@ -132,7 +132,7 @@ function getViewBusinesses( $currentSortIndex, $currentSortDir ){
 function insertBusiness( $company, $address, $address2, $city, $state, $zip, $phone, $fax, $email, $website ) {
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session
-  echo $fax;
+  //echo $fax;
   
   // Authenticate
   $auth = GetAuthority();	
@@ -182,9 +182,9 @@ function insertBusiness( $company, $address, $address2, $city, $state, $zip, $ph
   if( strlen( $website ) == 0 ) {
 	  $website = null;
   }
-  echo $fax;
+  //echo $fax;
 
-
+  //die($company);
   $company = mysqli_real_escape_string( $link, $company );
   $address = mysqli_real_escape_string( $link, $address );
   $address2 = mysqli_real_escape_string( $link, $address2 );
@@ -196,7 +196,7 @@ function insertBusiness( $company, $address, $address2, $city, $state, $zip, $ph
   $email = mysqli_real_escape_string( $link, $email );
   $website = mysqli_real_escape_string( $link, $website );
 
-  echo $fax;
+  //echo $fax;
   $sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES ( NULL, "'. $address .'", "'. $address2 .'", "'.  $city .'", "'. $state .'", "'. $zip .'", "'. $phone .'")';
 
   if( !mysqli_query( $link, $sql ) ){
@@ -207,13 +207,14 @@ function insertBusiness( $company, $address, $address2, $city, $state, $zip, $ph
 
 
   $sql = 'INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES ( NULL, '. $address_id .', "'. $company .'", "'. $fax .'", "'. $email .'", "'. $website .'")';
-  echo $sql;
+  //echo $sql;
 
   if( !mysqli_query( $link, $sql ) ) {
 	  die( 'Business insert query failed' );
   }
 
   mysqli_close( $link );
+	return 'success';
 }
 
 ?>

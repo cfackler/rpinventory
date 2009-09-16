@@ -560,44 +560,49 @@ function saveBusiness(business_result, business_select, new_business, company_na
 		zip_num.length == 0 ||
 		phone_num.length == 0 ) 
 	{
-		document.getElementById( business_result ).innerHTML = "Please enter the required information";
-		document.getElementById( business_result ).style.display = "";
+		(jQuery)('#business_result').html('Please enter the required information');
+		//document.getElementById( business_result ).innerHTML = "Please enter the required information";
+
+		(jQuery)('#business_result').css('display', '');
+		//document.getElementById( business_result ).style.display = "";
 		return;
 	}
 
 
-    new Ajax.Request("ajax.php?operation=saveBusiness&company_name="+company+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&fax_number="+fax_num+"&email="+email_name+"&website="+website_name,
-		     { 
-			 method: 'post', 
-			     onSuccess: function(transport)
+    (jQuery).ajax({
+		type: 'POST',
+		url: 'ajax.php?operation=saveBusiness',
+		data: {company_name: company, address: address_name, address2: address2_name, city: city_name, state: state_name, zipcode: zip_num, phone: phone_num, fax_number: fax_num, email: email_name, website: website_name},
+		success: function(transport)
 			     {
 				 // Set status text
-				 resultElement.innerHTML = 'Successfully saved.';
-				 
-				 // Hide the new location fields
-				 document.getElementById( new_business ).style.display = 'none';
-				 
-				 // Select the new location in the dropdown
-				 highlightEntry( business_dropdown, company.value, 'businesses' );
-				 
-				 //clears fields
-				 company.value = '';
-				 address_name.value = '';
-				 address2_name.value = '';
-				 city_name.value = '';
-				 state_name.value = '';
-				 zip_num.value = '';
-				 phone_num.value = '';
-				 fax_num.value = '';
-				 email_name.value = '';
-				 website_name.value = '';
+				if(transport == 'success')
+				{
+					resultElement.innerHTML = 'Successfully saved.';
+					// Hide the new location fields
+					 document.getElementById( new_business ).style.display = 'none';
 
-			     },
-			     onFailure: function()
-			     {	// Alert on failure
-				 resultElement.innerHTML = 'Error saving business!';
-			     }
-		     });	     	  
+					 // Select the new location in the dropdown
+					 highlightEntry( business_dropdown, company.value, 'businesses' );
+
+					 //clears fields
+					 company.value = '';
+					 address_name.value = '';
+					 address2_name.value = '';
+					 city_name.value = '';
+					 state_name.value = '';
+					 zip_num.value = '';
+					 phone_num.value = '';
+					 fax_num.value = '';
+					 email_name.value = '';
+					 website_name.value = '';
+				}
+				else
+				{
+					resultElement.innerHTML = transport;
+				}
+			}
+		 });	     	  
 }
 
 function highlightEntry( selectElement, nameText, type ){

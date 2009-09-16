@@ -31,6 +31,8 @@ $this->assign('clubName', Config::get('club_name'));
 <script src="ExternalJS.js" language="javascript" type="text/javascript"></script>
 <script src="prototype.js" language="javascript" type="text/javascript"></script>
 <script src="helpToolTip.js" language="javascript" type="text/javascript"></script>
+<script src="jquery.js" language="javascript" type="text/javascript"></script>
+<script>jQuery.noConflict();</script>
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
