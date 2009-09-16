@@ -23,13 +23,13 @@
 
 function getBusinesses()
 {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+  require_once('lib/connect.lib.php');  //mysql
+  require_once('lib/auth.lib.php');  //Session
 
   // Connect
   $link = connect();
   if( $link == null )
-    die( "Database connection failed" );
+    die( 'Database connection failed' );
   
   // Authenticate
   $auth = GetAuthority();
@@ -38,7 +38,7 @@ function getBusinesses()
   $endDate = mysqli_real_escape_string( $link, $endDate);
   
   // Loan History
-  $query= "SELECT company_name, fax, email, website, address, address2, city, state, zipcode, phone FROM businesses, addresses WHERE businesses.address_id = addresses.address_id";
+  $query= 'SELECT business_id, company_name, fax, email, website, address, address2, city, state, zipcode, phone FROM businesses, addresses WHERE businesses.address_id = addresses.address_id';
 
   $result = mysqli_query($link, $query) or
     die( 'Could not get the busineses' );
@@ -61,14 +61,14 @@ function getBusinessesOptions() {
 
 	$businesses = getBusinesses();	
 
-	$output .= '<option value="-1">Select a Business</option>'."\n";
+	$output .= '<option value="-1">Select a Business</option>'.'\n';
 
 	foreach( $businesses as $business ) {
 		$output .= '<option value="'.$business->business_id.'">';
-		$output .= $business->company_name . "</option>\n";
+		$output .= $business->company_name . '</option>\n';
 	}
 
-	$output .= "<option>Add a New Business</option>\n";
+	$output .= '<option value="newBusiness">Add a New Business</option>\n';
 
 	return $output;
 }
@@ -130,18 +130,18 @@ function getViewBusinesses( $currentSortIndex, $currentSortDir ){
 }
 
 function insertBusiness( $company, $address, $address2, $city, $state, $zip, $phone, $fax, $email, $website ) {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+  require_once('lib/connect.lib.php');  //mysql
+  require_once('lib/auth.lib.php');  //Session
   //echo $fax;
   
   // Authenticate
   $auth = GetAuthority();	
   if($auth<1)
-    die("Please login to complete this action");
+    die('Please login to complete this action');
   
   $link = connect();
   if($link == null)
-    die("Database connection failed");
+    die('Database connection failed');
 
   if( strlen( $company ) == 0 ) {
 	  die( 'Must have a company name' );

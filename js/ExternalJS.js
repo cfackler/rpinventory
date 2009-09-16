@@ -582,8 +582,8 @@ function saveBusiness(business_result, business_select, new_business, company_na
 					// Hide the new location fields
 					 document.getElementById( new_business ).style.display = 'none';
 
-					 // Select the new location in the dropdown
-					 highlightEntry( business_dropdown, company.value, 'businesses' );
+					 // Refresh the dropdown, and select the new business.
+					getSelectOptions(business_dropdown.id, 'businesses', company.value);
 
 					 //clears fields
 					 company.value = '';
@@ -619,7 +619,7 @@ function highlightEntry( selectElement, nameText, type ){
 }
 
 // Same as getLocationOptions, just not asynchronous
-function getLocationOptionsNonAsynch(element, type)
+function getLocationOptionsNonAsynch(element, type, selectText)
 {
 	if( type == 'locations' ) {
 	 new Ajax.Request("ajax.php?operation=locations", 
@@ -629,6 +629,11 @@ function getLocationOptionsNonAsynch(element, type)
 			     {
 				     var response = transport.responseText;
 				     element.innerHTML = response;
+					
+							if(selectText != '')
+							{
+								makeSelection(element.id, selectText);
+							}
 			 	 }
 		     });
 	}
@@ -642,6 +647,33 @@ function getLocationOptionsNonAsynch(element, type)
 						element.innerHTML = response;
 					}
 				});
+	}
+}
+/**
+ *	getSelectOptions takes the ID of a select object, the kind of dropdown it is
+ *	(locations, businesses), and the optional text of the option to select when 
+ *	the select is refreshed.
+ *	
+ *	@param	selectID								-	The id of the <select> object.
+ *	@param	type										-	The type of option (business, location, ect)
+ *	@param	postSelectedOptionText	-	The optional text to select when the <select> is refreshed.
+ **/
+function getSelectOptions(selectID, type, postSelectedOptionText)
+{
+	if(type == 'businesses'){
+		(jQuery).ajax({
+			url: 'ajax.php?operation=businesses',
+			type: 'POST',
+			success: function(msg)
+			{
+				(jQuery)('#'+selectID).html(msg);
+				
+				if(postSelectedOptionText != '')
+				{
+					makeSelection(selectID, postSelectedOptionText);
+				}
+			}
+		})
 	}
 }
 
@@ -866,4 +898,41 @@ function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrowe
 			     }
 		     });	     	  
 }
-
+/**
+ *  makeSelection takes an id of a <select> object, and some text
+ *  that is an item in the list, and selects it.
+ *
+ *  @param id   - The id of the <select> object.
+ *  @param text - The text of the option to select.
+ **/
+function makeSelection(id, text)
+{
+  var options = $('#'+id).attr('options');
+  for(i = 0; i<options.length; i++)
+  {
+    if(options[i].text == text)
+    {
+      $('#'+id).attr('selectedIndex', i);
+      break;
+    }
+  }
+}
+/**
+ *	makeSelectionValue takes an id of a <select> object, and some value
+ *	of one of the options in the list, and selects it.
+ *
+ *	@param id			-	The id of the <select> object on the page.
+ *	@param value	-	The value of the option to select.
+ **/
+function makeSelectionValue(id, value)
+{
+  var options = $('#'+id).attr('options');
+  for(i = 0; i<options.length; i++)
+  {
+    if(options[i].value == value)
+    {
+      $('#'+id).attr('selectedIndex', i);
+      break;
+    }
+  }
+}
