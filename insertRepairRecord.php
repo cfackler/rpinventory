@@ -66,7 +66,9 @@ for($x=0; $x<$count; $x++)
   //cost
   $cost = (double)$_POST["cost" . $x];
   if($cost == 0)
-    die("Invalid Cost");
+      die("Invalid Cost");
+
+  $condition = mysqli_real_escape_string( $link, $_POST['condition']);
   
   //Biz id
   $businessId = (int)$_POST["businessId" . $x];
@@ -162,8 +164,12 @@ for($x=0; $x<$count; $x++)
 	(NULL, " . $inventory_id . ", " . $businessId . ", '" . $date . "', " . $cost . ", '" . $desc . "'	)";
   
   if(!mysqli_query($link, $sql))
-    die("Query failed");
+    die('Query failed');
   
+  $sql = 'UPDATE inventory SET current_condition = "'. $condition .'" WHERE inventory_id = '. $inventory_id;
+
+  if(!mysqli_query($link, $sql))
+    die('Query failed');
 }
 
 mysqli_close($link);
