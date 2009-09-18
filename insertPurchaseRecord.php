@@ -127,7 +127,7 @@ if($count == 0)
 	die("invalid count");
 
 //Date
-$timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
+$timestamp = mktime(0, 0, 0, (int)$_POST["Date_Month"], (int)$_POST["Date_Day"], (int)$_POST["Date_Year"]);	
 $date = date("Y-m-d", $timestamp);
 
 
