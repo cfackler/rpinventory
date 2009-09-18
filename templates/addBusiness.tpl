@@ -20,7 +20,9 @@
 
 <form id="AjaxForm" name="addBusiness" action="insertBusiness.php" onsubmit="return ValidateForm()" METHOD="post">
 
+<span class="TopOfTable">
 <h3>Add Business</h3>
+</span>
 
 <table width="410">
 

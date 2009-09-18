@@ -19,10 +19,10 @@
 *}
 
 {if $authority>1}
-{*	<div class="TopOfTable"><span class="TopOfTable">
-    <h3>Businesses</h3>
+	<div class="TopOfTable"><span class="TopOfTable">
+{*    <h3>Businesses</h3>*}
 	<a href="addBusiness.php">Add new business</a>
-	</span></div>*}
+	</span></div>
 	<table width="900" bsort="0" class="itemsTable" cellspacing="0">
 	       <tr>
 	   
