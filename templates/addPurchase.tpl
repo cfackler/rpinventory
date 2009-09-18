@@ -122,8 +122,16 @@
       Total Value of Purchase: 
      </td>
      <td>
-      <input type="text" name="total_cost" value="" id="total_cost" class="validate">
+      <input type="text" name="total_cost" value="0.00" id="total_cost" class="validate" readonly="readonly" />
      </td>
+    </tr>
+    <tr>
+        <td>
+            Miscellaneous Costs:
+        </td>
+        <td>
+            <input type="text" name="misc_cost" value="" id="misc_cost" class="validate" />
+        </td>
     </tr>
     </table>
     </span>
