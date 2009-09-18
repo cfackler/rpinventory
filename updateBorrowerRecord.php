@@ -74,11 +74,11 @@ if(strlen($phone) == 0)
 //id
 $id = (int)$_POST["id"];
 if($id == 0)
-	die("Invalid ID");
+	die("Invalid User ID");
 
 $address_id = (int)$_POST['address_id'];
 if($address_id == 0)
-	die('Invalid ID');
+	die('Invalid Address ID');
 
 /* Sanitize */
 $name = mysqli_real_escape_string( $link, $name );

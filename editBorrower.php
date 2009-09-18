@@ -45,7 +45,8 @@ $borrower = getBorrower( $id );
 if($borrower == false)
   die("Could not get information");
  
-$address = getAddress( $borrower->address_id );
+$address_id = $borrower->address_id;
+$address = getAddress( $address_id );
 
 //BEGIN Page
 	
