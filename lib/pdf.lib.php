@@ -128,26 +128,18 @@ function getBusinessesData()
   require_once( 'lib/businesses.lib.php' );
 
   $data1 = array();
-  $data2 = array();
 
   $records = getBusinesses();
   foreach( $records as $value ) {
     $data1[] = array('Company Name' => $value->company_name,
-		     'Address' => $value->address,
-		     'Address2' => $value->address2,
 		     'City' => $value->city,
 		     'State' => $value->state,
-		     'Zipcode' => $value->zipcode,
-		     'Phone' => $value->phone,
-		     'Fax' => $value->fax,);
-  }
-  foreach( $records as $value ) {
-    $data2[] = array('Company Name' => $value->company_name,
-		     'Email' => $value->email,
-		     'Website' => $value->website);
+             'Phone' => $value->phone,
+             'Email' => $value->email,
+             'Website' => $value->website);
   }
 
-  return array($data1, $data2);
+  return array($data1);
 }
 
 
