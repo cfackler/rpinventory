@@ -23,13 +23,13 @@
 
 function getBusinesses()
 {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+  require_once('lib/connect.lib.php');  //mysql
+  require_once('lib/auth.lib.php');  //Session
 
   // Connect
   $link = connect();
   if( $link == null )
-    die( "Database connection failed" );
+    die( 'Database connection failed' );
   
   // Authenticate
   $auth = GetAuthority();
@@ -38,10 +38,10 @@ function getBusinesses()
   $endDate = mysqli_real_escape_string( $link, $endDate);
   
   // Loan History
-  $query= "SELECT company_name, fax, email, website, address, address2, city, state, zipcode, phone FROM businesses, addresses WHERE businesses.address_id = addresses.address_id";
+  $query= 'SELECT business_id, company_name, fax, email, website, address, address2, city, state, zipcode, phone FROM businesses, addresses WHERE businesses.address_id = addresses.address_id';
 
   $result = mysqli_query($link, $query) or
-    die( 'Could not get the busineses' );
+    die( 'Could not get the businesses' );
 
   $records = array();
   
@@ -61,14 +61,14 @@ function getBusinessesOptions() {
 
 	$businesses = getBusinesses();	
 
-	$output .= '<option value="-1">Select a Business</option>'."\n";
+	$output .= '<option value="-1">Select a Business</option>';
 
 	foreach( $businesses as $business ) {
 		$output .= '<option value="'.$business->business_id.'">';
-		$output .= $business->company_name . "</option>\n";
+		$output .= $business->company_name . '</option>';
 	}
 
-	$output .= "<option>Add a New Business</option>\n";
+	$output .= '<option value="newBusiness">Add a New Business</option>';
 
 	return $output;
 }
@@ -130,18 +130,18 @@ function getViewBusinesses( $currentSortIndex, $currentSortDir ){
 }
 
 function insertBusiness( $company, $address, $address2, $city, $state, $zip, $phone, $fax, $email, $website ) {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
-  echo $fax;
+  require_once('lib/connect.lib.php');  //mysql
+  require_once('lib/auth.lib.php');  //Session
+  //echo $fax;
   
   // Authenticate
   $auth = GetAuthority();	
   if($auth<1)
-    die("Please login to complete this action");
+    die('Please login to complete this action');
   
   $link = connect();
   if($link == null)
-    die("Database connection failed");
+    die('Database connection failed');
 
   if( strlen( $company ) == 0 ) {
 	  die( 'Must have a company name' );
@@ -182,9 +182,9 @@ function insertBusiness( $company, $address, $address2, $city, $state, $zip, $ph
   if( strlen( $website ) == 0 ) {
 	  $website = null;
   }
-  echo $fax;
+  //echo $fax;
 
-
+  //die($company);
   $company = mysqli_real_escape_string( $link, $company );
   $address = mysqli_real_escape_string( $link, $address );
   $address2 = mysqli_real_escape_string( $link, $address2 );
@@ -196,7 +196,7 @@ function insertBusiness( $company, $address, $address2, $city, $state, $zip, $ph
   $email = mysqli_real_escape_string( $link, $email );
   $website = mysqli_real_escape_string( $link, $website );
 
-  echo $fax;
+  //echo $fax;
   $sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES ( NULL, "'. $address .'", "'. $address2 .'", "'.  $city .'", "'. $state .'", "'. $zip .'", "'. $phone .'")';
 
   if( !mysqli_query( $link, $sql ) ){
@@ -207,13 +207,14 @@ function insertBusiness( $company, $address, $address2, $city, $state, $zip, $ph
 
 
   $sql = 'INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES ( NULL, '. $address_id .', "'. $company .'", "'. $fax .'", "'. $email .'", "'. $website .'")';
-  echo $sql;
+  //echo $sql;
 
   if( !mysqli_query( $link, $sql ) ) {
 	  die( 'Business insert query failed' );
   }
 
   mysqli_close( $link );
+	return 'success';
 }
 
 ?>

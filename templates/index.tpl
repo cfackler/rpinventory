@@ -28,9 +28,11 @@ $this->assign('clubName', Config::get('club_name'));
 <title>{$clubName} - RPInventory</title>
 
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
-<script src="ExternalJS.js" language="javascript" type="text/javascript"></script>
-<script src="prototype.js" language="javascript" type="text/javascript"></script>
-<script src="helpToolTip.js" language="javascript" type="text/javascript"></script>
+<script src="js/ExternalJS.js" language="javascript" type="text/javascript"></script>
+<script src="js/modulesJS/prototype.js" language="javascript" type="text/javascript"></script>
+<script src="js/helpToolTip.js" language="javascript" type="text/javascript"></script>
+<script src="js/modulesJS/jquery.js" language="javascript" type="text/javascript"></script>
+<script>jQuery.noConflict();</script>
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />

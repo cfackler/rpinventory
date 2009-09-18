@@ -26,41 +26,41 @@ require_once( 'lib/users.lib.php' );
 require_once( 'lib/businesses.lib.php' );
 require_once( 'lib/borrowers.lib.php' );
 
-switch ($_GET["operation"])
+switch ($_GET['operation'])
   {
-  case "locations":
+  case 'locations':
     print getLocationsOptions();
     break;
 	
-	case "businesses":
+	case 'businesses':
 			print getBusinessesOptions();
 			break;
   
-	case "loanlocations":
+	case 'loanlocations':
 		print getLoanLocationsOptions();
 		break;
 
-  case "savelocation":
-    insertLocation($_GET["location"], $_GET["description"]);
+  case 'savelocation':
+    insertLocation($_GET['location'], $_GET['description']);
     break;
 
-	case "saveBusiness":
-		insertBusiness($_GET["company_name"], $_GET['address'], $_GET['address2'],
-									 $_GET['city'], $_GET['state'], $_GET['zipcode'], $_GET['phone'],
-									 $_GET['fax_number'], $_GET['email'], $_GET['website']);
+	case 'saveBusiness':
+		print insertBusiness($_POST['company_name'], $_POST['address'], $_POST['address2'],
+									 $_POST['city'], $_POST['state'], $_POST['zipcode'], $_POST['phone'],
+									 $_POST['fax_number'], $_POST['email'], $_POST['website']);
 		break;
 
-	case "saveBorrower":
+	case 'saveBorrower':
 		insertBorrower($_GET['borrower_name'], $_GET['rin'], $_GET['email'],
 									 $_GET['address'], $_GET['address2'], $_GET['city'],
 									 $_GET['state'], $_GET['zipcode'], $_GET['phone']);
 		break;		
     
-  case "username":
+  case 'username':
     print getUsernames( $_GET['name'] );
     break;
 
-	case "borrowerNames":
+	case 'borrowerNames':
 		print getBorrowerNames( $_GET['name'] );
 		break;
 	}

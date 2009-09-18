@@ -162,13 +162,13 @@ function sendValidateRequest(itemID){
 				 });
     }
     else{
-	new Ajax.Request("validateFormItem.php?itemValue=" + itemValue + "&itemID=" + itemID,
-			 { 
-			     method: 'post', 
-				 parameters: $(itemID).serialize(true),
-				 onSuccess: validateAction
-				 });
-    }
+			(jQuery).ajax({
+				url: 'validateFormItem.php',
+				type: 'POST',
+				data: {itemValue: itemValue, itemID: itemID},
+				success: validateAction
+			});
+  }
 }
 
 
@@ -560,44 +560,49 @@ function saveBusiness(business_result, business_select, new_business, company_na
 		zip_num.length == 0 ||
 		phone_num.length == 0 ) 
 	{
-		document.getElementById( business_result ).innerHTML = "Please enter the required information";
-		document.getElementById( business_result ).style.display = "";
+		(jQuery)('#business_result').html('Please enter the required information');
+		//document.getElementById( business_result ).innerHTML = "Please enter the required information";
+
+		(jQuery)('#business_result').css('display', '');
+		//document.getElementById( business_result ).style.display = "";
 		return;
 	}
 
 
-    new Ajax.Request("ajax.php?operation=saveBusiness&company_name="+company+"&address="+address_name+"&address2="+address2_name+"&city="+city_name+"&state="+state_name+"&zipcode="+zip_num+"&phone="+phone_num+"&fax_number="+fax_num+"&email="+email_name+"&website="+website_name,
-		     { 
-			 method: 'post', 
-			     onSuccess: function(transport)
+    (jQuery).ajax({
+		type: 'POST',
+		url: 'ajax.php?operation=saveBusiness',
+		data: {company_name: company, address: address_name, address2: address2_name, city: city_name, state: state_name, zipcode: zip_num, phone: phone_num, fax_number: fax_num, email: email_name, website: website_name},
+		success: function(transport)
 			     {
 				 // Set status text
-				 resultElement.innerHTML = 'Successfully saved.';
-				 
-				 // Hide the new location fields
-				 document.getElementById( new_business ).style.display = 'none';
-				 
-				 // Select the new location in the dropdown
-				 highlightEntry( business_dropdown, company.value, 'businesses' );
-				 
-				 //clears fields
-				 company.value = '';
-				 address_name.value = '';
-				 address2_name.value = '';
-				 city_name.value = '';
-				 state_name.value = '';
-				 zip_num.value = '';
-				 phone_num.value = '';
-				 fax_num.value = '';
-				 email_name.value = '';
-				 website_name.value = '';
+				if(transport == 'success')
+				{
+					resultElement.innerHTML = 'Successfully saved.';
+					// Hide the new location fields
+					 document.getElementById( new_business ).style.display = 'none';
 
-			     },
-			     onFailure: function()
-			     {	// Alert on failure
-				 resultElement.innerHTML = 'Error saving business!';
-			     }
-		     });	     	  
+					 // Refresh the dropdown, and select the new business.
+					getSelectOptions(business_dropdown.id, 'businesses', company);
+
+					 //clears fields
+					 company.value = '';
+					 address_name.value = '';
+					 address2_name.value = '';
+					 city_name.value = '';
+					 state_name.value = '';
+					 zip_num.value = '';
+					 phone_num.value = '';
+					 fax_num.value = '';
+					 email_name.value = '';
+					 website_name.value = '';
+				}
+				else
+				{
+					resultElement.innerHTML = transport;
+				}
+			}
+		 });	     	  
 }
 
 function highlightEntry( selectElement, nameText, type ){
@@ -614,7 +619,7 @@ function highlightEntry( selectElement, nameText, type ){
 }
 
 // Same as getLocationOptions, just not asynchronous
-function getLocationOptionsNonAsynch(element, type)
+function getLocationOptionsNonAsynch(element, type, selectText)
 {
 	if( type == 'locations' ) {
 	 new Ajax.Request("ajax.php?operation=locations", 
@@ -624,6 +629,11 @@ function getLocationOptionsNonAsynch(element, type)
 			     {
 				     var response = transport.responseText;
 				     element.innerHTML = response;
+					
+							if(selectText != '')
+							{
+								makeSelection(element.id, selectText);
+							}
 			 	 }
 		     });
 	}
@@ -637,6 +647,38 @@ function getLocationOptionsNonAsynch(element, type)
 						element.innerHTML = response;
 					}
 				});
+	}
+}
+/**
+ *	getSelectOptions takes the ID of a select object, the kind of dropdown it is
+ *	(locations, businesses), and the optional text of the option to select when 
+ *	the select is refreshed.
+ *	
+ *	@param	selectID								-	The id of the <select> object.
+ *	@param	type										-	The type of option (business, location, ect)
+ *	@param	postSelectedOptionText	-	The optional text to select when the <select> is refreshed.
+ **/
+function getSelectOptions(selectID, type, postSelectedOptionText)
+{
+	//this is a business pulldown
+	if(type == 'businesses'){
+		//get options
+		(jQuery).ajax({
+			url: 'ajax.php?operation=businesses',
+			type: 'POST',
+			asynchronous: true,
+			success: function(msg)
+			{
+				//load the options into the <select> object
+				(jQuery)('#'+selectID).html(msg);
+				
+				//select a certain option
+				if(postSelectedOptionText)
+				{
+					makeSelection(selectID, postSelectedOptionText);
+				}
+			}
+		});
 	}
 }
 
@@ -861,4 +903,41 @@ function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrowe
 			     }
 		     });	     	  
 }
-
+/**
+ *  makeSelection takes an id of a <select> object, and some text
+ *  that is an item in the list, and selects it.
+ *
+ *  @param id   - The id of the <select> object.
+ *  @param text - The text of the option to select.
+ **/
+function makeSelection(id, text)
+{
+  var options = (jQuery)('#'+id).attr('options');
+  for(i = 0; i<options.length; i++)
+  {
+    if(options[i].text == text)
+    {
+      (jQuery)('#'+id).attr('selectedIndex', i);
+      break;
+    }
+  }
+}
+/**
+ *	makeSelectionValue takes an id of a <select> object, and some value
+ *	of one of the options in the list, and selects it.
+ *
+ *	@param id			-	The id of the <select> object on the page.
+ *	@param value	-	The value of the option to select.
+ **/
+function makeSelectionValue(id, value)
+{
+  var options = (jQuery)('#'+id).attr('options');
+  for(i = 0; i<options.length; i++)
+  {
+    if(options[i].value == value)
+    {
+      (jQuery)('#'+id).attr('selectedIndex', i);
+      break;
+    }
+  }
+}
