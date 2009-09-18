@@ -50,6 +50,7 @@ $repairs = mysqli_real_escape_string( $link, $_POST['repairs'] );
 $purchases = mysqli_real_escape_string( $link, $_POST['purchases'] );
 $businesses = mysqli_real_escape_string( $link, $_POST['businesses'] );
 $users = mysqli_real_escape_string( $link, $_POST['users'] );
+$borrowers = mysqli_real_escape_string( $link, $_POST['borrowers'] );
 $locations = mysqli_real_escape_string( $link, $_POST['locations'] );
 
 $startDate = mysqli_real_escape_string( $link, $_POST['start_Year'] ). '-' .
@@ -158,6 +159,23 @@ if ( $businesses != '' ){
   $pdf->ezTable( $return[0] );
   $pdf->ezText('');
   $pdf->ezTable( $return[1] );
+  unset($data);
+  $data= array();
+  $pdf->ezText('');
+}
+
+if ( $borrowers != '' ){
+  //add text
+  $pdf->ezText('<u>Borrowers</u>', 10, array('justification'=>'center'));
+  $pdf->ezText('');
+  
+  $return = getBorrowerData();
+  
+  foreach( $return as $item ){
+    $data[] = $item;
+  }
+
+  $pdf->ezTable( $data );
   unset($data);
   $data= array();
   $pdf->ezText('');

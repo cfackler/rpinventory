@@ -51,6 +51,10 @@
 		<input type="checkbox" name="businesses" value="Businesses" />
 		<label for="businesses">Businesses</label>
 	</li>
+    <li>
+        <input type="checkbox" name="borrowers" value="Borrowers" />
+        <label for="borrowers">Borrowers</label>
+    </li>
 	<li>
 		<input type="checkbox" name="users" value="Users" />
 		<label for="users">Users</label>

@@ -185,6 +185,22 @@ function getLocationsData()
   return $data;
 }
 
+function getBorrowerData()
+{
+  require_once( 'lib/borrowers.lib.php' );
+
+  $data = array();
+
+  $records = getBorrowers();
+  foreach( $records as $value ) {
+    $data[] = array('Name' => $value->name,
+                    'RIN' => $value->rin,
+                    'Email' => $value->email);
+  }
+
+  return $data;
+}
+
 function getInventorySummary(){
   require_once( "lib/connect.lib.php" );  // mysql
   require_once( "lib/auth.lib.php" );  // Session
