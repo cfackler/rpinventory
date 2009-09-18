@@ -46,6 +46,18 @@
 </tr>
 
 <tr>
+    <td>Condition: </td>
+    <td>
+        <select class="dropDown" id="condition" name="condition">
+            <option value="Excellent" {if $items[num]->current_condition == "Excellent"}selected="selected"{/if}>Excellent</option>
+            <option value="Good" {if $items[num]->current_condition == "Good"}selected="selected"{/if}>Good</option>
+            <option value="Fair" {if $items[num]->current_condition == "Fair"}selected="selected"{/if}>Fair</option>
+            <option value="Poor" {if $items[num]->current_condition == "Poor"}selected="selected"{/if}>Poor</option>
+        </select>
+    </td>
+</tr>
+
+<tr>
 	<td>Date: </td>
 	<td>
 		{html_select_date start_year="-3" end_year="+2" class="dropDown" prefix=$smarty.section.num.index} 
