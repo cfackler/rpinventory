@@ -37,16 +37,15 @@ $smarty = new Smarty_Inv();
 
 $id = (int)$_GET['id'];
 if($id == 0)
-  die("Invalid ID");
+  die("Invalid ID Given");
 
 //borrowers
 $borrower = getBorrower( $id );
 
 if($borrower == false)
-  die("Invalid ID");
-
-$address_id = getAddressFromBorrower( $id );
-$address = getAddress( getAddressFromBorrower( $address_id ) );
+  die("Could not get information");
+ 
+$address = getAddress( $borrower->address_id );
 
 //BEGIN Page
 	

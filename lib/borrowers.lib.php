@@ -177,7 +177,8 @@ function getBorrower( $id ) {
 
 	$sql = 'SELECT * FROM borrowers WHERE borrower_id = ' . $id;
 
-	$result = mysqli_query($link, $sql);
+    $result = mysqli_query($link, $sql) or
+        die('Borrower query failed');
 	$borrower = mysqli_fetch_object($result);
 
 	return $borrower;
