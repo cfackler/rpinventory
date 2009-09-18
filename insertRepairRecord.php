@@ -44,7 +44,13 @@ if($count == 0)
 for($x=0; $x<$count; $x++)
 {
   //Date
-  $timestamp = mktime(0, 0, 0, (int)$_POST["months" . $x], (int)$_POST["days" . $x], (int)$_POST["year" . $x]);	
+  if (!isset($_POST[$x.'Month']) ||
+      !isset($_POST[$x.'Day']) ||
+      !isset($_POST[$x.'Year'])) {
+    die('Must include dates for all repaired items');
+  }
+
+  $timestamp = mktime(0, 0, 0, (int)$_POST[$x . "Month"], (int)$_POST[$x . "Day"], (int)$_POST[$x . "Year"]);	
   $date = date("Y-m-d", $timestamp);
   
   //Description

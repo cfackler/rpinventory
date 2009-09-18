@@ -24,7 +24,6 @@
 </span>
 
 <input type="hidden" name="count" size="40" value="{$itemCount}">
-
 {section name=num loop=$items}
 
 <table width="500">
@@ -49,7 +48,7 @@
 <tr>
 	<td>Date: </td>
 	<td>
-		{html_select_date start_year="-3" end_year="+2" class="dropDown"}
+		{html_select_date start_year="-3" end_year="+2" class="dropDown" prefix=$smarty.section.num.index} 
 	<td>
 </tr>
 
