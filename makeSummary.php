@@ -55,7 +55,7 @@ $locations = mysqli_real_escape_string( $link, $_POST['locations'] );
 $startDate = mysqli_real_escape_string( $link, $_POST['start_Year'] ). '-' .
              mysqli_real_escape_string( $link, $_POST['start_Month'] ). '-' .
              mysqli_real_escape_string( $link, $_POST['start_Day'] );
-$endDate = mysqli_real_escape_string( $link, $_POST['end_Month'] ). '-' .
+$endDate = mysqli_real_escape_string( $link, $_POST['end_Year'] ). '-' .
            mysqli_real_escape_string( $link, $_POST['end_Month'] ). '-' .
            mysqli_real_escape_string( $link, $_POST['end_Day'] );
 
