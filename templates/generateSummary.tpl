@@ -69,12 +69,14 @@
 <table>
 	<tr>
 		<td><label for="startdate">Starting Date:</label> </td>
-		<td><input type="text" id="startdate" name="startdate" onClick="removeContents('startdate', 'yyyy-mm-dd')" value="yyyy-mm-dd" class="validate"/></td>
+		<td>{html_select_date start_year="-5" end_year="+0"	class="dropDown"
+            prefix="start_"}</td>
 		
 	</tr>
 	<tr>
 		<td><label for="enddate">Ending Date:</label></td>
-		<td><input type="text" id="enddate" name="enddate" onClick="removeContents('enddate', 'yyyy-mm-dd')" value="yyyy-mm-dd" class="validate"/></td>
+		<td>{html_select_date start_year="-5" end_year="+0"	class="dropDown"
+            prefix="end_"}</td>
 	</tr>
 </table>
 
