@@ -48,7 +48,7 @@ echo <<<END
 	  
   <tr>
   <td>Value: </td>
-  <td><input type="text" name="value$id" id="value$id" class="validate"></td>
+  <td><input type="text" name="value$id" id="value$id" class="validate" onchange="updateTotal('value$id')"/></td>
   </tr>
 	  
   <tr>

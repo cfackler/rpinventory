@@ -130,7 +130,7 @@
             Miscellaneous Costs:
         </td>
         <td>
-            <input type="text" name="misc_cost" value="" id="misc_cost" class="validate" />
+            <input type="text" name="misc_cost" value="" id="misc_cost" class="validate" onchange="updateTotal('misc_cost')" />
         </td>
     </tr>
     </table>
@@ -148,7 +148,7 @@
 	  
 	  <tr>
 	    <td>Value: </td>
-	    <td><input type="text" name="value0" id="value0" class="validate"></td>
+	    <td><input type="text" name="value0" id="value0" class="validate" onchange="updateTotal('value0')"></td>
 	  </tr>
 	  
 	  <tr>

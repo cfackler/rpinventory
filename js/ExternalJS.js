@@ -941,3 +941,31 @@ function makeSelectionValue(id, value)
     }
   }
 }
+
+function updateTotal(callingID)
+{
+    var total = $('total_cost');
+    var new_value = $(callingID); 
+	
+	if( new_value.value.match( /^\d+$/ ) ){
+		new_value.value += '.00';
+	}
+	
+    if( !new_value.value.match( /^\d+\.\d{2}$/ ) ){
+		alert("Please enter a value in the form 'xxxxx.yy'");
+        new_value.focus();
+        new_value.select();
+        return;
+    }
+
+    var num = 0;
+    var sum = 0;
+    while( $('value'+num) != null ) {
+        sum += Number($('value'+num).value);
+        num++;
+    }
+
+    sum += Number($('misc_cost').value);
+
+    total.value = sum.toFixed(2);
+}
