@@ -159,9 +159,18 @@ function getUsersData()
 
   $records = getUsers();
   foreach( $records as $value ) {
-    $data[] = array('Name' => $value->name,
-		     'Username' => $value->username,
-		     'RIN' => $value->rin,
+    if ($value->access_level == 0) {
+        $value->access_level = 'User';
+    }
+    elseif ($value->access_level == 1) {
+        $value->access_level = 'Manager';
+    }
+    elseif ($value->access_level == 2) {
+        $value->access_level = "Administrator";
+    }
+    
+    $data[] = array('Username' => $value->username,
+		     'Role' => $value->access_level,
 		     'Email Address' => $value->email);
   }
 
