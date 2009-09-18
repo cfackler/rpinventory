@@ -33,7 +33,12 @@ $link = connect();
 if($link == null)
   die("Database connection failed");
 
-if ( !isset( $_POST['startdate'] ) || !isset( $_POST['enddate'] ) ){
+if (!isset( $_POST['start_Month'] ) || 
+    !isset( $_POST['start_Day'] ) ||
+    !isset( $_POST['start_Year'] ) ||
+    !isset( $_POST['end_Month'] ) ||
+    !isset( $_POST['end_Day'] ) ||
+    !isset( $_POST['end_Year'] ) ){
   die( "Start or end date not specified" );
 }
 
@@ -47,8 +52,12 @@ $businesses = mysqli_real_escape_string( $link, $_POST['businesses'] );
 $users = mysqli_real_escape_string( $link, $_POST['users'] );
 $locations = mysqli_real_escape_string( $link, $_POST['locations'] );
 
-$startDate = mysqli_real_escape_string( $link, $_POST['startdate'] );
-$endDate = mysqli_real_escape_string( $link, $_POST['enddate'] );
+$startDate = mysqli_real_escape_string( $link, $_POST['start_Year'] ). '-' .
+             mysqli_real_escape_string( $link, $_POST['start_Month'] ). '-' .
+             mysqli_real_escape_string( $link, $_POST['start_Day'] );
+$endDate = mysqli_real_escape_string( $link, $_POST['end_Month'] ). '-' .
+           mysqli_real_escape_string( $link, $_POST['end_Month'] ). '-' .
+           mysqli_real_escape_string( $link, $_POST['end_Day'] );
 
 require_once( 'lib/config.class.php' );
 
