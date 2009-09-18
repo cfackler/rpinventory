@@ -88,6 +88,7 @@ $smarty->assign('items', $items);
 $smarty->assign('itemCount', count($items));
 $smarty->assign('idString', $idString);
 $smarty->assign('businesses', $businesses);
+$smarty->assign('numBusinesses', count($businesses));
 $smarty->assign('selectDate', getdate(time()));
 
 $smarty->display('index.tpl');

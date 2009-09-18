@@ -70,7 +70,11 @@
 	</td>
 </tr>
 	<tr>
+    {if $numBusinesses > 0 }
 		<table id="newBusiness" style="display:none;padding-left:1cm">	
+    {else}
+        <table id="newBusiness" style="padding-left:1cm">
+    {/if}
 
      	 	<tr>
 			<td>Company Name:</td>
