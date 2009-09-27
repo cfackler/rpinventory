@@ -21,19 +21,20 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
-require_once("lib/auth.lib.php");  //Session
-require_once('lib/locations.lib.php'); //locations funciton
+require_once('lib/connect.lib.php');		//mysql
+require_once('lib/auth.lib.php');				//Session
+require_once('lib/locations.lib.php'); 	//locations
+require_once('lib/display.lib.php');		//formatting <option>s
 require_once('lib/tooltip.lib.php');
 
 $link = connect();
 if($link == null)
-  die("Database connection failed");
+  die('Database connection failed');
 	
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
-  die("You dont have permission to access this page");
+  die('You dont have permission to access this page');
 
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
@@ -41,7 +42,7 @@ $smarty = new Smarty_Inv();
 
 //Business List
 
-$businessQuery = "SELECT business_id, company_name FROM businesses";
+$businessQuery = 'SELECT business_id, company_name FROM businesses';
 $businessResult = mysqli_query($link, $businessQuery);
 $businesses = array();
 
@@ -52,16 +53,20 @@ while($business = mysqli_fetch_object($businessResult))
 $locations = getLocationsOptions();
 $tooltip_html = getToolTips('addPurchase');
 
+//Categoryes
+$category_options = get_options('categories', 'id', 'category_name');
+
 //BEGIN Page
 	
 //Assign vars
-$smarty->assign('title', "Purchase Items");
+$smarty->assign('title', 'Purchase Items');
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'addPurchase');
 $smarty->assign('businesses', $businesses);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('locations', $locations);
 $smarty->assign('tooltip', $tooltip_html);
+$smarty->assign('category_options', $category_options);
 
 $smarty->display('index.tpl');
 

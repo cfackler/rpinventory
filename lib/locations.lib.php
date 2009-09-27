@@ -23,22 +23,22 @@
 
 function getLocations()
 {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+  require_once('lib/connect.lib.php');  //mysql
+  require_once('lib/auth.lib.php');  //Session
 
   // Connect
   $link = connect();
   if( $link == null )
-    die( "Database connection failed" );
+    die( 'Database connection failed' );
   
   // Authenticate
   $auth = GetAuthority();
   if($auth < 1)
-	  die("You dont have permission to access this page");
+	  die('You dont have permission to access this page');
 
   
   // Loan History
-  $query= "SELECT location_id, location, description FROM locations";
+  $query= 'SELECT location_id, location, description FROM locations';
 
   $result = mysqli_query($link, $query) or
     die( 'Could not get the locations' );
@@ -64,12 +64,12 @@ function getCommonLocation()
   // Connect
   $link = connect();
   if( $link == null )
-    die( "Database connection failed" );
+    die( 'Database connection failed' );
   
   // Authenticate
   $auth = GetAuthority();
   if($auth < 1)
-    die("You dont have permission to access this page");
+    die('You dont have permission to access this page');
 
   $sql = 'SELECT count(locations.location_id) AS counts, locations.location_id, location FROM inventory, locations
  WHERE locations.location_id = inventory.location_id ORDER BY counts desc LIMIT 1';
@@ -99,7 +99,7 @@ function getOnLoanLocation()
 	// Authenticate
 	$auth = GetAuthority();
 	if( $auth < 1 )
-		die( "You don't have permission to access this page" );
+		die( 'You don\'t have permission to access this page' );
 
 	$sql = 'SELECT * FROM locations WHERE location = "On Loan"';
 	$result = mysqli_query( $link, $sql ) or
@@ -124,16 +124,16 @@ function getLocationsOptions()
 	/* Make sure we found a common location */
   if( $commonLocation ) {
 		$loc_select = '<option value="'.$commonLocation->location_id . '">';
-  	$loc_select .= $commonLocation->location . "</option>";
+  	$loc_select .= $commonLocation->location . '</option>';
 	}
   
   foreach($locations as $location) {
     if( $location->location_id != $commonLocation->location_id && $location->location != 'On Loan'){
       $loc_select .= '<option value="' . $location->location_id . '">';
-      $loc_select .= $location->location . "</option>";
+      $loc_select .= $location->location . '</option>';
     }
   }
-  $loc_select .= "<option>New Location</option>";
+  $loc_select .= '<option>New Location</option>';
   
   return $loc_select;
 }
@@ -150,40 +150,40 @@ function getLoanLocationsOptions()
   $firstLocation = getOnLoanLocation();
 
   $loc_select = '<option value="'.$firstLocation->location_id . '">';
-  $loc_select .= $firstLocation->location . "</option>";
+  $loc_select .= $firstLocation->location . '</option>';
   
   foreach($locations as $location) {
     if( $location->location_id != $commonLocation->location_id && $location->location != 'On Loan'){
       $loc_select .= '<option value="' . $location->location_id . '">';
-      $loc_select .= $location->location . "</option>";
+      $loc_select .= $location->location . '</option>';
     }
   }
-  $loc_select .= "<option>New Location</option>";
+  $loc_select .= '<option>New Location</option>';
   
   return $loc_select;
 }
 
 function insertLocation($location, $desc)
 {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+  require_once('lib/connect.lib.php');  //mysql
+  require_once('lib/auth.lib.php');  //Session
   
   // Authenticate
   $auth = GetAuthority();	
   if($auth<1)
-    die("Please login to complete this action");
+    die('Please login to complete this action');
   
   $link = connect();
   if($link == null)
-    die("Database connection failed");
+    die('Database connection failed');
   
   // Description
   if(strlen($desc) == 0)
-    die("Must have a description");
+    die('Must have a description');
   	
   // Location
   if(strlen($location) == 0)
-    die("Must have a location");
+    die('Must have a location');
   
   // Clean user input
   $desc = mysqli_real_escape_string($link, $desc);
@@ -198,26 +198,26 @@ function insertLocation($location, $desc)
   // Make sure location doesn't already exist
   while ($row = mysqli_fetch_array($result)) {
     if (strcasecmp($row['location'], $location) == 0){ 
-      die("A location already exists with name, '" . $location ."'");
+      die('A location already exists with name, "' . $location .'"');
     }
   }
   
-  $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $location . "', '" . $desc . "')";
+  $sql = 'INSERT INTO locations (location_id, location, description) VALUES (NULL, "' . $location . '", "' . $desc . '")';
   	
   if(!mysqli_query($link, $sql))
-    die("Query failed");
+    die('Query failed');
   
   mysqli_close($link);
 
 }
 
 function getViewLocations( $currentSortIndex, $currentSortDir ) {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+  require_once('lib/connect.lib.php');  //mysql
+  require_once('lib/auth.lib.php');  //Session
   
   $link = connect();
   if($link == null)
-    die("Database connection failed");
+    die('Database connection failed');
   
   //Authenticate
   $auth = GetAuthority();
@@ -234,7 +234,7 @@ function getViewLocations( $currentSortIndex, $currentSortDir ) {
     $sortBy .= ' DESC';
   
   //users
-  $locQuery= "SELECT * from locations ORDER BY ".$sortBy;
+  $locQuery= 'SELECT * from locations ORDER BY '.$sortBy;
   $locResult = mysqli_query($link, $locQuery);
   $locations = array();
   

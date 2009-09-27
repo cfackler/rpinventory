@@ -150,6 +150,18 @@
 	    <td>Value: </td>
 	    <td><input type="text" name="value0" id="value0" class="validate" onchange="updateTotal('value0')"></td>
 	  </tr>
+	
+		<tr>
+			<td>Category: </td>
+			<td>
+				<select id="category-0" name="category-0" class="category_select dropdown">
+					<option value="-1">Select a Category</option>
+					{$category_options}
+					<option value="newCategory">New Category</option>
+				</select>
+			</td>
+		</tr>
+				
 	  
 	  <tr>
 	    <td>Condition: </td>
