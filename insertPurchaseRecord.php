@@ -40,7 +40,7 @@ if( isset( $_POST['ignoreBusiness'] ) ){
 }
 
 if( !$ignoreBusiness ){
-  $bus_id = (int)$_POST["business_id"];
+  $bus_id = $_POST['business_id'];
   
   $sql = "SELECT business_id FROM businesses";
   
@@ -48,7 +48,7 @@ if( !$ignoreBusiness ){
   $numBusinesses = mysqli_num_rows($result);
   
   // Chose to insert a new business
-  if($bus_id>$numBusinesses){
+  if($bus_id == 'newBusiness'){
     //Company name
     $company = $_POST["company"];
     if(strlen($company) == 0)
@@ -157,23 +157,23 @@ $purchase_id = mysqli_insert_id($link);
 for($x=0; $x<$count; $x++)
 {
   //Description
-  $itemdesc = $_POST["desc".$x];
+  $itemdesc = $_POST["desc-".$x];
   if(strlen($itemdesc) == 0)
     die("Must have a description");
 
   //Condition
-  $condition = $_POST["condition".$x];
+  $condition = $_POST["condition-".$x];
   if(strlen($condition) == 0)
     die("Must have a condition");	
   
   //Value
-  $valueStr = $_POST["value".$x];
-  $value = (double)$_POST["value".$x];
+  $valueStr = $_POST["value-".$x];
+  $value = (double)$_POST["value-".$x];
   if(strlen($valueStr) == 0)
     die("Must have a value");
   
   //Location	
-  $location = (int)$_POST["location" . $x];
+  $location = (int)$_POST["location-" . $x];
   
   $itemdesc = mysqli_real_escape_string( $link, $itemdesc );
   $condition = mysqli_real_escape_string( $link, $condition );
@@ -186,10 +186,10 @@ for($x=0; $x<$count; $x++)
   //if not in database, new location was specified
   if($checkRows == 0){
     
-    $newLocation = $_POST["newlocation" . $x];
+    $newLocation = $_POST["newlocation-" . $x];
     if(strlen($newLocation) == 0)
       die("New location must have a name.");	
-    $locDescription = $_POST["newdescription" . $x];
+    $locDescription = $_POST["newdescription-" . $x];
     if(strlen($locDescription) == 0)
       die("New location must have a description.");
 
