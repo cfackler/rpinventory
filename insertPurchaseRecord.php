@@ -230,6 +230,10 @@ for($x=0; $x<$count; $x++)
   
   if(!mysqli_query($link, $sql))
     die("Purchase Record Query failed");
+
+	//Insert item category
+	$sql = 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ("'.$inv_id.'", "'.$_POST['category-'.$x].'")';
+	
 }
 	
 
