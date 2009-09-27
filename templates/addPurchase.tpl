@@ -139,22 +139,22 @@
     <br />
 
     <div id="itemTable">
-      <div id="item0">
+      <div id="item-0">
 	<table>
 	  <tr>
 	    <td>Item Description: </td>
-	    <td><input type="text" name="desc0" size="40" id="description0" class="validate"></td>
+	    <td><input type="text" name="desc-0" size="40" id="description-0" class="validate"></td>
 	  </tr>
 	  
 	  <tr>
 	    <td>Value: </td>
-	    <td><input type="text" name="value0" id="value0" class="validate" onchange="updateTotal('value0')"></td>
+	    <td><input type="text" name="value-0" id="value-0" class="value validate" onchange="updateTotal('value-0')"></td>
 	  </tr>
 	  
 	  <tr>
 	    <td>Condition: </td>
 	    <td>
-	      <select class="dropDown" name="condition0">
+	      <select class="dropDown" name="condition-0" id="condition-0">
 		<option value="Excellent">Excellent</option>
 		<option value="Good">Good</option>
 		<option value="Fair">Fair</option>
@@ -167,27 +167,27 @@
 	    <td>Location: </td>
 
 	    <td>
-	      <select class="dropDown" id="location0" name="location0" onChange="OnChangeDouble('location0', 'newLocation0', 'newDescription0')" onFocus="getLocationOptions(this);">
+	      <select class="dropDown" id="location-0" name="location-0" onChange="OnChangeDouble('location-0', 'newLocation-0', 'newDescription-0')" onFocus="getLocationOptions(this);">
 
 			{$locations}
 		
 	      </select>
-	    <span id="resultText0"></span>
+	    <span id="resultText-0"></span>
 	    </td>
 	  </tr>
 
-	  <tr id="newLocation0" style="display:none">
+	  <tr id="newLocation-0" style="display:none">
 	    <td>New Location:</td>
 	    <td>
-	      <input type="text" name="newlocation0" id="newlocation0" size="40" onChange="sendValidateRequest('newlocation0')">
+	      <input type="text" name="newlocation-0" id="newlocation-0" size="40" onChange="sendValidateRequest('newlocation-0')">
 	    </td>
 	  </tr>
-	  <tr id="newDescription0" style="display:none">
+	  <tr id="newDescription-0" style="display:none">
 	    <td>Location Description:</td>
 	    <td>
-	      <input type="text" name="newdescription0" id="newdescription0" size="40">
+	      <input type="text" name="newdescription-0" id="newdescription-0" size="40">
 	    </td>
-	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation0', 'newdescription0', 'resultText0', 'location0', 'newLocation0', 'newDescription0');">
+	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation-0', 'newdescription-0', 'resultText-0', 'location-0', 'newLocation-0', 'newDescription-0');">
 	    </td>
 	  </tr>
 	</table>
