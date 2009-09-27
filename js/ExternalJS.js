@@ -408,7 +408,7 @@ function addItemField() {
     var nextnum = divs.length;
     var newrow = document.createElement('div');
     var br = document.createElement('br');
-    newrow.setAttribute('id', 'item' + nextnum);
+    newrow.setAttribute('id', 'item-' + nextnum);
     getItemBlockContents(newrow, nextnum);
     t.appendChild(newrow);
     t.appendChild(br);
@@ -423,16 +423,16 @@ function addItemField() {
 function removeItemField() {
     var count = document.getElementById("count");
     if (Number(count.value) > 1) {
-	var t = document.getElementById("itemTable");
-	var divs = t.getElementsByTagName("div");
-	t.removeChild(divs[divs.length - 1]);
+			var t = document.getElementById("itemTable");
+			var divs = t.getElementsByTagName("div");
+			t.removeChild(divs[divs.length - 1]);
 
-	// decrement count
-	count.setAttribute('value', Number(count.value - 1));
+			// decrement count
+			count.setAttribute('value', Number(count.value - 1));
 
-	// hide delete button?
-	if (Number(count.value) < 2)
-	    document.getElementById("removeButton").style.display="none";
+			// hide delete button?
+			if (Number(count.value) < 2)
+	    	document.getElementById("removeButton").style.display="none";
     }
 }
 
@@ -874,15 +874,15 @@ function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrowe
 
 function updateTotal(callingID)
 {
-    var total = $('total_cost');
-    var new_value = $(callingID); 
+    var total = (jQuery)('#total_cost');
+    var new_value = (jQuery)('#'+callingID); 
 	
-	if( new_value.value.match( /^\d+$/ ) ){
-		new_value.value += '.00';
+	if( new_value.val().match( /^\d+$/ ) ){
+		new_value.val(new_value.val() + '.00');
 	}
 	
-    if( !new_value.value.match( /^\d+\.\d{2}$/ ) ){
-		alert("Please enter a value in the form 'xxxxx.yy'");
+    if( !new_value.val().match( /^\d+\.\d{2}$/ ) ){
+				alert("Please enter a value in the form 'xxxxx.yy'");
         new_value.focus();
         new_value.select();
         return;
@@ -890,12 +890,17 @@ function updateTotal(callingID)
 
     var num = 0;
     var sum = 0;
-    while( $('value'+num) != null ) {
-        sum += Number($('value'+num).value);
-        num++;
+
+		//select all input fields with class "value"
+		var value_inputs = (jQuery)('.value');
+		//sum all together
+    for(var i = 0; i < value_inputs.length; i++){
+        sum += Number(value_inputs[i].value);
     }
 
-    sum += Number($('misc_cost').value);
+		//add miscellaneous cost column
+    sum += Number((jQuery)('#misc_cost').val());
 
-    total.value = sum.toFixed(2);
+		//change total value
+    total.val(sum.toFixed(2));
 }

@@ -43,18 +43,18 @@ echo <<<END
 <table>
 <tr>
 <td>Item Description: </td>
-<td><input type="text" name="desc$id" size="40" id="description$id" class="validate"></td>
+<td><input type="text" name="desc-$id" size="40" id="description-$id" class="validate"></td>
   </tr>
 	  
   <tr>
   <td>Value: </td>
-  <td><input type="text" name="value$id" id="value$id" class="validate" onchange="updateTotal('value$id')"/></td>
+  <td><input type="text" name="value-$id" id="value-$id" class="value validate" onchange="updateTotal('value-$id')"/></td>
   </tr>
 	  
   <tr>
   <td>Condition: </td>
   <td>
-  <select class="dropDown" name="condition$id">
+  <select class="dropDown" name="condition-$id" id="condition-$id">
   <option value="Excellent">Excellent</option>
   <option value="Good">Good</option>
   <option value="Fair">Fair</option>
@@ -67,28 +67,28 @@ echo <<<END
   <td>Location: </td>
 
   <td>
-  <select class="dropDown" id="location$id" name="location$id" onChange="OnChangeDouble('location$id', 'newLocation$id', 'newDescription$id')" onFocus="getLocationOptions(this);">
+  <select class="dropDown" id="location-$id" name="location-$id" onChange="OnChangeDouble('location-$id', 'newLocation-$id', 'newDescription-$id')" onFocus="getLocationOptions(this);">
   $loc_select
   <option>
   New Location
   </option>
   </select>
-  <span id="resultText$id"></span>
+  <span id="resultText-$id"></span>
   </td>
   </tr>
 
-  <tr id="newLocation$id" style="display:none">
+  <tr id="newLocation-$id" style="display:none">
   <td>New Location:</td>
   <td>
-  <input type="text" name="newlocation$id" id="newlocation$id" size="40" onchange="sendValidateRequest('newlocation$id')">
+  <input type="text" name="newlocation-$id" id="newlocation-$id" size="40" onchange="sendValidateRequest('newlocation-$id')">
   </td>
   </tr>
-  <tr id="newDescription$id" style="display:none">
+  <tr id="newDescription-$id" style="display:none">
   <td>Location Description:</td>
   <td>
-  <input type="text" name="newdescription$id" id="newdescription$id" size="40">
+  <input type="text" name="newdescription-$id" id="newdescription-$id" size="40">
   </td>
-  	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation$id', 'newdescription$id', 'resultText$id', 'location$id', 'newLocation$id', 'newDescription$id');">
+  	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation-$id', 'newdescription-$id', 'resultText-$id', 'location-$id', 'newLocation-$id', 'newDescription-$id');">
 	    </td>
   </tr>
   </table>
