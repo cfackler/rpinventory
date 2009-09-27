@@ -34,6 +34,12 @@ $this->assign('clubName', Config::get('club_name'));
 <script src="js/modulesJS/jquery.js" language="javascript" type="text/javascript"></script>
 <script>jQuery.noConflict();</script>
 
+<script src="js/functions.interface.js" language="javascript" type="text/javascript"></script>
+
+{if $page_tpl == 'addPurchase'}
+	<script src="js/addPurchase.interface.js" language="javascript" type="text/javascript"></script>
+{/if}
+
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 

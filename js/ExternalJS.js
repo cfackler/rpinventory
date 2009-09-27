@@ -649,38 +649,6 @@ function getLocationOptionsNonAsynch(element, type, selectText)
 				});
 	}
 }
-/**
- *	getSelectOptions takes the ID of a select object, the kind of dropdown it is
- *	(locations, businesses), and the optional text of the option to select when 
- *	the select is refreshed.
- *	
- *	@param	selectID								-	The id of the <select> object.
- *	@param	type										-	The type of option (business, location, ect)
- *	@param	postSelectedOptionText	-	The optional text to select when the <select> is refreshed.
- **/
-function getSelectOptions(selectID, type, postSelectedOptionText)
-{
-	//this is a business pulldown
-	if(type == 'businesses'){
-		//get options
-		(jQuery).ajax({
-			url: 'ajax.php?operation=businesses',
-			type: 'POST',
-			asynchronous: true,
-			success: function(msg)
-			{
-				//load the options into the <select> object
-				(jQuery)('#'+selectID).html(msg);
-				
-				//select a certain option
-				if(postSelectedOptionText)
-				{
-					makeSelection(selectID, postSelectedOptionText);
-				}
-			}
-		});
-	}
-}
 
 function hideBusiness() {
     var checkbox = document.getElementById( 'ignoreBusiness' );
@@ -902,44 +870,6 @@ function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrowe
 						 resultElement.innerHTML = ' | Error saving borrower!';
 			     }
 		     });	     	  
-}
-/**
- *  makeSelection takes an id of a <select> object, and some text
- *  that is an item in the list, and selects it.
- *
- *  @param id   - The id of the <select> object.
- *  @param text - The text of the option to select.
- **/
-function makeSelection(id, text)
-{
-  var options = (jQuery)('#'+id).attr('options');
-  for(i = 0; i<options.length; i++)
-  {
-    if(options[i].text == text)
-    {
-      (jQuery)('#'+id).attr('selectedIndex', i);
-      break;
-    }
-  }
-}
-/**
- *	makeSelectionValue takes an id of a <select> object, and some value
- *	of one of the options in the list, and selects it.
- *
- *	@param id			-	The id of the <select> object on the page.
- *	@param value	-	The value of the option to select.
- **/
-function makeSelectionValue(id, value)
-{
-  var options = (jQuery)('#'+id).attr('options');
-  for(i = 0; i<options.length; i++)
-  {
-    if(options[i].value == value)
-    {
-      (jQuery)('#'+id).attr('selectedIndex', i);
-      break;
-    }
-  }
 }
 
 function updateTotal(callingID)
