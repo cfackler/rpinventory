@@ -18,8 +18,18 @@ function insertCategory($category_name)
 	{
 		die('Category must have a name');
 	}
-	
+
+	//sanitize input
 	$category_name = mysqli_real_escape_string($link, $category_name);
+	
+	//check for duplicate category
+	$query = 'SELECT category_name FROM categories WHERE category_name="'.$category_name.'"';
+	$result = mysqli_query($link, $query) or die('Selecting categories failed: '.mysqli_error($link));
+	if(mysqli_num_rows($result) > 0 )
+	{
+		die('Category already exists.  Please choose from list.');
+	}
+	
 	$query = 'INSERT INTO categories (category_name) VALUES ("'.$category_name.'")';
 	mysqli_query($link, $query) or die('Inserting category failed: '.mysqli_error($link));
 	
