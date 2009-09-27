@@ -154,11 +154,14 @@
 		<tr>
 			<td>Category: </td>
 			<td>
-				<select id="category-0" name="category-0" class="category_select dropdown">
+				<select id="category-0" name="category-0" class="category_select dropdown" onChange="">
 					<option value="-1">Select a Category</option>
 					{$category_options}
 					<option value="newCategory">New Category</option>
 				</select>
+			</td>
+			<td>
+				<span id="category_notification-0" name="category_notification-0" class="notification"><!-- --></span>
 			</td>
 		</tr>
 				

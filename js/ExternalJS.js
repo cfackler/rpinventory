@@ -194,10 +194,10 @@ function OnChange(item1, item2){
     //If you have selected the last element in the list
     //	(will always be "new Location" (or new whatever)
     if(Menu.selectedIndex == Menu.length-1){
-	blankFields.style.display = '';
+			blankFields.style.display = '';
     }
     else{
-	blankFields.style.display = 'none';
+			blankFields.style.display = 'none';
     }
 }
 
