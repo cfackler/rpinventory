@@ -35,11 +35,13 @@ function getInventory($sortIndex = 0, $sortdir = 0)
   //Determine which column to sort by
   if($sortIndex == 0)
     $sortBy = 'description';
-  else if($sortIndex == 1)
-    $sortBy = 'current_condition';
+	else if($sortIndex == 1)
+		$sortBy = 'description';
   else if($sortIndex == 2)
-    $sortBy = 'current_value';
+    $sortBy = 'current_condition';
   else if($sortIndex == 3)
+    $sortBy = 'current_value';
+  else if($sortIndex == 4)
     $sortBy = 'location';
   
   //Determine which direction to sort in
@@ -83,7 +85,31 @@ function getInventory($sortIndex = 0, $sortdir = 0)
             $item->loan_id = 0;
             $item->checkout_id = 0;
         }
+				
+				//Get categories of item
+				$sql = 'SELECT category_id FROM inventory_category WHERE inventory_id="'.$item->inventory_id.'"';
+				$catIDsResult = mysqli_query($link, $sql) or die('Error getting categories: '.mysqli_error($link) );
+				if(mysqli_num_rows($catIDsResult) > 0)
+				{
+					//first category ID
+					$cat_id = mysqli_fetch_object($catIDsResult)->category_id;
+					$sql = 'SELECT category_name FROM categories WHERE id="'.$cat_id.'"';
+					//if multiple categories
+					while($cat_id = mysqli_fetch_object($catIDsResult))
+					{
+						$sql .= 'OR id="'.$cat_id->category_id.'"';
+					}
+					$catNamesResult = mysqli_query($link, $sql) or die('Error getting category names: '.mysqli_error($link));
 
+					//format category names
+					$categories = mysqli_fetch_object($catNamesResult)->category_name;
+					while($cat_name = mysqli_fetch_object($catNamesResult))
+					{
+						$categories .= ', '.$cat_name->category_name;
+					}
+					$item->category = $categories;
+				}
+				
         $items [] = $item;
     }
 

@@ -233,6 +233,7 @@ for($x=0; $x<$count; $x++)
 
 	//Insert item category
 	$sql = 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ("'.$inv_id.'", "'.$_POST['category-'.$x].'")';
+	mysqli_query($link, $sql) or die('Error inserting item category: '.mysqli_error($link));
 	
 }
 	

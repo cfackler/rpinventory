@@ -39,6 +39,7 @@
 	{/if}
 	<td>{$items[itemLoop]->description}</td>
 	{if $authority >= 1}
+		<td>{$items[itemLoop]->category}</td>
 		<td>{$items[itemLoop]->current_condition}</td>
 		<td>${$items[itemLoop]->current_value}</td>
 	{/if}

@@ -53,12 +53,12 @@ else
     the template file. */
 $headers = array();
 $headers[0] = array('label' => 'Item', 'width' => 250);
+$headers[1] = array('label' => 'Category', 'width' => 100);
 if( $auth >= 1 ){
-  $headers[1] = array('label' => 'Condition', 'width' => 100);
-  $headers[2] = array('label' => 'Current Value', 'width' => 150);
+  $headers[2] = array('label' => 'Condition', 'width' => 100);
+  $headers[3] = array('label' => 'Current Value', 'width' => 150);
 }
-
-$headers[3] = array('label' => 'Location', 'width' => 150);
+$headers[4] = array('label' => 'Location', 'width' => 150);
 
 /* Paginate the results */
 paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'inventory' );
