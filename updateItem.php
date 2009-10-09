@@ -43,20 +43,20 @@ if($count == 0)
 for($x=0; $x<$count; $x++)
 {
   //Description
-  $desc = $_POST["desc" . $x];
+  $desc = $_POST["desc-" . $x];
   if(strlen($desc) == 0)
     die("Must have a description");
   
 	
   //Condition
-  $condition = $_POST["condition" . $x];
+  $condition = $_POST["condition-" . $x];
   if(strlen($condition) == 0)
     die("Must have a condition");	
   
   //Location	
-  $location = (int)$_POST["location" . $x];
+  $location = (int)$_POST["location-" . $x];
   
-  $newLocation = $_POST["newlocation" . $x];
+  $newLocation = $_POST["newlocation-" . $x];
   
   $desc = mysqli_real_escape_string($link, $desc);
   $condition = mysqli_real_escape_string($link, $condition);
@@ -82,7 +82,7 @@ for($x=0; $x<$count; $x++)
     if(strlen($newLocation) == 0)
       die("New location must have a name.");	
     
-    $locDescription = $_POST["newdescription" . $x];
+    $locDescription = $_POST["newdescription-" . $x];
     $locDescription = mysqli_real_escape_string($link, $locDescription);
     
     if(strlen($locDescription) == 0)
@@ -113,12 +113,12 @@ for($x=0; $x<$count; $x++)
   
   
   //Value
-  $value = (double)$_POST["value" . $x];
+  $value = (double)$_POST["value-" . $x];
   if($value == 0)
     die("Invalid Value");
   
   //Item ID
-  $inventory_id = (int)$_POST["inventory_id" . $x];
+  $inventory_id = (int)$_POST["inventory_id-" . $x];
   if($inventory_id == 0)
     die("Invalid item id");	
   
