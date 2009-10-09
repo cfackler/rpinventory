@@ -32,23 +32,23 @@
 
 <table width="400">
 
-<input type="hidden" name="inventory_id{$smarty.section.num.index}" size="40" value="{$items[num]->inventory_id}">
+<input type="hidden" name="inventory_id-{$smarty.section.num.index}" size="40" value="{$items[num]->inventory_id}">
 
 <tr>
 	<td>Description:
 </td>
-	<td><input type="text" name="desc{$smarty.section.num.index}" size="40" id="description" value="{$items[num]->description}"></td>
+	<td><input type="text" name="desc-{$smarty.section.num.index}" size="40" id="description" value="{$items[num]->description}"></td>
 </tr>
 
 <tr>
 	<td>Value: </td>
-	<td><input type="text" name="value{$smarty.section.num.index}" size="40" id="value" value="{$items[num]->current_value}"></td>
+	<td><input type="text" name="value-{$smarty.section.num.index}" size="40" id="value" value="{$items[num]->current_value}"></td>
 </tr>
 
 <tr>
 	<td>Condition: </td>
 	<td>
-		<select class="dropDown" name="condition{$smarty.section.num.index}">
+		<select class="dropDown" name="condition-{$smarty.section.num.index}">
 			<option value="Excellent" {if $items[num]->current_condition == "Excellent"}selected{/if}>Excellent</option>
 			<option value="Good" {if $items[num]->current_condition == "Good"}selected{/if}>Good</option>
 			<option value="Fair" {if $items[num]->current_condition == "Fair"}selected{/if}>Fair</option>
@@ -61,7 +61,7 @@
 	<td>Location: </td>
 	<td>
 	
-	<select class="dropDown" name="location{$smarty.section.num.index}" id="location{$smarty.section.num.index}" onChange="OnChangeDouble('location{$smarty.section.num.index}', 'newLocation{$smarty.section.num.index}', 'newDescription{$smarty.section.num.index}')">   
+	<select class="dropDown" name="location-{$smarty.section.num.index}" id="location-{$smarty.section.num.index}" onChange="OnChangeDouble('location-{$smarty.section.num.index}', 'newLocation-{$smarty.section.num.index}', 'newDescription-{$smarty.section.num.index}')">   
     {section name=loc loop=$locations}
 		<option value="{$locations[loc]->location_id}">
 			{$locations[loc]->location}
@@ -79,16 +79,16 @@
 	
 	</td>
 </tr>
-    <tr id="newLocation{$smarty.section.num.index}" style="display:none">
+    <tr id="newLocation-{$smarty.section.num.index}" style="display:none">
             <td>New Location:</td>
         <td>
-                <input type="text" name="newlocation{$smarty.section.num.index}" size="40">
+                <input type="text" name="newlocation-{$smarty.section.num.index}" size="40">
         </td>
     </tr>
-    <tr id="newDescription{$smarty.section.num.index}" style="display:none">
+    <tr id="newDescription-{$smarty.section.num.index}" style="display:none">
             <td>Location Description:</td>
         <td>
-                <input type="text" name="newdescription{$smarty.section.num.index}" size="40">
+                <input type="text" name="newdescription-{$smarty.section.num.index}" size="40">
         </td>
     </tr>
 	
