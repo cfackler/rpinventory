@@ -23,6 +23,7 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/display.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
@@ -39,13 +40,9 @@ $smarty = new Smarty_Inv();
 
 //grab all ids
 $idString = $_GET["ids"];
-$token = strtok($idString, ",");
+//Split idString into array using ',' as delimiter
 $idList = array();
-
-while ($token !== false) {
-  $idList[] = (int)$token;
-  $token = strtok(",");
-}
+$idList = explode(',', $idString);
 
 if(count($idList) == 0)
   die("No items");
@@ -54,8 +51,13 @@ if(count($idList) == 0)
 $items = array();
 foreach($idList as $id)
   {
+
     //item
-    $query= "SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value  FROM inventory, locations WHERE locations.location_id=inventory.location_id and inventory.inventory_id = " . $id;
+    $query= "SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value, inventory_category.category_id AS cat_id
+						FROM inventory, locations, inventory_category
+						WHERE locations.location_id=inventory.location_id
+									AND inventory_category.inventory_id = inventory.inventory_id
+									AND inventory.inventory_id = " . $id;
     $result = mysqli_query($link, $query);
 	
     if(mysqli_num_rows($result) == 0)
@@ -75,6 +77,9 @@ while($loc = mysqli_fetch_object($locResult))
     $locations [] = $loc;
   }
 
+//Categories Options (for populating dropdown)
+$category_options = get_options('categories', 'id', 'category_name');
+
 //BEGIN Page
 	
 //Assign vars
@@ -84,6 +89,7 @@ $smarty->assign('page_tpl', 'editItem');
 $smarty->assign('items', $items);
 $smarty->assign('itemCount', count($items));
 $smarty->assign('locations', $locations);
+$smarty->assign('category_options', $category_options);
 
 $smarty->display('index.tpl');
 

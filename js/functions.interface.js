@@ -31,7 +31,7 @@ function makeSelection(id, text)
     if(options[i].text == text)
     {
       (jQuery)('#'+id).attr('selectedIndex', i);
-			(jQuery)('#'+id).change();
+			(jQuery)('#'+id).change(); //incase any behavior is mapped to change
       break;
     }
   }
@@ -51,6 +51,7 @@ function makeSelectionValue(id, value)
     if(options[i].value == value)
     {
       (jQuery)('#'+id).attr('selectedIndex', i);
+			(jQuery)('#'+id).change(); //incase any behavior is mapped to change
       break;
     }
   }

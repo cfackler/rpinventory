@@ -46,6 +46,19 @@
 </tr>
 
 <tr>
+	<td>Category: </td>
+	<td>
+		<select name="category-{$smarty.section.num.index}" id="category-{$smarty.section.num.index}">
+			{$category_options}
+			<option value="-1">
+				New Category
+			</option>
+		</select>
+	</td>
+</tr>
+		
+
+<tr>
 	<td>Condition: </td>
 	<td>
 		<select class="dropDown" name="condition{$smarty.section.num.index}">

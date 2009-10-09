@@ -47,6 +47,7 @@ for($x=0; $x<$count; $x++)
   if(strlen($desc) == 0)
     die("Must have a description");
   
+	
   //Condition
   $condition = $_POST["condition" . $x];
   if(strlen($condition) == 0)
@@ -121,6 +122,11 @@ for($x=0; $x<$count; $x++)
   if($inventory_id == 0)
     die("Invalid item id");	
   
+	//Category
+	$cat_id = $_POST["category-".$x];
+	$query = 'UPDATE inventory_category SET category_id='.$cat_id.' WHERE inventory_id='.$inventory_id;
+	mysqli_query($link, $query) or die("Updating category failed: ".mysqli_error($link));
+
   
   $query = "update inventory set description = '" . $desc . "', location_id = '" . $location . "', current_condition = '" . $condition . "', current_value = '" . $value . "' where inventory_id = '" . $inventory_id . "'";
   
