@@ -899,6 +899,14 @@ function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrowe
 							document.getElementById(zip).value = '';
 							document.getElementById(phone).value = '';
 
+                            // Set fields on page
+                            document.getElementById('address').value = address_name;
+                            document.getElementById('address2').value = address2_name;
+                            document.getElementById('city').value = city_name;
+                            document.getElementById('state').value = state_name;
+                            document.getElementById('zipcode').value = zip_num;
+                            document.getElementById('phone').value = phone_num;
+
 		     },
 		     onFailure: function()
 			     {	// Alert on failure
