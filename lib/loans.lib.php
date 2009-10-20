@@ -91,9 +91,9 @@ function getViewLoans( $currentSortIndex, $currentSortDir ){
   $auth = getAuthority();
 
   //items
-  $query=   'SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description
-          FROM logins, loans, inventory 
-          WHERE loans.borrower_id = logins.id and inventory.inventory_id = loans.inventory_id ';
+  $query=   'SELECT loan_id, loans.inventory_id, name, loans.borrower_id, borrowers.borrower_id, issue_date, return_date, starting_condition, description
+          FROM borrowers, loans, inventory 
+          WHERE loans.borrower_id = borrowers.borrower_id and inventory.inventory_id = loans.inventory_id ';
   
   
   //Filter
