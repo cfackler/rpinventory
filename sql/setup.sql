@@ -57,7 +57,7 @@ CREATE TABLE loans (
        issue_date date NOT NULL,
        return_date date,
        starting_condition varchar(100),
-			 original_location_id int(5) NOT NULL,
+       original_location_id int(5) NOT NULL,
        PRIMARY KEY (loan_id)
 ) type = MyISAM;
 
@@ -100,6 +100,7 @@ CREATE TABLE checkouts (
        event_location varchar(50) NOT NULL,
        starting_condition varchar(100) NOT NULL,
        ending_condition varchar(100),
+       original_location_id int(5) NOT NULL,
        PRIMARY KEY (checkout_id)
 ) type = MyISAM;
 
