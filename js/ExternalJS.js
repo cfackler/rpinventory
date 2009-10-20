@@ -685,8 +685,11 @@ function getSelectOptions(selectID, type, postSelectedOptionText)
 function hideBusiness() {
     var checkbox = document.getElementById( 'ignoreBusiness' );
     var span = document.getElementById( 'businessInformation' );
+    var newbusiness = document.getElementById('newBusiness');
     if( checkbox.checked ) {
-	span.style.display = "none";
+	    span.style.display = "none";
+        newbusiness.style.display = "none";
+
     }
     else{
 	span.style.display = "";
