@@ -34,11 +34,11 @@ function getLoan( $loanId )
 	// Authenticate
 	$auth = GetAuthority();
 
-	$sql = 'SELECT inventory.description, logins.username, loans.issue_date, locations.location FROM loans, inventory, logins, locations WHERE loans.loan_id = ' . $loanId .
-					' AND loans.inventory_id = inventory.inventory_id AND loans.borrower_id = logins.id AND loans.original_location_id = locations.location_id';
+	$sql = 'SELECT inventory.description, borrowers.name, borrowers.borrower_id, loans.issue_date, locations.location FROM borrowers, loans, inventory, locations WHERE loans.loan_id = ' . $loanId .
+					' AND loans.inventory_id = inventory.inventory_id AND loans.borrower_id = borrowers.borrower_id AND loans.original_location_id = locations.location_id';
 
 	$result = mysqli_query( $link, $sql ) or
-		die( 'Error: '. mysql_error() );
+		die( 'Error: '. mysqli_error($link) );
 
 	$loan = mysqli_fetch_object( $result ); 
 
