@@ -63,7 +63,7 @@ function getLoans( $startDate, $endDate )
   $endDate = mysqli_real_escape_string( $link, $endDate);
   
   // Loan History
-  $query= "SELECT issue_date, return_date, starting_condition, inventory.description, username FROM loans, inventory, logins WHERE logins.id = loans.borrower_id AND loans.inventory_id = inventory.inventory_id AND issue_date >= '". $startDate ."' AND (return_date <= '". $endDate ."' OR return_date IS NULL)";
+  $query= "SELECT issue_date, return_date, starting_condition, inventory.description, borrowers.borrower_id, borrowers.name AS username FROM loans, inventory, borrowers WHERE borrowers.borrower_id = loans.borrower_id AND loans.inventory_id = inventory.inventory_id AND issue_date >= '". $startDate ."' AND (return_date <= '". $endDate ."' OR return_date IS NULL)";
 
   $result = mysqli_query($link, $query) or
     die( 'Could not get the loan history' );
