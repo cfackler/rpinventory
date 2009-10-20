@@ -887,6 +887,7 @@ function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrowe
 				 
 				 			// Set the new name
 							borrower_text.value = borrower_name;
+                            borrower_text.disabled = false;
 
 							//clears fields
 							document.getElementById(name).value = '';
