@@ -49,6 +49,11 @@ $condition = mysqli_real_escape_string( $link, $_POST['condition']);
 if( $time_returned == '' ){
   die( 'Invalid Return Time' );
 }
+
+// Get location
+$sql = "SELECT original_location_id FROM checkouts WHERE checkout_id = ". $checkout_id ." LIMIT 1";
+$result = mysqli_query($link, $sql) or die("Could not get original location");
+$original_loc = mysqli_fetch_object($result);
 	
 //Create query for returning item
 $sql = "Update checkouts set time_returned = '" . $time_returned . "', ending_condition = '" . $condition . "' where checkout_id = " . $checkout_id;
@@ -58,7 +63,7 @@ if(!mysqli_query($link, $sql))
 	die("Query failed");
 
 //Create query for updating item condition
-$sql = "UPDATE inventory SET current_condition = '". $condition . "'  WHERE inventory_id = " . $inv_id;
+$sql = "UPDATE inventory SET current_condition = '". $condition . "', location_id = '". $original_loc->original_location_id . "'  WHERE inventory_id = " . $inv_id;
 
 if(!mysqli_query($link, $sql))
         die("Query failed: ". mysqli_error($link));
