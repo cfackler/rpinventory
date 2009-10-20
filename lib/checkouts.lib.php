@@ -32,7 +32,7 @@ function getCheckout($checkoutId){
   // Authenticate
   $auth = GetAuthority();
 
-  $sql = 'SELECT inventory.description, borrowers.name, checkouts.time_taken, locations.location FROM checkouts, inventory, borrowers, locations WHERE checkouts.checkout_id = '. $checkoutId .' AND checkouts.inventory_id = inventory.inventory_id AND checkouts.borrower_id = borrowers.borrower_id AND checkouts.original_location_id = locations.location_id';
+  $sql = 'SELECT inventory.description, borrowers.name, checkouts.time_taken, locations.location FROM checkouts, inventory, borrowers, locations WHERE checkouts.checkout_id = '. $checkoutId .' AND checkouts.inventory_id = inventory.inventory_id AND checkouts.borrower_id = borrowers.borrower_id';
 
   $result = mysqli_query($link, $sql) or
     die( 'Error: '.mysqli_error($link));

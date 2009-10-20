@@ -47,7 +47,7 @@ if($id == 0)
 
 
 //Loan status
-$checkoutQuery = "Select description, current_condition, time_taken, checkout_id, inventory.inventory_id, original_location_id from inventory, checkouts where inventory.inventory_id = checkouts.inventory_id and checkout_id = " . $id;
+$checkoutQuery = "Select description, current_condition, time_taken, checkout_id, inventory.inventory_id from inventory, checkouts where inventory.inventory_id = checkouts.inventory_id and checkout_id = " . $id;
 $checkoutResult = mysqli_query($link, $checkoutQuery);
 
 $status = "None";
