@@ -82,13 +82,25 @@ function VerifyUserExists($id, $link)
 {
 	
 	//Find user
-	$result=mysqli_query($link, "select * from logins where id=" . $id);
+	$result=mysqli_query($link, "select * from logins where id=" . mysqli_real_escape_string($link, $id));
 
 	//verify count
 	if(mysqli_num_rows($result) == 0)
 		return false;
 
 	return true;
+}
+
+function VerifyBorrowerExists($id, $link)
+{
+    //Find borrower
+    $result = mysqli_query($link, 'SELECT * FROM borrowers WHERE borrower_id = ' . mysqli_real_escape_string($link,$id)) or
+        die("Query Failed: ".mysqli_error($link));
+
+    if(mysqli_num_rows($result) == 0)
+        return false;
+
+    return true;
 }
 
 function VerifyBusinessExists($id, $link)
