@@ -231,9 +231,16 @@ for($x=0; $x<$count; $x++)
   if(!mysqli_query($link, $sql))
     die("Purchase Record Query failed");
 
-	//Insert item category
-	$sql = 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ("'.$inv_id.'", "'.$_POST['category-'.$x].'")';
-	mysqli_query($link, $sql) or die('Error inserting item category: '.mysqli_error($link));
+	// For all categories
+	$sql = '';
+	for($c = 0; $c < $_POST['category_count-'.$x]; $c++)
+	{
+		//Insert item category
+		$sql .= 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ('.$inv_id.', '.$_POST['category_'.$c.'-'.$x].');'	;
+		
+	}
+	mysqli_multi_query($link, $sql) or die('Error inserting item category: '.mysqli_error($link));
+	
 	
 }
 	

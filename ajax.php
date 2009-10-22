@@ -26,7 +26,7 @@ require_once( 'lib/users.lib.php' );
 require_once( 'lib/businesses.lib.php' );
 require_once( 'lib/borrowers.lib.php' );
 require_once( 'lib/display.lib.php' );
-require_once('lib/categories.lib.php');
+require_once( 'lib/categories.lib.php' );
 
 switch ($_GET['operation'])
   {
@@ -72,6 +72,10 @@ switch ($_GET['operation'])
 	
 	case 'options':
 		print get_options($_GET['table_name'], $_GET['value_column'], $_GET['display_column']);
+		break;
+		
+	case 'itemCategoryIDs':
+		print get_item_category_ids($_POST['inventory_id']);
 		break;
 	}
 

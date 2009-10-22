@@ -6,13 +6,16 @@
 	
 	(jQuery)('.saveNewCategory').livequery('click', function()
 	{
-		//get count
-		var $count = (jQuery)(this).attr('id').split('-')[1];
+		//get item_index
+		var $item_index = (jQuery)(this).attr('id').split('-')[1];
+		
+		// get category_index
+		var $cat_index = (jQuery)(this).attr('id').split('_')[1].split('-')[0];
 		
 		//validate field
-		var $newCatName = (jQuery)('#newCategory-'+$count).val();
+		var $newCatName = (jQuery)('#newCategory_'+$cat_index+'-'+$item_index).val();
 		
-		if( $newCatName == '' || $newCatName == (jQuery)('#newCategory-'+$count).attr('title'))
+		if( $newCatName == '' || $newCatName == (jQuery)('#newCategory_'+$cat_index+'-'+$item_index).attr('title'))
 		{
 			//if field is empty, or user hasn't typed anything in yet, display error
 			alert('Please enter a valid category name.');
@@ -29,7 +32,23 @@
 				if(msg == 'success')
 				{
 					//re-populate dropdown, and select new category
-					getSelectOptions('category-'+$count, 'categories', $newCatName);
+					getSelectOptions('category_'+$cat_index+'-'+$item_index, 'categories', $newCatName);
+					
+					//re-populate all other dropdowns, and select the previously selected item
+					$cat_count = (jQuery)('#category_count-'+$item_index).val();
+					for(var $i = 0; $i < $cat_count; $i++)
+					{
+						/* Do not do this for the select box that initated the process */
+						if($i == $cat_index)
+							continue;
+							
+						/* currently selected text */
+						var $currText = (jQuery)('#category_'+$i+'-'+$item_index).attr('options');
+						$currText = $currText[(jQuery)('#category_'+$i+'-'+$item_index).attr('selectedIndex')].text;
+
+						/* repopulate dropdown */
+						getSelectOptions('category_'+$i+'-'+$item_index, 'categories', $currText);
+					}
 				}
 				else
 					alert(msg);
@@ -37,27 +56,30 @@
 		});
 	});
 	
-});
-
-function category_select_behavior()
-{
-	(jQuery)('.category_select').livequery('change', function(){
-		//get count (number after id)
-		var $count = (jQuery)(this).attr('id').split('-')[1];
-
-		//if new category was selected
-		if((jQuery)(this).val() == 'newCategory')
+	(jQuery)('.ui-state-default').livequery(function()
+	{
+		(jQuery)(this).hover(function()
 		{
-			//pop up new category text field
-			(jQuery)('#category_notification-'+$count).html('<input type="text" value="New category name" id="newCategory-'+$count
-				+'" name="newCategory-'+$count+'" title="New category name" class="autoClear" size="40" />'
-				+'<input type="button" id="saveNewCategory-'+$count
-				+'" class="saveNewCategory" value="Save Category" />');
-		}
-		else
+			(jQuery)(this).addClass('ui-state-hover');
+		}, function()
 		{
-			//category was selected from list, so hide input field
-			(jQuery)('#category_notification-'+$count).html('<!-- -->');
-		}
+			(jQuery)(this).removeClass('ui-state-hover');
+		});
 	});
-}
+	
+	(jQuery)('.add_category_button').livequery('click', function()
+	{
+		/* Add Category Button was clicked */
+		
+		/* get item index on page */
+		var $id = (jQuery)(this).attr('id').split('-')[1];
+		
+		/* show new category form */
+		(jQuery)('category_notification-'+$id).html('<input type="text" value="New category name" id="newCategory-'+$id
+			+'" name="newCategory-'+$id+'" title="New category name" class="autoClear" size="40" />'
+			+'<input type="button" id="saveNewCategory-'+$id
+			+'" class="saveNewCategory" value="Save Category" />');
+		
+	});
+	
+});

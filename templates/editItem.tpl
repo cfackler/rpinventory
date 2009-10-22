@@ -26,13 +26,13 @@
 
 <br />
 
-<input type="hidden" name="count" size="40" value="{$itemCount}">
+<input type="hidden" name="count" id="count" size="40" value="{$itemCount}">
 
 {section name=num loop=$items}
 
 <table width="400">
 
-<input type="hidden" name="inventory_id-{$smarty.section.num.index}" size="40" value="{$items[num]->inventory_id}">
+<input type="hidden" name="inventory_id-{$smarty.section.num.index}" id="inventory_id-{$smarty.section.num.index}" size="40" value="{$items[num]->inventory_id}">
 
 <tr>
 	<td>Description:
@@ -47,13 +47,19 @@
 
 <tr>
 	<td>Category: </td>
-	<td>
-		<select name="category-{$smarty.section.num.index}" id="category-{$smarty.section.num.index}">
+	<td id="categoryTD-{$smarty.section.num.index}">
+		<input type="hidden" name="catCount-{$smarty.section.num.index}" id="catCount-{$smarty.section.num.index}" value="{$items[num]->catCount}" />
+		<select name="category_0-{$smarty.section.num.index}" id="category_0-{$smarty.section.num.index}" class="category_select">
 			{$category_options}
 			<option value="-1">
 				New Category
 			</option>
 		</select>
+	</td>
+	<td>
+		<div id="categoryNotify-{$smarty.section.num.index}">
+			<!-- -->
+		</div>
 	</td>
 </tr>
 		

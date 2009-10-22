@@ -27,17 +27,21 @@ $this->assign('clubName', Config::get('club_name'));
 {/php}
 <title>{$clubName} - RPInventory</title>
 
+<link rel="stylesheet" href="js/modulesJS/jquery-ui-1.7.2.custom/css/blitzer/jquery-ui-1.7.2.custom.css" type="text/css" />
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
 <script src="js/ExternalJS.js" language="javascript" type="text/javascript"></script>
 <script src="js/modulesJS/prototype.js" language="javascript" type="text/javascript"></script>
 <script src="js/helpToolTip.js" language="javascript" type="text/javascript"></script>
 <script src="js/modulesJS/jquery.js" language="javascript" type="text/javascript"></script>
+<script src="js/modulesJS/jquery-ui-1.7.2.custom/js/jquery-ui-1.7.2.custom.min.js" language="javascript" type="text/javascript"></script>
 <script>jQuery.noConflict();</script>
 
 <script src="js/functions.interface.js" language="javascript" type="text/javascript"></script>
 
 {if $page_tpl == 'addPurchase'}
 	<script src="js/addPurchase.interface.js" language="javascript" type="text/javascript"></script>
+{elseif $page_tpl == 'editItem'}
+	<script src="js/editItem.interface.js" language="javascript" type="text/javascript"></script>
 {/if}
 
 

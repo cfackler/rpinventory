@@ -87,28 +87,21 @@ function getInventory($sortIndex = 0, $sortdir = 0)
         }
 				
 				//Get categories of item
-				$sql = 'SELECT category_id FROM inventory_category WHERE inventory_id="'.$item->inventory_id.'"';
-				$catIDsResult = mysqli_query($link, $sql) or die('Error getting categories: '.mysqli_error($link) );
-				if(mysqli_num_rows($catIDsResult) > 0)
-				{
-					//first category ID
-					$cat_id = mysqli_fetch_object($catIDsResult)->category_id;
-					$sql = 'SELECT category_name FROM categories WHERE id="'.$cat_id.'"';
-					//if multiple categories
-					while($cat_id = mysqli_fetch_object($catIDsResult))
-					{
-						$sql .= 'OR id="'.$cat_id->category_id.'"';
-					}
-					$catNamesResult = mysqli_query($link, $sql) or die('Error getting category names: '.mysqli_error($link));
+				$sql = 'SELECT categories.category_name
+								FROM inventory_category, categories
+								WHERE inventory_category.inventory_id="'.$item->inventory_id.'"
+								AND categories.id=inventory_category.category_id';
+				$cat_names = mysqli_query($link, $sql) or die('Error getting categories: '.mysqli_error($link) );
+				
+				//Each item must have a category, so no need to check for empty results
 
-					//format category names
-					$categories = mysqli_fetch_object($catNamesResult)->category_name;
-					while($cat_name = mysqli_fetch_object($catNamesResult))
-					{
-						$categories .= ', '.$cat_name->category_name;
-					}
-					$item->category = $categories;
+				//format category names
+				$categoryString = mysqli_fetch_object($cat_names)->category_name;
+				while($cat_name = mysqli_fetch_object($cat_names))
+				{
+					$categoryString .= ', '.$cat_name->category_name;
 				}
+				$item->category = $categoryString;
 				
         $items [] = $item;
     }

@@ -24,6 +24,7 @@
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/display.lib.php');
+session_start();
 
 //Authenticate
 $auth = GetAuthority();
@@ -53,13 +54,14 @@ foreach($idList as $id)
   {
 
     //item
-    $query= "SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value, inventory_category.category_id AS cat_id
+    $query= "SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value, count(inventory_category.category_id) AS catCount
 						FROM inventory, locations, inventory_category
 						WHERE locations.location_id=inventory.location_id
 									AND inventory_category.inventory_id = inventory.inventory_id
 									AND inventory.inventory_id = " . $id;
     $result = mysqli_query($link, $query);
 	
+	/* retrieve item categories, and store them in a $_SESSION variable so they can be checked against */
     if(mysqli_num_rows($result) == 0)
       die("Invalid ID");
 	

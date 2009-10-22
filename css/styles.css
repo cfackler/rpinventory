@@ -307,6 +307,24 @@ span.TopOfTable h3{
   
 }
 
+a.icon_button
+{
+	float: left;
+	padding: 4px 4px 4px 0px;
+	text-decoration: none;
+	font-size: 10pt;
+	cursor: pointer;
+}
+a.icon_button:hover
+{
+	color: default;
+}
+span.icon_button_icon
+{
+	float: left;
+	margin: 0 4px;
+}
+
 .dropDown {
   background-color: #333333;
   border: 1px solid black;

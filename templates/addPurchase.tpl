@@ -154,11 +154,24 @@
 		<tr>
 			<td>Category: </td>
 			<td>
-				<select id="category-0" name="category-0" class="category_select dropdown" >
-					<option value="-1">Select a Category</option>
-					{$category_options}
-					<option value="newCategory">New Category</option>
-				</select>
+				<input type="hidden" id="category_count-0" name="category_count-0" value="1">
+
+				<div id="categories-0">
+					<select multiple id="category_0-0" name="category_0-0" class="category_select dropdown" >
+						{$category_options}
+					</select>
+					<span id="categories_notification-0">
+						<!-- -->
+					</span>
+				</div>
+				
+				<br />
+				<div>
+					<a id="add_category_button-0" class="ui-state-default ui-corner-all icon_button add_category_button">
+						<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category
+					</a>
+				</div>
+				
 			</td>
 			<td>
 				<span id="category_notification-0" name="category_notification-0" class="notification"><!-- --></span>

@@ -22,48 +22,49 @@
 */
 
 
-require_once("lib/connect.lib.php");  //mysql
-require_once("lib/auth.lib.php");  //Session
+require_once('lib/connect.lib.php');  //mysql
+require_once('lib/auth.lib.php');  //Session
+session_start();
 
 $link = connect();
 if($link == null)
-	die("Database connection failed");
+	die('Database connection failed');
 	
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
-	die("You dont have permission to access this page");
+	die('You dont have permission to access this page');
 
-$count = (int)$_POST["count"];
+$count = (int)$_POST['count'];
 if($count == 0)
-	die("Must edit at least one item");
+	die('Must edit at least one item');
 	
 
 //Run update for each item
 for($x=0; $x<$count; $x++)
 {
   //Description
-  $desc = $_POST["desc-" . $x];
+  $desc = $_POST['desc-' . $x];
   if(strlen($desc) == 0)
-    die("Must have a description");
+    die('Must have a description');
   
 	
   //Condition
-  $condition = $_POST["condition-" . $x];
+  $condition = $_POST['condition-' . $x];
   if(strlen($condition) == 0)
-    die("Must have a condition");	
+    die('Must have a condition');	
   
   //Location	
-  $location = (int)$_POST["location-" . $x];
+  $location = (int)$_POST['location-' . $x];
   
-  $newLocation = $_POST["newlocation-" . $x];
+  $newLocation = $_POST['newlocation-' . $x];
   
   $desc = mysqli_real_escape_string($link, $desc);
   $condition = mysqli_real_escape_string($link, $condition);
   $location = mysqli_real_escape_string($link, $location);
   $newLocation = mysqli_real_escape_string($link, $newLocation);
   
-  $sql = "SELECT * FROM locations";	
+  $sql = 'SELECT * FROM locations';	
   $result = mysqli_query($link, $sql); 
   $checkRows = 0;
   $loc_match;
@@ -113,20 +114,59 @@ for($x=0; $x<$count; $x++)
   
   
   //Value
-  $value = (double)$_POST["value-" . $x];
+  $value = (double)$_POST['value-' . $x];
   if($value == 0)
     die("Invalid Value");
   
   //Item ID
-  $inventory_id = (int)$_POST["inventory_id-" . $x];
+  $inventory_id = (int)$_POST['inventory_id-' . $x];
   if($inventory_id == 0)
-    die("Invalid item id");	
+    die('Invalid item id');	
   
-	//Category
-	$cat_id = $_POST["category-".$x];
-	$query = 'UPDATE inventory_category SET category_id='.$cat_id.' WHERE inventory_id='.$inventory_id;
-	mysqli_query($link, $query) or die("Updating category failed: ".mysqli_error($link));
+	/**
+	 *	Categories
+	 **/	
+	
+	/* All old categories are stored in session variables when editItem.php is loaded */	
+	$currCatIDs = $_SESSION['item_old_categoryIDs-'.$inventory_id];
 
+	/* Final categories can be retrieved from page */
+	$finalCatIDs = array();
+	for($c = 0; $c < $_POST['catCount-'.$x]; $c++)
+	{
+		/* Put each final category into array */
+		$finalCatIDs[] = $_POST['category_'.$c.'-'.$x];
+	}
+	
+	/* categories to delete are the ones from the original that are not in the final */
+	$toDeleteIDs = array_diff($currCatIDs, $finalCatIDs);
+	
+	/* categories to add are the ones from the final that are not in the original */
+	$toAddIDs = array_diff($finalCatIDs, $currCatIDs);
+
+	if(sizeof($toDeleteIDs) > 0)
+	{
+		$toDeleteQuery = 'DELETE FROM inventory_category
+											WHERE inventory_id='.$inventory_id;
+
+		foreach($toDeleteIDs as $id)
+		{
+			$toDeleteQuery .= ' AND category_id='.$id;
+		}
+		/* Actually delete categories */
+		mysqli_query($link, $toDeleteQuery) or die('Error deleting: '.mysqli_error($link));
+	}
+	
+	if(sizeof($toAddIDs) > 0)
+	{
+		$toAddQuery = '';
+		foreach($toAddIDs as $id)
+		{
+			$toAddQuery .= 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ('.$inventory_id.', '.$id.');';		
+		}
+		/* actually insert categories */
+		mysqli_query($link, $toAddQuery) or die('Error inserting: '.mysqli_error($link));
+	}
   
   $query = "update inventory set description = '" . $desc . "', location_id = '" . $location . "', current_condition = '" . $condition . "', current_value = '" . $value . "' where inventory_id = '" . $inventory_id . "'";
   
