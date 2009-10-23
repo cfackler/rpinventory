@@ -32,7 +32,7 @@ function getCheckout($checkoutId){
   // Authenticate
   $auth = GetAuthority();
 
-  $sql = 'SELECT inventory.description, borrowers.name, checkouts.time_taken, locations.location FROM checkouts, inventory, borrowers, locations WHERE checkouts.checkout_id = '. $checkoutId .' AND checkouts.inventory_id = inventory.inventory_id AND checkouts.borrower_id = borrowers.borrower_id AND checkouts.original_location_id = locations.location_id';
+  $sql = 'SELECT inventory.description, borrowers.name, checkouts.time_taken, locations.location, original_location_id FROM checkouts, inventory, borrowers, locations WHERE checkouts.checkout_id = '. $checkoutId .' AND checkouts.inventory_id = inventory.inventory_id AND checkouts.borrower_id = borrowers.borrower_id AND locations.location_id = checkouts.original_location_id';
 
   $result = mysqli_query($link, $sql) or
     die( 'Error: '.mysqli_error($link));
@@ -58,7 +58,7 @@ function getCheckouts( $startDate, $endDate ){
   $endDate = mysqli_real_escape_string( $link, $endDate);
   
   // Checkout History
-  $query= "SELECT time_taken, time_returned, event_name, starting_condition, ending_condition, inventory.description, username FROM checkouts, inventory, logins WHERE logins.id = checkouts.borrower_id AND checkouts.inventory_id = inventory.inventory_id AND time_taken >= '". $startDate ."' AND (time_returned <= '". $endDate ."' OR time_returned IS NULL)";
+  $query= "SELECT time_taken, time_returned, event_name, starting_condition, ending_condition, inventory.description, username, original_location_id FROM checkouts, inventory, logins WHERE logins.id = checkouts.borrower_id AND checkouts.inventory_id = inventory.inventory_id AND time_taken >= '". $startDate ."' AND (time_returned <= '". $endDate ."' OR time_returned IS NULL)";
 
   //  echo $query;
   $result = mysqli_query($link, $query) or
@@ -88,7 +88,7 @@ function getViewCheckouts( $currentSortIndex, $currentSortDir ){
   $auth = GetAuthority();	
   
   //items
-  $query=   'SELECT checkout_id, checkouts.inventory_id, username, borrower_id, time_taken, time_returned, starting_condition, username, description
+  $query=   'SELECT checkout_id, checkouts.inventory_id, username, borrower_id, time_taken, time_returned, starting_condition, username, description, original_location_id
           FROM logins, checkouts, inventory 
           WHERE checkouts.borrower_id = logins.id and inventory.inventory_id = checkouts.inventory_id';
   

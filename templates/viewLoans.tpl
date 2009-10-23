@@ -38,7 +38,7 @@
 				<label>Borrower:</label>
 			</td>
 			<td>
-				<label>{$loanObj->username}</label>
+				<label>{$loanObj->name}</label>
 			</td>
 		</tr>
 		<tr>

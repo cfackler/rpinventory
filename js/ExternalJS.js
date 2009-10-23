@@ -662,8 +662,11 @@ function getLocationOptionsNonAsynch(element, type, selectText)
 function hideBusiness() {
     var checkbox = document.getElementById( 'ignoreBusiness' );
     var span = document.getElementById( 'businessInformation' );
+    var newbusiness = document.getElementById('newBusiness');
     if( checkbox.checked ) {
-	span.style.display = "none";
+	    span.style.display = "none";
+        newbusiness.style.display = "none";
+
     }
     else{
 	span.style.display = "";
@@ -861,6 +864,7 @@ function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrowe
 				 
 				 			// Set the new name
 							borrower_text.value = borrower_name;
+                            borrower_text.disabled = false;
 
 							//clears fields
 							document.getElementById(name).value = '';
@@ -872,6 +876,14 @@ function saveBorrower(borrower_result, borrower_text, borrower_checkbox, borrowe
 							document.getElementById(state).value = '';
 							document.getElementById(zip).value = '';
 							document.getElementById(phone).value = '';
+
+                            // Set fields on page
+                            document.getElementById('address').value = address_name;
+                            document.getElementById('address2').value = address2_name;
+                            document.getElementById('city').value = city_name;
+                            document.getElementById('state').value = state_name;
+                            document.getElementById('zipcode').value = zip_num;
+                            document.getElementById('phone').value = phone_num;
 
 		     },
 		     onFailure: function()

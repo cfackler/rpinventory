@@ -48,6 +48,10 @@ $result = mysqli_query( $link, $sql ) or
   die( 'Invalid user id found'.mysqli_error($link) );
 $result = mysqli_fetch_object( $result );
 $user_id = $result->borrower_id;
+
+if(!VerifyBorrowerExists($user_id, $link)) {
+    die('Invalid Borrower');
+}
 	
 //get on-loan location
 $onLoanLocationId = (int)$_POST['location0'];

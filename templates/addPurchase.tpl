@@ -31,83 +31,85 @@
 		{$tooltip.ignoreBusiness}
     <br />
 
-    <span id="businessInformation">
     <br />
     <li>
-        <table><tr>
-	<td>Purchased	From:</td>
+        <table>
+            <tr id="businessInformation">
+            	<td>Purchased	From:</td>
       
-	<td><select class="dropDown" id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
-	<option value="-1">Select a Business</option>
-	{section name=bus loop=$businesses}
-	<option value="{$businesses[bus]->business_id}">
-	  {$businesses[bus]->company_name}
-	</option>
-	{/section}
+            	<td>
+                    <select class="dropDown" id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
+                    	<option value="-1">Select a Business</option>
+                    	{section name=bus loop=$businesses}
+                        	<option value="{$businesses[bus]->business_id}">
+                                {$businesses[bus]->company_name}
+                        	</option>
+                    	{/section}
 
-	<option value="newBusiness">
-	  Add a New Business
-	</option>
-      </select>
-		<span id="business_result" style="display:none"></span>
-      </td>
-     </tr>
-     <tr id="newBusiness" style="display:none;">
-      <td colspan="2">
-      <table style="padding-left: 1cm">	
-     	<tr>
-	  <td>Company Name:</td>
-	  <td><input type="text" name="company" size="30" id="company" class="validate_cond_bus" onchange="sendValidateRequest('company')"></td>
-     	</tr>
+                    	<option value="newBusiness">
+                    	  Add a New Business
+                    	</option>
+                    </select>
+                    <span id="business_result" style="display:none"></span>
+                </td>
+            </tr>
+            <tr id="newBusiness" style="display:none;">
+                <td colspan="2">
+                    <table style="padding-left: 1cm">	
+                     	<tr>
+                            <td>Company Name:</td>
+                            <td><input type="text" name="company" size="30" id="company" class="validate_cond_bus" onchange="sendValidateRequest('company')"></td>
+                     	</tr>
 
-     	<tr>
-	  <td>Address:</td>
-	  <td> <input type="text" name="address" size="30" id="address" class="validate_cond_bus"></td>
-     	</tr>
+             	        <tr>
+                            <td>Address:</td>
+                            <td> <input type="text" name="address" size="30" id="address" class="validate_cond_bus"></td>
+                     	</tr>
+        
+             	        <tr>
+                            <td>Address 2:</td>
+                            <td><input type="text" name="address2" id="address2" size="30"></td>
+                     	</tr>
+    
+             	        <tr>
+                            <td>City: </td>
+                            <td><input type="text" name="city" size="30" id="city" class="validate_cond_bus"></td>
+                     	</tr>
 
-     	<tr>
-	  <td>Address 2:</td>
-	  <td><input type="text" name="address2" id="address2" size="30"></td>
-     	</tr>
+                     	<tr>
+                            <td>State: </td>
+                            <td><input type="text" name="state" size="10" id="state" class="validate_cond_bus"></td>
+                     	</tr>
 
-     	<tr>
-	  <td>City: </td>
-	  <td><input type="text" name="city" size="30" id="city" class="validate_cond_bus"></td>
-     	</tr>
+             	        <tr>
+                            <td>Zip Code: </td>
+                            <td><input type="text" name="zip" size="10" id="zip" class="validate_cond_bus"></td>
+                        </tr>
 
-     	<tr>
-	  <td>State: </td>
-	  <td><input type="text" name="state" size="10" id="state" class="validate_cond_bus"></td>
-     	</tr>
+                     	<tr>
+                            <td>Phone Number: </td>
+                            <td><input type="text" name="phone" size="20" id="phone" class="validate_cond_bus"></td>
+                     	</tr>
 
-     	<tr>
-	  <td>Zip Code: </td>
-	  <td><input type="text" name="zip" size="10" id="zip" class="validate_cond_bus"></td>
-     	</tr>
+             	        <tr>
+                            <td>Fax Number: </td>
+                            <td><input type="text" name="fax" id="fax" size="20"></td>
+                     	</tr>
 
-     	<tr>
-	  <td>Phone Number: </td>
-	  <td><input type="text" name="phone" size="20" id="phone" class="validate_cond_bus"></td>
-     	</tr>
+             	        <tr>
+                            <td>E-mail: </td>
+                            <td><input type="text" name="email" id="email" size="30"></td>
+                        </tr>
 
-     	<tr>
-	  <td>Fax Number: </td>
-	  <td><input type="text" name="fax" id="fax" size="20"></td>
-     	</tr>
+                     	<tr>
+                            <td>Website: </td>
+                            <td><input type="text" name="website" id="website" size="30"></td>
+                            <td><input type="button" value="Save Business" onclick="saveBusiness('business_result', 'business_id', 'newBusiness', 'company', 'address', 'address2', 'city', 'state', 'zip', 'phone', 'fax', 'email', 'website');" /></td>
+                        </tr>
+                  </table>
+                </td>
+            </tr>
 
-     	<tr>
-	  <td>E-mail: </td>
-	  <td><input type="text" name="email" id="email" size="30"></td>
-     	</tr>
-
-     	<tr>
-	  <td>Website: </td>
-	  <td><input type="text" name="website" id="website" size="30"></td>
-	  <td><input type="button" value="Save Business" onclick="saveBusiness('business_result', 'business_id', 'newBusiness', 'company', 'address', 'address2', 'city', 'state', 'zip', 'phone', 'fax', 'email', 'website');" /></td>
-     	</tr>
-      </table>
-     </td>
-    </tr>
     <tr>
       <td>
 	Date:
@@ -134,7 +136,6 @@
         </td>
     </tr>
     </table>
-    </span>
 
     <br />
 

@@ -34,11 +34,11 @@ function getLoan( $loanId )
 	// Authenticate
 	$auth = GetAuthority();
 
-	$sql = 'SELECT inventory.description, logins.username, loans.issue_date, locations.location FROM loans, inventory, logins, locations WHERE loans.loan_id = ' . $loanId .
-					' AND loans.inventory_id = inventory.inventory_id AND loans.borrower_id = logins.id AND loans.original_location_id = locations.location_id';
+	$sql = 'SELECT inventory.description, borrowers.name, borrowers.borrower_id, loans.issue_date, locations.location FROM borrowers, loans, inventory, locations WHERE loans.loan_id = ' . $loanId .
+					' AND loans.inventory_id = inventory.inventory_id AND loans.borrower_id = borrowers.borrower_id AND loans.original_location_id = locations.location_id';
 
 	$result = mysqli_query( $link, $sql ) or
-		die( 'Error: '. mysql_error() );
+		die( 'Error: '. mysqli_error($link) );
 
 	$loan = mysqli_fetch_object( $result ); 
 
@@ -63,7 +63,7 @@ function getLoans( $startDate, $endDate )
   $endDate = mysqli_real_escape_string( $link, $endDate);
   
   // Loan History
-  $query= "SELECT issue_date, return_date, starting_condition, inventory.description, username FROM loans, inventory, logins WHERE logins.id = loans.borrower_id AND loans.inventory_id = inventory.inventory_id AND issue_date >= '". $startDate ."' AND (return_date <= '". $endDate ."' OR return_date IS NULL)";
+  $query= "SELECT issue_date, return_date, starting_condition, inventory.description, borrowers.borrower_id, borrowers.name AS username FROM loans, inventory, borrowers WHERE borrowers.borrower_id = loans.borrower_id AND loans.inventory_id = inventory.inventory_id AND issue_date >= '". $startDate ."' AND (return_date <= '". $endDate ."' OR return_date IS NULL)";
 
   $result = mysqli_query($link, $query) or
     die( 'Could not get the loan history' );
@@ -91,9 +91,9 @@ function getViewLoans( $currentSortIndex, $currentSortDir ){
   $auth = getAuthority();
 
   //items
-  $query=   'SELECT loan_id, loans.inventory_id, username, borrower_id, issue_date, return_date, starting_condition, username, description
-          FROM logins, loans, inventory 
-          WHERE loans.borrower_id = logins.id and inventory.inventory_id = loans.inventory_id ';
+  $query=   'SELECT loan_id, loans.inventory_id, name, loans.borrower_id, borrowers.borrower_id, issue_date, return_date, starting_condition, description
+          FROM borrowers, loans, inventory 
+          WHERE loans.borrower_id = borrowers.borrower_id and inventory.inventory_id = loans.inventory_id ';
   
   
   //Filter

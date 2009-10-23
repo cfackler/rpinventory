@@ -34,7 +34,6 @@ if($auth < 1)
   die("You dont have permission to access this page");
 
 
-
 //User
 $user_name = mysqli_real_escape_string( $link, $_POST["username"] );
 if($user_name == "")
@@ -49,8 +48,8 @@ $result = mysqli_query( $link, $sql ) or
 $result = mysqli_fetch_object( $result );
 $user_id = $result->borrower_id;
 
-if(!VerifyUserExists($user_id, $link))
-  die("Invalid User");
+if(!VerifyBorrowerExists($user_id, $link))
+  die("Invalid Borrower");
 
 
 //grab all ids
@@ -145,7 +144,7 @@ foreach ($items as $item)
 	(NULL, " . $item->inventory_id . ", " . $user_id . ", '" . $date . "', NULL, '". $event_location ."', '". $event_name ."', '" . $item->current_condition . "', NULL, '". $item->location_id ."' )";	
     
     if(!mysqli_query($link, $sql))
-      die("Query failed Checkouts ". mysql_error());
+      die("Query failed Checkouts ". mysqli_error($link));
 
     $sql = 'UPDATE inventory SET location_id = 2 WHERE inventory_id = ' . $item->inventory_id;
 
