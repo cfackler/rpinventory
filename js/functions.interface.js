@@ -57,6 +57,13 @@ function makeSelectionValue(id, value)
   }
 }
 
+/**
+ *	makeSelectionMultiple is just like the makeSelection functions above,
+ *	except it works for a select multiple.
+ *
+ *	@param	id				-	The id of the <select multiple> object.
+ *	@param	textArray	-	The array of selected options text attribute
+ **/
 function makeSelectionMultiple(id, textArray)
 {
 	var $options = (jQuery)('#'+id).attr('options');
@@ -150,6 +157,45 @@ function getSelectOptions(selectID, type, postSelectedOptionText)
 			}
 		});
 	}
+	else if(type == 'locations')
+	{
+		//get locations
+		(jQuery).ajax({
+			url: 'ajax.php?operation=options',
+			type: 'GET',
+			asynchronous: true,
+			data: {table_name: 'locations', value_column: 'location_id', display_column: 'location'},
+			success: function(msg)
+			{
+				//load the options into the <select> object
+				(jQuery)('#'+selectID).html(msg);
+				
+				//select certain option (if desired)
+				if(postSelectedOptionText)
+				{
+					makeSelection(selectID, postSelectedOptionText);
+				}
+			}
+		});
+	}
 	
 	
 }
+
+/**
+ *	ui_hover_behavior just makes jQuery ui objects work
+ *	as expected.  Changing the class when hovered over.
+ **/
+function ui_hover_behavior() {
+	(jQuery)('.ui-state-default').livequery(function()
+	{
+		(jQuery)(this).hover(function()
+		{
+			(jQuery)(this).addClass('ui-state-hover');
+		}, function()
+		{
+			(jQuery)(this).removeClass('ui-state-hover');
+		});
+	});
+}
+

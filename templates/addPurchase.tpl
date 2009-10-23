@@ -159,16 +159,12 @@
 
 				<select multiple="multiple" id="category-0" name="category-0[]" class="category_select" title="Please select a category">
 					{$category_options}
-				</select>
-				
-				<br />
-				<a id="add_category_button-0" class="ui-state-default ui-corner-all icon_button add_category_button">
-					<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category
-				</a>
-				
+				</select>				
 			</td>
 			<td>
-				<span id="category_notification-0" name="category_notification-0" class="notification"><!-- --></span>
+				<span id="category_notification-0" name="category_notification-0" class="notification"><a id="add_category_button-0" class="ui-state-default ui-corner-all icon_button add_category_button">
+					<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category
+				</a></span>
 			</td>
 		</tr>
 
@@ -188,21 +184,20 @@
 	    <td>Location: </td>
 
 	    <td>
-	      <select class="dropDown" id="location-0" name="location-0" onChange="OnChangeDouble('location-0', 'newLocation-0', 'newDescription-0')" onFocus="getLocationOptions(this);">
-
-			{$locations}
-		
+	      <select id="location-0" name="location-0" class="location_select">
+					{$locations}
 	      </select>
-	    <span id="resultText-0"></span>
 	    </td>
+	
+			<td>
+				<span id="location_notification-0">
+					<a id="add_location_button-0" class="ui-state-default ui-corner-all icon_button add_location_button">
+						<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Location
+					</a>
+				</span>
+			</td>
 	  </tr>
 
-	  <tr id="newLocation-0" style="display:none">
-	    <td>New Location:</td>
-	    <td>
-	      <input type="text" name="newlocation-0" id="newlocation-0" size="40" onChange="sendValidateRequest('newlocation-0')">
-	    </td>
-	  </tr>
 	  <tr id="newDescription-0" style="display:none">
 	    <td>Location Description:</td>
 	    <td>

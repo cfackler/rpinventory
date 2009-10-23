@@ -122,6 +122,7 @@ if( !$ignoreBusiness ){
   }
 }
 
+/* Amount of items to insert for this purchase */
 $count = (int)$_POST['count'];
 if($count == 0)
 	die("invalid count");
@@ -213,7 +214,7 @@ for($x=0; $x<$count; $x++)
   }
   else
     die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
-  
+ 
   
   //Insert new inventory item
   $sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $itemdesc . "', " . $location . ", '" . $condition . "', " . $value . ")";		
@@ -233,13 +234,14 @@ for($x=0; $x<$count; $x++)
 
 	// For all categories
 	$sql = '';
-	for($c = 0; $c < $_POST['category_count-'.$x]; $c++)
+	$categories = $_POST['category-'.$x];
+	for($c = 0; $c < sizeof($categories); $c++)
 	{
 		//Insert item category
-		$sql .= 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ('.$inv_id.', '.$_POST['category_'.$c.'-'.$x].');'	;
+		$sql .= 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ('.$inv_id.', '.$categories[$c].');'	;
 		
 	}
-	mysqli_multi_query($link, $sql) or die('Error inserting item category: '.mysqli_error($link));
+	mysqli_multi_query($link, $sql) or die('Error inserting item categories: '.mysqli_error($link));
 	
 	
 }

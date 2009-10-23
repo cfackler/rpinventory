@@ -43,7 +43,7 @@ switch ($_GET['operation'])
 		break;
 
   case 'savelocation':
-    insertLocation($_GET['location'], $_GET['description']);
+    print insertLocation($_GET['location'], $_GET['description']);
     break;
 
 	case 'saveBusiness':

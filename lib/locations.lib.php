@@ -133,7 +133,6 @@ function getLocationsOptions()
       $loc_select .= $location->location . '</option>';
     }
   }
-  $loc_select .= '<option>New Location</option>';
   
   return $loc_select;
 }
@@ -205,9 +204,11 @@ function insertLocation($location, $desc)
   $sql = 'INSERT INTO locations (location_id, location, description) VALUES (NULL, "' . $location . '", "' . $desc . '")';
   	
   if(!mysqli_query($link, $sql))
-    die('Query failed');
+    die('Insertion failed');
   
   mysqli_close($link);
+
+	return 'success';
 
 }
 

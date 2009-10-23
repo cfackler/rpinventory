@@ -38,7 +38,7 @@ $id = (int)$_GET['id'];
 if($id == 0)
   die("Invalid ID");
 
-$loc_select = getLocationsOptions( $id );
+$location_options = getLocationsOptions();
 $category_options = get_options('categories', 'id', 'category_name');
 
 echo <<<END
@@ -61,15 +61,11 @@ echo <<<END
 				<select multiple="multiple" id="category-$id" name="category-{$id}[]" class="category_select" title="Please select a category">
 					$category_options
 				</select>
-			
-			<br />
-			<a id="add_category_button-$id" class="ui-state-default ui-corner-all icon_button add_category_button">
-				<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category
-			</a>
-			
 		</td>
 		<td>
-			<span id="category_notification-$id" name="category_notification-$id" class="notification"><!-- --></span>
+			<span id="category_notification-$id" name="category_notification-$id" class="notification"><a id="add_category_button-$id" class="ui-state-default ui-corner-all icon_button add_category_button">
+				<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category
+			</a></span>
 		</td>
 	</tr>
 	
@@ -89,14 +85,21 @@ echo <<<END
   <td>Location: </td>
 
   <td>
-  <select class="dropDown" id="location-$id" name="location-$id" onChange="OnChangeDouble('location-$id', 'newLocation-$id', 'newDescription-$id')" onFocus="getLocationOptions(this);">
-  $loc_select
-  <option>
-  New Location
-  </option>
-  </select>
-  <span id="resultText-$id"></span>
+    <select id="location-$id" name="location-$id" class="location_select">
+
+			{$location_options}
+
+    </select>
   </td>
+
+	<td>
+		<span id="location_notification-$id">
+			<a id="add_location_button-$id" class="ui-state-default ui-corner-all icon_button add_location_button">
+				<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Location
+			</a>
+		</span>
+	</td>
+
   </tr>
 
   <tr id="newLocation-$id" style="display:none">
