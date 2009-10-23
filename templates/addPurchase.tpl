@@ -198,14 +198,7 @@
 			</td>
 	  </tr>
 
-	  <tr id="newDescription-0" style="display:none">
-	    <td>Location Description:</td>
-	    <td>
-	      <input type="text" name="newdescription-0" id="newdescription-0" size="40">
-	    </td>
-	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation-0', 'newdescription-0', 'resultText-0', 'location-0', 'newLocation-0', 'newDescription-0');">
-	    </td>
-	  </tr>
+
 	</table>
       </div>
     <br />

@@ -102,20 +102,6 @@ echo <<<END
 
   </tr>
 
-  <tr id="newLocation-$id" style="display:none">
-  <td>New Location:</td>
-  <td>
-  <input type="text" name="newlocation-$id" id="newlocation-$id" size="40" onchange="sendValidateRequest('newlocation-$id')">
-  </td>
-  </tr>
-  <tr id="newDescription-$id" style="display:none">
-  <td>Location Description:</td>
-  <td>
-  <input type="text" name="newdescription-$id" id="newdescription-$id" size="40">
-  </td>
-  	    <td><input value="Save Location" type="button" onClick="saveLocation('newlocation-$id', 'newdescription-$id', 'resultText-$id', 'location-$id', 'newLocation-$id', 'newDescription-$id');">
-	    </td>
-  </tr>
   </table>
 END;
 
