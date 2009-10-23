@@ -40,13 +40,25 @@ if($id == 0)
 
 //Verify no items use the location before deleting
 $sql = "SELECT location_id FROM inventory WHERE location_id = '" . $id ."'";
-
 $result= mysqli_query($link, $sql);
-
 $numItems = mysqli_num_rows($result); 
 
 if ( $numItems != 0) {
-  die("Location still in use!  Deletion will not be allowed until all inventory using this location are updated.");
+  die("Location still in use! Deletion will not be allowed until all inventory using this location are updated.");
+}
+
+// Make sure no items are loaned out that have the location as their original location
+$sql = 'SELECT original_location_id FROM loans WHERE return_date is null AND original_location_id = '. $id;
+$result = mysqli_query($link, $sql) or
+    die("Query failed: ".mysqli_error($link));
+$numItems = mysqli_num_rows($result);
+
+$sql = 'SELECT original_location_id FROM checkouts WHERE time_returned is null AND original_location_id = '. $id;
+$result2 = mysqli_query($link, $sql) or
+    die("Query failed: ".mysqli_error($link));
+
+if ( $numItems != 0 | mysqli_num_rows($result) != 0) {
+  die("Loaned/Checked out item is stored at this location! Deletion will not be allowed until all inventory using this location are updated.");
 }
 
 //Create query
