@@ -403,36 +403,45 @@ function getItemBlockContents(element, idnum)
 }
 
 function addItemField() {
+		/* the table containing the form */
     var t = document.getElementById("itemTable");
-    var divs = t.getElementsByTagName("div");
-    var nextnum = divs.length;
+
+		/* the amount of items currently on the form */
+    var nextnum = (jQuery)('#count').attr('value')*1;
+
+		/* the new rows about to be entered */
     var newrow = document.createElement('div');
-    var br = document.createElement('br');
+
     newrow.setAttribute('id', 'item-' + nextnum);
+		newrow.setAttribute('class', 'item');
+
+		/* get content for new items */
     getItemBlockContents(newrow, nextnum);
     t.appendChild(newrow);
-    t.appendChild(br);
 
-    var count = document.getElementById("count");
-    count.setAttribute('value', nextnum + 1);
+
+		//initialize asm selects because livequery isn't working right
+//		(jQuery)('#category-'+nextnum).asmSelect();
+
+    (jQuery)('#count').attr('value', nextnum+1);
 
     // show delete button
     document.getElementById("removeButton").style.display="";
+		
 }
 
 function removeItemField() {
-    var count = document.getElementById("count");
-    if (Number(count.value) > 1) {
-			var t = document.getElementById("itemTable");
-			var divs = t.getElementsByTagName("div");
-			t.removeChild(divs[divs.length - 1]);
-
+    /* get count of fields on page (*1 converts to int) */
+		var count = document.getElementById("count").value*1;
+    if (count > 1) {
+			//remove last item
+			(jQuery)('#itemTable div.item:last').remove();
 			// decrement count
-			count.setAttribute('value', Number(count.value - 1));
+			(jQuery)('#count').attr('value', count - 1);
 
 			// hide delete button?
-			if (Number(count.value) < 2)
-	    	document.getElementById("removeButton").style.display="none";
+			if ((jQuery)('#count').attr('value') < 2)
+	    	(jQuery)('#removeButton').css('display', 'none');
     }
 }
 

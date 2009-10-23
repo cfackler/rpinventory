@@ -57,6 +57,23 @@ function makeSelectionValue(id, value)
   }
 }
 
+function makeSelectionMultiple(id, textArray)
+{
+	var $options = (jQuery)('#'+id).attr('options');
+	
+	for(var i = 0; i < $options.length; i++)
+	{
+		for(var j = 0; j < textArray.length; j++)
+		{
+			if($options[i].text == textArray[j])
+			{
+				$options[i].selected = true;
+			}
+		}
+	}
+	(jQuery)('#'+id).change();
+}
+
 /**
  *	getSelectOptions takes the ID of a select object, the kind of dropdown it is
  *	(locations, businesses), and the optional text of the option to select when 
@@ -110,7 +127,28 @@ function getSelectOptions(selectID, type, postSelectedOptionText)
 				}
 								
 			}
-		});	
+		});
+	}
+	else if(type == 'categories_multiple')
+	{
+		//get options
+		(jQuery).ajax({
+			url: 'ajax.php?operation=options',
+			type: 'GET',
+			asynchronous: true,
+			data: {table_name: 'categories', value_column: 'id', display_column: 'category_name'},
+			success: function(msg)
+			{
+				//load the options into the <select> object
+				(jQuery)('#'+selectID).html(msg);
+				
+				//select certain options (if desired)
+				if(postSelectedOptionText)
+				{
+					makeSelectionMultiple(selectID, postSelectedOptionText);
+				}
+			}
+		});
 	}
 	
 	

@@ -25,6 +25,7 @@ require_once('modules/json/JSON.php');
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");   //Session
 require_once('lib/locations.lib.php'); //getting locations drop down items
+require_once('lib/display.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
@@ -38,6 +39,7 @@ if($id == 0)
   die("Invalid ID");
 
 $loc_select = getLocationsOptions( $id );
+$category_options = get_options('categories', 'id', 'category_name');
 
 echo <<<END
 <table>
@@ -50,7 +52,27 @@ echo <<<END
   <td>Value: </td>
   <td><input type="text" name="value-$id" id="value-$id" class="value validate" onchange="updateTotal('value-$id')"/></td>
   </tr>
-	  
+	
+	<tr>
+		<td>Category: </td>
+		<td>
+			<input type="hidden" id="category_count-$id" name="category_count-$id" value="1">
+
+				<select multiple="multiple" id="category-$id" name="category-{$id}[]" class="category_select" title="Please select a category">
+					$category_options
+				</select>
+			
+			<br />
+			<a id="add_category_button-$id" class="ui-state-default ui-corner-all icon_button add_category_button">
+				<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category
+			</a>
+			
+		</td>
+		<td>
+			<span id="category_notification-$id" name="category_notification-$id" class="notification"><!-- --></span>
+		</td>
+	</tr>
+	
   <tr>
   <td>Condition: </td>
   <td>
