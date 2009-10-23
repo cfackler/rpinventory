@@ -104,7 +104,7 @@ Show:
 
 	<td>{$items[itemLoop]->description}</td>
 	<td>{$items[itemLoop]->starting_condition}</td>
-	<td>{$items[itemLoop]->username}</td>
+	<td>{$items[itemLoop]->name}</td>
 	<td>{$items[itemLoop]->issue_date}</td>
 	<td align="center">
 	{if $items[itemLoop]->return_date == NULL && $authority >= 1}
