@@ -25,7 +25,7 @@ require_once("lib/auth.lib.php");  //Session
 
 //Authenticate
 $auth = GetAuthority();	
-if($auth != 2)
+if($auth < 1)
   die("You dont have permission to access this page");
 
 $link = connect();
@@ -36,6 +36,21 @@ if($link == null)
 $id = (int)$_GET["id"];
 if($id == 0)
   die("Invalid ID");
+
+// Don't delete active borrowers
+$sql = 'SELECT * from loans WHERE return_date is null AND borrower_id = ' . $id;
+$result = mysqli_query($link, $sql) or
+    die("Query failed: ".mysqli_error());
+if (mysqli_num_rows($result) > 0) {
+    die('Cannot delete an active borrower');
+}
+
+$sql = 'SELECT * from checkouts WHERE time_returned is null AND borrower_id = ' . $id;
+$result = mysqli_query($link, $sql) or
+    die("Query failed: ".mysqli_error());
+if (mysqli_num_rows($result) > 0) {
+    die('Cannot delete an active borrower');
+}
 
 // Get the address_id of the borrower
 $sql = 'SELECT address_id FROM borrowers WHERE borrower_id = '. $id;
