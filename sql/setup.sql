@@ -104,6 +104,29 @@ CREATE TABLE checkouts (
        PRIMARY KEY (checkout_id)
 ) type = MyISAM;
 
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE categories (
+  id int(5) NOT NULL AUTO_INCREMENT,
+  category_name varchar(32) NOT NULL,
+  PRIMARY KEY (id)
+) type=MyISAM;
+--
+-- Table structure for table `inventory_category`
+--
+
+CREATE TABLE `inventory_category` (
+  id int(5) NOT NULL AUTO_INCREMENT,
+  inventory_id int(5) NOT NULL,
+  category_id int(5) NOT NULL,
+  PRIMARY KEY (id)
+) type=MyISAM;
+
+
+
 -- Adds the default locations for loans and checkouts
 INSERT INTO locations VALUES ( 1, "On Loan", "This item is on loan" );
 INSERT INTO locations VALUES ( 2, "Checked Out", "This item is checked out" );
