@@ -21,38 +21,46 @@
 
 <form id="itemList" name="itemList">
 
-<table width="800" border="0" class="itemsTable" cellspacing="0" >
-	<tr>
-		{if $authority >= 1}
-			<th width="20"> </th>
-		{/if}
+<div id="filters" class="filters">
+	<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />	
+</div>
 
-    {* Table headers with sorting links *}
-    {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
-		
-  </tr>
-
-{section name=itemLoop loop=$items}
-<tr{cycle values=" class=\"alt\","}>
-	{if $authority >= 1}
-		<td><input type="checkbox" name="{$items[itemLoop]->inventory_id}" id="{$items[itemLoop]->inventory_id}"></td>
-	{/if}
-	<td>{$items[itemLoop]->description}</td>
-	<td>{$items[itemLoop]->category}</td>
-	{if $authority >= 1}
-		<td>{$items[itemLoop]->current_condition}</td>
-		<td>${$items[itemLoop]->current_value}</td>
-	{/if}
-	{if $items[itemLoop]->loan_id == 0 && $items[itemLoop]->checkout_id == 0}
-		<td align="center">{$items[itemLoop]->location}</td>
-	{elseif $items[itemLoop]->checkout_id == 0}
-		<td align="center"><a href="viewLoans.php?loanId={$items[itemLoop]->loan_id}">{$items[itemLoop]->location}</a></td>
-    {else}
-        <td align="center"><a href="viewCheckouts.php?checkoutId={$items[itemLoop]->checkout_id}">{$items[itemLoop]->location}</a></td>
-	{/if}
-</tr>
-{/section}	
-
+<table width="800" border="0" id="itemsTable" class="itemsTable" cellspacing="0" >
+	<thead>
+		<tr>
+			{if $authority >= 1}
+				<th width="20"> </th>
+			{/if}
+	    <th width="250">Item</th>
+			<th width="100">Category</th>		
+			<th width="100">Condition</th>
+			<th width="150">Current Value</th>
+			<th width="150">Location</th>
+	  </tr>
+	</thead>
+	<tbody>
+		{section name=itemLoop loop=$items}
+		<tr{cycle values=" class=\"alt\","}>
+			{if $authority >= 1}
+				<td><input type="checkbox" name="{$items[itemLoop]->inventory_id}" id="{$items[itemLoop]->inventory_id}"></td>
+			{/if}
+			<td>{$items[itemLoop]->description}</td>
+			<td>{$items[itemLoop]->category}</td>
+			{if $authority >= 1}
+				<td>{$items[itemLoop]->current_condition}</td>
+				<td>${$items[itemLoop]->current_value}</td>
+			{/if}
+			{if $items[itemLoop]->loan_id == 0 && $items[itemLoop]->checkout_id == 0}
+				<td align="center">{$items[itemLoop]->location}</td>
+			{elseif $items[itemLoop]->checkout_id == 0}
+				<td align="center"><a href="viewLoans.php?loanId={$items[itemLoop]->loan_id}">{$items[itemLoop]->location}</a></td>
+		    {else}
+		        <td align="center"><a href="viewCheckouts.php?checkoutId={$items[itemLoop]->checkout_id}">{$items[itemLoop]->location}</a></td>
+			{/if}
+		</tr>
+		{/section}	
+	</tbody>
 
 </table>
 <br />
