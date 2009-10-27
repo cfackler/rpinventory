@@ -51,7 +51,6 @@ $user_id = $result->borrower_id;
 if(!VerifyBorrowerExists($user_id, $link))
   die("Invalid Borrower");
 
-
 //grab all ids
 $idString = $_POST["inventory_ids"];
 $token = strtok($idString, ",");

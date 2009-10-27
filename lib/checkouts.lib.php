@@ -88,9 +88,9 @@ function getViewCheckouts( $currentSortIndex, $currentSortDir ){
   $auth = GetAuthority();	
   
   //items
-  $query=   'SELECT checkout_id, checkouts.inventory_id, username, borrower_id, time_taken, time_returned, starting_condition, username, description, original_location_id
-          FROM logins, checkouts, inventory 
-          WHERE checkouts.borrower_id = logins.id and inventory.inventory_id = checkouts.inventory_id';
+  $query=   'SELECT checkout_id, checkouts.inventory_id, name, borrowers.borrower_id, time_taken, time_returned, starting_condition, description, original_location_id
+          FROM borrowers, checkouts, inventory 
+          WHERE checkouts.borrower_id = borrowers.borrower_id and inventory.inventory_id = checkouts.inventory_id';
   
   
   //Filter
