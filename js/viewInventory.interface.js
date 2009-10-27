@@ -20,6 +20,8 @@
 
 	(jQuery)('#searchField').keyup(function() {
 		(jQuery).uiTableFilter(theTable, this.value);
+		(jQuery)('#itemsTable tr.alt').removeClass('alt');
+		(jQuery)('#itemsTable tr:even').addClass('alt');
 	});
 	
 });
