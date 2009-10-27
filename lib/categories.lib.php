@@ -37,13 +37,15 @@ function insertCategory($category_name)
 	return 'success';  
 }
 
-function get_item_category_ids($item_id)
+function get_item_category_ids($item_id, $store = 0)
 {
 	require_once('lib/connect.lib.php');  //mysql
   require_once('lib/auth.lib.php');  //Session
   session_start();
 
-	$_SESSION['item_old_categoryIDs-'.$item_id] = array();
+	/* Store all category IDs into session variable if specified */
+	if($store)
+		$_SESSION['item_old_categoryIDs-'.$item_id] = array();
 	
   // Authenticate
   $auth = GetAuthority();	
@@ -65,10 +67,14 @@ function get_item_category_ids($item_id)
 	
 	/* format the ids separated by commas 5,3,2 */
 	$ids = mysqli_fetch_object($result)->category_id;
-	$_SESSION['item_old_categoryIDs-'.$item_id][] = $ids;
+	if($store)
+		$_SESSION['item_old_categoryIDs-'.$item_id][] = $ids;
+		
 	while($id = mysqli_fetch_object($result))
 	{
-		$_SESSION['item_old_categoryIDs-'.$item_id] [] = $id->category_id;
+		if($store)
+			$_SESSION['item_old_categoryIDs-'.$item_id] [] = $id->category_id;
+			
 		$ids .= ','.$id->category_id;
 	}
 	return $ids;

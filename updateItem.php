@@ -132,11 +132,17 @@ for($x=0; $x<$count; $x++)
 
 	/* Final categories can be retrieved from page */
 	$finalCatIDs = array();
-	for($c = 0; $c < $_POST['catCount-'.$x]; $c++)
+	// For all categories
+	$sql = '';
+	$categories = $_POST['category-'.$x];
+	if(sizeof($categories) > 0)
 	{
-		/* Put each final category into array */
-		$finalCatIDs[] = $_POST['category_'.$c.'-'.$x];
-	}
+		for($c = 0; $c < sizeof($categories); $c++)
+		{
+			/* Put each final category into array */
+			$finalCatIDs[] = $categories[$c];
+		}
+	}	
 	
 	/* categories to delete are the ones from the original that are not in the final */
 	$toDeleteIDs = array_diff($currCatIDs, $finalCatIDs);

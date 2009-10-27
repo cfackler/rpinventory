@@ -30,7 +30,7 @@
 
 {section name=num loop=$items}
 
-<table width="400">
+<table width="500">
 
 <input type="hidden" name="inventory_id-{$smarty.section.num.index}" id="inventory_id-{$smarty.section.num.index}" size="40" value="{$items[num]->inventory_id}">
 
@@ -38,27 +38,28 @@
 	<td>Description:
 </td>
 	<td><input type="text" name="desc-{$smarty.section.num.index}" size="40" id="description" value="{$items[num]->description}"></td>
+	<td><!-- --></td>
 </tr>
 
 <tr>
 	<td>Value: </td>
 	<td><input type="text" name="value-{$smarty.section.num.index}" size="40" id="value" value="{$items[num]->current_value}"></td>
+	<td><!-- --></td>
 </tr>
 
 <tr>
 	<td>Category: </td>
 	<td id="categoryTD-{$smarty.section.num.index}">
 		<input type="hidden" name="catCount-{$smarty.section.num.index}" id="catCount-{$smarty.section.num.index}" value="{$items[num]->catCount}" />
-		<select name="category_0-{$smarty.section.num.index}" id="category_0-{$smarty.section.num.index}" class="category_select">
+		<select multiple="multiple" name="category-{$smarty.section.num.index}[]" id="category-{$smarty.section.num.index}" class="category_select" title="Please select a category">
 			{$category_options}
-			<option value="-1">
-				New Category
-			</option>
 		</select>
 	</td>
 	<td>
-		<div id="categoryNotify-{$smarty.section.num.index}">
-			<!-- -->
+		<div id="category_notification-{$smarty.section.num.index}" class="category_notification">
+			<a id="add_category_button-0" class="ui-state-default ui-corner-all icon_button add_category_button">
+				<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category
+			</a>
 		</div>
 	</td>
 </tr>
@@ -74,42 +75,33 @@
 			<option value="Poor" {if $items[num]->current_condition == "Poor"}selected{/if}>Poor</option>
 		</select>
 	</td>
+	<td><!-- --><td>
 </tr>
 
 <tr>
 	<td>Location: </td>
-	<td>
-	
-	<select class="dropDown" name="location-{$smarty.section.num.index}" id="location-{$smarty.section.num.index}" onChange="OnChangeDouble('location-{$smarty.section.num.index}', 'newLocation-{$smarty.section.num.index}', 'newDescription-{$smarty.section.num.index}')">   
-    {section name=loc loop=$locations}
-		<option value="{$locations[loc]->location_id}">
-			{$locations[loc]->location}
-		</option>
-    {* If there are no locations, just put a blank option there. *}
-    {sectionelse}
-  		<option value = "-2">
-        </option>
-	{/section}
-        <option value = "-1">
-			New Location
-		</option>
-        
-	</select>
-	
-	</td>
+	  <td>
+      <select name="location-{$smarty.section.num.index}" id="location-{$smarty.section.num.index}" class="location_select">
+				{section name=loc loop=$locations}
+				{if $locations[loc]->location_id == $items[num]->location_id}
+					<option value="{$locations[loc]->location_id}" selected="true">
+				{else}
+					<option value="{$locations[loc]->location_id}">
+				{/if}
+					{$locations[loc]->location}
+				</option>
+				{/section}
+      </select>
+    </td>
+
+		<td>
+			<span id="location_notification-{$smarty.section.num.index}">
+				<a id="add_location_button-{$smarty.section.num.index}" class="ui-state-default ui-corner-all icon_button add_location_button">
+					<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Location
+				</a>
+			</span>
+		</td>
 </tr>
-    <tr id="newLocation-{$smarty.section.num.index}" style="display:none">
-            <td>New Location:</td>
-        <td>
-                <input type="text" name="newlocation-{$smarty.section.num.index}" size="40">
-        </td>
-    </tr>
-    <tr id="newDescription-{$smarty.section.num.index}" style="display:none">
-            <td>Location Description:</td>
-        <td>
-                <input type="text" name="newdescription-{$smarty.section.num.index}" size="40">
-        </td>
-    </tr>
 	
 
 </table>

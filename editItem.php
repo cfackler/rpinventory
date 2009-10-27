@@ -60,13 +60,12 @@ foreach($idList as $id)
 									AND inventory_category.inventory_id = inventory.inventory_id
 									AND inventory.inventory_id = " . $id;
     $result = mysqli_query($link, $query);
-	
-	/* retrieve item categories, and store them in a $_SESSION variable so they can be checked against */
+
     if(mysqli_num_rows($result) == 0)
       die("Invalid ID");
 	
     $item = mysqli_fetch_object($result);
-    $items[] = $item;
+    $items[] = $item;	
   }
 
 //Locations

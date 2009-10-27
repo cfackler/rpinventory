@@ -199,13 +199,15 @@ for($x=0; $x<$count; $x++)
 	// For all categories
 	$sql = '';
 	$categories = $_POST['category-'.$x];
-	for($c = 0; $c < sizeof($categories); $c++)
+	if(sizeof($categories) > 0)
 	{
-		//Insert item category
-		$sql .= 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ('.$inv_id.', '.$categories[$c].');'	;
-		
+		for($c = 0; $c < sizeof($categories); $c++)
+		{
+			//Insert item category
+			$sql .= 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ('.$inv_id.', '.$categories[$c].');'	;
+		}
+		mysqli_multi_query($link, $sql) or die('Error inserting item categories: '.mysqli_error($link));
 	}
-	mysqli_multi_query($link, $sql) or die('Error inserting item categories: '.mysqli_error($link));
 	
 	
 }

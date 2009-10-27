@@ -93,14 +93,21 @@ function getInventory($sortIndex = 0, $sortdir = 0)
 								AND categories.id=inventory_category.category_id';
 				$cat_names = mysqli_query($link, $sql) or die('Error getting categories: '.mysqli_error($link) );
 				
-				//Each item must have a category, so no need to check for empty results
-
-				//format category names
-				$categoryString = mysqli_fetch_object($cat_names)->category_name;
-				while($cat_name = mysqli_fetch_object($cat_names))
+				//If an item has no categories, just put "Uncategorized" into field
+				if(mysqli_num_rows($cat_names) == 0)
 				{
-					$categoryString .= ', '.$cat_name->category_name;
+					$categoryString = 'Uncategorized';
 				}
+				else
+				{
+					//format category names
+					$categoryString = mysqli_fetch_object($cat_names)->category_name;
+					while($cat_name = mysqli_fetch_object($cat_names))
+					{
+						$categoryString .= ', '.$cat_name->category_name;
+					}
+				}
+
 				$item->category = $categoryString;
 				
         $items [] = $item;

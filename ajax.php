@@ -75,7 +75,10 @@ switch ($_GET['operation'])
 		break;
 		
 	case 'itemCategoryIDs':
-		print get_item_category_ids($_POST['inventory_id']);
+		if(isset($_POST['store']))
+			print get_item_category_ids($_POST['inventory_id'], $_POST['store']);
+		else
+			print get_item_category_ids($_POST['inventory_id']);
 		break;
 	}
 
