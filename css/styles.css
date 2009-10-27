@@ -204,17 +204,7 @@ span.TopOfTable h3{
     text-transform: uppercase;
     text-align: left;
     padding: 6px 6px 6px 12px;
-    background-color:#d50000;		
-		background-position: 95% center;
-		background-repeat: no-repeat;
-}
-.itemsTable th.headerSortUp
-{
-	background-image: url('../images/sortTriangleDown.png');
-}
-.itemsTable th.headerSortDown
-{
-	background-image: url('../images/sortTriangleUp.png');
+    background-color:#d50000;
 }
 
 /**
@@ -367,15 +357,4 @@ span.icon_button_icon
 	max-width: 150px;
 	padding: 2px;
 	font-size: 12px;
-}
-
-div#filters
-{
-	margin-bottom: 20px;
-}
-div#filters h3
-{
-	margin-top: 0;
-	margin-bottom: 0;
-	font-size: 10pt;
 }
