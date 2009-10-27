@@ -206,8 +206,8 @@ span.TopOfTable h3{
     padding: 6px 6px 6px 12px;
     background-color:#d50000;
 		
-		background-position: 95% center;
-		background-repeat: no-repeat;
+    background-position: 95% center;
+    background-repeat: no-repeat;
 }
 
 .itemsTable th.headerSortDown
@@ -379,4 +379,5 @@ div#filters h3
 {
 	margin-top: 0;
 	margin-bottom: 0;
+	font-size: 10pt;
 }
