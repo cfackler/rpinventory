@@ -56,8 +56,6 @@ echo <<<END
 	<tr>
 		<td>Category: </td>
 		<td>
-			<input type="hidden" id="category_count-$id" name="category_count-$id" value="1">
-
 				<select multiple="multiple" id="category-$id" name="category-{$id}[]" class="category_select" title="Please select a category">
 					$category_options
 				</select>

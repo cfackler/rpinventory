@@ -155,8 +155,6 @@
 		<tr>
 			<td>Category: </td>
 			<td>
-				<input type="hidden" id="category_count-0" name="category_count-0" value="1">
-
 				<select multiple="multiple" id="category-0" name="category-0[]" class="category_select" title="Please select a category">
 					{$category_options}
 				</select>				

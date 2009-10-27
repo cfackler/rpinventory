@@ -149,7 +149,7 @@ else{
 }
 
 if(!mysqli_query($link, $sql))
-  die("Query failed");
+  die("Query failed: ".mysqli_error($link));
 	
 //ID
 $purchase_id = mysqli_insert_id($link);
@@ -157,6 +157,7 @@ $purchase_id = mysqli_insert_id($link);
 //All items
 for($x=0; $x<$count; $x++)
 {
+	
   //Description
   $itemdesc = $_POST["desc-".$x];
   if(strlen($itemdesc) == 0)
@@ -184,7 +185,7 @@ for($x=0; $x<$count; $x++)
   $sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $itemdesc . "', " . $location . ", '" . $condition . "', " . $value . ")";		
   
   if(!mysqli_query($link, $sql))
-    die("Inventory Insert Query failed");
+    die("Inventory Insert Query failed: ".mysqli_error($link));
   
   $inv_id = mysqli_insert_id($link);
   
@@ -206,7 +207,17 @@ for($x=0; $x<$count; $x++)
 			//Insert item category
 			$sql .= 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ('.$inv_id.', '.$categories[$c].');'	;
 		}
-		mysqli_multi_query($link, $sql) or die('Error inserting item categories: '.mysqli_error($link));
+		/* insert all items, and discard results */
+		if(mysqli_multi_query($link, $sql))
+		{
+			do {
+				$result = mysqli_store_result($link);
+				mysqli_free_result($result);
+				mysqli_more_results($link);
+			} while(mysqli_next_result($link));
+		}
+		else
+			die('Error inserting item categories: '.mysqli_error($link));
 	}
 	
 	
