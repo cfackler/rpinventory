@@ -24,7 +24,7 @@
 require_once("lib/auth.lib.php");  //Session
 require_once("lib/inventory.lib.php"); //inventory functions
 require_once("lib/interface.lib.php"); //interface functions
-require_once( 'lib/paginate.lib.php' ); // paginate
+require_once( 'lib/display.lib.php' ); // categories options
 
 //Authenticate
 $auth = GetAuthority();
@@ -34,36 +34,15 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
+/* get categories */
+$categories = get_options('categories', 'id', 'category_name');
 
-/*  Determine wether or not to default sort column headers,
-    Make sure no one messed with the URL by checking the $_GET vars */
-if(isset($_GET['sort']) && ($_GET['sort'] <= 3 && $_GET['sort'] >= 0))
-  $currentSortIndex = $_GET['sort'];
-else
-  $currentSortIndex = 0;
-  
-//Determine wether or not to default sort direction, validate $_GET
-if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
-  $currentSortDir = 1;
-else
-  $currentSortDir = 0;
-  
+/* get inventory items */
+$items = getInventory();
 
-/*  Table headers, to be sent to the generateTableHeader function from
-    the template file. */
-$headers = array();
-$headers[0] = array('label' => 'Item', 'width' => 250);
-$headers[1] = array('label' => 'Category', 'width' => 100);
-if( $auth >= 1 ){
-  $headers[2] = array('label' => 'Condition', 'width' => 100);
-  $headers[3] = array('label' => 'Current Value', 'width' => 150);
-}
-$headers[4] = array('label' => 'Location', 'width' => 150);
-
-/* Paginate the results */
-paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'inventory' );
-	
 //Assign vars
+$smarty->assign('items', $items);
+$smarty->assign('categories', $categories);
 $smarty->assign('currentSortIndex', $currentSortIndex);
 $smarty->assign('currentSortDir', $currentSortDir);
 $smarty->assign('headers', $headers);

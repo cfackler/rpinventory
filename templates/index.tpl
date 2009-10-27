@@ -35,6 +35,8 @@ $this->assign('clubName', Config::get('club_name'));
 <script src="js/modulesJS/jquery.js" language="javascript" type="text/javascript"></script>
 <script src="js/modulesJS/jquery-ui-1.7.2.custom/js/jquery-ui-1.7.2.custom.min.js" language="javascript" type="text/javascript"></script>
 <script src="js/modulesJS/asmselect/jquery.asmselect.js" language="javascript" type="text/javascript"></script>
+<script src="js/modulesJS/jquery.uitablefilter.js" language="javascript" type="text/javascript"></script>
+<script src="js/modulesJS/jquery.tablesorter.min.js" language="javascript" type="text/javascript"></script>
 <link rel="stylesheet" href="js/modulesJS/asmselect/jquery.asmselect.css" type="text/css" />
 <script src="js/modulesJS/jquery.wait.js" language="javascript" type="text/javascript"></script>
 <script>jQuery.noConflict();</script>
@@ -45,6 +47,8 @@ $this->assign('clubName', Config::get('club_name'));
 	<script src="js/addPurchase.interface.js" language="javascript" type="text/javascript"></script>
 {elseif $page_tpl == 'editItem'}
 	<script src="js/editItem.interface.js" language="javascript" type="text/javascript"></script>
+{elseif $page_tpl == 'viewInventory'}
+	<script src="js/viewInventory.interface.js" language="javascript" type="text/javascript"></script>
 {/if}
 
 
