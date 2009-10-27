@@ -3,6 +3,14 @@
 	/* make table javascript sortable */
 	(jQuery)('#itemsTable').tablesorter( {sortList: [[1,0]]} );
 	
+	/* upon sort end, remove and re-assign class for alternate row color */
+	(jQuery)('#itemsTable').bind("sortStart", function(){
+		/*Loading notification eventually */
+	}).bind("sortEnd", function(){
+		(jQuery)('#itemsTable tr.alt').removeClass('alt');
+		(jQuery)('#itemsTable tr:even').addClass('alt');
+	});
+	
 	/* auto clear text fields with autoClear class */
 	autoClearClass();
 	
