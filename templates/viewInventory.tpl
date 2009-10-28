@@ -33,9 +33,11 @@
 				<th width="20"> </th>
 			{/if}
 	    <th width="250">Item</th>
-			<th width="100">Category</th>		
-			<th width="100">Condition</th>
-			<th width="150">Current Value</th>
+			<th width="100">Category</th>
+			{if $authority >= 1}
+				<th width="100">Condition</th>
+				<th width="150">Current Value</th>
+			{/if}
 			<th width="150">Location</th>
 	  </tr>
 	</thead>

@@ -23,7 +23,6 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once("lib/inventory.lib.php"); //inventory functions
-require_once("lib/interface.lib.php"); //interface functions
 require_once( 'lib/display.lib.php' ); // categories options
 
 //Authenticate
@@ -43,10 +42,6 @@ $items = getInventory();
 //Assign vars
 $smarty->assign('items', $items);
 $smarty->assign('categories', $categories);
-$smarty->assign('currentSortIndex', $currentSortIndex);
-$smarty->assign('currentSortDir', $currentSortDir);
-$smarty->assign('headers', $headers);
-$smarty->register_function('generateTableHeader', 'generateTableHeader');
 
 $smarty->assign('title', "View Inventory");
 $smarty->assign('authority', $auth);

@@ -20,7 +20,7 @@
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-
+	
 // Run install if config.ini.php does not exist
 if (!file_exists('config/config.ini.php')) {
   header('Location: install.php');
