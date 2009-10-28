@@ -206,8 +206,12 @@ span.TopOfTable h3{
     padding: 6px 6px 6px 12px;
     background-color:#d50000;
 		
+		cursor: pointer;
     background-position: 95% center;
     background-repeat: no-repeat;
+}
+.itemsTable tr {
+	cursor: pointer;
 }
 
 .itemsTable th.headerSortDown
