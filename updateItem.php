@@ -142,23 +142,43 @@ for($x=0; $x<$count; $x++)
 			/* Put each final category into array */
 			$finalCatIDs[] = $categories[$c];
 		}
-	}	
+		
+		/* categories to delete are the ones from the original that are not in the final */
+		$toDeleteIDs = array_diff($currCatIDs, $finalCatIDs);
+	}
+	else
+	{
+		/* All categories should be removed */
+		$toDeleteIDs = $currCatIDs;
+		
+	}
 	
-	/* categories to delete are the ones from the original that are not in the final */
-	$toDeleteIDs = array_diff($currCatIDs, $finalCatIDs);
-	
-	/* categories to add are the ones from the final that are not in the original */
-	$toAddIDs = array_diff($finalCatIDs, $currCatIDs);
+	if(sizeof($currCatIDs) > 0)
+		/* categories to add are the ones from the final that are not in the original */
+		$toAddIDs = array_diff($finalCatIDs, $currCatIDs);
+	else
+		/* Categories to add are just the ones from the page (final) */
+		$toAddIDs = $finalCatIDs;
 
 	if(sizeof($toDeleteIDs) > 0)
 	{
 		$toDeleteQuery = 'DELETE FROM inventory_category
-											WHERE inventory_id='.$inventory_id;
+											WHERE inventory_id='.$inventory_id.' AND ( ';
 
+		$first = 1;
 		foreach($toDeleteIDs as $id)
 		{
-			$toDeleteQuery .= ' AND category_id='.$id;
+			if($first == 1)
+			{
+				$toDeleteQuery .= 'category_id='.$id;
+				$first = 0;
+			}
+			else
+				$toDeleteQuery .= ' OR category_id='.$id;
+			
 		}
+		$toDeleteQuery .= ')';
+		
 		/* Actually delete categories */
 		mysqli_query($link, $toDeleteQuery) or die('Error deleting: '.mysqli_error($link));
 	}
@@ -170,8 +190,17 @@ for($x=0; $x<$count; $x++)
 		{
 			$toAddQuery .= 'INSERT INTO inventory_category (inventory_id, category_id) VALUES ('.$inventory_id.', '.$id.');';		
 		}
-		/* actually insert categories */
-		mysqli_query($link, $toAddQuery) or die('Error inserting: '.mysqli_error($link));
+		/* insert all items, and discard results */
+		if(mysqli_multi_query($link, $toAddQuery))
+		{
+			do {
+				$result = mysqli_store_result($link);
+				mysqli_free_result($result);
+				mysqli_more_results($link);
+			} while(mysqli_next_result($link));
+		}
+		else
+			die('Error inserting item categories: '.mysqli_error($link));
 	}
   
   $query = "update inventory set description = '" . $desc . "', location_id = '" . $location . "', current_condition = '" . $condition . "', current_value = '" . $value . "' where inventory_id = '" . $inventory_id . "'";
