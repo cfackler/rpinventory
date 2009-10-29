@@ -67,13 +67,7 @@
 </table>
 <br />
 
-{if $displayPaginate }
 <div>
-<span id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</span>
-{elseif $authority >= 1}
-<div>
-
-{/if}
 
 {if $authority >= 1}
 	

@@ -43,11 +43,6 @@
 
 
     </table>
-    {if $displayPaginate }
-    	<br />
-
-	<div id="paginate">{paginate_prev} {paginate_middle} {paginate_next}</div>
-    {/if}
 {else}
     <h3>Purchases</h3>
 
