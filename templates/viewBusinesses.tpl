@@ -23,32 +23,43 @@
 {*    <h3>Businesses</h3>*}
 	<a href="addBusiness.php">Add new business</a>
 	</span></div>
-	<table width="900" bsort="0" class="itemsTable" cellspacing="0">
-	       <tr>
-	   
-          {* Table header *}
-    {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
-		  
-		</tr>
-
-	{section name=busLoop loop=$businesses}
-		 <tr{cycle values=" class=\"alt\","}>
-		 	   <td align="center">{$businesses[busLoop]->company_name}</td>
-			   <td align="center">{$businesses[busLoop]->address}</td>
-			   <td align="center">{$businesses[busLoop]->address2}</td>
-			   <td align="center">{$businesses[busLoop]->city}</td>
-			   <td align="center">{$businesses[busLoop]->state}</td>
-			   <td align="center">{$businesses[busLoop]->zipcode}</td>
-			   <td align="center">{$businesses[busLoop]->phone}</td>
-			   <td align="center">{$businesses[busLoop]->fax}</td>
-			   <td align="center"><a href="mailto:{$businesses[busLoop]->email}">{$businesses[busLoop]->email}</td>
-			   <td align="center"><a href="{$businesses[busLoop]->website}">{$businesses[busLoop]->website}</td>
-
-
-    		</tr>
-	{/section}	
-
-
+	
+	<div id="filters" class="filters">
+		<h3>Search:</h3>
+			<input type="text" id="searchField" class="searchField" />	
+	</div>
+	
+	<table width="900" bsort="0" class="itemsTable searchable sortable" cellspacing="0">
+		<thead>
+			<tr>
+				<th width = "300">Company Name</th>
+				<th width="150">Address</th>
+				<th width="160">Address 2</th>
+				<th width="100">City</th>
+				<th width="50">State</th>
+				<th width="100">Zip Code</th>
+				<th width="100">Phone Number</th>
+				<th width="100">Fax Number</th>
+				<th width="100">Email</th>
+				<th width="150">Website</th>
+			</tr>
+		</thead>
+		<tbody>
+			{section name=busLoop loop=$businesses}
+			<tr{cycle values=" class=\"alt\","}>
+				<td align="center">{$businesses[busLoop]->company_name}</td>
+				<td align="center">{$businesses[busLoop]->address}</td>
+				<td align="center">{$businesses[busLoop]->address2}</td>
+				<td align="center">{$businesses[busLoop]->city}</td>
+				<td align="center">{$businesses[busLoop]->state}</td>
+				<td align="center">{$businesses[busLoop]->zipcode}</td>
+				<td align="center">{$businesses[busLoop]->phone}</td>
+				<td align="center">{$businesses[busLoop]->fax}</td>
+				<td align="center"><a href="mailto:{$businesses[busLoop]->email}">{$businesses[busLoop]->email}</td>
+				<td align="center"><a href="{$businesses[busLoop]->website}">{$businesses[busLoop]->website}</td>
+			</tr>
+			{/section}
+		</tbody>
 	</table>
 
 {else}

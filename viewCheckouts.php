@@ -24,8 +24,6 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
-require_once("lib/interface.lib.php"); //interface functions
-require_once( 'lib/paginate.lib.php' );
 require_once( 'lib/checkouts.lib.php' );
 
 //Authenticate
@@ -42,19 +40,9 @@ if(isset($_GET['checkoutId'])){
     $viewCheckoutId = (int)$_GET['checkoutId'];
 }
 
-// Decide sorting method
-if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
-  $currentSortIndex = $_GET['sort'];
-else
-  $currentSortIndex = 3;
-
-//Decide sorting direction
-if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
-  $currentSortDir = 1;
-else
-  $currentSortDir = 0;
   
-paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'checkouts' );
+//paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'checkouts' );
+$items = getViewCheckouts();
 
 if($viewCheckoutId > 0) {
     $checkoutObj = getCheckout($viewCheckoutId);
@@ -62,23 +50,13 @@ if($viewCheckoutId > 0) {
 
 //BEGIN Page
 
-/* Table column headers */
-$headers = array();
-$headers[0] = array('label' => 'Item', 'width' => 250);
-$headers[1] = array('label' => 'Starting Condition', 'width' => 175);
-$headers[2] = array('label' => 'Borrower', 'width' => 100);
-$headers[3] = array('label' => 'Time Taken', 'width' => 150);
-$headers[4] = array('label' => 'Return Date', 'width' => 120);
-
 
 //Assign vars
-$smarty->assign('headers', $headers);
-$smarty->assign('currentSortIndex', $currentSortIndex);
-$smarty->assign('currentSortDir', $currentSortDir);
-$smarty->register_function('generateTableHeader', 'generateTableHeader');
-
+$smarty->assign('items', $items);
 $smarty->assign('viewCheckoutId', $viewCheckoutId);
-$smarty->assign('checkoutObj', $checkoutObj);
+if(isset($checkoutObj))
+	$smarty->assign('checkoutObj', $checkoutObj);
+	
 $smarty->assign('title', "View Checkouts");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewCheckouts');

@@ -23,8 +23,6 @@
 
 
 require_once("lib/auth.lib.php");  //Session
-require_once("lib/interface.lib.php"); //interface
-require_once( 'lib/paginate.lib.php' ); //pagination
 require_once( 'lib/loans.lib.php' ); 
 
 //Authenticate
@@ -42,47 +40,29 @@ if( isset( $_GET['loanId'] ) ) {
 	$viewLoanId = (int)$_GET['loanId'];
 }
 
-// Decide sorting method
-if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
-  $currentSortIndex = $_GET['sort'];
-else
-  $currentSortIndex = 3; //default sorting column is Loan Date (3)
 
-//Decide sorting direction
-if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
-  $currentSortDir = 1;
-else
-  $currentSortDir = 0;
-
-paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'loans' );
+//paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'loans' );
+$items = getViewLoans();
 
 if( $viewLoanId > 0 ) {
 	$loanObj = getLoan( $viewLoanId );
 }
 
 //BEGIN Page
-/* table column headers */
-$headers = array();
-$headers[0] = array('label' => 'Item',                'width' => 250);
-$headers[1] = array('label' => 'Starting Condition',  'width' => 175);
-$headers[2] = array('label' => 'Borrower',            'width' => 100);
-$headers[3] = array('label' => 'Loan Date',           'width' => 100);
-$headers[4] = array('label' => 'Return Date',         'width' => 120);
 
 
 
 //Assign vars
-$smarty->assign('headers', $headers);
-$smarty->assign('currentSortIndex', $currentSortIndex);
-$smarty->assign('currentSortDir', $currentSortDir);
-$smarty->register_function('generateTableHeader', 'generateTableHeader');
 $smarty->assign('viewLoanId', $viewLoanId);
-$smarty->assign('loanObj', $loanObj);
-
+if(isset($loanObj))
+	$smarty->assign('loanObj', $loanObj);
+	
+$smarty->assign('items', $items);
 $smarty->assign('title', "View Loans");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewLoans');
-$smarty->assign('filter', $view);
+if(isset($view))
+	$smarty->assign('filter', $view);
 
 
 $smarty->display('index.tpl');

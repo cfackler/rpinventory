@@ -22,8 +22,6 @@
 */
 
 require_once("lib/auth.lib.php");  //Session
-require_once("lib/interface.lib.php"); //interface functions
-require_once( 'lib/paginate.lib.php' );
 require_once( 'lib/purchases.lib.php' );
 
 //Authenticate
@@ -36,40 +34,19 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-// Decide sorting method
-if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 4))
-  $currentSortIndex = $_GET['sort'];
-else
-  $currentSortIndex = 0;
-
-//Decide sorting direction
-if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
-  $currentSortDir = 1;
-else
-  $currentSortDir = 0;
 
 //BEGIN Page
 
-paginate( $smarty, 'purchases', $currentSortIndex, $currentSortDir, 'purchases' );
-
-/* Table column headers */
-$headers = array();
-$headers[0] = array('label' => 'Items', 'width' => 150);
-$headers[1] = array('label' => 'Company Name', 'width' => 250);
-$headers[2] = array('label' => 'Date', 'width' => 125);
-$headers[3] = array('label' => 'Total Cost', 'width' => 150);
+//paginate( $smarty, 'purchases', $currentSortIndex, $currentSortDir, 'purchases' );
+$purchases = getViewPurchases( );
 
 	
 //Assign vars
-$smarty->assign('headers', $headers);
-$smarty->assign('currentSortIndex', $currentSortIndex);
-$smarty->assign('currentSortDir', $currentSortDir);
-$smarty->register_function('generateTableHeader', 'generateTableHeader');
   
 $smarty->assign('title', "View Purchases");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewPurchases');
-//$smarty->assign('purchases', $purchases);
+$smarty->assign('purchases', $purchases);
 //$smarty->assign('purchaseItems', $items);
 
 $smarty->display('index.tpl');

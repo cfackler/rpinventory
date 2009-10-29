@@ -24,8 +24,6 @@
 
 require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
-require_once("lib/interface.lib.php"); //interface functions
-require_once( 'lib/paginate.lib.php' );
 require_once( 'lib/users.lib.php' );
 
 $link = connect();
@@ -44,36 +42,16 @@ require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
 
-// Decide sorting method
-if(isset($_GET['sort']) && ($_GET['sort'] >= 0 && $_GET['sort'] <= 2))
-  $currentSortIndex = $_GET['sort'];
-else
-  $currentSortIndex = 0;
 
-//Decide sorting direction
-if(isset($_GET['sortdir']) && $_GET['sortdir'] == 1)
-  $currentSortDir = 1;
-else
-  $currentSortDir = 0;
+//paginate( $smarty, 'users', $currentSortIndex, $currentSortDir, 'users' );
+$users = getViewUsers();
 
-paginate( $smarty, 'users', $currentSortIndex, $currentSortDir, 'users' );
-
-/* Table column headers */
-$headers = array();
-$headers[0] = array('label' => 'Username', 'width' => 100);
-$headers[1] = array('label' => 'Access', 'width' => 100);
-$headers[2] = array('label' => 'Email', 'width' => 150);
 
 //Assign vars
-$smarty->assign('headers', $headers);
-$smarty->assign('currentSortIndex', $currentSortIndex);
-$smarty->assign('currentSortDir', $currentSortDir);
-$smarty->register_function('generateTableHeader', 'generateTableHeader');
-
 $smarty->assign('title', "Manage Users");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'manageUsers');
-
+$smarty->assign('users', $users);
 
 $smarty->display('index.tpl');
 

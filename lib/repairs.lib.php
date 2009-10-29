@@ -55,7 +55,7 @@ function getRepairs( $startDate, $endDate )
   return $records;
 }
 
-function getViewRepairs( $currentSortIndex, $currentSortDir ){
+function getViewRepairs( $currentSortIndex=0, $currentSortDir=0 ){
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session
 

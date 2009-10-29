@@ -77,7 +77,7 @@ function getCheckouts( $startDate, $endDate ){
 
 }
 
-function getViewCheckouts( $currentSortIndex, $currentSortDir ){
+function getViewCheckouts( $currentSortIndex=0, $currentSortDir=0 ){
   require_once( 'lib/connect.lib.php' );
 
   $link = connect();
@@ -127,7 +127,7 @@ function getViewCheckouts( $currentSortIndex, $currentSortDir ){
   if($currentSortDir == 1)
     $query .= ' DESC';
   
-  $result = mysqli_query($link, $query) or die(mysqli_error($link));
+  $result = mysqli_query($link, $query) or die('Error getting checkouts: '.mysqli_error($link));
   
   
   $items = array();

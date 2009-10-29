@@ -22,27 +22,31 @@
 		<a href="addBorrower.php">Add new borrower</a>
 	</span>
 </div>
+<div id="filters" class="filters">
+	<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />	
+</div>
 
-<table width="800" border="0" class="itemsTable" cellspacing="0">
-	<tr>
-		
-    {* Table header *}
-    {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
-		{* Actions does not need to be a sorting column *}
-		<th width="200">Actions</th>
-		
-	</tr>
-
-{section name=borrowerLoop loop=$borrowers}
-<tr{cycle values=" class=\"alt\","}>
-	<td align="center">{$borrowers[borrowerLoop]->name}</td>
-	<td align="center">{$borrowers[borrowerLoop]->rin}</td>
-	<td align="center"><a href="mailto:{$borrowers[borrowerLoop]->email}">{$borrowers[borrowerLoop]->email}</a></td>
-	<td align="center"><a href="viewBorrowerAddress.php?id={$borrowers[borrowerLoop]->borrower_id}">Address</a></td>
+<table width="800" border="0" class="itemsTable searchable sortable" cellspacing="0">
+	<thead>
+		<tr>
+			<th width="150">Name</th>
+			<th width="100">RIN</th>
+			<th width="150">Email</th>
+			<th width="100">Address</th>		
+			<th width="200">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{section name=borrowerLoop loop=$borrowers}
+		<tr{cycle values=" class=\"alt\","}>
+			<td align="center">{$borrowers[borrowerLoop]->name}</td>
+			<td align="center">{$borrowers[borrowerLoop]->rin}</td>
+			<td align="center"><a href="mailto:{$borrowers[borrowerLoop]->email}">{$borrowers[borrowerLoop]->email}</a></td>
+			<td align="center"><a href="viewBorrowerAddress.php?id={$borrowers[borrowerLoop]->borrower_id}">Address</a></td>
 	
-	<td align="center"><a href="editBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete borrower \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')" value="Delete Borrower"></td>
-</tr>
-{/section}	
-
-
+			<td align="center"><a href="editBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete borrower \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')" value="Delete Borrower"></td>
+		</tr>
+		{/section}	
+	</tbody>
 </table>

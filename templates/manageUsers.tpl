@@ -23,35 +23,39 @@
 	</span>
 </div>
 
-<table width="700" border="0" class="itemsTable" cellspacing="0">
-	<tr>
-		
-    {* Table header *}
-    {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
-		{* Actions does not need to be a sorting column *}
-		<th width="150">Actions</th>
-		
-	</tr>
+<div id="filters" class="filters">
+	<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />	
+</div>
 
-{section name=userLoop loop=$users}
-<tr{cycle values=" class=\"alt\","}>
-	<td align="center">{$users[userLoop]->username}</td>
-	<td align="center">
-	{if $users[userLoop]->access_level == 2}
-		Administrator
-	{elseif $users[userLoop]->access_level == 1}
-		Manager
-	{else}
-		User
-	{/if}
+<table width="700" border="0" class="itemsTable searchable sortable" cellspacing="0">
+	<thead>
+		<tr>
+			<th width="100">Username</th>
+			<th width="100">Access</th>
+			<th width="150">Email</th>
+			<th width="150">Actions</th>		
+		</tr>
+	</thead>
+	<tbody>
+		{section name=userLoop loop=$users}
+		<tr{cycle values=" class=\"alt\","}>
+			<td align="center">{$users[userLoop]->username}</td>
+			<td align="center">
+			{if $users[userLoop]->access_level == 2}
+				Administrator
+			{elseif $users[userLoop]->access_level == 1}
+				Manager
+			{else}
+				User
+			{/if}
 		
-	</td>
+			</td>
 	
-	<td align="center"><a href="mailto:{$users[userLoop]->email}">{$users[userLoop]->email}</a></td>
+			<td align="center"><a href="mailto:{$users[userLoop]->email}">{$users[userLoop]->email}</a></td>
 	
-	<td align="center"><a href="editUser.php?id={$users[userLoop]->id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')" value="Delete User"></td>
-</tr>
-{/section}	
-
-
+			<td align="center"><a href="editUser.php?id={$users[userLoop]->id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')" value="Delete User"></td>
+		</tr>
+		{/section}	
+	</tbody>
 </table>

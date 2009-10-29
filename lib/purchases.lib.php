@@ -55,7 +55,7 @@ function getPurchases( $startDate, $endDate )
   return $records;
 }
 
-function getViewPurchases( $currentSortIndex, $currentSortDir ){
+function getViewPurchases( $currentSortIndex=0, $currentSortDir=0 ){
   require_once( 'lib/connect.lib.php' );
   require_once( 'lib/auth.lib.php' );
 

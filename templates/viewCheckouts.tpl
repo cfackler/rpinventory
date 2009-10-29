@@ -87,37 +87,43 @@ Show:
 	<b>Returned </b>
 {/if}
 </span></div>
+<div id="filters" class="filters">
+	<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />	
+</div>
 
 
-<table width="800" border="0" class="itemsTable" cellspacing="0">
-	<tr>
+<table width="800" border="0" class="itemsTable sortable searchable" cellspacing="0">
+	<thead>
+		<tr>
+			<th width="250">Item</th>
+			<th width="175">Starting Condition</th>
+			<th width="100">Borrower</th>
+			<th width="150">Time Taken</th>
+			<th width="120">Return Date</th>
+		</tr>
+	</thead>
+	<tbody>		
+		{section name=itemLoop loop=$items}
+		<tr{cycle values=" class=\"alt\","}>
+
+			<td>{$items[itemLoop]->description}</td>
+			<td>{$items[itemLoop]->starting_condition}</td>
+			<td>{$items[itemLoop]->name}</td>
+			<td>{$items[itemLoop]->time_taken}</td>
+			<td align="center">
+			{if $items[itemLoop]->time_returned == NULL && $authority >= 1}
+				<a href="returnCheckoutItem.php?id={$items[itemLoop]->checkout_id}">Return</a>
+			{elseif $items[itemLoop]->time_returned == NULL}
+				Out
+			{else}
+				{$items[itemLoop]->time_returned}
+			{/if}
 	
-	 {* Table header *}
-    {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
-		
-	</tr>
-
-{section name=itemLoop loop=$items}
-<tr{cycle values=" class=\"alt\","}>
-
-	<td>{$items[itemLoop]->description}</td>
-	<td>{$items[itemLoop]->starting_condition}</td>
-	<td>{$items[itemLoop]->name}</td>
-	<td>{$items[itemLoop]->time_taken}</td>
-	<td align="center">
-	{if $items[itemLoop]->time_returned == NULL && $authority >= 1}
-		<a href="returnCheckoutItem.php?id={$items[itemLoop]->checkout_id}">Return</a>
-	{elseif $items[itemLoop]->time_returned == NULL}
-		Out
-	{else}
-		{$items[itemLoop]->time_returned}
-	{/if}
-	
-	</td>
-</tr>
-{/section}	
-
-
+			</td>
+		</tr>
+		{/section}	
+	</tbody>
 </table>
 
 {/if}

@@ -411,3 +411,37 @@ function save_location_behavior() {
 	});
 }
 
+function table_sortable(startingCol, startingDir) {
+	if(!startingCol)
+	{
+		startingCol = 0;
+	}
+	if(!startingDir)
+	{
+		startingDir = 0;
+	}
+	/* make table javascript sortable */
+	(jQuery)('table.sortable').tablesorter( {sortList: [[startingCol,startingDir]]} );
+	
+	/* upon sort end, remove and re-assign class for alternate row color */
+	(jQuery)('table.sortable').bind("sortStart", function(){
+		/*Loading notification eventually */
+	}).bind("sortEnd", function(){
+		(jQuery)('table.sortable tr.alt').removeClass('alt');
+		(jQuery)('table.sortable tr:even').addClass('alt');
+	});
+}
+function table_searchable() {
+	var theTable = (jQuery)('table.searchable');
+	
+	theTable.find("tbody > tr").find("td:eq(1)").mousedown(function(){
+    (jQuery)(this).prev().find(":checkbox").click()
+  });
+
+	(jQuery)('#searchField').keyup(function() {
+		(jQuery).uiTableFilter(theTable, this.value);
+		(jQuery)('table.searchable tr.alt').removeClass('alt');
+		(jQuery)('table.searchable tr:even').addClass('alt');
+	});
+	
+}

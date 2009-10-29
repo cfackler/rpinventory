@@ -22,28 +22,37 @@
 <h3>Repairs</h3>
 </span>
 </div>*}
+
+<div id="filters" class="filters">
+	<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />	
+</div>
+
 {if $authority>1}
-    <table width="800" border="0" class="itemsTable" cellspacing="0">
-    	<tr>
-    
-        {* Table header *}
-    {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
-		
-	</tr>
+<table width="800" border="0" class="itemsTable sortable searchable" cellspacing="0">
+	<thead>
+		<tr>
+    	<th width="200">Item</th>
+			<th width="150">Company Name</th>
+			<th width="75">Date</th>
+			<th width="50">Cost</th>
+			<th width="250">Description</th>		
+		</tr>
+	</thead>
+	<tbody>
 
-    {section name=itemLoop loop=$items}
-    <tr{cycle values=" class=\"alt\","}>
+		{section name=itemLoop loop=$items}
+		<tr{cycle values=" class=\"alt\","}>
 
-	<td>{$items[itemLoop]->inv_description}</td>
-	<td><a href="viewBusinessAddress.php?id={$items[itemLoop]->business_id}">{$items[itemLoop]->company_name}</td>
-	<td>{$items[itemLoop]->repair_date}</td>
-	<td>${$items[itemLoop]->repair_cost}</td>
-	<td>{$items[itemLoop]->rep_description}</td>
-    </tr>
-    {/section}	
-
-
-    </table>
+			<td>{$items[itemLoop]->inv_description}</td>
+			<td><a href="viewBusinessAddress.php?id={$items[itemLoop]->business_id}">{$items[itemLoop]->company_name}</td>
+			<td>{$items[itemLoop]->repair_date}</td>
+			<td>${$items[itemLoop]->repair_cost}</td>
+			<td>{$items[itemLoop]->rep_description}</td>
+		</tr>
+		{/section}	
+	</tbody>
+</table>
 
 {else}
     <h3>Repairs</h3>

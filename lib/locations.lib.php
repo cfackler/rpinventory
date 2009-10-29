@@ -212,7 +212,7 @@ function insertLocation($location, $desc)
 
 }
 
-function getViewLocations( $currentSortIndex, $currentSortDir ) {
+function getViewLocations( $currentSortIndex=0, $currentSortDir=0 ) {
   require_once('lib/connect.lib.php');  //mysql
   require_once('lib/auth.lib.php');  //Session
   

@@ -26,7 +26,7 @@
 		<input type="text" id="searchField" class="searchField" />	
 </div>
 
-<table width="800" border="0" id="itemsTable" class="itemsTable" cellspacing="0" >
+<table width="800" border="0" id="itemsTable" class="itemsTable sortable searchable" cellspacing="0" >
 	<thead>
 		<tr>
 			{if $authority >= 1}

@@ -23,26 +23,28 @@
 <a href="addLocation.php">Add new location</a>
 </span></div>
 
-<table width="700" border="0" cellspacing="0" class="itemsTable">
-	<tr>
-	   
-       {* Table header *}
-    {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
-		
-		{* Actions do not need to be sorted. *}
-		<th width="200">Actions</th>
-	</tr>
+<div id="filters" class="filters">
+	<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />	
+</div>
 
-{section name=num loop=$locations}
-<tr{cycle values=" class=\"alt\","}>
-
-	<td align="center">{$locations[num]->location}</td>
-	<td align="center">{$locations[num]->description}</td>
-	<td align="center">
-	<a href="editLocation.php?id={$locations[num]->location_id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')" value="Delete">
-	</td>
-</tr>
-{/section}	
-
-
+<table width="700" border="0" cellspacing="0" class="itemsTable searchable sortable">
+	<thead>
+		<tr>
+			<th width = "200">Location</th>
+			<th width="300">Description</th>
+			<th width="200">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{section name=num loop=$locations}
+		<tr{cycle values=" class=\"alt\","}>
+			<td align="center">{$locations[num]->location}</td>
+			<td align="center">{$locations[num]->description}</td>
+			<td align="center">
+			<a href="editLocation.php?id={$locations[num]->location_id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')" value="Delete">
+			</td>
+		</tr>
+		{/section}
+	</tbody>
 </table>

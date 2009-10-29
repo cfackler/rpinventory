@@ -89,7 +89,7 @@ function getUsernames( $name )
   header('X-JSON: ('.$json->encode( $data ).')');
 }
 
-function getViewUsers( $currentSortIndex, $currentSortDir ){
+function getViewUsers( $currentSortIndex=0, $currentSortDir=0 ){
   require_once("lib/connect.lib.php");  //mysql
   require_once("lib/auth.lib.php");  //Session
 

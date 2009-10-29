@@ -67,7 +67,7 @@
 
 <div class="TopOfTable">
 <span class="TopOfTable">
-{*<h3>Loans</h3>*}
+
 Show:
 
 {if $filter != "all"}
@@ -87,38 +87,45 @@ Show:
 {else}
 	<b>Returned </b>
 {/if}
-</span></div>
+</span>
+</div>
 
+<div id="filters" class="filters">
+	<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />	
+</div>
 
-<table width="800" border="0" class="itemsTable" cellspacing="0">
-	<tr>
+<table width="800" border="0" class="itemsTable sortable searchable" cellspacing="0">
+	<thead>
+		<tr>
+			<th width="250">Item</th>
+			<th width="175">Starting Condition</th>
+			<th width="100">Borrower</th>
+			<th width="100">Loan Date</th>
+			<th width="120">Return Date</t>
+		</tr>
+	</thead>
+	<tbody>
+	{section name=itemLoop loop=$items}
+	<tr{cycle values=" class=\"alt\","}>
+
+		<td>{$items[itemLoop]->description}</td>
+		<td>{$items[itemLoop]->starting_condition}</td>
+		<td>{$items[itemLoop]->name}</td>
+		<td>{$items[itemLoop]->issue_date}</td>
+		<td align="center">
+		{if $items[itemLoop]->return_date == NULL && $authority >= 1}
+			<a href="returnItem.php?id={$items[itemLoop]->loan_id}">Return</a>
+		{elseif $items[itemLoop]->return_date == NULL}
+			Out
+		{else}
+			{$items[itemLoop]->return_date}
+		{/if}
 	
-	 {* Table header *}
-    {generateTableHeader headers=$headers currentSortIndex=$currentSortIndex currentSortDir=$currentSortDir}
-
-		
+		</td>
 	</tr>
-
-{section name=itemLoop loop=$items}
-<tr{cycle values=" class=\"alt\","}>
-
-	<td>{$items[itemLoop]->description}</td>
-	<td>{$items[itemLoop]->starting_condition}</td>
-	<td>{$items[itemLoop]->name}</td>
-	<td>{$items[itemLoop]->issue_date}</td>
-	<td align="center">
-	{if $items[itemLoop]->return_date == NULL && $authority >= 1}
-		<a href="returnItem.php?id={$items[itemLoop]->loan_id}">Return</a>
-	{elseif $items[itemLoop]->return_date == NULL}
-		Out
-	{else}
-		{$items[itemLoop]->return_date}
-	{/if}
-	
-	</td>
-</tr>
-{/section}	
-
+	{/section}	
+	</tbody>
 
 </table>
 
