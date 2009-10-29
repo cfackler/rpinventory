@@ -54,10 +54,9 @@ foreach($idList as $id)
   {
 
     //item
-    $query= "SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value, count(inventory_category.category_id) AS catCount
-						FROM inventory, locations, inventory_category
+    $query= "SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value
+						FROM inventory, locations
 						WHERE locations.location_id=inventory.location_id
-									AND inventory_category.inventory_id = inventory.inventory_id
 									AND inventory.inventory_id = " . $id;
     $result = mysqli_query($link, $query);
 
