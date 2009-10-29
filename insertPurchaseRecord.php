@@ -211,8 +211,8 @@ for($x=0; $x<$count; $x++)
 		if(mysqli_multi_query($link, $sql))
 		{
 			do {
-				$result = mysqli_store_result($link);
-				mysqli_free_result($result);
+				if($result = mysqli_store_result($link))
+					mysqli_free_result($result);
 				mysqli_more_results($link);
 			} while(mysqli_next_result($link));
 		}

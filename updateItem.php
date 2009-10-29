@@ -57,60 +57,11 @@ for($x=0; $x<$count; $x++)
   //Location	
   $location = (int)$_POST['location-' . $x];
   
-  $newLocation = $_POST['newlocation-' . $x];
   
   $desc = mysqli_real_escape_string($link, $desc);
   $condition = mysqli_real_escape_string($link, $condition);
   $location = mysqli_real_escape_string($link, $location);
-  $newLocation = mysqli_real_escape_string($link, $newLocation);
-  
-  $sql = 'SELECT * FROM locations';	
-  $result = mysqli_query($link, $sql); 
-  $checkRows = 0;
-  $loc_match;
-  
-  // Check location exists
-  while ($row = mysqli_fetch_array($result)) {
-    if (strcasecmp($row['location'], $newLocation) == 0){ 
-      $loc_match = $row['location'];
-      $checkRows++;
-    }
-  }
-  
-  
-  //if not in database, new location was specified
-  if($location == -1 && $checkRows == 0){
-    if(strlen($newLocation) == 0)
-      die("New location must have a name.");	
     
-    $locDescription = $_POST["newdescription-" . $x];
-    $locDescription = mysqli_real_escape_string($link, $locDescription);
-    
-    if(strlen($locDescription) == 0)
-      die("New location must have a description.");	
-    
-    $sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $newLocation . "', '" . $locDescription . "')";
-    
-    if(!mysqli_query($link, $sql))
-      die("New Location Insert Query Failed");
-    
-    $location = mysqli_insert_id($link);  
-    
-    if($location == 0)
-      die("Must have a location");
-  }
-  //stuff they entered already exists in the table
-  else if($location == -1 && $checkRows == 1){
-    $sql = "SELECT location_id FROM locations WHERE location = '" . $loc_match . "' LIMIT 1";
-    $result = mysqli_query($link, $sql);
-    $loc = mysqli_fetch_object($result);
-    $location = $loc->location_id;
-  }
-  // Decided to not die(), but use the other location if duplicate was given
-  /*	else{
-	die("Cannot determine correct location_id from given name. Location already exists with name: ".$newLocation);
-	}*/
-  
   
   
   //Value
@@ -134,8 +85,9 @@ for($x=0; $x<$count; $x++)
 	$finalCatIDs = array();
 	// For all categories
 	$sql = '';
-	$categories = $_POST['category-'.$x];
-	if(sizeof($categories) > 0)
+	if(isset($_POST['category-'.$x]))
+		$categories = $_POST['category-'.$x];
+	if(isset($categories) && sizeof($categories) > 0)
 	{
 		for($c = 0; $c < sizeof($categories); $c++)
 		{
@@ -194,8 +146,9 @@ for($x=0; $x<$count; $x++)
 		if(mysqli_multi_query($link, $toAddQuery))
 		{
 			do {
-				$result = mysqli_store_result($link);
-				mysqli_free_result($result);
+				if($result = mysqli_store_result($link)) {
+					mysqli_free_result($result);
+				}
 				mysqli_more_results($link);
 			} while(mysqli_next_result($link));
 		}
