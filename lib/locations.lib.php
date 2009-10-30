@@ -72,7 +72,7 @@ function getCommonLocation()
     die('You dont have permission to access this page');
 
   $sql = 'SELECT count(locations.location_id) AS counts, locations.location_id, location FROM inventory, locations
- WHERE locations.location_id = inventory.location_id ORDER BY counts desc LIMIT 1';
+ WHERE locations.location_id = inventory.location_id GROUP BY locations.location_id ORDER BY counts desc LIMIT 1';
   $result = mysqli_query( $link, $sql ) or
     die( 'Could not determine most common location' );
  
