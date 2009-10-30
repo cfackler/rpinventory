@@ -47,6 +47,7 @@ function Authenticate($username, $password, $link)
 	//Store id and auth
 	$_SESSION['id'] = $row->id;
 	$_SESSION['authority'] = $row->access_level;
+    $_SESSION['uid'] = 'c651cd37773cea8a02654fbd71f0740f';
 	
 	return true;
 }
@@ -64,8 +65,11 @@ function Logout()
 //Verify id and authority set
 function IsAuthenticated()
 {
-	if(isset($_SESSION['id']) && isset($_SESSION['authority']))
-		return true;
+    if(isset($_SESSION['id']) && isset($_SESSION['authority']) && isset($_SESSION['uid']))
+    {
+        if($_SESSION['uid'] == 'c651cd37773cea8a02654fbd71f0740f')
+    		return true;
+    }
 		
 	return false;
 }
@@ -127,5 +131,10 @@ function VerifyItemExists($id, $link)
 	return true;
 }
 
+function uniqueId()
+{
+    return md5(uniqid(rand(), true);
+}
+    
 
 ?>
