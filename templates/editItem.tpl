@@ -50,14 +50,13 @@
 <tr>
 	<td>Category: </td>
 	<td id="categoryTD-{$smarty.section.num.index}">
-		<input type="hidden" name="catCount-{$smarty.section.num.index}" id="catCount-{$smarty.section.num.index}" value="{$items[num]->catCount}" />
 		<select multiple="multiple" name="category-{$smarty.section.num.index}[]" id="category-{$smarty.section.num.index}" class="category_select" title="Please select a category">
 			{$category_options}
 		</select>
 	</td>
 	<td>
 		<div id="category_notification-{$smarty.section.num.index}" class="category_notification">
-			<a id="add_category_button-0" class="ui-state-default ui-corner-all icon_button add_category_button">
+			<a id="add_category_button-{$smarty.section.num.index}" class="ui-state-default ui-corner-all icon_button add_category_button">
 				<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category
 			</a>
 		</div>
