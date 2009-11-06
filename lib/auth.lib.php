@@ -143,7 +143,7 @@ function VerifyItemExists($id, $link)
 
 function uniqueId()
 {
-    return md5(uniqid(rand(), true);
+    return md5(uniqid(rand(), true));
 }
     
 
