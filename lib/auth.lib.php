@@ -46,8 +46,10 @@ function Authenticate($username, $password, $link)
 	
 	//Store id and auth
 	$_SESSION['id'] = $row->id;
-	$_SESSION['authority'] = $row->access_level;
-    $_SESSION['uid'] = 'c651cd37773cea8a02654fbd71f0740f';
+    $_SESSION['authority'] = $row->access_level;
+
+    // echo md5(uniqid(mt_rand(), true))
+    $_SESSION['uid'] = '9dd0a719bcad4a5aaecf084193bc24a2';
 	
 	return true;
 }
@@ -57,7 +59,8 @@ function Authenticate($username, $password, $link)
 function Logout()
 {
 	unset($_SESSION['id']);
-	unset($_SESSION['authority']);
+    unset($_SESSION['authority']);
+    unset($_SESSION['uid']);
 	
 	session_destroy();
 }
@@ -67,8 +70,15 @@ function IsAuthenticated()
 {
     if(isset($_SESSION['id']) && isset($_SESSION['authority']) && isset($_SESSION['uid']))
     {
-        if($_SESSION['uid'] == 'c651cd37773cea8a02654fbd71f0740f')
+        if($_SESSION['uid'] == '9dd0a719bcad4a5aaecf084193bc24a2')
+        {
     		return true;
+        }
+        else
+        {
+            Logout();
+            return false;
+        }
     }
 		
 	return false;
