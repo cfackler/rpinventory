@@ -1,24 +1,21 @@
 
 
 /*
-* Attributes
-*/
+ * Attributes
+ */
 a {
     color: #303030;
     text-decoration: underline;
 }
 
-
 a:hover {
     color:#505050;
 }
-
 
 body {
     font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
     background-color: #cccccc;
 }
-
 
 /**
  * Red color for header
@@ -28,22 +25,20 @@ div.header, div.navigationBar{
     background-color: #d50000;
 }
 
-
 div.header {	
     /** Position of header **/
     position:absolute;
     left:0px;
     top: 20px;
     height:100px;
-    
+
     /** Size of header **/
     width: 100%;
-    
+
     /** Header border **/
     border-top: solid 2px;
     border-bottom: solid 2px;
 }
-
 
 /**
  * Sidebar border and background colors
@@ -56,7 +51,6 @@ div.navigationBar {
     left:0px
 }
 
-
 /* LINK styles */
 div.navigationBar a {
     color: #e0e0e0;
@@ -66,12 +60,10 @@ div.navigationBar a {
     padding-right:5px;
 }
 
-
 div.navigationBar a:hover {
     color: #f0f0f0;
     background-color:#ff0000;
 }
-
 
 /**
  * List items in sidebar
@@ -79,22 +71,20 @@ div.navigationBar a:hover {
 div.navigationBar ul {
     /** No Bullets **/
     list-style-type: none;
-    
+
     text-align:right;
-    
+
     /** space them out vertically **/
     line-height:30px;
-    
+
     padding-left:0px;
     margin-top: 0px;
     margin-bottom:0px;
 }
 
-
 div.navigationBar ul li {
     border-bottom: solid 1px;    
 }
-
 
 /**
  * This is for any items in the sidebar that aren't links
@@ -108,22 +98,19 @@ div.navigationBar ul li.SidebarSectionHeader {
     border-bottom:solid 1px #000000;
 }
 
-
 div.main_body {
     position: absolute;
     top: 145px;
     left:150px;
 }
 
-
 /**
  * This is the div for the stuff at the top of the table on the pages.
  * The span is inside always.
  **/
 div.TopOfTable {
-	margin-bottom:10px;
+    margin-bottom:10px;
 }
-
 
 /**
  * header content is in this span
@@ -134,7 +121,6 @@ span.headerContent {
     top: 45px;
     left: 150px;
 }
-
 
 /**
  * This is the span that is inside the TopOfTable div.
@@ -148,15 +134,10 @@ span.TopOfTable h3{
     margin-bottom:0;
 }
 
-
-
-
-
 .indent {
     position: relative;
     left: 20px
 }
-
 
 /* Items table styling */
 .itemsTable {
@@ -164,7 +145,6 @@ span.TopOfTable h3{
     margin: 0;
     border-left: 1px solid #cc3333;
 }
-
 
 .itemsTable td {
     font-size: 11px;
@@ -175,22 +155,18 @@ span.TopOfTable h3{
     color:000000;
 }
 
-
 .alt  td {
     background: #dfdfdf;	
 }
-
 
 .itemsTable td a {
     color: #d50000;
     text-decoration:underline;
 }
 
-
 .itemsTable td a:hover {
     color: #ff0000;
 }
-
 
 /**
  * Table header 
@@ -205,38 +181,36 @@ span.TopOfTable h3{
     text-align: left;
     padding: 6px 6px 6px 12px;
     background-color:#d50000;
-		
-		cursor: pointer;
+    cursor: pointer;
     background-position: 95% center;
     background-repeat: no-repeat;
 }
+
 .itemsTable tr {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .itemsTable th.headerSortDown
 {
-	background-image: url('../images/sortTriangleUp.png');
+    background-image: url('../images/sortTriangleUp.png');
 }
 .itemsTable th.headerSortUp
 {
-	background-image: url('../images/sortTriangleDown.png');
+    background-image: url('../images/sortTriangleDown.png');
 }
 
 /**
  * Table header link
  **/
 .itemsTable th a {
-  text-decoration: none;
-  display: block;
-  color: #ffffff;
+    text-decoration: none;
+    display: block;
+    color: #ffffff;
 }
 
-.tableHeaderSortTriangle
-{
-  border: 0px;
+.tableHeaderSortTriangle {
+    border: 0px;
 }
-
 
 /* Items table styling */
 .loanTable {
@@ -244,7 +218,6 @@ span.TopOfTable h3{
     margin: 0;
     border-left: 1px solid #cc3333;
 }
-
 
 .loanTable td {
     font-size: 11px;
@@ -255,12 +228,10 @@ span.TopOfTable h3{
     color: #000000;
 }
 
-
 .loanTable td a {
     color: #d50000;
     text-decoration:underline;
 }
-
 
 .loanTable td a:hover {
     color: #ff0000;
@@ -282,9 +253,9 @@ span.TopOfTable h3{
  * Table header link
  **/
 .loanTable th a {
-  text-decoration: none;
-  display: block;
-  color: #ffffff;
+    text-decoration: none;
+    display: block;
+    color: #ffffff;
 }
 
 .loanAlt td {
@@ -297,7 +268,6 @@ span.TopOfTable h3{
     margin: 0px;
 }
 
-
 #userAutoComplete {
     width: 152px;
     border: solid 1px;
@@ -307,81 +277,78 @@ span.TopOfTable h3{
     top: -5px;
 }
 
-#userAutoComplete span:hover{
+#userAutoComplete span:hover {
     background-color: #b5b5b5;
 }
 
 .naviOver {
-  background-color:#ff0000;
+    background-color:#ff0000;
 }
 
 .button {
-  background-color:#333333;
-  border: 2px solid black;
-  border-style:outset;
-  color: #ffffff;
-  
+    background-color:#333333;
+    border: 2px solid black;
+    border-style:outset;
+    color: #ffffff;
 }
 
-a.icon_button
-{
-	float: left;
-	padding: 4px 4px 4px 0px;
-	text-decoration: none;
-	font-size: 10pt;
-	cursor: pointer;
+a.icon_button {
+    float: left;
+    padding: 4px 4px 4px 0px;
+    text-decoration: none;
+    font-size: 10pt;
+    cursor: pointer;
 }
-a.icon_button:hover
-{
-	color: default;
+
+a.icon_button:hover {
+    color: default;
 }
-span.icon_button_icon
-{
-	float: left;
-	margin: 0 4px;
+
+span.icon_button_icon {
+    float: left;
+    margin: 0 4px;
 }
 
 .dropDown {
-  background-color: #333333;
-  border: 1px solid black;
-  color: #ffffff;
+    background-color: #333333;
+    border: 1px solid black;
+    color: #ffffff;
 }
 
-.dropDown option{
-  border-top:1px dotted black;
-  color: #ffffff;
+.dropDown option {
+    border-top:1px dotted black;
+    color: #ffffff;
 }
 
-#userAutoComplete:hover{
-  cursor: default
+#userAutoComplete:hover {
+    cursor: default
 }
 
-#paginate{
-  float: right;
+#paginate {
+    float: right;
 }
 
-#inventoryActions{
-  float: left;
+#inventoryActions {
+    float: left;
 }
 
-#helpToolTip{
-	visibility: hidden;
-	position: absolute;
-	z-index: 1000;
-	top: -100;
-	background-color: white;
-	max-width: 150px;
-	padding: 2px;
-	font-size: 12px;
+#helpToolTip {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1000;
+    top: -100;
+    background-color: white;
+    max-width: 150px;
+    padding: 2px;
+    font-size: 12px;
 }
 
-div#filters
-{
-	margin-bottom: 20px;
+div#filters {
+    margin-bottom: 20px;
 }
-div#filters h3
-{
-	margin-top: 0;
-	margin-bottom: 0;
-	font-size: 10pt;
+
+div#filters h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 10pt;
 }
