@@ -45,7 +45,7 @@ $this->assign('clubName', Config::get('club_name'));
 {elseif $page_tpl == 'viewInventory'}
 	<script src="js/viewInventory.interface.js" language="javascript" type="text/javascript"></script>
 {else}
-	<script src="js/default.interface.js" language="javascript" type="text/javascript"></script>
+	<!--<script src="js/default.interface.js" language="javascript" type="text/javascript"></script>-->
 {/if}
 
 
