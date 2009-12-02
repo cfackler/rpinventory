@@ -17,20 +17,19 @@
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 *}
-
-{*<div class="TopOfTable"><span class="TopOfTable">
-<h3>Repairs</h3>
-</span>
-</div>*}
-
-<div id="filters" class="filters">
-	<h3>Search:</h3>
-		<input type="text" id="searchField" class="searchField" />	
+{if $authority>1}
+<div id="controlsTop" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
+	<div class="left">
+		<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />
+	</div>
+	<div class="right">
+	  <!-- -->
+	</div>
 </div>
 
-{if $authority>1}
-<table width="800" border="0" class="itemsTable sortable searchable" cellspacing="0">
-	<thead>
+<table width="800" class="itemsTable sortable searchable ui-widget ui-corner-all" cellspacing="0">
+	<thead class="ui-widget-header">
 		<tr>
     	<th width="200">Item</th>
 			<th width="150">Company Name</th>
@@ -39,7 +38,7 @@
 			<th width="250">Description</th>		
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="ui-widget-content">
 
 		{section name=itemLoop loop=$items}
 		<tr{cycle values=" class=\"alt\","}>
@@ -55,7 +54,8 @@
 </table>
 
 {else}
-    <h3>Repairs</h3>
-
-    <p>Please login if you wish to view information about repairs.</p>
+<div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
+  <h3 class="ui-widget-header ui-corner-all">Repairs</h3>
+  <p>Please login if you wish to view information about repairs.</p>
+</div>
 {/if}

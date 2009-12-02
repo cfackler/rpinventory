@@ -67,8 +67,8 @@ div.navigationBar {
     top:145px;
     width: 120px;
     left: 10px;
-    font-size: 11px;
-    padding: 5px;
+    font-size: 12px;
+    padding: 10px;
 }
 ul.navigationList {
   margin: 0px 0px 0px 0px;
@@ -78,12 +78,12 @@ ul.navigationList {
 ul.navigationList li {
   margin: 0px 0px 0px 0px;
   padding: 5px;
-  margin-bottom: 1px;
+  margin-bottom: 2px;
 }
 ul.navigationList li.navigationHeader {
   margin: 0;
   padding: 10px;
-  font-size: 12px;
+  font-size: 16px;
 }
 ul.navigationList li a {
   display: block;
@@ -428,4 +428,17 @@ a.button span.ui-icon {
 }
 a.button span.buttonText {
   font-size: 12px;
+}
+
+div.mainForm h3 {
+  font-size: 16px;
+  margin: 0px 0px 10px 0;
+  padding: 5px;
+}
+
+div.mainForm {
+  padding: 10px;
+}
+div.mainForm label {
+  
 }
