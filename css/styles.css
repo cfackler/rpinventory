@@ -39,11 +39,11 @@ body {
 /**
  * Red color for header
  * sidebar background
- **/
+ *
 div.header, div.navigationBar{
     background-color: #d50000;
 }
-
+*/
 div.header {	
     /** Position of header **/
     position:absolute;
@@ -64,13 +64,35 @@ div.header {
  **/
 div.navigationBar {
     position: absolute;
-    border:solid 2px;
     top:145px;
     width: 120px;
-    left:0px
+    left: 10px;
+    font-size: 11px;
+    padding: 5px;
+}
+ul.navigationList {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  list-style:none;
+}
+ul.navigationList li {
+  margin: 0px 0px 0px 0px;
+  padding: 5px;
+  margin-bottom: 1px;
+}
+ul.navigationList li.navigationHeader {
+  margin: 0;
+  padding: 10px;
+  font-size: 12px;
+}
+ul.navigationList li a {
+  display: block;
+}
+ul.navigationList li.ui-state-active a {
+  cursor: default;
 }
 
-/* LINK styles */
+/* LINK styles 
 div.navigationBar a {
     color: #e0e0e0;
     font-size: 12px;
@@ -82,19 +104,19 @@ div.navigationBar a {
 div.navigationBar a:hover {
     color: #f0f0f0;
     background-color:#ff0000;
-}
+}*/
 
 /**
  * List items in sidebar
  **/
-div.navigationBar ul {
+/*div.navigationBar ul {
     /** No Bullets **/
-    list-style-type: none;
+/*    list-style-type: none;
 
     text-align:right;
 
     /** space them out vertically **/
-    line-height:30px;
+/*    line-height:30px;
 
     padding-left:0px;
     margin-top: 0px;
@@ -103,24 +125,24 @@ div.navigationBar ul {
 
 div.navigationBar ul li {
     border-bottom: solid 1px;    
-}
+}*/
 
 /**
  * This is for any items in the sidebar that aren't links
  * Like the "Admin" section divider
- **/
+ *
 div.navigationBar ul li.SidebarSectionHeader {
     padding-right: 5px;
     color: #FFFFFF;
     font-size: 14px;
     background-color: #aa0000;
     border-bottom:solid 1px #000000;
-}
+}*/
 
 div.main_body {
     position: absolute;
     top: 145px;
-    left:150px;
+    left:170px;
 }
 
 /**
@@ -162,27 +184,29 @@ span.TopOfTable h3{
 .itemsTable {
     padding: 0;
     margin: 0;
-    border-left: 1px solid #cc3333;
+    border-left: 1px solid #347992;
 }
 
-.itemsTable td {
+.itemsTable tbody td {
     font-size: 11px;
-    border-right: 1px solid #cc3333;
-    border-bottom: 1px solid #cc3333;
-    background: #cccccc;
+    border-right: 1px solid #347992;
+    border-bottom: 1px solid #347992;
     padding: 6px 6px 6px 12px;
-    color:000000;
+    /*color:000000;*/
 }
-
-.alt  td {
-    background: #dfdfdf;	
+/*
+.itemsTable tr {
+  background: #cccccc;
+}*/
+.itemsTable tbody tr.alt {
+    background: #EEEEEE;	
 }
-
+/*
 .itemsTable td a {
     color: #d50000;
     text-decoration:underline;
 }
-
+/*
 .itemsTable td a:hover {
     color: #ff0000;
 }
@@ -191,22 +215,24 @@ span.TopOfTable h3{
  * Table header 
  **/
 .itemsTable th {
-    font-weight: bold;
     font-size: 11px;
-    color: #ffffff;
     border-right: 1px solid #cc3333;
+    border-left: 0;
     letter-spacing: 2px;
     text-transform: uppercase;
     text-align: left;
     padding: 6px 6px 6px 12px;
-    background-color:#d50000;
     cursor: pointer;
     background-position: 95% center;
     background-repeat: no-repeat;
 }
 
-.itemsTable tr {
+.itemsTable.clickable tr {
     cursor: pointer;
+}
+.itemsTable.clickable tbody tr:hover {
+  background-color: #FFFFFF;
+  color: #347992;
 }
 
 .itemsTable th.headerSortDown
@@ -224,7 +250,6 @@ span.TopOfTable h3{
 .itemsTable th a {
     text-decoration: none;
     display: block;
-    color: #ffffff;
 }
 
 .tableHeaderSortTriangle {
@@ -362,12 +387,45 @@ span.icon_button_icon {
     font-size: 12px;
 }
 
-div#filters {
-    margin-bottom: 20px;
+div.controls {
+  margin-bottom: 20px;
+  padding: 10px;
+  display: table;
+  width: 778px;
 }
 
-div#filters h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 10pt;
+div.controls h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+}
+
+div.controls div.left {
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+}
+div.controls div.right {
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+  text-align: right;
+}
+.searchField {
+  font-size: 11px;
+}
+
+a.button {
+  padding: 0.4em 0.4em 0.4em 20px;
+  position: relative;
+  text-decoration: none;
+}
+a.button span.ui-icon {
+  left: 0.2em;
+  margin: -8px 5px 0 0;
+  position: absolute;
+  top: 50%;
+}
+a.button span.buttonText {
+  font-size: 12px;
 }

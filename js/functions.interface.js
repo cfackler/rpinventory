@@ -411,6 +411,14 @@ function save_location_behavior() {
 	});
 }
 
+/**
+ *  table_sortable takes an optional starting column and direction,
+ *  and makes the table with the "sortable" class sortable by clicking
+ *  the table headers.  The table must have a <thead> and <tbody> tags.
+ *
+ *  @param    startingCol   (optional)  The column index to initially sort by
+ *  @param    startingDir   (optional)  The direction to initially sort by
+ **/
 function table_sortable(startingCol, startingDir) {
 	if(!startingCol)
 	{
@@ -431,17 +439,37 @@ function table_sortable(startingCol, startingDir) {
 		(jQuery)('table.sortable tr:even').addClass('alt');
 	});
 }
+
+/**
+ *  table_searchable makes any table with the "searchable" class
+ *  searchable by the text field with id "searchField"
+ ***/
 function table_searchable() {
 	var theTable = (jQuery)('table.searchable');
 	
-	theTable.find("tbody > tr").find("td:eq(1)").mousedown(function(){
-    (jQuery)(this).prev().find(":checkbox").click()
-  });
-
 	(jQuery)('#searchField').keyup(function() {
 		(jQuery).uiTableFilter(theTable, this.value);
 		(jQuery)('table.searchable tr.alt').removeClass('alt');
 		(jQuery)('table.searchable tr:even').addClass('alt');
 	});
 	
+}
+
+/**
+ *  table_clickable makes all tables with the class "clickable" have
+ *  clickable behavior.  This means the checkbox will be checked
+ *  when the row is clicked.
+ **/
+function table_clickable() {
+  var theTable = (jQuery)('table.clickable');
+  
+  /* Check check box if a td is clicked. */
+  theTable.find("tbody > tr").find("td").mousedown(function(){
+    (jQuery)(this).parent().find(":checkbox").click();
+  });
+  
+  /* Check check box if actual check box is clicked */
+  theTable.find("tbody > tr").find(":checkbox").mousedown(function(){
+    (jQuery)(this).click();
+  });
 }
