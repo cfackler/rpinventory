@@ -34,7 +34,7 @@ if($link == null)
 //------- Page section --------
 
 //Authenticate user
-if(!Authenticate($_POST["username"], $_POST["password"], $link))
+if(!Authenticate($_POST["username"], $_POST["password"], $_POST["club_id"], $link))
 {
 	//Logout and kill session
 	Logout();
