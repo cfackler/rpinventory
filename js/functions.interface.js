@@ -318,7 +318,7 @@ function save_category_behavior() {
 					(jQuery)('#category_notification-'+$item_index).html('<a id="add_category_button-'+$item_index
 						+'" class="ui-state-default ui-corner-all icon_button add_category_button">'
 						+'<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category'
-						+'</a> Category successfully saved.');
+						+'</a> <div class="ui-state-highlight ui-corner-all padding">Category successfully saved.</div>');
 					
 				}
 				else
@@ -387,7 +387,7 @@ function save_location_behavior() {
 					/* Change form back to normal, and notify user of success */
 					(jQuery)('#location_notification-'+$item_index).html(
 						'<a id="add_location_button-'+$item_index+'" class="ui-state-default ui-corner-all icon_button add_location_button">'
-						+'<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Location</a> New Location saved successfully.');
+						+'<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Location</a> <div class="ui-state-highlight ui-corner-all padding">New Location saved successfully.</div>');
 						
 					/* update all other dropdowns */
 					var $loc_selects_count = (jQuery)('.location_select').length;

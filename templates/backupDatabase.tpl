@@ -18,15 +18,9 @@
 
 *}
 
-<div class="TopOfTable">
-  <span class="TopOfTable">
-    <h3>
-	Use this link to create a backup of your current installation
-    </h3>
-  </span>
+<div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
+  <h3 class="ui-widget-header ui-corner-all">Use this link to create a backup of your current installation</h3>
+  <p>
+  	<a class="indent" href="createBackup.php">Create a database backup</a>
+  </p>
 </div>
-
-<p>
-	<a class="indent" href="createBackup.php">Create a database backup</a>
-</p>
-

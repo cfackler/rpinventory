@@ -34,7 +34,7 @@
           <td>Purchased	From:</td>
 
           <td>
-            <select class="dropDown" id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
+            <select  id="business_id" name="business_id" onChange="OnChange('business_id', 'newBusiness')" class="validate_cond">
               <option value="-1">Select a Business</option>
               {section name=bus loop=$businesses}
               <option value="{$businesses[bus]->business_id}">
@@ -111,7 +111,7 @@
             Date:
           </td>
           <td>
-            {html_select_date start_year="-3" end_year="+2"	class="dropDown"}
+            {html_select_date start_year="-3" end_year="+2"	}
           </td>
         </tr>
 
@@ -156,8 +156,9 @@
                 </select>				
               </td>
               <td>
-                <span id="category_notification-0" name="category_notification-0" class="notification"><a id="add_category_button-0" class="ui-state-default ui-corner-all icon_button add_category_button">
-                  <span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category
+                <span id="category_notification-0" name="category_notification-0" class="notification"><a id="add_category_button-0" class="ui-state-default ui-corner-all button add_category_button">
+                  <span class="ui-icon ui-icon-plus"><!-- --></span>
+                  <span class="buttonText">Add Category</span>
                 </a></span>
               </td>
             </tr>
@@ -165,7 +166,7 @@
             <tr>
               <td>Condition: </td>
               <td>
-                <select class="dropDown" name="condition-0" id="condition-0">
+                <select  name="condition-0" id="condition-0">
                   <option value="Excellent">Excellent</option>
                   <option value="Good">Good</option>
                   <option value="Fair">Fair</option>
@@ -185,8 +186,9 @@
 
               <td>
                 <span id="location_notification-0">
-                  <a id="add_location_button-0" class="ui-state-default ui-corner-all icon_button add_location_button">
-                    <span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Location
+                  <a id="add_location_button-0" class="ui-state-default ui-corner-all button add_location_button">
+                    <span class="ui-icon ui-icon-plus"><!-- --></span>
+                    <span class="buttonText">Add Location</span>
                   </a>
                 </span>
               </td>
@@ -198,10 +200,10 @@
         <br />
       </div>
       <div>
-        <td><input type="button" class="button" onClick="addItemField();" value="Add Item">
-          <input type="button" class="button" id="removeButton" style="display:none;" onClick="removeItemField();" value="Remove Last Item">
+        <td><input type="button" onClick="addItemField();" value="Add Item">
+          <input type="button" id="removeButton" style="display:none;" onClick="removeItemField();" value="Remove Last Item">
         </td>
-        <td></td>
+        <td><!-- --></td>
       </div>
 
 

@@ -29,6 +29,7 @@ a {
 
 a:hover {
     color:#505050;
+    cursor: pointer;
 }
 
 body {
