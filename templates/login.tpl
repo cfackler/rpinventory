@@ -34,6 +34,18 @@
 			<td width="100">Password</td>
 			<td><input type="password" name="password" id="password"></td>
 		</tr>
+		<tr>
+			<td width="100">Club</td>
+			<td>
+				<select class="dropDown" id="club_id" name="club_id">
+					<option value="-1">Select a club</option>
+					{section name=club loop=$clubs}
+					  <option value="{$clubs[club]->club_id}">
+					  {$clubs[club]->club_name}</option>
+					{/section}
+				</select>
+			</td>
+		</tr>
 	</table>
 
 	<br>

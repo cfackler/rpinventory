@@ -38,12 +38,19 @@ if(isset($_GET['login']) && $_GET['login'] == "fail")
 {
 	$loginStatus = "fail";
 }
-	
+
+// Clubs list
+$clubsResult = mysqli_query($link, 'SELECT club_id, club_name FROM clubs');
+$clubs = array();
+
+while ($club = mysqli_fetch_object($clubsResult))
+  $clubs [] = $club;
+
 //Assign vars
 $smarty->assign('title', "Login");
 $smarty->assign('loginStatus', $loginStatus);
 $smarty->assign('page_tpl', 'login');
-
+$smarty->assign('clubs', $clubs);
 
 $smarty->display('index.tpl');
 
