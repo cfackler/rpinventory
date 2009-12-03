@@ -7,6 +7,11 @@ CREATE TABLE inventory (
        PRIMARY KEY (inventory_id)
 ) type = MyISAM;
 
+CREATE TABLE clubs (
+       club_id int(5) NOT NULL auto_increment,
+       club_name varchar(250) NOT NULL,
+       PRIMARY KEY (club_id)
+) type = MyISAM;
 
 CREATE TABLE locations (
        location_id int(5) NOT NULL auto_increment,
@@ -62,12 +67,12 @@ CREATE TABLE loans (
 ) type = MyISAM;
 
 CREATE TABLE borrowers (
-	   borrower_id int(5) NOT NULL auto_increment,
+       borrower_id int(5) NOT NULL auto_increment,
        address_id int(5) NOT NULL,
-	   rin varchar(9) NOT NULL,
-	   email varchar(100) NOT NULL,
-	   name varchar(100) NOT NULL,
-	   PRIMARY KEY (borrower_id)
+       rin varchar(9) NOT NULL,
+       email varchar(100) NOT NULL,
+       name varchar(100) NOT NULL,
+       PRIMARY KEY (borrower_id)
 ) type = MyISAM;
 
 CREATE TABLE addresses (
@@ -85,7 +90,7 @@ CREATE TABLE logins (
        id int(5) NOT NULL auto_increment,
        username varchar(50) NOT NULL,
        password varchar(32) NOT NULL,
-			 email varchar(100) NOT NULL,
+       email varchar(100) NOT NULL,
        access_level int(1) NOT NULL,
        PRIMARY KEY (id)
 ) type = MyISAM;
@@ -104,28 +109,24 @@ CREATE TABLE checkouts (
        PRIMARY KEY (checkout_id)
 ) type = MyISAM;
 
-
 --
 -- Table structure for table `categories`
 --
-
 CREATE TABLE categories (
-  id int(5) NOT NULL AUTO_INCREMENT,
-  category_name varchar(32) NOT NULL,
-  PRIMARY KEY (id)
+       id int(5) NOT NULL AUTO_INCREMENT,
+       category_name varchar(32) NOT NULL,
+       PRIMARY KEY (id)
 ) type=MyISAM;
+
 --
 -- Table structure for table `inventory_category`
 --
-
 CREATE TABLE `inventory_category` (
-  id int(5) NOT NULL AUTO_INCREMENT,
-  inventory_id int(5) NOT NULL,
-  category_id int(5) NOT NULL,
-  PRIMARY KEY (id)
+       id int(5) NOT NULL AUTO_INCREMENT,
+       inventory_id int(5) NOT NULL,
+       category_id int(5) NOT NULL,
+       PRIMARY KEY (id)
 ) type=MyISAM;
-
-
 
 -- Adds the default locations for loans and checkouts
 INSERT INTO locations VALUES ( 1, "On Loan", "This item is on loan" );
