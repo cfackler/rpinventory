@@ -71,23 +71,40 @@
     <input type="text" id="searchField" class="searchField" />
   </div>
   <div class="right">
-    Show:
     {if $filter != "all"}
-    	<a href="viewLoans.php">All</a>
+      <a id="allFilter" class="ui-state-default ui-corner-all button" href="viewLoans.php" title="View all loans">
+  			<span class="ui-icon ui-icon-search"><!-- --></span>
+  			<span class="buttonText">Show all</span>
+  		</a>
     {else}
-    	<b>All </b>
+    	<a id="allFilter" class="ui-state-active ui-corner-all button" href="viewLoans.php" title="View all loans">
+  			<span class="ui-icon ui-icon-search"><!-- --></span>
+  			<span class="buttonText">Show all</span>
+  		</a>
     {/if}
-    |
+    <br /><br />
     {if $filter != "outstanding"}
-    	<a href="viewLoans.php?view=outstanding">Outstanding</a>
+    	<a id="outstandingFilter" class="ui-state-default ui-corner-all button" href="viewLoans.php?view=outstanding" title="View outstanding loans">
+  			<span class="ui-icon ui-icon-star"><!-- --></span>
+  			<span class="buttonText">Show outstanding</span>
+  		</a>
     {else}
-    	<b>Outstanding </b>
+    	<a id="outstandingFilter" class="ui-state-active ui-corner-all button" href="viewLoans.php?view=outstanding" title="View outstanding loans">
+  			<span class="ui-icon ui-icon-star"><!-- --></span>
+  			<span class="buttonText">Show outstanding</span>
+  		</a>
     {/if}
-    |
+    <br /><br />
     {if $filter != "returned"}
-    	 <a href="viewLoans.php?view=returned">Returned</a>
+    	 <a id="returnedFilter" class="ui-state-default ui-corner-all button" href="viewLoans.php?view=returned" title="View returned loans">
+   			<span class="ui-icon ui-icon-check"><!-- --></span>
+   			<span class="buttonText">Show returned</span>
+   		</a>
     {else}
-    	<b>Returned </b>
+  	 <a id="returnedFilter" class="ui-state-active ui-corner-all button" href="viewLoans.php?view=returned" title="View returned loans">
+ 			<span class="ui-icon ui-icon-check"><!-- --></span>
+ 			<span class="buttonText">Show returned</span>
+ 		</a>
     {/if}
   </div>
 </div>

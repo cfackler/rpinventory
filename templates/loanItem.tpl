@@ -18,11 +18,11 @@
 
   *}
 
-<form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" onsubmit="return ValidateForm()" METHOD="post">
-  <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
-    <h3 class="ui-widget-header ui-corner-all">Loan Items</h3>
-    {$toolTipHelp.helpDiv}
-    {if $loanedOut == true }
+  <form id="AjaxForm" name="loanItem" action="insertLoanRecord.php" onsubmit="return ValidateForm()" METHOD="post">
+    <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
+      <h3 class="ui-widget-header ui-corner-all">Loan Items</h3>
+      {$toolTipHelp.helpDiv}
+      {if $loanedOut == true }
       <h4>The following item(s) have already been loaned out:</h4>
 
       <ul>
@@ -30,7 +30,7 @@
         <li>{$itemsOut[out]}</li>
         {/section}
       </ul>
-    {else}
+      {else}
       <table width="700">
 
         <input type="hidden" name="inventory_ids" size="40" value="{$idString}">
@@ -48,23 +48,26 @@
             </ul>
 
           </td>
-        </tr>
+          <td><td>
+          </tr>
 
 
-        <tr>
-          <td><label for="date">Date: </label></td>
-          <td>
-            {html_select_date start_year="-3" end_year="+2"}
+          <tr>
+            <td><label for="date">Date: </label></td>
             <td>
+              {html_select_date start_year="-3" end_year="+2"}
+            </td>
+            <td><td>
             </tr>
 
             <tr>
               <td><label for="username">Loan to: </label></td>
               <td>
                 <input id="username" name="username" class="validate" type="text" onblur="leaveUsername()" onkeyup="checkUsername()" autocomplete="off"/>
-                {$toolTipHelp.loanTo}
+                {*$toolTipHelp.loanTo*}
               </td>
-              <td>
+              <td rowspan="3">
+                <div class="ui-state-highlight ui-corner-all notification" id="usernameNotification">Type a username in the system<br/>or<br/>Create a new one.</div>
                 <span id="borrowerResult" style="display:none"></span>
               </td>
             </tr>
@@ -72,8 +75,9 @@
             <tr>	
               <td/>
               <td>
-                <div id="userAutoComplete" style="display:none"></div>
+                <div id="userAutoComplete" class="autoComplete" style="display:none"></div>
               </td>
+              <td />
             </tr>
 
             <tr>
@@ -81,9 +85,10 @@
               <td colspan="2">
                 <input type="checkbox" id="newBorrower" name="newBorrower" onclick="showNewBorrower()" />
                 <span>Create a new borrower</span>
-                {$toolTipHelp.newBorrower}
+                {*$toolTipHelp.newBorrower*}
                 <span id="newBorrowerResult" style="display:none"></span>
               </td>
+              <td/>
             </tr>
 
             <tr id="addNewBorrower" style="display:none;">
@@ -145,6 +150,8 @@
 
                 </table>
               </td>
+              <td/>
+              <td/>
             </tr>
 
             <tr>
@@ -182,38 +189,27 @@
                 </table>
 
               </td>
+              <td/>
             </tr>
 
             <tr>
               <td>
-                <label for="location0">Location:</label>
+                <label for="location-0">Location:</label>
               </td>
               <td>
-                <select id="location0" name="location0" onChange="OnChangeDouble('location0', 'newLocation0', 'newDescription0')" onFocus="getLoanLocationOptions(this);">
-
+                <select id="location-0" name="location-0" class="location_select">
                   {$locations}
-
                 </select>
-                <span id="resultText0"></span>
-              </td>
-            </tr>
-
-            <tr id="newLocation0" style="display:none">
-              <td><label for="newlocation0">New Location:</label></td>
-              <td>
-                <input type="text" name="newlocation0" id="newlocation0" size="40" onChange="sendValidateRequest('newlocation0')" />
-              </td>
-            </tr>
-            <tr id="newDescription0" style="display:none">
-              <td><label for="newdescription0">Location Description:</label></td>
-              <td>
-                <input type="text" name="newdescription0" id="newdescription0" size="40">
               </td>
               <td>
-                <input value="Save Location" type="button" onClick="saveLocation('newlocation0', 'newdescription0', 'resultText0', 'location0', 'newLocation0', 'newDescription0');" />
+                <div id="location_notification-0">
+                  <a id="add_location_button-0" class="ui-state-default ui-corner-all button add_location_button">
+                    <span class="ui-icon ui-icon-plus"><!-- --></span>
+                    <span class="buttonText">Add Location</span>
+                  </a>
+                </div>
               </td>
             </tr>
-
           </table>
 
           <br />

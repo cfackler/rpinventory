@@ -385,10 +385,11 @@ function save_location_behavior() {
 					getSelectOptions('location-'+$item_index, 'locations', $newLocName);
 					
 					/* Change form back to normal, and notify user of success */
-					(jQuery)('#location_notification-'+$item_index).html(
-						'<a id="add_location_button-'+$item_index+'" class="ui-state-default ui-corner-all icon_button add_location_button">'
-						+'<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Location</a> <div class="ui-state-highlight ui-corner-all padding">New Location saved successfully.</div>');
-						
+					(jQuery)('#location_notification-'+$item_index).css('opacity', '0')
+					  .html('<div class="ui-state-highlight ui-corner-all notification">New Location saved successfully.</div>').animate({opacity: 1.0}, 1000).animate({opacity: 1.0}, 2000)
+					  .animate({opacity: 0}, 1000, "linear", function(){ (jQuery)('#location_notification-'+$item_index).html('<a id="add_location_button-'+$item_index+'" class="ui-state-default ui-corner-all button add_location_button">'
+                	+'<span class="ui-icon ui-icon-plus"><!-- --></span><span class="buttonText">Add Location</span></a>').animate({opacity: 1.0}, 1000);});
+
 					/* update all other dropdowns */
 					var $loc_selects_count = (jQuery)('.location_select').length;
 					for(var $i = 0; $i < $loc_selects_count; $i++)

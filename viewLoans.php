@@ -61,9 +61,10 @@ $smarty->assign('items', $items);
 $smarty->assign('title', "View Loans");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewLoans');
-if(isset($view))
-	$smarty->assign('filter', $view);
-
+if(isset($_GET['view']))
+	$smarty->assign('filter', $_GET['view']);
+else
+  $smarty->assign('filter', 'all');
 
 $smarty->display('index.tpl');
 

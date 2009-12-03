@@ -44,6 +44,8 @@ $this->assign('clubName', Config::get('club_name'));
 	<script src="js/editItem.interface.js" language="javascript" type="text/javascript"></script>
 {elseif $page_tpl == 'viewInventory'}
 	<script src="js/viewInventory.interface.js" language="javascript" type="text/javascript"></script>
+{elseif $page_tpl == 'loanItem'}
+  <script src="js/loanItem.interface.js" language="javascript" type="text/javascript"></script>
 {else}
 	<script src="js/default.interface.js" language="javascript" type="text/javascript"></script>
 {/if}

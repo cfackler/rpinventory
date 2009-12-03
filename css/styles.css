@@ -430,6 +430,9 @@ a.button span.ui-icon {
 a.button span.buttonText {
   font-size: 12px;
 }
+a.button.ui-state-active {
+  cursor: default;
+}
 
 div.mainForm h3 {
   font-size: 16px;
@@ -442,4 +445,11 @@ div.mainForm {
 }
 div.mainForm label {
   
+}
+.notification {
+  padding: 10px;
+  text-align: center;
+}
+.autoComplete {
+  position: absolute;
 }
