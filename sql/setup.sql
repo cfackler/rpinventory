@@ -91,8 +91,14 @@ CREATE TABLE logins (
        username varchar(50) NOT NULL,
        password varchar(32) NOT NULL,
        email varchar(100) NOT NULL,
-       access_level int(1) NOT NULL,
        PRIMARY KEY (id)
+) type = MyISAM;
+
+CREATE TABLE user_clubs (
+       user_id int(5) NOT NULL,
+       club_id int(5) NOT NULL,
+       access_level int(1) NOT NULL,
+       PRIMARY KEY (user_id, club_id)
 ) type = MyISAM;
 
 CREATE TABLE checkouts (
