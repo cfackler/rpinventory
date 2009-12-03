@@ -21,7 +21,8 @@
   <form name="addLocation" action="insertLocation.php" onsubmit="return ValidateForm()" METHOD="post">
     <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
       <h3 class="ui-widget-header ui-corner-all">Add Location</h3>
-
+      {include file="notificationArea.tpl"}
+      
       <table width="400">
 
 

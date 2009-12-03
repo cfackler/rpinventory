@@ -19,6 +19,8 @@
 *}
 
 <form name="inventoryLogin" id="inventoryLogin" action="authenticate.php" method="post">	
+  <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
+  
 <center>
 
 	{if $loginStatus == "fail"}
@@ -38,6 +40,8 @@
 
 	<br>
 
-	<input type="submit" class="button" value="Login">
+	<input type="submit" value="Login">
 
 </center>
+</div>
+</form>

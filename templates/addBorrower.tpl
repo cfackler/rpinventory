@@ -20,7 +20,7 @@
 
   <form name="storeTransaction" action="addBorrowerRecord.php" onsubmit="return ValidateForm()" METHOD="post">
     <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
-      <h3 class="ui-widget-header ui-corner-all">Add Borrower</h3>
+    <h3 class="ui-widget-header ui-corner-all">Add Borrower</h3>
 
       <table width="400">
 
