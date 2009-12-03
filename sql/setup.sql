@@ -4,6 +4,7 @@ CREATE TABLE inventory (
        location_id int(5) NOT NULL,
        current_condition varchar(100) NOT NULL,
        current_value decimal(6,2) NOT NULL,
+       club_id int(5) NOT NULL,
        PRIMARY KEY (inventory_id)
 ) type = MyISAM;
 
@@ -17,6 +18,7 @@ CREATE TABLE locations (
        location_id int(5) NOT NULL auto_increment,
        location varchar(30) NOT NULL,
        description varchar(250),
+       club_id int(5) NOT NULL,
        PRIMARY KEY (location_id)
 ) type = MyISAM;
 
@@ -25,6 +27,7 @@ CREATE TABLE purchases (
        business_id int(5) NOT NULL,
        purchase_date date NOT NULL,
        total_price decimal(7,2) NOT NULL,
+       club_id int(5) NOT NULL,
        PRIMARY KEY (purchase_id)
 ) type = MyISAM;
 
@@ -32,6 +35,7 @@ CREATE TABLE purchase_items (
        purchase_id int(5) NOT NULL,
        inventory_id int(5) NOT NULL,
        cost decimal(6,2) NOT NULL,
+       club_id int(5) NOT NULL,
        PRIMARY KEY  (purchase_id, inventory_id)
 ) type = MyISAM;
 
@@ -42,6 +46,7 @@ CREATE TABLE repairs (
        repair_date date NOT NULL,
        repair_cost decimal(6,2) NOT NULL,
        description varchar(250),
+       club_id int(5) NOT NULL,
        PRIMARY KEY (repair_id)
 ) type = MyISAM;
 
@@ -52,6 +57,7 @@ CREATE TABLE businesses (
        fax varchar(20),
        email varchar(100),
        website varchar(200),
+       club_id int(5) NOT NULL,
        PRIMARY KEY (business_id)
 ) type = MyISAM;
 
@@ -63,6 +69,7 @@ CREATE TABLE loans (
        return_date date,
        starting_condition varchar(100),
        original_location_id int(5) NOT NULL,
+       club_id int(5) NOT NULL,
        PRIMARY KEY (loan_id)
 ) type = MyISAM;
 
@@ -72,6 +79,7 @@ CREATE TABLE borrowers (
        rin varchar(9) NOT NULL,
        email varchar(100) NOT NULL,
        name varchar(100) NOT NULL,
+       club_id int(5) NOT NULL,
        PRIMARY KEY (borrower_id)
 ) type = MyISAM;
 
@@ -83,6 +91,7 @@ CREATE TABLE addresses (
        state varchar(20),
        zipcode varchar(10),
        phone varchar(20),
+       club_id int(5) NOT NULL,
        PRIMARY KEY (address_id)
 ) type = MyISAM;
 
@@ -112,6 +121,7 @@ CREATE TABLE checkouts (
        starting_condition varchar(100) NOT NULL,
        ending_condition varchar(100),
        original_location_id int(5) NOT NULL,
+       club_id int(5) NOT NULL,
        PRIMARY KEY (checkout_id)
 ) type = MyISAM;
 
@@ -121,6 +131,7 @@ CREATE TABLE checkouts (
 CREATE TABLE categories (
        id int(5) NOT NULL AUTO_INCREMENT,
        category_name varchar(32) NOT NULL,
+       club_id int(5) NOT NULL,
        PRIMARY KEY (id)
 ) type=MyISAM;
 
@@ -131,6 +142,7 @@ CREATE TABLE `inventory_category` (
        id int(5) NOT NULL AUTO_INCREMENT,
        inventory_id int(5) NOT NULL,
        category_id int(5) NOT NULL,
+       club_id int(5) NOT NULL,
        PRIMARY KEY (id)
 ) type=MyISAM;
 
