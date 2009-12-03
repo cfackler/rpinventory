@@ -315,11 +315,10 @@ function save_category_behavior() {
 					}
 					
 					/* remove save category form and notify user */
-					(jQuery)('#category_notification-'+$item_index).html('<a id="add_category_button-'+$item_index
-						+'" class="ui-state-default ui-corner-all icon_button add_category_button">'
-						+'<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category'
-						+'</a> <div class="ui-state-highlight ui-corner-all padding">Category successfully saved.</div>');
-					
+					(jQuery)('#category_notification-'+$item_index).css('opacity', '0')
+					  .html('<div class="ui-state-highlight ui-corner-all notification">New category saved successfully.</div>').animate({opacity: 1.0}, 1000).animate({opacity: 1.0}, 2000)
+					  .animate({opacity: 0}, 1000, "linear", function(){ (jQuery)('#category_notification-'+$item_index).html('<a id="add_category_button-'+$item_index+'" class="ui-state-default ui-corner-all button add_category_button">'
+                	+'<span class="ui-icon ui-icon-plus"><!-- --></span><span class="buttonText">Add Category</span></a>').animate({opacity: 1.0}, 1000);});					
 				}
 				else
 					alert(msg);
