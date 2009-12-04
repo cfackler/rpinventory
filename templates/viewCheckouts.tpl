@@ -113,7 +113,7 @@
       <td>{$items[itemLoop]->starting_condition}</td>
       <td>{$items[itemLoop]->name}</td>
       <td>{$items[itemLoop]->time_taken}</td>
-      <td align="center">
+      <td>
         {if $items[itemLoop]->time_returned == NULL && $authority >= 1}
         <a href="returnCheckoutItem.php?id={$items[itemLoop]->checkout_id}">Return</a>
         {elseif $items[itemLoop]->time_returned == NULL}
