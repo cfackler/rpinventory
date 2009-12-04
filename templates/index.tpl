@@ -18,13 +18,13 @@
 
 *}
 
+{php}
+$this->assign('clubName', $_SESSION['club_name']);
+{/php}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-{php}
-require_once('lib/config.class.php');
-$this->assign('clubName', Config::get('club_name'));
-{/php}
 <title>{$clubName} - RPInventory</title>
 
 <link rel="stylesheet" href="js/modulesJS/jquery-ui-1.7.2.custom/css/custom-theme/jquery-ui-1.7.2.custom.css" type="text/css" />
@@ -54,14 +54,9 @@ $this->assign('clubName', Config::get('club_name'));
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
 </head>
-
 	<body>
 	  <div class="bodyContainer" id="bodyContainer">
 	    <div class="header ui-widget ui-widget-header ui-corner-all">
-			{php}
-				require_once('lib/config.class.php');
-				$this->assign('clubName', Config::get('club_name'));
-			{/php}
 			<span class="headerContent">{$clubName}</span>
 	    </div>
 		

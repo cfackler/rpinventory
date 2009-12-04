@@ -47,7 +47,7 @@ function Authenticate($username, $password, $clubID, $link)
   $_SESSION['id'] = $row->id;
   $_SESSION['authority'] = $row->access_level;
   $_SESSION['club'] = $clubID;
-  $_SESSION['clubname'] = $row->club_name;
+  $_SESSION['club_name'] = $row->club_name;
 
   return true;
 }
@@ -57,7 +57,7 @@ function Logout()
   unset($_SESSION['id']);
   unset($_SESSION['authority']);
   unset($_SESSION['club']);
-  unset($_SESSION['clubname']);
+  unset($_SESSION['club_name']);
 
   session_destroy();
 }
