@@ -19,7 +19,7 @@
   *}
   <form id="AjaxForm" name="purchaseItem" action="insertPurchaseRecord.php" onsubmit="return ValidateForm()" METHOD="post">
     <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
-      <h3 class="ui-widget-header ui-corner-all">Create Purchase</h3>
+      <h3 class="ui-widget-header ui-corner-all">Insert Inventory</h3>
       {$tooltip.helpDiv}
 
       <input type="hidden" name="count" id="count" value="1">

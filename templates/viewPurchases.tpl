@@ -27,7 +27,7 @@
 	<div class="right">
 		<a id="addPurchase" class="ui-state-default ui-corner-all button" href="addPurchase.php">
 			<span class="ui-icon ui-icon-circle-plus"><!-- --></span>
-			<span class="buttonText">Add a purchase</span>
+			<span class="buttonText">Insert inventory</span>
 		</a>
 	</div>
 </div>
