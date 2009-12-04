@@ -103,6 +103,7 @@ echo <<<END
   </tr>
 
   </table>
+  <br />
 END;
 
 ?>
