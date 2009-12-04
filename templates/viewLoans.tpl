@@ -82,7 +82,7 @@
   			<span class="buttonText">Show all</span>
   		</a>
     {/if}
-    <br /><br />
+    &nbsp;
     {if $filter != "outstanding"}
     	<a id="outstandingFilter" class="ui-state-default ui-corner-all button" href="viewLoans.php?view=outstanding" title="View outstanding loans">
   			<span class="ui-icon ui-icon-star"><!-- --></span>
@@ -94,7 +94,7 @@
   			<span class="buttonText">Show outstanding</span>
   		</a>
     {/if}
-    <br /><br />
+    &nbsp;
     {if $filter != "returned"}
     	 <a id="returnedFilter" class="ui-state-default ui-corner-all button" href="viewLoans.php?view=returned" title="View returned loans">
    			<span class="ui-icon ui-icon-check"><!-- --></span>

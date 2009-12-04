@@ -34,7 +34,7 @@ a:hover {
 
 body {
     font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-    background-color: #cccccc;
+    background-color: #efefef;
 }
 
 /**
@@ -47,19 +47,23 @@ div.header, div.navigationBar{
 */
 div.header {	
     /** Position of header **/
-    position:absolute;
+/*    position:absolute;
     left:0px;
-    top: 20px;
+    top: 20px;*/
     height:100px;
 
     /** Size of header **/
     width: 100%;
-
+    
+    -moz-box-shadow: black 2px 2px 2px;
+    -webkit-box-shadow: black 2px 2px 2px;
     /** Header border **/
-    border-top: solid 2px;
-    border-bottom: solid 2px;
+    /*border-top: solid 2px;
+    border-bottom: solid 2px;*/
 }
 
+div.bodyContainer {
+}
 /**
  * Sidebar border and background colors
  **/
@@ -78,7 +82,6 @@ ul.navigationList {
 }
 ul.navigationList li {
   margin: 0px 0px 0px 0px;
-  padding: 5px;
   margin-bottom: 2px;
 }
 ul.navigationList li.navigationHeader {
@@ -88,6 +91,7 @@ ul.navigationList li.navigationHeader {
 }
 ul.navigationList li a {
   display: block;
+  padding: 5px;
 }
 ul.navigationList li.ui-state-active a {
   cursor: default;
@@ -200,7 +204,7 @@ span.TopOfTable h3{
   background: #cccccc;
 }*/
 .itemsTable tbody tr.alt {
-    background: #EEEEEE;	
+    background: #e8e8e8;	
 }
 /*
 .itemsTable td a {

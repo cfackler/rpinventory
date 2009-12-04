@@ -41,7 +41,6 @@ function getLoan( $loanId )
 		die( 'Error: '. mysqli_error($link) );
 
 	$loan = mysqli_fetch_object( $result ); 
-
 	return $loan;
 }
 

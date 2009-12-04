@@ -27,11 +27,6 @@
 		<input type="text" id="searchField" class="searchField" />
 	</div>
 	<div class="right">
-		<a id="pdfLink" class="ui-state-default ui-corner-all button" href="makeInventorySummary.php" title="Download summary of inventory">
-			<span class="ui-icon ui-icon-circle-arrow-s"><!-- --></span>
-			<span class="buttonText">Download PDF</span>
-		</a>
-		<br /><br />
 		<a id="addPurchase" class="ui-state-default ui-corner-all button" href="addPurchase.php" title="Add to inventory">
 			<span class="ui-icon ui-icon-circle-plus"><!-- --></span>
 			<span class="buttonText">Add a purchase</span>
@@ -85,20 +80,27 @@
 
 {if $authority >= 1}
 <div id="controlsBottom" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
-<h3>With checked:</h3>
-<select name="action_list" id="action_list">
-	<option value="Loan">Loan</option>
-	<option value="Checkout">Checkout</option>
-	<option value="Edit">Edit</option>
-	<option value="Repair">Repair</option>
-	<option value="Delete">Delete</option>
+  <div class="left">
+    <h3>With checked:</h3>
+    <select name="action_list" id="action_list">
+    	<option value="Loan">Loan</option>
+    	<option value="Checkout">Checkout</option>
+    	<option value="Edit">Edit</option>
+    	<option value="Repair">Repair</option>
+    	<option value="Delete">Delete</option>
 
-</select>
-<a id="goButton" class="ui-state-default ui-corner-all button" href="#" onclick="submitItems()" title="Submit checked items">
-  <span class="ui-icon ui-icon-circle-check"><!-- --></span>
-	<span class="buttonText">Go</span>
-</a>
-
+    </select>
+    <a id="goButton" class="ui-state-default ui-corner-all button" href="#" onclick="submitItems()" title="Submit checked items">
+      <span class="ui-icon ui-icon-circle-check"><!-- --></span>
+    	<span class="buttonText">Go</span>
+    </a>
+  </div>
+  <div class="right">
+    <a id="pdfLink" class="ui-state-default ui-corner-all button" href="makeInventorySummary.php" title="Download summary of inventory">
+			<span class="ui-icon ui-icon-circle-arrow-s"><!-- --></span>
+			<span class="buttonText">Download PDF</span>
+		</a>
+	</div>
 </div>
 </div>
 {/if}

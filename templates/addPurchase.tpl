@@ -185,7 +185,7 @@
               </td>
 
               <td>
-                <span id="location_notification-0">
+                <span id="location_notification-0" class="notification">
                   <a id="add_location_button-0" class="ui-state-default ui-corner-all button add_location_button">
                     <span class="ui-icon ui-icon-plus"><!-- --></span>
                     <span class="buttonText">Add Location</span>

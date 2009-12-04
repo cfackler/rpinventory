@@ -56,7 +56,8 @@ $this->assign('clubName', Config::get('club_name'));
 </head>
 
 	<body>
-	    <div class="header ui-widget ui-widget-header">
+	  <div class="bodyContainer" id="bodyContainer">
+	    <div class="header ui-widget ui-widget-header ui-corner-all">
 			{php}
 				require_once('lib/config.class.php');
 				$this->assign('clubName', Config::get('club_name'));
@@ -158,6 +159,6 @@ $this->assign('clubName', Config::get('club_name'));
 	    <div class="main_body">
 			{include file="$page_tpl.tpl"}
 	    </div>
-
+    </div>
 	</body>
 </html>
