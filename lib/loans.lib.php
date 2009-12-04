@@ -124,14 +124,8 @@ function getViewLoans( $currentSortIndex=0, $currentSortDir=0 ){
   $db = new database;
 
   $result = $db->query($query);
-  
-  $items = array();
-  
-  while($item = mysqli_fetch_object($result)) {
-      $items [] = $item;
-  }
 
-  mysqli_close($link);
+  $items = $db->getObjectArray($result);
   
   return $items;
 }
