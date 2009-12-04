@@ -34,7 +34,7 @@ a:hover {
 
 body {
     font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-    background-color: #efefef;
+    background-color: #afd7ee; /* f5f5f5 91bbd3 a9d1e7 8fc7e7*/
 }
 
 /**
@@ -99,7 +99,7 @@ ul.navigationList li {
   margin-bottom: 2px;
 }
 ul.navigationList li.navigationHeader {
-  margin: 0;
+  margin: 0px 0px 2px 0px;
   padding: 10px;
   font-size: 16px;
 }
@@ -173,8 +173,8 @@ div.TopOfTable {
 span.headerContent {
     font-size: 35px;
     position:relative;
-    top: 45px;
-    left: 150px;
+    top: 30px;
+    left: 20px;
 }
 
 /**
@@ -214,7 +214,7 @@ span.TopOfTable h3{
   background: #cccccc;
 }*/
 .itemsTable tbody tr.alt {
-    background: #e8e8e8;	
+    background: #f5f5f5;	
 }
 /*
 .itemsTable td a {

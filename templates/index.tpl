@@ -62,7 +62,7 @@ $this->assign('clubName', Config::get('club_name'));
 				require_once('lib/config.class.php');
 				$this->assign('clubName', Config::get('club_name'));
 			{/php}
-			<span class="headerContent">{$clubName}</span>
+			<span class="headerContent">{*$clubName*}Rensselaer Music Association</span>
 	    </div>
 		
 	    <div class="navigationBar ui-widget ui-widget-content ui-corner-all">
