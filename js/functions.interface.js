@@ -1,3 +1,15 @@
+
+function pageNotification(text, type) {
+  if(type == "error" || type == 1) {
+    (jQuery)('#pageNotification').html('<div class="ui-state-error ui-corner-all notification">'+text+'</div>')
+    .animate({opacity: 1.0}, 1000);
+  }
+  else {
+    (jQuery)('#pageNotification').html('<div class="ui-state-highlight ui-corner-all notification">'+text+'</div>')
+    .animate({opacity: 1.0}, 1000);
+  }
+}
+
 /**
  *  The autoClearClass function loads the behaviour for a text field.
  *  The text field will be cleared when clicked on, and then the original

@@ -18,10 +18,10 @@
 
 *}
 
+{include file=notificationArea.tpl}
 <form name="inventoryLogin" id="inventoryLogin" action="authenticate.php" method="post">	
   <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
   
-<center>
 
 	{if $loginStatus == "fail"}
 		<h3>Login Failed</h3>
@@ -42,6 +42,5 @@
 
 	<input type="submit" value="Login">
 
-</center>
 </div>
 </form>
