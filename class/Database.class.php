@@ -50,14 +50,17 @@ class Database{
     }
 
     /* Disconnect Function */
-    function disconnect() {
+    function disconnect()
+    {
         mysqli_close( $this->_link );
     }
 
     /* Takes a variable number of arguments, sanitizes, and queries 
-       First argument must be SQL - Variables are denoted by %1, %2... %13, etc
-       Subsequent arguments are variables to be substituted into the query */
-    function query(){
+       First argument must be SQL - Variables are denoted by question marks '?'
+       Subsequent arguments are variables to be substituted into the query in order
+       replacing the question marks as they proceed */
+    function query()
+    {
         $numArgs = func_num_args();
     
         if ($numArgs < 1)		/* Must have at least one */
@@ -90,6 +93,33 @@ class Database{
     
         return $result;
     }
+
+    // Call stripslashes on all string objects
+    function stripSlashObject(&$object)
+    {
+        foreach ($object as &$val)
+        {
+            if (is_string($val))
+            {
+                $val = stripslashes($val);
+            }
+        }
+    }
+
+
+    /* Returns an array of objects from the mysqli object */
+    function getObjectArray($result)
+    {
+        $objects = array();
+
+        while($object = mysqli_fetch_object($result))
+        {
+            $objects[] = $object;
+        }
+
+        return $objects;
+    }
+
 }
 
 ?>
