@@ -78,7 +78,7 @@ if (!$db->query($sql, $address, $address2, $city, $state, $zip, $phone))
 }
 
 
-$address_id = mysqli_insert_id($db->getLink());
+$address_id = $db->insertId();
 
 
 // Insert the borrower
