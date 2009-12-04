@@ -55,6 +55,12 @@ class database{
         mysqli_close( $this->_link );
     }
 
+    /* Returns the insert ID for the last INSERT query */
+    function insertId()
+    {
+        return mysqli_insert_id($this->_link);
+    }
+
     /* Takes a variable number of arguments, sanitizes, and queries 
        First argument must be SQL - Variables are denoted by question marks '?'
        Subsequent arguments are variables to be substituted into the query in order
