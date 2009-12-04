@@ -110,13 +110,13 @@ $this->assign('clubName', $_SESSION['club_name']);
 				{else}
 					<li class="ui-state-default ui-corner-all">
 				{/if}
-				<a id="manageLocations" href="manageLocations.php">Manage Locations</a></li>
+				<a id="manageLocations" href="manageLocations.php">Locations</a></li>
 				{if $page_tpl == 'manageBorrowers'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
 					<li class="ui-state-default ui-corner-all">
 				{/if}
-				<a id="manageBorrowers" href="manageBorrowers.php">Manage Borrowers</a></li>
+				<a id="manageBorrowers" href="manageBorrowers.php">Borrowers</a></li>
 			{/if}
 			
 			{if $authority == 2}
@@ -125,19 +125,19 @@ $this->assign('clubName', $_SESSION['club_name']);
 				{else}
 					<li class="ui-state-default ui-corner-all">
 				{/if}
-				<a id="manageUsers" href="manageUsers.php">Manage Users</a></li>
+				<a id="manageUsers" href="manageUsers.php">Users</a></li>
 				{if $page_tpl == 'generateSummary'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
 					<li class="ui-state-default ui-corner-all">
 				{/if}
-				<a id="generateSummary" href="generateSummary.php">Create Summary</a></li>
+				<a id="generateSummary" href="generateSummary.php">Summary</a></li>
 				{if $page_tpl == 'backupDatabase'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
 			    <li class="ui-state-default ui-corner-all">
 				{/if}
-				<a id="backupDatabase" href="backupDatabase.php">Create Backup</a></li>
+				<a id="backupDatabase" href="backupDatabase.php">Backup</a></li>
 			{/if}
 			
 			<li><br /></li>
