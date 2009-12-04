@@ -121,7 +121,7 @@ function getViewLoans( $currentSortIndex=0, $currentSortDir=0 ){
     $query .= ' DESC';
   
   // Database object
-  $db = new database;
+  $db = new database();
 
   $result = $db->query($query);
 

@@ -67,7 +67,7 @@ if(strlen($phone) == 0)
 	die('Must have a phone number');
 
 // Database
-$db = new Database;
+$db = new database();
 
 // Inset the address
 $sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES (NULL, ?, ?, ?, ?, ?, ?)';
