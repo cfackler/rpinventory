@@ -22,7 +22,7 @@
 */
 
 require_once("lib/auth.lib.php");  //Session
-require_once('class/Database.class.php');
+require_once('class/database.class.php');
 
 //Authenticate
 $auth = GetAuthority();

@@ -212,7 +212,7 @@ function getInventorySummary(){
   if($link == null)
     die("Database connection failed");
   
-  require_once( 'lib/config.class.php' );
+  require_once( 'class/config.class.php' );
   
   $data = array();
   $clubName = Config::get( 'club_name' );

@@ -81,7 +81,7 @@ function getLoans( $startDate, $endDate )
 
 function getViewLoans( $currentSortIndex=0, $currentSortDir=0 ){
   require_once("lib/connect.lib.php");  //mysql
-  require_once('class/Database.class.php');
+  require_once('class/database.class.php');
 
   //items
   $query=   'SELECT loan_id, loans.inventory_id, name, loans.borrower_id, borrowers.borrower_id, issue_date, return_date, starting_condition, description
@@ -121,7 +121,7 @@ function getViewLoans( $currentSortIndex=0, $currentSortDir=0 ){
     $query .= ' DESC';
   
   // Database object
-  $db = new Database;
+  $db = new database;
 
   $result = $db->query($query);
   

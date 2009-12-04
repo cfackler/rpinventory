@@ -21,7 +21,7 @@
 
 */
 
-require_once('lib/config.class.php');
+require_once('class/config.class.php');
 
 function connect()
 {

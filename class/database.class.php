@@ -1,8 +1,8 @@
 <?php
 
-require_once('lib/config.class.php');
+require_once('class/config.class.php');
 
-class Database{
+class database{
     private $_dbUrl;
     private $_dbName;
     private $_dbUsername;

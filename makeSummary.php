@@ -60,7 +60,7 @@ $endDate = mysqli_real_escape_string( $link, $_POST['end_Year'] ). '-' .
            mysqli_real_escape_string( $link, $_POST['end_Month'] ). '-' .
            mysqli_real_escape_string( $link, $_POST['end_Day'] );
 
-require_once( 'lib/config.class.php' );
+require_once( 'class/config.class.php' );
 
 $data = array();
 $clubName = Config::get( 'club_name' );
