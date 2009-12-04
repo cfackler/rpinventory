@@ -211,13 +211,10 @@ function getSelectOptions(selectID, type, postSelectedOptionText)
  *	as expected.  Changing the class when hovered over.
  **/
 function ui_hover_behavior() {
-	(jQuery)('.ui-state-default').livequery(function()
-	{
-		(jQuery)(this).hover(function()
-		{
+	(jQuery)('.ui-state-default').livequery(function() {
+		(jQuery)(this).hover(function() {
 			(jQuery)(this).addClass('ui-state-hover');
-		}, function()
-		{
+		}, function() {
 			(jQuery)(this).removeClass('ui-state-hover');
 		});
 	});

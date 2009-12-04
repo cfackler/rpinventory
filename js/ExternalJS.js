@@ -698,7 +698,7 @@ function showUsernames(oReq, oJSN){
   var i;
   targetDiv.innerHTML = "";
   for( i = 0; i < oJSN.records.length; i++ ){
-    targetDiv.innerHTML = targetDiv.innerHTML + '<span style="display:block" onmouseover="setUsername(\''+ oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
+    targetDiv.innerHTML = targetDiv.innerHTML + '<span onmouseover="setUsername(\''+ oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
   }
 
   if( oJSN.records.length > 0 ){
