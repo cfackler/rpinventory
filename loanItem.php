@@ -85,7 +85,7 @@ foreach ($idList as $id) {
 }
 
 //Locations
-$locations = getLoanLocationsOptions();
+$locations = getLocationsOptions();
 
 //Tooltips
 $tooltips_html = getToolTips('loanItem');

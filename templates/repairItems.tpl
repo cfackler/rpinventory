@@ -19,136 +19,136 @@
 *}
 
 <form name="editItem" action="insertRepairRecord.php" onsubmit="return ValidateForm()" METHOD="post">
-<span class="TopOfTable">
-	<h3>Repair Items</h3>
-</span>
+  <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
+    <h3 class="ui-widget-header ui-corner-all">Repair Items</h3>
 
-<input type="hidden" name="count" size="40" value="{$itemCount}">
-{section name=num loop=$items}
 
-<table width="500">
+    <input type="hidden" name="count" size="40" value="{$itemCount}">
+    {section name=num loop=$items}
 
-<input type="hidden" name="inventory_id{$smarty.section.num.index}" size="40" value="{$items[num]->inventory_id}">
+    <table width="500">
 
-<tr>
-	<td>Item:</td>
-	<td>{$items[num]->description}</td>
-</tr>
+      <input type="hidden" name="inventory_id{$smarty.section.num.index}" size="40" value="{$items[num]->inventory_id}">
 
-<tr>
-	<td>Repair Description:</td>
-	<td><input type="text" name="desc{$smarty.section.num.index}" size="40" id="description" class="validate"></td>
-</tr>
+      <tr>
+        <td>Item:</td>
+        <td>{$items[num]->description}</td>
+      </tr>
 
-<tr>
-	<td>Cost: </td>
-	<td><input type="text" name="cost{$smarty.section.num.index}" size="10" id="cost" class="validate"></td>
-</tr>
+      <tr>
+        <td>Repair Description:</td>
+        <td><input type="text" name="desc{$smarty.section.num.index}" size="40" id="description" class="validate"></td>
+      </tr>
 
-<tr>
-    <td>Condition: </td>
-    <td>
-        <select class="dropDown" id="condition" name="condition">
+      <tr>
+        <td>Cost: </td>
+        <td><input type="text" name="cost{$smarty.section.num.index}" size="10" id="cost" class="validate"></td>
+      </tr>
+
+      <tr>
+        <td>Condition: </td>
+        <td>
+          <select  id="condition" name="condition">
             <option value="Excellent" {if $items[num]->current_condition == "Excellent"}selected="selected"{/if}>Excellent</option>
             <option value="Good" {if $items[num]->current_condition == "Good"}selected="selected"{/if}>Good</option>
             <option value="Fair" {if $items[num]->current_condition == "Fair"}selected="selected"{/if}>Fair</option>
             <option value="Poor" {if $items[num]->current_condition == "Poor"}selected="selected"{/if}>Poor</option>
-        </select>
-    </td>
-</tr>
+          </select>
+        </td>
+      </tr>
 
-<tr>
-	<td>Date: </td>
-	<td>
-		{html_select_date start_year="-3" end_year="+2" class="dropDown" prefix=$smarty.section.num.index} 
-	<td>
-</tr>
+      <tr>
+        <td>Date: </td>
+        <td>
+          {html_select_date start_year="-3" end_year="+2"  prefix=$smarty.section.num.index} 
+          <td>
+          </tr>
 
-<tr>
-	<td>Business: </td>
-	<td>
-	
-	<select class="dropDown" id="business_id" name="businessId{$smarty.section.num.index}" onChange="OnChange('business_id', 'newBusiness')">
-	{section name=biz loop=$businesses}
-		<option value="{$businesses[biz]->business_id}">
-			{$businesses[biz]->company_name}
-		</option>
-	{/section}
-    	<option value="-1">
-			Add a New Business
-		</option>
-	</select>
-	
-	</td>
-</tr>
-	<tr>
-    {if $numBusinesses > 0 }
-		<table id="newBusiness" style="display:none;padding-left:1cm">	
-    {else}
-        <table id="newBusiness" style="padding-left:1cm">
-    {/if}
+          <tr>
+            <td>Business: </td>
+            <td>
 
-     	 	<tr>
-			<td>Company Name:</td>
-			<td><input type="text" name="company" size="30"></td>
-     	 	</tr>
+              <select  id="business_id" name="businessId{$smarty.section.num.index}" onChange="OnChange('business_id', 'newBusiness')">
+                {section name=biz loop=$businesses}
+                <option value="{$businesses[biz]->business_id}">
+                  {$businesses[biz]->company_name}
+                </option>
+                {/section}
+                <option value="-1">
+                  Add a New Business
+                </option>
+              </select>
 
-     	 	<tr>
-			<td>Address:</td>
-			<td> <input type="text" name="address" size="30"></td>
-     	 	</tr>
+            </td>
+          </tr>
+          <tr>
+            {if $numBusinesses > 0 }
+            <table id="newBusiness" style="display:none;padding-left:1cm">	
+              {else}
+              <table id="newBusiness" style="padding-left:1cm">
+                {/if}
 
-     	 	<tr>
-			<td>Address 2:</td>
-			<td><input type="text" name="address2" size="30"></td>
-     	 	</tr>
+                <tr>
+                  <td>Company Name:</td>
+                  <td><input type="text" name="company" size="30"></td>
+                </tr>
 
-     	 	<tr>
-			<td>City: </td>
-			<td><input type="text" name="city" size="30"></td>
-     	 	</tr>
+                <tr>
+                  <td>Address:</td>
+                  <td> <input type="text" name="address" size="30"></td>
+                </tr>
 
-     	 	<tr>
-			<td>State: </td>
-			<td><input type="text" name="state" size="10"></td>
-     	 	</tr>
+                <tr>
+                  <td>Address 2:</td>
+                  <td><input type="text" name="address2" size="30"></td>
+                </tr>
 
-     	 	<tr>
-			<td>Zip Code: </td>
-			<td><input type="text" name="zip" size="10"></td>
-     	 	</tr>
+                <tr>
+                  <td>City: </td>
+                  <td><input type="text" name="city" size="30"></td>
+                </tr>
 
-     	 	<tr>
-			<td>Phone Number: </td>
-			<td><input type="text" name="phone" size="20"></td>
-     	 	</tr>
+                <tr>
+                  <td>State: </td>
+                  <td><input type="text" name="state" size="10"></td>
+                </tr>
 
-     	 	<tr>
-			<td>Fax Number: </td>
-			<td><input type="text" name="fax" size="20"></td>
-     	 	</tr>
+                <tr>
+                  <td>Zip Code: </td>
+                  <td><input type="text" name="zip" size="10"></td>
+                </tr>
 
-     	 	<tr>
-			<td>E-mail: </td>
-			<td><input type="text" name="email" size="30"></td>
-     	 	</tr>
+                <tr>
+                  <td>Phone Number: </td>
+                  <td><input type="text" name="phone" size="20"></td>
+                </tr>
 
-     	 	<tr>
-			<td>Website: </td>
-			<td><input type="text" name="website" size="30"></td>
-     	 	</tr>
-		</table>
-	</tr>
+                <tr>
+                  <td>Fax Number: </td>
+                  <td><input type="text" name="fax" size="20"></td>
+                </tr>
+
+                <tr>
+                  <td>E-mail: </td>
+                  <td><input type="text" name="email" size="30"></td>
+                </tr>
+
+                <tr>
+                  <td>Website: </td>
+                  <td><input type="text" name="website" size="30"></td>
+                </tr>
+              </table>
+            </tr>
 
 
-</table>
+          </table>
 
-<br>
-<br>
+          <br>
+          <br>
 
-{/section}
+          {/section}
 
-<br>
-<input type="submit" value="Repair">
-
-<form>
+          <br>
+          <input type="submit" value="Repair">
+        </div>
+        <form>

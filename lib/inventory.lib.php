@@ -49,11 +49,17 @@ function getInventory($sortIndex = 0, $sortdir = 0)
     $sortdir = ''; //query ascends by default
   else
     $sortdir = "DESC";
-  
+
+  // determine whether to limit inventory only to one club
+  if (isset($_SESSION['club']))
+     $clublimit = ' AND inventory.club_id = ' . $_SESSION['club'];
+  else
+    $clublimit = '';
+
   //items
-  $query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value
-				FROM inventory, locations
-				WHERE locations.location_id=inventory.location_id
+  $query= "SELECT inventory.inventory_id, inventory.description, location, current_condition, current_value, clubs.club_name
+				FROM inventory, locations, clubs
+				WHERE inventory.club_id = clubs.club_id AND locations.location_id=inventory.location_id" . $clublimit . "
 				ORDER BY ".$sortBy." ".$sortdir;
   $result = mysqli_query($link, $query) or
     die( 'Could not retrieve the inventory' );
@@ -109,7 +115,6 @@ function getInventory($sortIndex = 0, $sortdir = 0)
 				}
 
 				$item->category = $categoryString;
-				
         $items [] = $item;
     }
 

@@ -21,13 +21,22 @@
 
 <form id="itemList" name="itemList">
 
-<div id="filters" class="filters">
-	<h3>Search:</h3>
-		<input type="text" id="searchField" class="searchField" />	
+<div id="controlsTop" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
+	<div class="left">
+		<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />
+	</div>
+	<div class="right">
+		<a id="addPurchase" class="ui-state-default ui-corner-all button" href="addPurchase.php" title="Add to inventory">
+			<span class="ui-icon ui-icon-circle-plus"><!-- --></span>
+			<span class="buttonText">Insert inventory</span>
+		</a>
+		
+	</div>
 </div>
 
-<table width="800" border="0" id="itemsTable" class="itemsTable sortable searchable" cellspacing="0" >
-	<thead>
+<table width="800" id="itemsTable" class="itemsTable sortable searchable clickable ui-widget ui-corner-all" cellspacing="0" >
+	<thead class="ui-widget-header">
 		<tr>
 			{if $authority >= 1}
 				<th width="20"> </th>
@@ -41,7 +50,7 @@
 			<th width="150">Location</th>
 	  </tr>
 	</thead>
-	<tbody>
+	<tbody class="ui-widget-content">
 		{section name=itemLoop loop=$items}
 		<tr{cycle values=" class=\"alt\","}>
 			{if $authority >= 1}
@@ -70,19 +79,29 @@
 <div>
 
 {if $authority >= 1}
-	
-<span id="inventoryActions">
-<select class="dropDown" name="action_list" id="action_list">
-	<option value="Loan">Loan</option>
-	<option value="Checkout">Checkout</option>
-	<option value="Edit">Edit</option>
-	<option value="Repair">Repair</option>
-	<option value="Delete">Delete</option>
+<div id="controlsBottom" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
+  <div class="left">
+    <h3>With checked:</h3>
+    <select name="action_list" id="action_list">
+    	<option value="Loan">Loan</option>
+    	<option value="Checkout">Checkout</option>
+    	<option value="Edit">Edit</option>
+    	<option value="Repair">Repair</option>
+    	<option value="Delete">Delete</option>
 
-</select>
-
-<input type="button" class="button" onclick="submitItems()" value="Go">
-</span>
+    </select>
+    <a id="goButton" class="ui-state-default ui-corner-all button" href="#" onclick="submitItems()" title="Submit checked items">
+      <span class="ui-icon ui-icon-circle-check"><!-- --></span>
+    	<span class="buttonText">Go</span>
+    </a>
+  </div>
+  <div class="right">
+    <a id="pdfLink" class="ui-state-default ui-corner-all button" href="makeInventorySummary.php" title="Download summary of inventory">
+			<span class="ui-icon ui-icon-circle-arrow-s"><!-- --></span>
+			<span class="buttonText">Download PDF</span>
+		</a>
+	</div>
+</div>
 </div>
 {/if}
 
@@ -94,6 +113,3 @@
 <br />
 
 {/if}
-
-<a href="makeInventorySummary.php"><img border="0" src="images/pdficon_small.gif" />&nbsp;&nbsp;Download PDF</a>
-

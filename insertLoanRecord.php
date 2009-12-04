@@ -54,7 +54,7 @@ if(!VerifyBorrowerExists($user_id, $link)) {
 }
 	
 //get on-loan location
-$onLoanLocationId = (int)$_POST['location0'];
+$onLoanLocationId = (int)$_POST['location-0'];
 if( $onLoanLocationId < 1 ) {
 	die( 'Invalid location id' );
 }

@@ -65,38 +65,52 @@
 {else}
 
 
-<div class="TopOfTable">
-<span class="TopOfTable">
-
-Show:
-
-{if $filter != "all"}
-	<a href="viewLoans.php">All</a>
-{else}
-	<b>All </b>
-{/if}
-|
-{if $filter != "outstanding"}
-	<a href="viewLoans.php?view=outstanding">Outstanding</a>
-{else}
-	<b>Outstanding </b>
-{/if}
-|
-{if $filter != "returned"}
-	 <a href="viewLoans.php?view=returned">Returned</a>
-{else}
-	<b>Returned </b>
-{/if}
-</span>
+<div id="controlsTop" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
+  <div class="left">
+    <h3>Search:</h3>
+    <input type="text" id="searchField" class="searchField" />
+  </div>
+  <div class="right">
+    {if $filter != "all"}
+      <a id="allFilter" class="ui-state-default ui-corner-all button" href="viewLoans.php" title="View all loans">
+  			<span class="ui-icon ui-icon-search"><!-- --></span>
+  			<span class="buttonText">Show all</span>
+  		</a>
+    {else}
+    	<a id="allFilter" class="ui-state-active ui-corner-all button" href="viewLoans.php" title="View all loans">
+  			<span class="ui-icon ui-icon-search"><!-- --></span>
+  			<span class="buttonText">Show all</span>
+  		</a>
+    {/if}
+    &nbsp;
+    {if $filter != "outstanding"}
+    	<a id="outstandingFilter" class="ui-state-default ui-corner-all button" href="viewLoans.php?view=outstanding" title="View outstanding loans">
+  			<span class="ui-icon ui-icon-star"><!-- --></span>
+  			<span class="buttonText">Show outstanding</span>
+  		</a>
+    {else}
+    	<a id="outstandingFilter" class="ui-state-active ui-corner-all button" href="viewLoans.php?view=outstanding" title="View outstanding loans">
+  			<span class="ui-icon ui-icon-star"><!-- --></span>
+  			<span class="buttonText">Show outstanding</span>
+  		</a>
+    {/if}
+    &nbsp;
+    {if $filter != "returned"}
+    	 <a id="returnedFilter" class="ui-state-default ui-corner-all button" href="viewLoans.php?view=returned" title="View returned loans">
+   			<span class="ui-icon ui-icon-check"><!-- --></span>
+   			<span class="buttonText">Show returned</span>
+   		</a>
+    {else}
+  	 <a id="returnedFilter" class="ui-state-active ui-corner-all button" href="viewLoans.php?view=returned" title="View returned loans">
+ 			<span class="ui-icon ui-icon-check"><!-- --></span>
+ 			<span class="buttonText">Show returned</span>
+ 		</a>
+    {/if}
+  </div>
 </div>
 
-<div id="filters" class="filters">
-	<h3>Search:</h3>
-		<input type="text" id="searchField" class="searchField" />	
-</div>
-
-<table width="800" border="0" class="itemsTable sortable searchable" cellspacing="0">
-	<thead>
+<table width="800" border="0" class="itemsTable sortable searchable ui-widget ui-corner-all" cellspacing="0">
+	<thead class="ui-widget-header">
 		<tr>
 			<th width="250">Item</th>
 			<th width="175">Starting Condition</th>
@@ -105,7 +119,7 @@ Show:
 			<th width="120">Return Date</t>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="ui-widget-content">
 	{section name=itemLoop loop=$items}
 	<tr{cycle values=" class=\"alt\","}>
 
