@@ -120,6 +120,12 @@ class database{
         return $objects;
     }
 
+    /* Returns the first object from the mysqli object */
+    function getObject($result)
+    {
+        return stripSlashObject(mysqli_fetch_object($result));
+    }
+
 }
 
 ?>
