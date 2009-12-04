@@ -60,21 +60,35 @@ div.header {
     /** Header border **/
     /*border-top: solid 2px;
     border-bottom: solid 2px;*/
+    margin-bottom: 25px;
 }
 
 div.bodyContainer {
+  margin: auto;
+  width: 1024px;
 }
-/**
- * Sidebar border and background colors
- **/
+div.main_body {
+  float: left;
+  width: 860px;
+    /*position: absolute;
+    top: 145px;
+    left:170px;*/
+}
 div.navigationBar {
-    position: absolute;
+  float: left;
+  margin-right: 20px;
+    /*position: absolute;*/
     top:145px;
     width: 120px;
-    left: 10px;
+    /*left: 10px;*/
     font-size: 12px;
     padding: 10px;
 }
+
+
+/**
+ * Sidebar border and background colors
+ **/
 ul.navigationList {
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
@@ -144,11 +158,6 @@ div.navigationBar ul li.SidebarSectionHeader {
     border-bottom:solid 1px #000000;
 }*/
 
-div.main_body {
-    position: absolute;
-    top: 145px;
-    left:170px;
-}
 
 /**
  * This is the div for the stuff at the top of the table on the pages.
@@ -190,6 +199,7 @@ span.TopOfTable h3{
     padding: 0;
     margin: 0;
     border-left: 1px solid #347992;
+    width: 100%;
 }
 
 .itemsTable tbody td {
@@ -394,9 +404,8 @@ span.icon_button_icon {
 
 div.controls {
   margin-bottom: 20px;
-  padding: 10px;
   display: table;
-  width: 778px;
+  width: 100%;
 }
 
 div.controls h3 {
@@ -409,8 +418,10 @@ div.controls div.left {
   display: table-cell;
   height: 100%;
   vertical-align: middle;
+  padding: 10px;
 }
 div.controls div.right {
+  padding: 10px;
   display: table-cell;
   height: 100%;
   vertical-align: middle;
