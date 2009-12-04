@@ -114,6 +114,8 @@ class Database{
 
         while($object = mysqli_fetch_object($result))
         {
+            $this->stripSlashObject($object);
+
             $objects[] = $object;
         }
 
