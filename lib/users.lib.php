@@ -90,16 +90,20 @@ function getUsernames( $name )
 }
 
 function getViewUsers( $currentSortIndex=0, $currentSortDir=0 ){
-  require_once("lib/connect.lib.php");  //mysql
+  require_once('class/database.class.php');  //mysql
   require_once("lib/auth.lib.php");  //Session
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( "Database connection failed" );
+  // Database
+  $db = new database();
   
   // Authenticate
   $auth = GetAuthority();
+
+  // Need to be administrator 
+  if ($auth < 2)
+  {
+    return array();
+  }
 
   /* Determine query argument for sorting */
   if($currentSortIndex == 0)
@@ -112,20 +116,18 @@ function getViewUsers( $currentSortIndex=0, $currentSortDir=0 ){
   /*  Determine query argument for sort direction
       Ascending is default    */
   if($currentSortDir == 1)
-    $sortBy .= ' DESC';
-  
+      $sortBy .= ' DESC';
+
+  if (!isset($_SESSION['club']))
+  {
+      return array();
+  }  
   
   //users
-  $userQuery= "SELECT * from logins ORDER BY ".$sortBy;
-  $userResult = mysqli_query($link, $userQuery);
-  $users = array();
-  
-  while($user = mysqli_fetch_object($userResult))
-    {
-      $users [] = $user;
-    }
-  mysqli_close($link);
+  $sql = "SELECT * from logins, user_clubs WHERE user_clubs.user_id = logins.id AND user_clubs.club_id = ". $_SESSION['club'] ." ORDER BY ".$sortBy;
 
-  return $users;
+  $result = $db->query($sql);
+
+  return $db->getObjectArray($result);
 }
 ?>
