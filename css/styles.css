@@ -1,105 +1,62 @@
 /*
 
-  Copyright (C) 2009, All Rights Reserved.
+Copyright (C) 2009, All Rights Reserved.
 
-  This file is part of RPInventory.
+This file is part of RPInventory.
 
-  RPInventory is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+RPInventory is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-  RPInventory is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+RPInventory is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-
-/*
- * Attributes
- */
-a {
-    color: #303030;
-    text-decoration: underline;
-}
-
-a:hover {
-    color:#505050;
-    cursor: pointer;
-}
-
-body {
-    font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-    background-color: #afd7ee; /* f5f5f5 91bbd3 a9d1e7 8fc7e7*/
-}
 
 /**
- * Red color for header
- * sidebar background
- *
-div.header, div.navigationBar{
-    background-color: #d50000;
-}
-*/
-div.header {	
-    /** Position of header **/
-/*    position:absolute;
-    left:0px;
-    top: 20px;*/
-    height:100px;
+* Layout
+**/
 
-    /** Size of header **/
-    width: 100%;
-    
-    -moz-box-shadow: black 2px 2px 2px;
-    -webkit-box-shadow: black 2px 2px 2px;
-    /** Header border **/
-    /*border-top: solid 2px;
-    border-bottom: solid 2px;*/
-    margin-bottom: 25px;
-}
-
+/* Page container */
 div.bodyContainer {
-  margin: auto;
+  margin: auto; /* Make layout centered in window */
   width: 1024px;
 }
-div.main_body {
-  float: left;
-  width: 860px;
-    /*position: absolute;
-    top: 145px;
-    left:170px;*/
+
+/* Page header */
+div.header {
+  height:100px;
+  width: 100%;
+  margin-bottom: 25px;
 }
+span.headerContent {
+  position:relative;
+  top: 30px;
+  left: 20px;
+}
+
+/* Navigation bar container */
 div.navigationBar {
   float: left;
   margin-right: 20px;
-    /*position: absolute;*/
-    top:145px;
-    width: 120px;
-    /*left: 10px;*/
-    font-size: 12px;
-    padding: 10px;
+  width: 120px;
+  padding: 10px;
 }
-
-
-/**
- * Sidebar border and background colors
- **/
 ul.navigationList {
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
+  margin: 0;
+  padding: 0;
   list-style:none;
 }
 ul.navigationList li {
-  margin: 0px 0px 0px 0px;
-  margin-bottom: 2px;
+  margin: 0px 0px 4px 0px;
 }
 ul.navigationList li.navigationHeader {
-  margin: 0px 0px 2px 0px;
   padding: 10px;
   font-size: 16px;
 }
@@ -111,295 +68,211 @@ ul.navigationList li.ui-state-active a {
   cursor: default;
 }
 
-/* LINK styles 
-div.navigationBar a {
-    color: #e0e0e0;
-    font-size: 12px;
-    text-decoration:none;
-    display:block;
-    padding-right:5px;
+/* Main content container */
+div.main_body {
+  float: left;
+  width: 860px;
 }
 
-div.navigationBar a:hover {
-    color: #f0f0f0;
-    background-color:#ff0000;
-}*/
-
-/**
- * List items in sidebar
- **/
-/*div.navigationBar ul {
-    /** No Bullets **/
-/*    list-style-type: none;
-
-    text-align:right;
-
-    /** space them out vertically **/
-/*    line-height:30px;
-
-    padding-left:0px;
-    margin-top: 0px;
-    margin-bottom:0px;
-}
-
-div.navigationBar ul li {
-    border-bottom: solid 1px;    
-}*/
-
-/**
- * This is for any items in the sidebar that aren't links
- * Like the "Admin" section divider
- *
-div.navigationBar ul li.SidebarSectionHeader {
-    padding-right: 5px;
-    color: #FFFFFF;
-    font-size: 14px;
-    background-color: #aa0000;
-    border-bottom:solid 1px #000000;
-}*/
-
-
-/**
- * This is the div for the stuff at the top of the table on the pages.
- * The span is inside always.
- **/
-div.TopOfTable {
-    margin-bottom:10px;
-}
-
-/**
- * header content is in this span
- **/
-span.headerContent {
-    font-size: 35px;
-    position:relative;
-    top: 30px;
-    left: 20px;
-}
-
-/**
- * This is the span that is inside the TopOfTable div.
- **/
-span.TopOfTable {
-    color:#000000;
-}
-
-span.TopOfTable h3{
-    margin-top:0;
-    margin-bottom:0;
-}
-
-.indent {
-    position: relative;
-    left: 20px
-}
-
-/* Items table styling */
 .itemsTable {
-    border-left: 1px solid #347992;
-    width: 100%;
+  width: 100%;
 }
 
+.itemsTable th {
+  padding: 6px 6px 6px 12px;
+  /* For sorting icon */
+  background-position: 95% center;
+  background-repeat: no-repeat;
+}
 .itemsTable tbody td {
-    font-size: 11px;
-    border-right: 1px solid #347992;
-    border-bottom: 1px solid #347992;
-    padding: 6px 6px 6px 12px;
-    /*color:000000;*/
+  padding: 6px 6px 6px 12px;
 }
-/*
-.itemsTable tr {
-  background: #cccccc;
-}*/
-.itemsTable tbody tr.alt {
-    background: #f5f5f5;	
+.itemsTable th.headerSortDown {
+  background-image: url('../images/sortTriangleUp.png');
 }
-/*
-.itemsTable td a {
-    color: #d50000;
-    text-decoration:underline;
+.itemsTable th.headerSortUp {
+  background-image: url('../images/sortTriangleDown.png');
 }
-/*
-.itemsTable td a:hover {
-    color: #ff0000;
-}
+
+
 
 /**
- * Table header 
+ *  Borders and Colors (non-text)
  **/
-.itemsTable th {
-    font-size: 11px;
-    border-right: 1px solid #cc3333;
-/*    border-left: 0;*/
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-align: left;
-    padding: 6px 6px 6px 12px;
-    cursor: pointer;
-    background-position: 95% center;
-    background-repeat: no-repeat;
+ 
+ body {
+   background-color: #afd7ee;
+ }
+ 
+div.header {
+  -moz-box-shadow: black 2px 2px 2px;
+  -webkit-box-shadow: black 2px 2px 2px;
 }
 
-.itemsTable.clickable tr {
-    cursor: pointer;
+.itemsTable th {
+  border-right: 1px solid #cc3333;
+}
+.itemsTable tbody td {
+  border-right: 1px solid #347992;
+  border-bottom: 1px solid #347992;
+}
+.itemsTable tbody tr.alt {
+  background: #f5f5f5;	
 }
 .itemsTable.clickable tbody tr:hover {
   background-color: #FFFFFF;
   color: #347992;
 }
+.itemsTable tbody tr td:first-child {
+  border-left: 1px solid #347992;
+}
 
-.itemsTable th.headerSortDown
-{
-    background-image: url('../images/sortTriangleUp.png');
-}
-.itemsTable th.headerSortUp
-{
-    background-image: url('../images/sortTriangleDown.png');
-}
+
+
 
 /**
- * Table header link
+ *  Typography and cursors
  **/
-.itemsTable th a {
-    text-decoration: none;
-/*    display: block;*/
+ 
+a {
+  color: #303030;
+  text-decoration: underline;
 }
 
-.tableHeaderSortTriangle {
-    border: 0px;
+a:hover {
+  color:#505050;
+  cursor: pointer;
 }
 
-/* Items table styling */
-.loanTable {
-    padding: 0;
-    margin: 0;
-    border-left: 1px solid #cc3333;
+body {
+  font: 14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 }
 
-.loanTable td {
-    font-size: 11px;
-    border-right: 1px solid #cc3333;
-    border-bottom: 1px solid #cc3333;
-    background: #cccccc;
-    padding: 6px 6px 6px 12px;
-    color: #000000;
+div.navigationBar {
+  font-size: 12px;
+}
+ul.navigationList li.navigationHeader {
+  font-size: 16px;
 }
 
-.loanTable td a {
-    color: #d50000;
-    text-decoration:underline;
+span.headerContent {
+  font-size: 35px;  
+}
+.itemsTable th {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+}
+.itemsTable tbody td {
+  font-size: 11px;
+}
+.itemsTable.clickable tr {
+  cursor: pointer;
 }
 
-.loanTable td a:hover {
-    color: #ff0000;
-}
-
-.loanTable th {
-    font-weight: bold;
-    font-size: 11px;
-    color: #ffffff;
-    border-right: 1px solid #cc3333;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-align: left;
-    padding: 6px 6px 6px 12px;
-    background-color:#d50000;
-}
 
 /**
- * Table header link
+ *  Helpers
  **/
-.loanTable th a {
-    text-decoration: none;
-    display: block;
-    color: #ffffff;
-}
 
-.loanAlt td {
-    background: #dfdfdf;
+.indent {
+  margin-left: 20px
 }
 
 .nobullets {
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
 }
 
+/**
+ *  Auto Complete
+ **/
 #userAutoComplete {
-    width: 152px;
-    border: solid 1px;
-    background-color: #FFFFFF;
-    color: #303030;
-    position: relative;
-    top: -5px;
+  font-family: "Arial", sans-serif;
+  width: 152px;
+  position: relative;
+  top: -5px;
 }
-
+#userAutoComplete span {
+  display: block;
+  background:#E8E8E8 url(images/ui-bg_flat_75_e8e8e8_40x100.png) repeat-x scroll 50% 50%;
+  border-bottom:1px solid #ADADAD;
+  color:#333333;
+}
 #userAutoComplete span:hover {
-    background-color: #b5b5b5;
+  background:#ffffff;
+  color: #347992;
+}
+#userAutoComplete:hover {
+  cursor: default
+}
+.autoComplete {
+  position: absolute;
 }
 
-.naviOver {
-    background-color:#ff0000;
-}
-
+/**
+ *  buttons & icons
+ **/
 .button {
-    background-color:#333333;
-    border: 2px solid black;
-    border-style:outset;
-    color: #ffffff;
+  background-color:#333333;
+  border: 2px solid black;
+  border-style:outset;
+  color: #ffffff;
 }
 
 a.icon_button {
-    float: left;
-    padding: 4px 4px 4px 0px;
-    text-decoration: none;
-    font-size: 10pt;
-    cursor: pointer;
+  float: left;
+  padding: 4px 4px 4px 0px;
+  text-decoration: none;
+  font-size: 10pt;
+  cursor: pointer;
 }
 
 a.icon_button:hover {
-    color: default;
+  color: default;
 }
 
 span.icon_button_icon {
-    float: left;
-    margin: 0 4px;
+  float: left;
+  margin: 0 4px;
+}
+a.button {
+  padding: 0.4em 0.4em 0.4em 20px;
+  position: relative;
+  text-decoration: none;
+}
+a.button span.ui-icon {
+  left: 0.2em;
+  margin: -8px 5px 0 0;
+  position: absolute;
+  top: 50%;
+}
+a.button span.buttonText {
+  font-size: 12px;
+}
+a.button.ui-state-active {
+  cursor: default;
 }
 
-.dropDown {
-    background-color: #333333;
-    border: 1px solid black;
-    color: #ffffff;
-}
 
-.dropDown option {
-    border-top:1px dotted black;
-    color: #ffffff;
-}
-
-#userAutoComplete:hover {
-    cursor: default
-}
-
-#paginate {
-    float: right;
-}
-
-#inventoryActions {
-    float: left;
-}
 
 #helpToolTip {
-    visibility: hidden;
-    position: absolute;
-    z-index: 1000;
-    top: -100;
-    background-color: white;
-    max-width: 150px;
-    padding: 2px;
-    font-size: 12px;
+  visibility: hidden;
+  position: absolute;
+  z-index: 1000;
+  top: -100;
+  background-color: white;
+  max-width: 150px;
+  padding: 2px;
+  font-size: 12px;
 }
 
+/**
+ *  Controls (filters section)
+ **/
 div.controls {
   margin-bottom: 20px;
   display: table;
@@ -429,24 +302,9 @@ div.controls div.right {
   font-size: 11px;
 }
 
-a.button {
-  padding: 0.4em 0.4em 0.4em 20px;
-  position: relative;
-  text-decoration: none;
-}
-a.button span.ui-icon {
-  left: 0.2em;
-  margin: -8px 5px 0 0;
-  position: absolute;
-  top: 50%;
-}
-a.button span.buttonText {
-  font-size: 12px;
-}
-a.button.ui-state-active {
-  cursor: default;
-}
-
+/**
+ *  Forms
+ **/
 div.mainForm h3 {
   font-size: 16px;
   margin: 0px 0px 10px 0;
@@ -457,12 +315,13 @@ div.mainForm {
   padding: 10px;
 }
 div.mainForm label {
-  
+
 }
+
+/**
+ *  notification area
+ **/
 .notification {
   padding: 10px;
   text-align: center;
-}
-.autoComplete {
-  position: absolute;
 }

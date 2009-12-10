@@ -34,8 +34,12 @@
 		
 	</div>
 </div>
-
+{if $authority >= 1}
 <table width="800" id="itemsTable" class="itemsTable sortable searchable clickable ui-widget ui-corner-all" cellspacing="0" >
+{else}
+<table width="800" id="itemsTable" class="itemsTable sortable searchable ui-widget ui-corner-all" cellspacing="0" >
+{/if}
+
 	<thead class="ui-widget-header">
 		<tr>
 			{if $authority >= 1}
@@ -63,11 +67,11 @@
 				<td>${$items[itemLoop]->current_value}</td>
 			{/if}
 			{if $items[itemLoop]->loan_id == 0 && $items[itemLoop]->checkout_id == 0}
-				<td align="center">{$items[itemLoop]->location}</td>
+				<td>{$items[itemLoop]->location}</td>
 			{elseif $items[itemLoop]->checkout_id == 0}
-				<td align="center"><a href="viewLoans.php?loanId={$items[itemLoop]->loan_id}">{$items[itemLoop]->location}</a></td>
+				<td><a href="viewLoans.php?loanId={$items[itemLoop]->loan_id}">{$items[itemLoop]->location}</a></td>
 		    {else}
-		        <td align="center"><a href="viewCheckouts.php?checkoutId={$items[itemLoop]->checkout_id}">{$items[itemLoop]->location}</a></td>
+		        <td><a href="viewCheckouts.php?checkoutId={$items[itemLoop]->checkout_id}">{$items[itemLoop]->location}</a></td>
 			{/if}
 		</tr>
 		{/section}	

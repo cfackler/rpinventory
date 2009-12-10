@@ -698,7 +698,7 @@ function showUsernames(oReq, oJSN){
   var i;
   targetDiv.innerHTML = "";
   for( i = 0; i < oJSN.records.length; i++ ){
-    targetDiv.innerHTML = targetDiv.innerHTML + '<span style="display:block" onmouseover="setUsername(\''+ oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
+    targetDiv.innerHTML = targetDiv.innerHTML + '<span onmouseover="setUsername(\''+ oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
   }
 
   if( oJSN.records.length > 0 ){
@@ -707,7 +707,7 @@ function showUsernames(oReq, oJSN){
 }
 
 
-// Set the username to be the stored username unless field is blank
+// Set the username to be the stored username
 function fillText(){
   document.getElementById( 'username' ).value = document.getElementById( 'tempUsername' ).value;
 }
@@ -721,6 +721,15 @@ function setUsername( name ){
 function leaveUsername( ){
   // hide suggestions
   document.getElementById( 'userAutoComplete' ).style.display = "none";
+  /* If username field is blank */
+  if ((jQuery)('#username').val() == '') {
+    /* Show helper notification */
+    (jQuery)('#usernameNotification').animate({opacity: 1.0}, 1000);
+  }
+  else {
+    /* Hide notificiation */
+    (jQuery)('#usernameNotification').animate({opacity: 0}, 1000);
+  }
   fillText();
   sendAddressBorrowerRequest();
 }

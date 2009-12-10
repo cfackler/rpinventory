@@ -75,7 +75,7 @@
             <tr>	
               <td/>
               <td>
-                <div id="userAutoComplete" class="autoComplete" style="display:none"></div>
+                <div id="userAutoComplete" class="ui-widget-smaller ui-widget-content autoComplete" style="display:none"></div>
               </td>
               <td />
             </tr>

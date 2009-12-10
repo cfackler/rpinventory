@@ -38,14 +38,8 @@ $this->assign('clubName', $_SESSION['club_name']);
 
 <script src="js/functions.interface.js" language="javascript" type="text/javascript"></script>
 
-{if $page_tpl == 'addPurchase'}
-	<script src="js/addPurchase.interface.js" language="javascript" type="text/javascript"></script>
-{elseif $page_tpl == 'editItem'}
-	<script src="js/editItem.interface.js" language="javascript" type="text/javascript"></script>
-{elseif $page_tpl == 'viewInventory'}
-	<script src="js/viewInventory.interface.js" language="javascript" type="text/javascript"></script>
-{elseif $page_tpl == 'loanItem'}
-  <script src="js/loanItem.interface.js" language="javascript" type="text/javascript"></script>
+{if file_exists("js/"|cat:$page_tpl|cat:".interface.js") }
+	<script src={'"js/'|cat:$page_tpl|cat:'.interface.js"'} language="javascript" type="text/javascript"></script>
 {else}
 	<script src="js/default.interface.js" language="javascript" type="text/javascript"></script>
 {/if}

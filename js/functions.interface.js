@@ -1,3 +1,22 @@
+
+/**
+ *  The pageNotification function displays a message on the page inside
+ *  the element with id="pageNotification".  
+ *
+ *  @param      text      the text to display inside the notification
+ *  @param      type      the type of notification (null if normal, 'error' or 1 if error)
+ **/
+function pageNotification(text, type) {
+  if(type == "error" || type == 1) {
+    (jQuery)('#pageNotification').html('<div class="ui-state-error ui-corner-all notification">'+text+'</div>')
+    .animate({opacity: 0}, 0).animate({opacity: 1.0}, 1000);
+  }
+  else {
+    (jQuery)('#pageNotification').html('<div class="ui-state-highlight ui-corner-all notification">'+text+'</div>')
+    .animate({opacity: 0}, 0).animate({opacity: 1.0}, 1000);
+  }
+}
+
 /**
  *  The autoClearClass function loads the behaviour for a text field.
  *  The text field will be cleared when clicked on, and then the original
@@ -211,13 +230,10 @@ function getSelectOptions(selectID, type, postSelectedOptionText)
  *	as expected.  Changing the class when hovered over.
  **/
 function ui_hover_behavior() {
-	(jQuery)('.ui-state-default').livequery(function()
-	{
-		(jQuery)(this).hover(function()
-		{
+	(jQuery)('.ui-state-default').livequery(function() {
+		(jQuery)(this).hover(function() {
 			(jQuery)(this).addClass('ui-state-hover');
-		}, function()
-		{
+		}, function() {
 			(jQuery)(this).removeClass('ui-state-hover');
 		});
 	});
