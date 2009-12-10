@@ -48,7 +48,7 @@
             </ul>
 
           </td>
-          <td><td>
+          <td></td>
           </tr>
 
 
@@ -57,7 +57,7 @@
             <td>
               {html_select_date start_year="-3" end_year="+2"}
             </td>
-            <td><td>
+            <td></td>
             </tr>
 
             <tr>

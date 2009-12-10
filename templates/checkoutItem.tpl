@@ -33,10 +33,10 @@
       {/section}
     </ul>
     {else}
-    <input type="hidden" id="tempUsername" size="50" value=""/>
 
-    <table width="500">
+    <table width="700">
 
+      <input type="hidden" id="tempUsername" size="50" value=""/>
       <input type="hidden" name="inventory_ids" size="40" value="{$idString}">
 
       <tr>
@@ -51,6 +51,7 @@
           </ul>
 
         </td>
+        <td></td>
       </tr>
 
       <tr>
@@ -58,6 +59,7 @@
         <td>
           <input id="time_taken" name="time_taken" class="validate" type="text" value="{$dateTime}"/>
         </td>
+        <td></td>
       </tr>
 
 
@@ -65,12 +67,14 @@
         <td>Checkout To: </td>
         <td>
           <input id="username" name="username" class="validate" type="text" onblur="leaveUsername()" onkeyup="checkUsername()" autocomplete="off"/>
-          {$toolTipHelp.checkoutTo}
+          {*$toolTipHelp.checkoutTo*}
         </td>
-        <td>
-          <span id="borrowerResult" style="display:none"></span>
+        <td rowspan="3">
+            <div class="ui-state-highlight ui-corner-all notification" id="usernameNotification">Type a username in the system<br/>or<br/>Create a new one.</div>
+            <span id="borrowerResult" style="display:none"></span>
         </td>
       </tr>
+
       <tr>
         <td />
         <td>
@@ -85,7 +89,7 @@
         <td colspan="2">
           <input type="checkbox" id="newBorrower" name="newBorrower" onclick="showNewBorrower()" />
           <span>Create a new borrower</span>
-          {$toolTipHelp.newBorrower}
+          {*$toolTipHelp.newBorrower*}
           <span id="newBorrowerResult" style="display:none"></span>
         </td>
       </tr>
