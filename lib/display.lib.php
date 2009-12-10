@@ -25,7 +25,7 @@ function get_options($tableName, $valueColumn, $displayColumn)
 	$options = '';
 	while($item = mysqli_fetch_object($result))
 	{
-		$options .= '<option value="'.$item->$valueColumn.'">'.$item->$displayColumn.'</option>';
+		$options .= '<option value="'.stripslashes($item->$valueColumn).'">'.stripslashes($item->$displayColumn).'</option>';
 	}
 	
 	return $options;

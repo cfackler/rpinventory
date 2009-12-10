@@ -34,7 +34,7 @@ $link = connect();
 if($link == null)
   die("Database connection failed");
 
-require_once( "lib/config.class.php" );
+require_once( "class/config.class.php" );
 
 $user = Config::get( 'database_username' );
 $password = Config::get( 'database_password' );

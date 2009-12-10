@@ -315,11 +315,10 @@ function save_category_behavior() {
 					}
 					
 					/* remove save category form and notify user */
-					(jQuery)('#category_notification-'+$item_index).html('<a id="add_category_button-'+$item_index
-						+'" class="ui-state-default ui-corner-all icon_button add_category_button">'
-						+'<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category'
-						+'</a> Category successfully saved.');
-					
+					(jQuery)('#category_notification-'+$item_index).css('opacity', '0')
+					  .html('<div class="ui-state-highlight ui-corner-all notification">New category saved successfully.</div>').animate({opacity: 1.0}, 1000).animate({opacity: 1.0}, 2000)
+					  .animate({opacity: 0}, 1000, "linear", function(){ (jQuery)('#category_notification-'+$item_index).html('<a id="add_category_button-'+$item_index+'" class="ui-state-default ui-corner-all button add_category_button">'
+                	+'<span class="ui-icon ui-icon-plus"><!-- --></span><span class="buttonText">Add Category</span></a>').animate({opacity: 1.0}, 1000);});					
 				}
 				else
 					alert(msg);
@@ -385,10 +384,11 @@ function save_location_behavior() {
 					getSelectOptions('location-'+$item_index, 'locations', $newLocName);
 					
 					/* Change form back to normal, and notify user of success */
-					(jQuery)('#location_notification-'+$item_index).html(
-						'<a id="add_location_button-'+$item_index+'" class="ui-state-default ui-corner-all icon_button add_location_button">'
-						+'<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Location</a> New Location saved successfully.');
-						
+					(jQuery)('#location_notification-'+$item_index).css('opacity', '0')
+					  .html('<div class="ui-state-highlight ui-corner-all notification">New Location saved successfully.</div>').animate({opacity: 1.0}, 1000).animate({opacity: 1.0}, 2000)
+					  .animate({opacity: 0}, 1000, "linear", function(){ (jQuery)('#location_notification-'+$item_index).html('<a id="add_location_button-'+$item_index+'" class="ui-state-default ui-corner-all button add_location_button">'
+                	+'<span class="ui-icon ui-icon-plus"><!-- --></span><span class="buttonText">Add Location</span></a>').animate({opacity: 1.0}, 1000);});
+
 					/* update all other dropdowns */
 					var $loc_selects_count = (jQuery)('.location_select').length;
 					for(var $i = 0; $i < $loc_selects_count; $i++)
@@ -411,6 +411,14 @@ function save_location_behavior() {
 	});
 }
 
+/**
+ *  table_sortable takes an optional starting column and direction,
+ *  and makes the table with the "sortable" class sortable by clicking
+ *  the table headers.  The table must have a <thead> and <tbody> tags.
+ *
+ *  @param    startingCol   (optional)  The column index to initially sort by
+ *  @param    startingDir   (optional)  The direction to initially sort by
+ **/
 function table_sortable(startingCol, startingDir) {
 	if(!startingCol)
 	{
@@ -431,17 +439,37 @@ function table_sortable(startingCol, startingDir) {
 		(jQuery)('table.sortable tr:even').addClass('alt');
 	});
 }
+
+/**
+ *  table_searchable makes any table with the "searchable" class
+ *  searchable by the text field with id "searchField"
+ ***/
 function table_searchable() {
 	var theTable = (jQuery)('table.searchable');
 	
-	theTable.find("tbody > tr").find("td:eq(1)").mousedown(function(){
-    (jQuery)(this).prev().find(":checkbox").click()
-  });
-
 	(jQuery)('#searchField').keyup(function() {
 		(jQuery).uiTableFilter(theTable, this.value);
 		(jQuery)('table.searchable tr.alt').removeClass('alt');
 		(jQuery)('table.searchable tr:even').addClass('alt');
 	});
 	
+}
+
+/**
+ *  table_clickable makes all tables with the class "clickable" have
+ *  clickable behavior.  This means the checkbox will be checked
+ *  when the row is clicked.
+ **/
+function table_clickable() {
+  var theTable = (jQuery)('table.clickable');
+  
+  /* Check check box if a td is clicked. */
+  theTable.find("tbody > tr").find("td").mousedown(function(){
+    (jQuery)(this).parent().find(":checkbox").click();
+  });
+  
+  /* Check check box if actual check box is clicked */
+  theTable.find("tbody > tr").find(":checkbox").mousedown(function(){
+    (jQuery)(this).click();
+  });
 }

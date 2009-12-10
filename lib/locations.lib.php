@@ -124,13 +124,13 @@ function getLocationsOptions()
 	/* Make sure we found a common location */
   if( $commonLocation ) {
 		$loc_select = '<option value="'.$commonLocation->location_id . '">';
-  	$loc_select .= $commonLocation->location . '</option>';
+  	$loc_select .= stripslashes($commonLocation->location) . '</option>';
 	}
   
   foreach($locations as $location) {
     if( $location->location_id != $commonLocation->location_id && $location->location != 'On Loan'){
       $loc_select .= '<option value="' . $location->location_id . '">';
-      $loc_select .= $location->location . '</option>';
+      $loc_select .= stripslashes($location->location) . '</option>';
     }
   }
   

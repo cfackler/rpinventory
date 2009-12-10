@@ -3,6 +3,9 @@
 	/* Make auto clear fields work */
 	autoClearClass();
 	
+	/* make buttons look nice when hovered */
+	ui_hover_behavior();
+	
 	/* Change all category_selects into fancy ones */
 	(jQuery)('.category_select').livequery(function(){ (jQuery)(this).asmSelect(); });
 	

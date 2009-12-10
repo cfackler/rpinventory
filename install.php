@@ -54,7 +54,7 @@ if (!file_exists('config/config.ini.php') || $retry) {
   $smarty->display('install.tpl');
 } elseif ($_POST['install']) {
   /* perform installation */
-  require_once('lib/config.class.php'); // configurations
+  require_once('class/config.class.php'); // configurations
 
   /* config data */
   $hostname = Config::get('database_hostname');

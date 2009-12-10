@@ -19,18 +19,21 @@
 *}
 
 {if $authority>1}
-	<div class="TopOfTable"><span class="TopOfTable">
-{*    <h3>Businesses</h3>*}
-	<a href="addBusiness.php">Add new business</a>
-	</span></div>
-	
-	<div id="filters" class="filters">
+<div id="controlsTop" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
+	<div class="left">
 		<h3>Search:</h3>
-			<input type="text" id="searchField" class="searchField" />	
+		<input type="text" id="searchField" class="searchField" />
 	</div>
-	
-	<table width="900" bsort="0" class="itemsTable searchable sortable" cellspacing="0">
-		<thead>
+	<div class="right">
+		<a id="addBusiness" class="ui-state-default ui-corner-all button" href="addBusiness.php">
+			<span class="ui-icon ui-icon-circle-plus"><!-- --></span>
+			<span class="buttonText">Add new business</span>
+		</a>
+	</div>
+</div>
+
+	<table width="900" bsort="0" class="itemsTable sortable searchable ui-widget ui-corner-all" cellspacing="0">
+		<thead class="ui-widget-header">
 			<tr>
 				<th width = "300">Company Name</th>
 				<th width="150">Address</th>
@@ -44,7 +47,7 @@
 				<th width="150">Website</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody class="ui-widget-content">
 			{section name=busLoop loop=$businesses}
 			<tr{cycle values=" class=\"alt\","}>
 				<td align="center">{$businesses[busLoop]->company_name}</td>
@@ -63,7 +66,8 @@
 	</table>
 
 {else}
-    <h3>Businesses</h3>
-
-    <p>Please login if you wish to view information about businesses.</p>
+<div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
+  <h3 class="ui-widget-header ui-corner-all">Businesses</h3>
+  <p>Please login if you wish to view information about businesses.</p>
+</div>
 {/if}

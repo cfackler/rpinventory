@@ -64,37 +64,35 @@
 	<a href="javascript:history.go(-1)">Go back</a>
 {else}
 
-<div class="TopOfTable">
-<span class="TopOfTable">
-{*<h3>Checkouts</h3>*}
-Show:
-
-{if $filter != "all"}
-	<a href="viewCheckouts.php">All</a>
-{else}
-	<b>All </b>
-{/if}
-|
-{if $filter != "outstanding"}
-	<a href="viewCheckouts.php?view=outstanding">Outstanding</a>
-{else}
-	<b>Outstanding </b>
-{/if}
-|
-{if $filter != "returned"}
-	 <a href="viewCheckouts.php?view=returned">Returned</a>
-{else}
-	<b>Returned </b>
-{/if}
-</span></div>
-<div id="filters" class="filters">
-	<h3>Search:</h3>
-		<input type="text" id="searchField" class="searchField" />	
+<div id="controlsTop" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
+	<div class="left">
+		<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />
+	</div>
+	<div class="right">
+		Show:
+    {if $filter != "all"}
+    	<a href="viewCheckouts.php">All</a>
+    {else}
+    	<b>All </b>
+    {/if}
+    |
+    {if $filter != "outstanding"}
+    	<a href="viewCheckouts.php?view=outstanding">Outstanding</a>
+    {else}
+    	<b>Outstanding </b>
+    {/if}
+    |
+    {if $filter != "returned"}
+    	 <a href="viewCheckouts.php?view=returned">Returned</a>
+    {else}
+    	<b>Returned </b>
+    {/if}
+	</div>
 </div>
 
-
-<table width="800" border="0" class="itemsTable sortable searchable" cellspacing="0">
-	<thead>
+<table width="800" border="0" class="itemsTable sortable searchable ui-widget ui-corner-all" cellspacing="0">
+	<thead class="ui-widget-header">
 		<tr>
 			<th width="250">Item</th>
 			<th width="175">Starting Condition</th>
@@ -103,7 +101,7 @@ Show:
 			<th width="120">Return Date</th>
 		</tr>
 	</thead>
-	<tbody>		
+	<tbody class="ui-widget-content">		
 		{section name=itemLoop loop=$items}
 		<tr{cycle values=" class=\"alt\","}>
 

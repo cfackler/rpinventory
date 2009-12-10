@@ -27,7 +27,7 @@ $this->assign('clubName', $_SESSION['club_name']);
 <head>
 <title>{$clubName} - RPInventory</title>
 
-<link rel="stylesheet" href="js/modulesJS/jquery-ui-1.7.2.custom/css/blitzer/jquery-ui-1.7.2.custom.css" type="text/css" />
+<link rel="stylesheet" href="js/modulesJS/jquery-ui-1.7.2.custom/css/custom-theme/jquery-ui-1.7.2.custom.css" type="text/css" />
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
 <script src="js/ExternalJS.js" language="javascript" type="text/javascript"></script>
 <script src="js/modulesJS/prototype.js" language="javascript" type="text/javascript"></script>
@@ -44,51 +44,108 @@ $this->assign('clubName', $_SESSION['club_name']);
 	<script src="js/editItem.interface.js" language="javascript" type="text/javascript"></script>
 {elseif $page_tpl == 'viewInventory'}
 	<script src="js/viewInventory.interface.js" language="javascript" type="text/javascript"></script>
+{elseif $page_tpl == 'loanItem'}
+  <script src="js/loanItem.interface.js" language="javascript" type="text/javascript"></script>
 {else}
-	<!--<script src="js/default.interface.js" language="javascript" type="text/javascript"></script>-->
+	<script src="js/default.interface.js" language="javascript" type="text/javascript"></script>
 {/if}
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
 </head>
-
-	<body onload="updateSidebar()">
-	    <div class="header">
+	<body>
+	  <div class="bodyContainer" id="bodyContainer">
+	    <div class="header ui-widget ui-widget-header ui-corner-all">
 			<span class="headerContent">{$clubName}</span>
 	    </div>
 		
-	    <div class="navigationBar">
-	    	 <ul>
-			<li class="SidebarSectionHeader">Home</li>
-			<li><a id="viewInventory" href="viewInventory.php">View Inventory</a></li>
+	    <div class="navigationBar ui-widget ui-widget-content ui-corner-all">
+	    	 <ul class="ui-corner-all navigationList">
+			<li class="ui-widget-header ui-corner-all navigationHeader">Home</li>
+			{if $page_tpl == 'viewInventory'}
+				<li class="ui-state-default ui-corner-all ui-state-active">
+			{else}
+				<li class="ui-state-default ui-corner-all">
+			{/if}
+			<a id="viewInventory" href="viewInventory.php">Inventory</a></li>
 			{if $authority >= 1}
-		    	     <li><a id="viewLoans" href="viewLoans.php">View Loans</a></li>
-			     <li><a id="viewCheckouts" href="viewCheckouts.php">View Checkouts</a></li>
+				{if $page_tpl == 'viewLoans'}
+					<li class="ui-state-default ui-corner-all ui-state-active">
+				{else}
+					<li class="ui-state-default ui-corner-all">
+				{/if}
+				<a id="viewLoans" href="viewLoans.php">Loans</a></li>
+				{if $page_tpl == 'viewCheckouts'}
+					<li class="ui-state-default ui-corner-all ui-state-active">
+				{else}
+			    <li class="ui-state-default ui-corner-all">
+				{/if}
+				<a id="viewCheckouts" href="viewCheckouts.php">Checkouts</a></li>
 			     {if $authority == 2}
-		    	     <li><a id="viewRepairs" href="viewRepairs.php">View Repairs</a></li>
-		    	     <li><a id="viewPurchases" href="viewPurchases.php">View Purchases</a></li>
-		    	     <li><a id="viewBusinesses" href="viewBusinesses.php">View Businesses</a></li>
+						{if $page_tpl == 'viewRepairs'}
+							<li class="ui-state-default ui-corner-all ui-state-active">
+						{else}
+							<li class="ui-state-default ui-corner-all">
+						{/if}
+						<a id="viewRepairs" href="viewRepairs.php">Repairs</a></li>
+		    	  {if $page_tpl == 'viewPurchases'}
+							<li class="ui-state-default ui-corner-all ui-state-active">
+						{else}
+							<li class="ui-state-default ui-corner-all">
+						{/if}
+						<a id="viewPurchases" href="viewPurchases.php">Purchases</a></li>
+						{if $page_tpl == 'viewBusinesses'}
+							<li class="ui-state-default ui-corner-all ui-state-active">
+						{else}
+							<li class="ui-state-default ui-corner-all">
+						{/if}
+						<a id="viewBusinesses" href="viewBusinesses.php">Businesses</a></li>
 			     {/if}
 			     
 			     <li><br /></li>
-			     <li class="SidebarSectionHeader">Admin</li>
-			     <li><a id="manageLocations" href="manageLocations.php">Manage Locations</a></li>
-					 <li><a id="manageBorrowers" href="manageBorrowers.php">Manage Borrowers</a></li>
+			     <li class="ui-widget-header ui-corner-all navigationHeader">Admin</li>
+				{if $page_tpl == 'manageLocations'}
+					<li class="ui-state-default ui-corner-all ui-state-active">
+				{else}
+					<li class="ui-state-default ui-corner-all">
+				{/if}
+				<a id="manageLocations" href="manageLocations.php">Locations</a></li>
+				{if $page_tpl == 'manageBorrowers'}
+					<li class="ui-state-default ui-corner-all ui-state-active">
+				{else}
+					<li class="ui-state-default ui-corner-all">
+				{/if}
+				<a id="manageBorrowers" href="manageBorrowers.php">Borrowers</a></li>
 			{/if}
 			
 			{if $authority == 2}
-			     <li><a id="manageUsers" href="manageUsers.php">Manage Users</a></li>
-			     <li><a id="generateSummary" href="generateSummary.php">Create Summary</a></li>
-			     <li><a id="backupDatabase" href="backupDatabase.php">Create Backup</a></li>
+				{if $page_tpl == 'manageUsers'}
+					<li class="ui-state-default ui-corner-all ui-state-active">
+				{else}
+					<li class="ui-state-default ui-corner-all">
+				{/if}
+				<a id="manageUsers" href="manageUsers.php">Users</a></li>
+				{if $page_tpl == 'generateSummary'}
+					<li class="ui-state-default ui-corner-all ui-state-active">
+				{else}
+					<li class="ui-state-default ui-corner-all">
+				{/if}
+				<a id="generateSummary" href="generateSummary.php">Summary</a></li>
+				{if $page_tpl == 'backupDatabase'}
+					<li class="ui-state-default ui-corner-all ui-state-active">
+				{else}
+			    <li class="ui-state-default ui-corner-all">
+				{/if}
+				<a id="backupDatabase" href="backupDatabase.php">Backup</a></li>
 			{/if}
 			
 			<li><br /></li>
 			
 			{if $authority == null}
-			     <li><a href="login.php">Login</a></li>
+			     <li class="ui-state-default ui-corner-all"><a href="login.php">Login</a></li>
 			{else}
-			     <li><a href="logout.php">Logout</a></li>
+			     <li class="ui-state-default ui-corner-all"><a href="logout.php">Logout</a></li>
 			{/if}
 		</ul>
 			
@@ -97,6 +154,6 @@ $this->assign('clubName', $_SESSION['club_name']);
 	    <div class="main_body">
 			{include file="$page_tpl.tpl"}
 	    </div>
-
+    </div>
 	</body>
 </html>

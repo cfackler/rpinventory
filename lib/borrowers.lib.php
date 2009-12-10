@@ -107,7 +107,7 @@ function getBorrowerNames( $name )
   $records = array();
  
   while ( $record = mysqli_fetch_object( $result ) ){
-    if ( preg_match( '!^'.$name.'!', $record->name ) ) {
+    if ( preg_match( '/'.$name.'/i', $record->name ) ) {
       $records[] = $record->name;
     }
   }

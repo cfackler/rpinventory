@@ -115,7 +115,6 @@ function getInventory($sortIndex = 0, $sortdir = 0)
 				}
 
 				$item->category = $categoryString;
-				
         $items [] = $item;
     }
 

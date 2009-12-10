@@ -59,7 +59,7 @@ function Logout()
   unset($_SESSION['club']);
   unset($_SESSION['club_name']);
 
-  session_destroy();
+  @session_destroy();
 }
 
 //Verify id and authority set

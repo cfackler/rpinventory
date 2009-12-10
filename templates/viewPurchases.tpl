@@ -19,18 +19,21 @@
 *}
 
 {if $authority>1}
-    <div class="TopOfTable"><span class="TopOfTable">
-    <a href="addPurchase.php">Add a purchase</a>
-    </span>
-    </div>
+<div id="controlsTop" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
+	<div class="left">
+		<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />
+	</div>
+	<div class="right">
+		<a id="addPurchase" class="ui-state-default ui-corner-all button" href="addPurchase.php">
+			<span class="ui-icon ui-icon-circle-plus"><!-- --></span>
+			<span class="buttonText">Insert inventory</span>
+		</a>
+	</div>
+</div>
 
-		<div id="filters" class="filters">
-			<h3>Search:</h3>
-				<input type="text" id="searchField" class="searchField" />	
-		</div>
-		
-    <table width="800" border="0" class="itemsTable sortable searchable" cellspacing="0">
-    	<thead>
+    <table width="800" border="0" class="itemsTable sortable searchable ui-widget ui-corner-all" cellspacing="0">
+    	<thead class="ui-widget-header">
 				<tr>
 					<th width="150">Items</th>
 					<th width="250">Company Name</th>
@@ -38,7 +41,7 @@
 					<th width="150">Total Cost</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="ui-widget-content">
 
 		    {section name=itemLoop loop=$purchases}
 		    <tr{cycle values=" class=\"alt\","}>
@@ -52,7 +55,8 @@
 
     </table>
 {else}
-    <h3>Purchases</h3>
-
-    <p>Please login if you wish to view information about purchases.</p>
+<div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
+  <h3 class="ui-widget-header ui-corner-all">Purchases</h3>
+  <p>Please login if you wish to view information about purchases.</p>
+</div>
 {/if}

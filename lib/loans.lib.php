@@ -41,7 +41,6 @@ function getLoan( $loanId )
 		die( 'Error: '. mysqli_error($link) );
 
 	$loan = mysqli_fetch_object( $result ); 
-
 	return $loan;
 }
 
@@ -82,13 +81,7 @@ function getLoans( $startDate, $endDate )
 
 function getViewLoans( $currentSortIndex=0, $currentSortDir=0 ){
   require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
-
-  $link = connect();
-  if($link == null)
-    die("Database connection failed");
-
-  $auth = getAuthority();
+  require_once('class/database.class.php');
 
   //items
   $query=   'SELECT loan_id, loans.inventory_id, name, loans.borrower_id, borrowers.borrower_id, issue_date, return_date, starting_condition, description
@@ -127,16 +120,12 @@ function getViewLoans( $currentSortIndex=0, $currentSortDir=0 ){
   if($currentSortDir == 1)
     $query .= ' DESC';
   
-  $result = mysqli_query($link, $query) or die(mysqli_error($link));
-  
-  
-  $items = array();
-  
-  while($item = mysqli_fetch_object($result)) {
-      $items [] = $item;
-  }
+  // Database object
+  $db = new database();
 
-  mysqli_close($link);
+  $result = $db->query($query);
+
+  $items = $db->getObjectArray($result);
   
   return $items;
 }

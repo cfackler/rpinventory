@@ -21,13 +21,9 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
+require_once('class/database.class.php'); //mysql
 require_once("lib/auth.lib.php");  //Session
 
-$link = connect();
-if($link == null)
-  die("Database connection failed");
-	
 //Authenticate
 $auth = GetAuthority();
 
@@ -35,13 +31,13 @@ $auth = GetAuthority();
 require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
+$db = new database();
+
 //items
 $query= "SELECT location_id, location  FROM locations";
-$result = mysqli_query($link, $query);
-$locations = array();
+$result = $db->query($query); 
 
-while($loc = mysqli_fetch_object($result))
-  $locations [] = $loc;
+$locations = $db->getObjectArray($result);
 
 //BEGIN Page
 	
