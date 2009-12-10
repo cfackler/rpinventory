@@ -73,6 +73,12 @@ class database{
     {
         mysqli_close( $this->_link );
     }
+    
+    /* Close Function */
+    function close()
+    {
+        mysqli_close( $this->_link );
+    }
 
     /* Returns the insert ID for the last INSERT query */
     function insertId()
