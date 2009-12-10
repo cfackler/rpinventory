@@ -21,17 +21,18 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
-require_once("lib/auth.lib.php");  //Session
+require_once('class/database.class.php');  //mysql
+require_once('lib/auth.lib.php');  //Session
 
-$link = connect();
-if($link == null)
-  die("Database connection failed");
+// Database connection
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
-if($auth != 2)
-  die("You dont have permission to access this page");
+if ($auth != 2)
+{
+    die("You dont have permission to access this page");
+}
 	
 //Username
 $username = $_POST["username"];
@@ -54,13 +55,23 @@ if($access > 2 || $access < 0)
 $email = $_POST["email"];
 if(strlen($email) == 0)
   die("Must have a email");
+
+// Check club id in session
+if (!isset($_SESSION['club']))
+{
+    die('Must have a club ID');
+}
 	
-$sql = "INSERT INTO logins (id , username, password, email, access_level) VALUES (NULL, '" . $username . "', '" . md5($password) . "', '" . $email ."', ". $access . ")";	
+// Insert into logins
+$sql = 'INSERT INTO logins (id , username, password, email) VALUES (NULL, ?, ?, ?)';
+$db->query($sql, $username, md5($password), $email);
 
-if(!mysqli_query($link, $sql))
-  die("Query failed");
+// Add login record to user_clubs
+$sql = 'INSERT INTO user_clubs (user_id, club_id, access_level) VALUES (?, ?, ?)';
+$db->query($sql, $db->insertId(), $_SESSION['club'], $access);
 
-mysqli_close($link);
+$db->close();
+
 header('Location: manageUsers.php');
 	
 ?>
