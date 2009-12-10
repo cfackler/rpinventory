@@ -25,7 +25,7 @@ $this->assign('clubName', $_SESSION['club_name']);
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>{$clubName} - RPInventory</title>
+<title>{if $authority > 0}{$clubName} - {/if}RPInventory</title>
 
 <link rel="stylesheet" href="js/modulesJS/jquery-ui-1.7.2.custom/css/custom-theme/jquery-ui-1.7.2.custom.css" type="text/css" />
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
@@ -51,7 +51,11 @@ $this->assign('clubName', $_SESSION['club_name']);
 	<body>
 	  <div class="bodyContainer" id="bodyContainer">
 	    <div class="header ui-widget ui-widget-header ui-corner-all">
+            {if $authority > 0}
 			<span class="headerContent">{$clubName}</span>
+            {else}
+            <span class="headerContent">RPInventory</span>
+            {/if}
 	    </div>
 		
 	    <div class="navigationBar ui-widget ui-widget-content ui-corner-all">
