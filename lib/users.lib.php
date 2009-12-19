@@ -130,4 +130,25 @@ function getViewUsers( $currentSortIndex=0, $currentSortDir=0 ){
 
   return $db->getObjectArray($result);
 }
+
+// Add a new user and link them to the current club
+function addUser($username, $password, $accessLevel, $email, $clubId)
+{
+    require_once('class/database.class.php');  //mysql
+
+    // Database connection
+    $db = new database();
+
+    // Insert the new user
+    $sql = 'INSERT INTO logins (id, username, password, email) VALUES (NULL, ?, ?, ?)';
+    $db->query($sql, $username, $password, $email);
+
+    // Link the user to the current club
+    $sql = 'INSERT INTO user_clubs (user_id, club_id, access_level) VALUES (?, ?, ?)';
+    $db->query($sql, $db->insertId(), $clubId, $accessLevel);
+
+    // Close the connection
+    $db->close();
+}
+
 ?>
