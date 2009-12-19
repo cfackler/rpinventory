@@ -21,8 +21,8 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
-require_once("lib/auth.lib.php");  //Session
+require_once('class/database.class.php');
+require_once('lib/auth.lib.php');  //Session
 require_once('lib/display.lib.php');
 
 //Authenticate
@@ -30,9 +30,7 @@ $auth = GetAuthority();
 if($auth < 1)
   die("You dont have permission to access this page");
 
-$link = connect();
-if($link == null)
-  die("Database connection failed");
+$db = new database();
 
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
@@ -49,32 +47,28 @@ if(count($idList) == 0)
 
 //Get all items
 $items = array();
-foreach($idList as $id)
-  {
-
+foreach($idList as &$id)
+{
     //item
-    $query= "SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value
+    $sql = 'SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value
 						FROM inventory, locations
 						WHERE locations.location_id=inventory.location_id
-									AND inventory.inventory_id = " . $id;
-    $result = mysqli_query($link, $query);
+									AND inventory.inventory_id = ?';
+
+    $result = $db->query($sql, $id);
 
     if(mysqli_num_rows($result) == 0)
-      die("Invalid ID");
+    {
+        die("Invalid ID");
+    }
 	
-    $item = mysqli_fetch_object($result);
-    $items[] = $item;	
-  }
+    $items[] = $db->getObject($result);	
+}
 
 //Locations
 $locQuery= "SELECT location_id, location  FROM locations";
-$locResult = mysqli_query($link, $locQuery);
-$locations = array();
-
-while($loc = mysqli_fetch_object($locResult))
-  {
-    $locations [] = $loc;
-  }
+$locResult = $db->query($locQuery);
+$locations = $db->getObjectArray($locResult);
 
 //Categories Options (for populating dropdown)
 $category_options = get_options('categories', 'id', 'category_name');
@@ -92,6 +86,6 @@ $smarty->assign('category_options', $category_options);
 
 $smarty->display('index.tpl');
 
-mysqli_close($link);
+$db->close();
 
 ?>

@@ -18,7 +18,7 @@
 
 *}
 
-<form name="editItem" action="updateItem.php" onsubmit="return ValidateEditForm(this)" METHOD="post">
+<form name="editItem" action="updateItem.php" onsubmit="return ValidateEditForm(this)" method="post">
   <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
     <h3 class="ui-widget-header ui-corner-all">Edit Item</h3>
 
@@ -26,14 +26,14 @@
 
     {section name=num loop=$items}
 
-    <table width="500">
+    <table width="600">
 
       <input type="hidden" name="inventory_id-{$smarty.section.num.index}" id="inventory_id-{$smarty.section.num.index}" size="40" value="{$items[num]->inventory_id}">
 
       <tr>
         <td>Description:
         </td>
-        <td><input type="text" name="desc-{$smarty.section.num.index}" size="40" id="description" value="{$items[num]->description}"></td>
+        <td width="250"><input type="text" name="desc-{$smarty.section.num.index}" size="40" id="description" value="{$items[num]->description}"></td>
         <td><!-- --></td>
       </tr>
 
