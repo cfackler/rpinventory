@@ -56,7 +56,14 @@
 	
 			<td align="center"><a href="mailto:{$users[userLoop]->email}">{$users[userLoop]->email}</a></td>
 	
-			<td align="center"><a href="editUser.php?id={$users[userLoop]->id}">Edit</a> or <input type="button"  onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')" value="Delete User"></td>
+			<td align="center">
+                <a href="editUser.php?id={$users[userLoop]->id}" class="ui-state-default ui-corner-all button">
+                    <span class="ui-icon ui-icon-circle-arrow-w"></span>
+                    <span class="buttonText">Edit</span>
+                </a>
+                &nbsp;
+                <input type="button" class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')" value="Delete" />
+            </td>
 		</tr>
 		{/section}	
 	</tbody>

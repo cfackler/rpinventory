@@ -46,9 +46,21 @@
 			<td align="center">{$borrowers[borrowerLoop]->name}</td>
 			<td align="center">{$borrowers[borrowerLoop]->rin}</td>
 			<td align="center"><a href="mailto:{$borrowers[borrowerLoop]->email}">{$borrowers[borrowerLoop]->email}</a></td>
-			<td align="center"><a href="viewBorrowerAddress.php?id={$borrowers[borrowerLoop]->borrower_id}">Address</a></td>
+			<td align="center">
+                <a href="viewBorrowerAddress.php?id={$borrowers[borrowerLoop]->borrower_id}" class="ui-state-default ui-corner-all button">
+                    <span class="ui-icon ui-icon-circle-arrow-e"></span>
+                    <span class="buttonText">View Address</span>
+                </a>
+            </td>
 	
-			<td align="center"><a href="editBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}">Edit</a> or <input type="button" onclick="confirmation('Are you sure you want to delete borrower \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')" value="Delete Borrower"></td>
+			<td align="center">
+                <a href="editBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}" class="ui-state-default ui-corner-all button">
+                    <span class="ui-icon ui-icon-circle-arrow-w"></span>
+                    <span class="buttonText">Edit</span>
+                </a>
+                &nbsp;
+                <input type="button" class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete borrower \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')" value="Delete" />
+            </td>
 		</tr>
 		{/section}	
 	</tbody>

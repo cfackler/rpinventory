@@ -44,7 +44,16 @@
 			<td align="center">{$locations[num]->location}</td>
 			<td align="center">{$locations[num]->description}</td>
 			<td align="center">
-			<a href="editLocation.php?id={$locations[num]->location_id}">Edit</a> or <input type="button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')" value="Delete">
+			<a href="editLocation.php?id={$locations[num]->location_id}" class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')">
+                <span class="ui-icon ui-icon-circle-arrow-w"></span>
+                <span class="buttonText">Edit</span>
+            </a>
+            &nbsp;
+            <!--<a class="ui-state-default ui-corner-all button" >
+                <span class="ui-icon ui-icon-circle-minus"></span>
+                <span class="buttonText">Delete</span>
+            </a>-->
+            <input type="button" class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')" value="Delete" />
 			</td>
 		</tr>
 		{/section}
