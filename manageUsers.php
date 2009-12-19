@@ -52,6 +52,10 @@ $smarty->assign('title', "Manage Users");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'manageUsers');
 $smarty->assign('users', $users);
+if (count($users) == 0)
+{
+    $smarty->assign('emptyTable', TRUE);
+}
 
 $smarty->display('index.tpl');
 
