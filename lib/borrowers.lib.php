@@ -184,6 +184,7 @@ function getBorrower( $id ) {
 	return $borrower;
 }
 
+// AJAX Call for adding a new borrower
 function insertBorrower( $name, $rin, $email, $address, $address2, $city, $state, $zip, $phone ) {
 	require_once( 'modules/json/JSON.php' );
 	require_once('lib/connect.lib.php');
@@ -246,6 +247,25 @@ function insertBorrower( $name, $rin, $email, $address, $address2, $city, $state
 
 
 	header('X-JSON: ('.$json->encode($data).')');
+}
+
+// Add a borrower to the system
+function addBorrower($addressId, $rin, $email, $name)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    // Insert the borrower
+    $sql = 'INSERT INTO borrowers (borrower_id, address_id, rin, email, name) VALUES (NULL, ?, ?, ?, ?)';
+
+    $db->query($sql, $addressId, $rin, $email, $name);
+
+    $id = $db->insertId();
+
+    $db->close();
+
+    return $id;
 }
 
 ?>
