@@ -22,7 +22,8 @@
 */
 
 require_once("lib/auth.lib.php");  //Session
-require_once('class/database.class.php');
+require_once('lib/addresses.lib.php');
+require_once('lib/borrowers.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
@@ -66,28 +67,9 @@ $phone = $_POST['phone'];
 if(strlen($phone) == 0)
 	die('Must have a phone number');
 
-// Database
-$db = new database();
+$addressId = addAddress($address, $address2, $city, $state, $zip, $phone);
 
-// Inset the address
-$sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES (NULL, ?, ?, ?, ?, ?, ?)';
-
-if (!$db->query($sql, $address, $address2, $city, $state, $zip, $phone))
-{
-    die('Query failed');
-}
-
-
-$address_id = $db->insertId();
-
-
-// Insert the borrower
-$sql = "INSERT INTO borrowers (borrower_id, address_id, rin, email, name) VALUES (NULL, ?, ?, ?, ?)";	
-
-if (!$db->query($sql, $address_id, $rin, $email, $name))
-{
-    die('Query failed');
-}
+addBorrower($addressId, $rin, $email, $name);
 
 header('Location: manageBorrowers.php');
 	
