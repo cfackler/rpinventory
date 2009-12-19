@@ -24,44 +24,44 @@
 
       <ul class="nobullets">
         <li>
-          <input type="checkbox" name="inventory" value="Inventory" />
+          <input type="checkbox" name="inventory" id="inventory" value="Inventory" />
           <label for="inventory">Inventory</label>
         </li>
         <li>
-          <input type="checkbox" name="loans" value="Loans" />
+          <input type="checkbox" name="loans" id="loans" value="Loans" />
           <label for="loans">Loans</label>
         </li>
         <li>
-          <input type="checkbox" name="checkouts" value="Checkouts" />
+          <input type="checkbox" name="checkouts" id="checkouts" value="Checkouts" />
           <label for="checkouts">Checkouts</label>
         </li>
         <li>
-          <input type="checkbox" name="repairs" value="Repairs" />
+          <input type="checkbox" name="repairs" id="repairs" value="Repairs" />
           <label for="repairs">Repairs</label>
         </li>
         <li>
-          <input type="checkbox" name="purchases" value="Purchases" />
+          <input type="checkbox" name="purchases" id="purchases" value="Purchases" />
           <label for="purchases">Purchases</label>
         </li>
         <li>
-          <input type="checkbox" name="businesses" value="Businesses" />
+          <input type="checkbox" name="businesses" id="businesses" value="Businesses" />
           <label for="businesses">Businesses</label>
         </li>
         <li>
-          <input type="checkbox" name="borrowers" value="Borrowers" />
+          <input type="checkbox" name="borrowers" id="borrowers" value="Borrowers" />
           <label for="borrowers">Borrowers</label>
         </li>
         <li>
-          <input type="checkbox" name="users" value="Users" />
+          <input type="checkbox" name="users" id="users" value="Users" />
           <label for="users">Users</label>
         </li>
         <li>
-          <input type="checkbox" name="locations" value="Locations" />
+          <input type="checkbox" name="locations" id="locations" value="Locations" />
           <label for="locations">Locations</label>
         </li>
         <br />
         <li class="indent">
-          <input type="checkbox" name="selectallnone" value="selectallnone" onClick="selectAllNone(this, 'checkBoxForm');"/>
+          <input type="checkbox" name="selectallnone" id="selectallnone" value="selectallnone" onClick="selectAllNone(this, 'checkBoxForm');"/>
           <label for="selectallnone">Select All/None</label>
         </li>
       </ul>
