@@ -21,15 +21,13 @@
 
 */
 
-require_once('lib/connect.lib.php');		//mysql
+require_once('class/database.class.php');		//mysql
 require_once('lib/auth.lib.php');				//Session
 require_once('lib/locations.lib.php'); 	//locations
 require_once('lib/display.lib.php');		//formatting <option>s
 require_once('lib/tooltip.lib.php');
 
-$link = connect();
-if($link == null)
-  die('Database connection failed');
+$db = new database();
 	
 //Authenticate
 $auth = GetAuthority();
@@ -41,13 +39,9 @@ require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
 //Business List
-
 $businessQuery = 'SELECT business_id, company_name FROM businesses';
-$businessResult = mysqli_query($link, $businessQuery);
-$businesses = array();
-
-while($business = mysqli_fetch_object($businessResult))
-  $businesses [] = $business;
+$businessResult = $db->query($businessQuery);
+$businesses = $db->getObjectArray($businessResult);
 
 //Locations
 $locations = getLocationsOptions();
@@ -70,6 +64,6 @@ $smarty->assign('category_options', $category_options);
 
 $smarty->display('index.tpl');
 
-mysqli_close($link);
+$db->close();
 
 ?>
