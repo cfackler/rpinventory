@@ -21,11 +21,8 @@
 
 */
 
-require_once('class/database.class.php');  //mysql
 require_once('lib/auth.lib.php');  //Session
-
-// Database connection
-$db = new database();
+require_once('lib/users.lib.php'); // User library
 
 //Authenticate
 $auth = GetAuthority();
@@ -62,15 +59,7 @@ if (!isset($_SESSION['club']))
     die('Must have a club ID');
 }
 	
-// Insert into logins
-$sql = 'INSERT INTO logins (id , username, password, email) VALUES (NULL, ?, ?, ?)';
-$db->query($sql, $username, md5($password), $email);
-
-// Add login record to user_clubs
-$sql = 'INSERT INTO user_clubs (user_id, club_id, access_level) VALUES (?, ?, ?)';
-$db->query($sql, $db->insertId(), $_SESSION['club'], $access);
-
-$db->close();
+addUser($username, md5($password), $access, $email, $_SESSION['club']);
 
 header('Location: manageUsers.php');
 	
