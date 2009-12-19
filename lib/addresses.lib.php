@@ -76,4 +76,21 @@ function getAddress( $id ) {
 	return $address;
 }
 
+function addAddress($address, $address2, $city, $state, $zipcode, $phone)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES (NULL, ?, ?, ?, ?, ?, ?)';
+
+    $db->query($sql, $address, $address2, $city, $state, $zipcode, $phone);
+
+    $id = $db->insertId();
+
+    $db->close();
+
+    return $id;
+}
+
 ?>
