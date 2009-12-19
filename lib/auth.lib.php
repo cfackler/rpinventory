@@ -105,16 +105,18 @@ function VerifyBorrowerExists($id, $link)
   return true;
 }
 
-function VerifyBusinessExists($id, $link)
+function VerifyBusinessExists($id, $db)
 {
-  //Find business
-  $result=mysqli_query($link, "select * from `businesses` where business_id=" . $id);
+    //Find business
+    $result = $db->query('SELECT * FROM businesses WHERE business_id= ?', $id);
 
-  //verify count
-  if(mysqli_num_rows($result) == 0)
-    return false;
+    //verify count
+    if (mysqli_num_rows($result) == 0)
+    {
+        return false;
+    }
 
-  return true;
+    return true;
 }
 
 function VerifyItemExists($id, $link)
