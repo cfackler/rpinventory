@@ -61,5 +61,5 @@
 
     <br />
 
-    <a href="javascript:history.go(-1)">Go back</a>
+    <a href="manageBorrowers.php">Go back</a>
   </div>
