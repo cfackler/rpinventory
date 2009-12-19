@@ -23,112 +23,113 @@
 
 function getUsers()
 {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( "Database connection failed" );
-  
-  // Authenticate
-  $auth = GetAuthority();
-  
-  // Users
-  $query= "SELECT username, email, access_level FROM logins";
-
-  $result = mysqli_query($link, $query) or
-    die( 'Could not get the users' );
-
-  $records = array();
-  
-  while($record = mysqli_fetch_object($result))
+    if (!isset($_SESSION['club']))
     {
-      $records [] = $record;
+        return array();
     }
+
+    $clubId = (int)$_SESSION['club'];
+
+    // Connect
+    $db = new database();
+
+    // Authenticate
+    $auth = GetAuthority();
+
+    // Users
+    $query = "SELECT username, email FROM logins, user_clubs WHERE user_clubs.user_id = logins.user_id AND user_clubs.club_id = ?";
+
+    $result = $db->query($query, $clubId);
+
+    $records = $db->getObjectArray($result);
+
+    $db->close();
   
-  mysqli_close($link);	
-  
-  return $records;
+    return $records;
 }
 
 function getUsernames( $name )
 {
-  require_once( 'modules/json/JSON.php' );
-  require_once( 'lib/connect.lib.php' );
-  require_once( 'lib/auth.lib.php' );
+    require_once( 'modules/json/JSON.php' );
+    require_once('class/database.class.php');
+    require_once( 'lib/auth.lib.php' );
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( "Database connection failed" );
+    // Connect
+    $db = new database();
   
-  // Authenticate
-  $auth = GetAuthority();
-  if($auth < 1)
-	  die("You dont have permission to access this page");
+    // Authenticate
+    $auth = GetAuthority();
+    if($auth < 1)
+        die("You dont have permission to access this page");
 
-  $sql = 'SELECT username FROM logins';
+    $sql = 'SELECT username FROM logins';
 
-  $result = mysqli_query( $link, $sql ) or
-    die( 'Could not get the usernames' );
+    $result = $db->query($sql);
 
-  $records = array();
- 
-  while ( $record = mysqli_fetch_object( $result ) ){
-    if ( preg_match( '!^'.$name.'!', $record->username ) ) {
-      $records[] = $record->username;
+    $users = $db->getObjectArray($result);
+    $records = array();
+
+    foreach($users as &$record)
+    {
+        if ( preg_match( '!^'.$name.'!', $record->username ) ) {
+            $records[] = $record->username;
+        }
     }
-  }
 
-  $data = array( "records" => $records );
-  mysqli_close( $link );
- 
-  $json = new Services_JSON();
-  
-  header('X-JSON: ('.$json->encode( $data ).')');
+    $data = array( "records" => $records );
+    $db->close();
+
+    $json = new Services_JSON();
+
+    header('X-JSON: ('.$json->encode( $data ).')');
 }
 
-function getViewUsers( $currentSortIndex=0, $currentSortDir=0 ){
-  require_once('class/database.class.php');  //mysql
-  require_once("lib/auth.lib.php");  //Session
+function getViewUsers( $currentSortIndex=0, $currentSortDir=0 )
+{
+    require_once('class/database.class.php');  //mysql
+    require_once("lib/auth.lib.php");  //Session
 
-  // Database
-  $db = new database();
-  
-  // Authenticate
-  $auth = GetAuthority();
+    // Database
+    $db = new database();
 
-  // Need to be administrator 
-  if ($auth < 2)
-  {
-    return array();
-  }
+    // Authenticate
+    $auth = GetAuthority();
 
-  /* Determine query argument for sorting */
-  if($currentSortIndex == 0)
-    $sortBy = 'username';
-  else if($currentSortIndex == 1)
-    $sortBy = 'access_level';
-  else if($currentSortIndex == 2)
-    $sortBy = 'email';
-  
-  /*  Determine query argument for sort direction
-      Ascending is default    */
-  if($currentSortDir == 1)
-      $sortBy .= ' DESC';
+    // Need to be administrator 
+    if ($auth < 2)
+    {
+        return array();
+    }
 
-  if (!isset($_SESSION['club']))
-  {
-      return array();
-  }  
-  
-  //users
-  $sql = "SELECT * from logins, user_clubs WHERE user_clubs.user_id = logins.id AND user_clubs.club_id = ". $_SESSION['club'] ." ORDER BY ".$sortBy;
+    /* Determine query argument for sorting */
+    if($currentSortIndex == 0)
+        $sortBy = 'username';
+    else if($currentSortIndex == 1)
+        $sortBy = 'access_level';
+    else if($currentSortIndex == 2)
+        $sortBy = 'email';
 
-  $result = $db->query($sql);
+    /*  Determine query argument for sort direction
+        Ascending is default    */
+    if($currentSortDir == 1)
+        $sortBy .= ' DESC';
 
-  return $db->getObjectArray($result);
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }  
+
+    $clubId = $_SESSION['club'];
+
+    //users
+    $sql = "SELECT * from logins, user_clubs WHERE user_clubs.user_id = logins.id AND user_clubs.club_id = ? ORDER BY ".$sortBy;
+
+    $result = $db->query($sql, $clubId);
+
+    return $db->getObjectArray($result);
 }
 
 // Add a new user and link them to the current club
