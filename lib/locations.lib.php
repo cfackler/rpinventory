@@ -23,36 +23,24 @@
 
 function getLocations()
 {
-  require_once('lib/connect.lib.php');  //mysql
-  require_once('lib/auth.lib.php');  //Session
+    require_once('class/database.class.php');
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( 'Database connection failed' );
+    // Connect
+    $db = new database();
   
-  // Authenticate
-  $auth = GetAuthority();
-  if($auth < 1)
-	  die('You dont have permission to access this page');
+    // Loan History
+    $sql = 'SELECT location_id, location, description FROM locations';
 
-  
-  // Loan History
-  $query= 'SELECT location_id, location, description FROM locations';
+    // Execute query
+    $result = $db->query($sql);
 
-  $result = mysqli_query($link, $query) or
-    die( 'Could not get the locations' );
+    // Get array of objects
+    $locations = $db->getObjectArray($result);
 
-  $records = array();
-  
-  while($record = mysqli_fetch_object($result))
-    {
-      $records [] = $record;
-    }
-  
-  mysqli_close($link);	
-  
-  return $records;
+    // Close connection
+    $db->close();
+
+    return $locations;
 }
 
 /* Gets the most commonly used location. Returns false upon failure */
@@ -162,6 +150,7 @@ function getLoanLocationsOptions()
   return $loc_select;
 }
 
+// AJAX version of inserting a location
 function insertLocation($location, $desc)
 {
   require_once('lib/connect.lib.php');  //mysql
@@ -210,6 +199,24 @@ function insertLocation($location, $desc)
 
 	return 'success';
 
+}
+
+// Add a new location
+function addLocation($location, $description)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'INSERT INTO locations (location_id, location, description) VALUES (NULL, ?, ?)';
+
+    $db->query($sql, $location, $description);
+
+    $id = $db->insertId();
+
+    $db->close();
+
+    return $id;
 }
 
 function getViewLocations( $currentSortIndex=0, $currentSortDir=0 ) {
