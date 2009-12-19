@@ -38,12 +38,15 @@ $this->assign('clubName', $_SESSION['club_name']);
 
 <script src="js/functions.interface.js" language="javascript" type="text/javascript"></script>
 
-{if file_exists("js/"|cat:$page_tpl|cat:".interface.js") }
-	<script src={'"js/'|cat:$page_tpl|cat:'.interface.js"'} language="javascript" type="text/javascript"></script>
+{if !isset($emptyTable)}
+    {if file_exists("js/"|cat:$page_tpl|cat:".interface.js") }
+        <script src={'"js/'|cat:$page_tpl|cat:'.interface.js"'} language="javascript" type="text/javascript"></script>
+    {else}
+        <script src="js/default.interface.js" language="javascript" type="text/javascript"></script>
+    {/if}
 {else}
-	<script src="js/default.interface.js" language="javascript" type="text/javascript"></script>
+    <script src="js/buttons.interface.js" language="javascript" type="text/javascript"></script>
 {/if}
-
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 

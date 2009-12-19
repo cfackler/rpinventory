@@ -53,14 +53,30 @@ if($viewCheckoutId > 0) {
 
 //Assign vars
 $smarty->assign('items', $items);
+if (count($items) == 0)
+{
+    $smarty->assign('emptyTable', TRUE);
+}
+
 $smarty->assign('viewCheckoutId', $viewCheckoutId);
-if(isset($checkoutObj))
+
+if (isset($checkoutObj))
+{
 	$smarty->assign('checkoutObj', $checkoutObj);
+}
 	
 $smarty->assign('title', "View Checkouts");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewCheckouts');
-$smarty->assign('filter', $view);
+
+if (isset($_GET['view']))
+{
+    $smarty->assign('filter', $_GET['view']);
+}
+else
+{
+    $smarty->assign('filter', 'all');
+}
 
 
 $smarty->display('index.tpl');
