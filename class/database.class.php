@@ -154,7 +154,9 @@ class database{
     /* Returns the first object from the mysqli object */
     function getObject($result)
     {
-        return stripSlashObject(mysqli_fetch_object($result));
+        $object = mysqli_fetch_object($result);
+        $this->stripSlashObject($object);
+        return $object;
     }
 
 }
