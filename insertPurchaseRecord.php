@@ -117,7 +117,7 @@ if (!$ignoreBusiness)
     {
         die("Invalid Business was chosen");
     }
-    elseif (!VerifyBusinessExists($bus_id, $link))
+    elseif (!VerifyBusinessExists($bus_id, $db))
     {
         die("Invalid Business");
     }
