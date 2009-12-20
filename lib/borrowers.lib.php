@@ -18,235 +18,235 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 
 function getBorrowers()
 {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( "Database connection failed" );
-  
-  // Authenticate
-  $auth = GetAuthority();
-  
-  // Borrowers
-  $query= "SELECT * FROM borrowers";
+    // Connect
+    $db = new database();
 
-  $result = mysqli_query($link, $query) or
-    die( 'Could not get the borrowers' );
+    // Authenticate
+    $auth = GetAuthority();
 
-  $records = array();
-  
-  while($record = mysqli_fetch_object($result))
+    if (!isset($_SESSION['club']))
     {
-      $records [] = $record;
+        return array();
     }
-  
-  mysqli_close($link);	
-  
-  return $records;
+
+    $club_id = $_SESSION['club'];
+
+    // Borrowers
+    $query= "SELECT * FROM borrowers WHERE club_id = ?";
+
+    $result = $db->query($query, $club_id);
+
+    $records = $db->getObjectArray($result);
+
+    $db->close();
+
+    return $records;
 }
 
 /* Return the name of the borrower given an id */
 function getBorrowerName($id) {
-  require_once("lib/connect.lib.php");  //mysql
-	require_once("lib/auth.lib.php");  //Session
+    require_once("lib/connect.lib.php");  //mysql
+    require_once("lib/auth.lib.php");  //Session
 
-	// Connect
-	$link = connect();
-	if( $link == null )
-		die( "Database connection failed" );
+    // Connect
+    $link = connect();
+    if( $link == null )
+        die( "Database connection failed" );
 
-	// Authenticate
-	$auth = GetAuthority();
+    // Authenticate
+    $auth = GetAuthority();
 
-	$id = (int)$id;
-	if($id == 0)
-		die('ID cannot be zero');
+    $id = (int)$id;
+    if($id == 0)
+        die('ID cannot be zero');
 
-	// Borrowers
-	$query= "SELECT name FROM borrowers WHERE borrower_id = ". $id;
+    // Borrowers
+    $query= "SELECT name FROM borrowers WHERE borrower_id = ". $id;
 
-	$result = mysqli_query($link, $query) or
-		die( 'Could not get the borrowers' );
+    $result = mysqli_query($link, $query) or
+        die( 'Could not get the borrowers' );
 
-	$name = mysqli_fetch_object($result);
+    $name = mysqli_fetch_object($result);
 
-	mysqli_close($link);
+    mysqli_close($link);
 
-	return $name->name;
+    return $name->name;
 }
 
 
 function getBorrowerNames( $name )
 {
-  require_once( 'modules/json/JSON.php' );
-  require_once( 'lib/connect.lib.php' );
-  require_once( 'lib/auth.lib.php' );
+    require_once( 'modules/json/JSON.php' );
+    require_once('class/database.class.php');
+    require_once( 'lib/auth.lib.php' );
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( "Database connection failed" );
-  
-  // Authenticate
-  $auth = GetAuthority();
-  if($auth < 1)
-	  die("You dont have permission to access this page");
+    // Connect
+    $db = new database();
 
-  $sql = 'SELECT name FROM borrowers';
+    // Authenticate
+    $auth = GetAuthority();
+    if($auth < 1)
+        die("You dont have permission to access this page");
 
-  $result = mysqli_query( $link, $sql ) or
-    die( 'Could not get the names' );
-
-  $records = array();
- 
-  while ( $record = mysqli_fetch_object( $result ) ){
-    if ( preg_match( '/'.$name.'/i', $record->name ) ) {
-      $records[] = $record->name;
+    if (!isset($_SESSION['club']))
+    {
+        return array();
     }
-  }
 
-  $data = array( "records" => $records );
-  mysqli_close( $link );
- 
-  $json = new Services_JSON();
-  
-  header('X-JSON: ('.$json->encode( $data ).')');
+    $club_id = $_SESSION['club'];
+
+    $sql = 'SELECT name, club_id FROM borrowers WHERE club_id = ?';
+
+    $result = $db->query($sql, $club_id);
+
+    $names = $db->getObjectArray($result);
+    $records = array();
+
+    foreach($names as &$x)
+    {
+        if (preg_match('/'.$name.'/i', $x->name))
+        {
+            $records[] = $x->name;
+        }
+    }
+
+    $data = array( "records" => $records );
+
+    $db->close();
+
+    $json = new Services_JSON();
+
+    header('X-JSON: ('.$json->encode( $data ).')');
 }
 
-function getViewBorrowers( $currentSortIndex=0, $currentSortDir=0 ){
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+function getViewBorrowers( $currentSortIndex=0, $currentSortDir=0 )
+{
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( "Database connection failed" );
-  
-  // Authenticate
-  $auth = GetAuthority();
+    // Connect
+    $db = new database();
+    
+    // Authenticate
+    $auth = GetAuthority();
 
-  /* Determine query argument for sorting */
-  if($currentSortIndex == 0)
-    $sortBy = 'name';
-  else if($currentSortIndex == 1)
-    $sortBy = 'rin';
-  else if($currentSortIndex == 2)
-    $sortBy = 'email';
-  
-  /*  Determine query argument for sort direction
-      Ascending is default    */
-  if($currentSortDir == 1)
-    $sortBy .= ' DESC';
-  
-  
-  //users
-  $borrowersQuery= "SELECT * from borrowers ORDER BY ".$sortBy;
-  $borrowerResult = mysqli_query($link, $borrowersQuery);
-  $borrowers = array();
-  
-  while($borrower = mysqli_fetch_object($borrowerResult))
+    if (!isset($_SESSION['club']))
     {
-      $borrowers [] = $borrower;
+        return array();
     }
-  mysqli_close($link);
 
-  return $borrowers;
+    $club_id = $_SESSION['club'];
+
+    /* Determine query argument for sorting */
+    if($currentSortIndex == 0)
+        $sortBy = 'name';
+    else if($currentSortIndex == 1)
+        $sortBy = 'rin';
+    else if($currentSortIndex == 2)
+        $sortBy = 'email';
+
+    /*  Determine query argument for sort direction
+        Ascending is default    */
+    if($currentSortDir == 1)
+        $sortBy .= ' DESC';
+
+
+    //users
+    $borrowerQuery= "SELECT * from borrowers WHERE club_id = ? ORDER BY ".$sortBy;
+    $borrowerResult = $db->query($borrowerQuery, $club_id);
+
+    $borrowers = $db->getObjectArray($borrowerResult);
+
+    $db->close();
+
+    return $borrowers;
 }
 
 function getBorrower( $id ) {
-	require_once('lib/connect.lib.php');
-	require_once('lib/auth.lib.php');
+    require_once('lib/connect.lib.php');
+    require_once('lib/auth.lib.php');
 
-	// Database
-	$link = connect();
-	if( $link == null )
-		die( 'Database connection failed' );
+    // Database
+    $link = connect();
+    if( $link == null )
+        die( 'Database connection failed' );
 
-	// Authority
-	$auth = GetAuthority();
+    // Authority
+    $auth = GetAuthority();
 
-	// Sanitize
-	$id = (int)$id;
+    // Sanitize
+    $id = (int)$id;
 
-	$sql = 'SELECT * FROM borrowers WHERE borrower_id = ' . $id;
+    $sql = 'SELECT * FROM borrowers WHERE borrower_id = ' . $id;
 
     $result = mysqli_query($link, $sql) or
         die('Borrower query failed');
-	$borrower = mysqli_fetch_object($result);
+    $borrower = mysqli_fetch_object($result);
 
-	return $borrower;
+    return $borrower;
 }
 
 // AJAX Call for adding a new borrower
-function insertBorrower( $name, $rin, $email, $address, $address2, $city, $state, $zip, $phone ) {
-	require_once( 'modules/json/JSON.php' );
-	require_once('lib/connect.lib.php');
-	require_once('lib/auth.lib.php');
+function insertBorrower( $name, $rin, $email, $address, $address2, $city, $state, $zip, $phone )
+{
+    require_once('class/database.class.php');
+    require_once( 'modules/json/JSON.php' );
+    require_once('lib/auth.lib.php');
 
-	// Database
-	$link = connect();
-	if( $link == null )
-		die( 'Database connection failed' );
+    // Database
+    $db = new database();
 
-	// Authority
-	$auth = GetAuthority();
+    // Authority
+    $auth = GetAuthority();
 
-	$data = Array( "response" => '' );
-	$json = new Services_JSON();
+    $data = Array( "response" => '' );
+    $json = new Services_JSON();
 
-	// Sanitize
-	$name			= mysqli_real_escape_string($link, $name);
-	$rin			= mysqli_real_escape_string($link, $rin);
-	$email		= mysqli_real_escape_string($link, $email);
-	$address	=	mysqli_real_escape_string($link, $address);
-	$address2	=	mysqli_real_escape_string($link, $address2);
-	$city			=	mysqli_real_escape_string($link, $city);
-	$state		=	mysqli_real_escape_string($link, $state);
-	$zip			=	mysqli_real_escape_string($link, $zip);
-	$phone		=	mysqli_real_escape_string($link, $phone);
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
 
-	// Duplicate check
-	$sql = 'SELECT rin, email FROM borrowers WHERE rin = "'. $rin .'" OR email = "'. $email .'" LIMIT 1';
-	$result = mysqli_query($link, $sql);
+    $club_id = $_SESSION['club'];
 
-	// Check to make sure a duplicate RIN or email is not given
-	if( mysqli_num_rows($result) != 0 ) {
-		$obj = mysqli_fetch_object($result);
-		
-		if( $obj->rin == $rin ) {
-			$data['response'] = 'Duplicate RIN entered!';
-		}
-		else {
-			$data['response'] = 'Duplicate email entered!';
-		}
-		
-		header('X-JSON: ('.$json->encode($data ).')');
-		exit();
-	}
+    // Duplicate check
+    $sql = 'SELECT rin, email FROM borrowers WHERE club_id = ? AND (rin = ? OR email = ?) LIMIT 1';
+    $result = $db->query($sql, $club_id, $rin, $email); 
 
-	$sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES (NULL, "'. $address .'", "'. $address2 .'", "'. $city .'", "'. $state .'", "'. $zip .'", "'. $phone .'")';
-	$result = mysqli_query($link, $sql);
-	if( !$result ){
-		die('Could not insert the address');
-	}
+    // Check to make sure a duplicate RIN or email is not given
+    if( mysqli_num_rows($result) != 0 ) {
+        $obj = $db->getObject($result);
 
-	$address_id = mysqli_insert_id($link);	// Insert the borrower
+        if( $obj->rin == $rin ) {
+            $data['response'] = 'Duplicate RIN entered!';
+        }
+        else {
+            $data['response'] = 'Duplicate email entered!';
+        }
 
-	$sql = 'INSERT INTO borrowers (borrower_id, address_id, name, rin, email) VALUES (NULL, '. $address_id .', "'. $name .'", "'. $rin .'", "'. $email .'")';
-	$result = mysqli_query($link, $sql);
-	if( !$result ) {
-		die('Could not insert the borrower');
-	}
+        header('X-JSON: ('.$json->encode($data ).')');
+        exit();
+    }
 
+    $sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone, club_id) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)';
 
-	header('X-JSON: ('.$json->encode($data).')');
+    $result = $db->query($sql, $address, $address2, $city, $state, $zip, $phone, $club_id);
+
+    $address_id = $db->insertId();
+
+    $sql = 'INSERT INTO borrowers (borrower_id, address_id, name, rin, email, club_id) VALUES (NULL, ?, ?, ?, ?, ?)';
+
+    $result = $db->query($sql, $address_id, $name, $rin, $email, $club_id);
+
+    header('X-JSON: ('.$json->encode($data).')');
 }
 
 // Add a borrower to the system
@@ -256,10 +256,17 @@ function addBorrower($addressId, $rin, $email, $name)
 
     $db = new database();
 
-    // Insert the borrower
-    $sql = 'INSERT INTO borrowers (borrower_id, address_id, rin, email, name) VALUES (NULL, ?, ?, ?, ?)';
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
 
-    $db->query($sql, $addressId, $rin, $email, $name);
+    $club_id = $_SESSION['club'];
+
+    // Insert the borrower
+    $sql = 'INSERT INTO borrowers (borrower_id, address_id, rin, email, name, club_id) VALUES (NULL, ?, ?, ?, ?, ?)';
+
+    $db->query($sql, $addressId, $rin, $email, $name, $club_id);
 
     $id = $db->insertId();
 
