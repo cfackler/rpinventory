@@ -101,7 +101,8 @@ div.main_body {
  **/
  
  body {
-   background-color: #afd7ee;
+   /*background-color: #afd7ee;*/
+     background-color: #888888;
  }
  
 div.header {
