@@ -47,7 +47,10 @@ $smarty->assign('title', "View Purchases");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewPurchases');
 $smarty->assign('purchases', $purchases);
-//$smarty->assign('purchaseItems', $items);
+if (count($purchases) == 0)
+{
+    $smarty->assign('emptyTable', TRUE);
+}
 
 $smarty->display('index.tpl');
 

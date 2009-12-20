@@ -49,6 +49,10 @@ $smarty->assign('title', "Manage Businesses");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewBusinesses');
 $smarty->assign('businesses', $businesses);
+if (count($businesses) == 0)
+{
+    $smarty->assign('emptyTable', TRUE);
+}
 
 $smarty->display('index.tpl');
 
