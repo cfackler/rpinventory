@@ -49,11 +49,10 @@
                 <span class="buttonText">Edit</span>
             </a>
             &nbsp;
-            <!--<a class="ui-state-default ui-corner-all button" >
-                <span class="ui-icon ui-icon-circle-minus"></span>
+            <a class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')">
+                <span class="ui-icon ui-icon-circle-close"></span>
                 <span class="buttonText">Delete</span>
-            </a>-->
-            <input type="button" class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')" value="Delete" />
+            </a>
 			</td>
 		</tr>
 		{/section}

@@ -62,7 +62,10 @@
                     <span class="buttonText">Edit</span>
                 </a>
                 &nbsp;
-                <input type="button" class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')" value="Delete" />
+                <a class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')">
+                    <span class="ui-icon ui-icon-circle-close"></span>
+                    <span class="buttonText">Delete</span>
+                </a>
             </td>
 		</tr>
 		{/section}	

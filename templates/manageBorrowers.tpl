@@ -59,7 +59,10 @@
                     <span class="buttonText">Edit</span>
                 </a>
                 &nbsp;
-                <input type="button" class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete borrower \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')" value="Delete" />
+                <a class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete borrower \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')">
+                    <span class="ui-icon ui-icon-circle-close"></span>
+                    <span class="buttonText">Delete</span>
+                </a>
             </td>
 		</tr>
 		{/section}	
