@@ -82,9 +82,16 @@ function addAddress($address, $address2, $city, $state, $zipcode, $phone)
 
     $db = new database();
 
-    $sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES (NULL, ?, ?, ?, ?, ?, ?)';
+    if (!isset($_SESSION['club']))
+    {
+        return 0;
+    }
 
-    $db->query($sql, $address, $address2, $city, $state, $zipcode, $phone);
+    $club_id = $_SESSION['club'];
+
+    $sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone, club_id) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)';
+
+    $db->query($sql, $address, $address2, $city, $state, $zipcode, $phone, $club_id);
 
     $id = $db->insertId();
 
