@@ -59,6 +59,14 @@ function getUsernames( $name )
 
     // Connect
     $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        header('X-JSON: ('.$json->encode('').')');
+        exit();
+    }
+
+    $club_id = $_SESSION['club'];
   
     // Authenticate
     $auth = GetAuthority();
