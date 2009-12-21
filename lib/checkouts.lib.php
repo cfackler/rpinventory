@@ -20,24 +20,24 @@
 
  */
 
-function getCheckout($checkoutId){
-    require_once("lib/connect.lib.php");  //mysql
+function getCheckout($checkoutId)
+{
+    require_once('class/database.class.php');
     require_once("lib/auth.lib.php");  //Session
 
     // Connect
-    $link = connect();
-    if( $link == null )
-        die( "Database connection failed" );
+    $db = new database();
 
     // Authenticate
     $auth = GetAuthority();
 
-    $sql = 'SELECT inventory.description, borrowers.name, checkouts.time_taken, locations.location, original_location_id FROM checkouts, inventory, borrowers, locations WHERE checkouts.checkout_id = '. $checkoutId .' AND checkouts.inventory_id = inventory.inventory_id AND checkouts.borrower_id = borrowers.borrower_id AND locations.location_id = checkouts.original_location_id';
+    $sql = 'SELECT inventory.description, borrowers.name, checkouts.time_taken, locations.location, original_location_id FROM checkouts, inventory, borrowers, locations WHERE checkouts.checkout_id = ? AND checkouts.inventory_id = inventory.inventory_id AND checkouts.borrower_id = borrowers.borrower_id AND locations.location_id = checkouts.original_location_id';
 
-    $result = mysqli_query($link, $sql) or
-        die( 'Error: '.mysqli_error($link));
+    $result = $db->query($sql, $checkoutId);
 
-    $checkout = mysqli_fetch_object($result);
+    $checkout = $db->getObject($result);
+
+    $db->close();
 
     return $checkout;
 }
