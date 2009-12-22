@@ -27,12 +27,19 @@ function getLocations()
 
     // Connect
     $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        $return array();
+    }
+
+    $club_id = $_SESSION['club'];
   
     // Loan History
-    $sql = 'SELECT location_id, location, description FROM locations';
+    $sql = 'SELECT location_id, location, description, club_id FROM locations WHERE club_id = ?';
 
     // Execute query
-    $result = $db->query($sql);
+    $result = $db->query($sql, $club_id);
 
     // Get array of objects
     $locations = $db->getObjectArray($result);
