@@ -130,4 +130,27 @@ function getViewLoans($currentSortIndex=0, $currentSortDir=0)
     return $items;
 }
 
+function isLoanedOut($inventory_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'SELECT description FROM loans, inventory WHERE return_date is NULL and loans.inventory_id = inventory.inventory_id and loans.inventory_id = ?';
+
+    $result = $db->query($sql, $inventory_id);
+
+    $obj = NULL;
+
+    if (mysqli_num_rows($result) != 0)
+    {
+        $obj = $db->getObject($result);
+    }
+
+    $db->close();
+
+    return $obj;
+}
+
+
 ?>
