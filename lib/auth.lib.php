@@ -100,7 +100,7 @@ function VerifyBorrowerExists($id)
     $db = new database();
 
     //Find borrower
-    $result = $db->query('SELECT * FROM borrowers WHERE borrower_id = ?', $id)
+    $result = $db->query('SELECT * FROM borrowers WHERE borrower_id = ?', $id);
 
     if(mysqli_num_rows($result) == 0)
     {
