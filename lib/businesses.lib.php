@@ -44,7 +44,7 @@ function getBusinesses()
 
     $result = $db->query($query, $club_id);
 
-    $records = $db->getObjectsArray($result);
+    $records = $db->getObjectArray($result);
 
     $db->close();
 
@@ -122,6 +122,32 @@ function getViewBusinesses( $currentSortIndex=0, $currentSortDir=0 )
     $db->close();
 
     return $businesses;
+}
+
+function addBusiness($address_id, $company_name, $fax, $email, $website)
+{
+    require_once('class/database.class.php');
+    require_once('lib/auth.lib.php');  //Session
+
+    if (!isset($_SESSION['club']))
+    {
+        die('Need a club');
+    }
+
+    $club_id = $_SESSION['club'];
+
+    // Authenticate
+    $auth = GetAuthority();	
+    if($auth<1)
+        die('Please login to complete this action');
+
+    $sql = 'INSERT INTO businesses (business_id, address_id, company_name, fax, email, website, club_id) VALUES ( NULL, ?, ?, ?, ?, ?, ?)';
+
+    $db->query($sql, $address_id, $company, $fax, $email, $website, $club_id);
+
+    $db->close();
+
+    return $db->insertId();
 }
 
 function insertBusiness( $company, $address, $address2, $city, $state, $zip, $phone, $fax, $email, $website ) 
