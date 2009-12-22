@@ -20,6 +20,28 @@
 
  */
 
+function getInventoryItem($inventory_id)
+{
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
+
+    // Connect
+    $db = new database();
+
+    // Authenticate
+    $auth = GetAuthority();
+
+    $sql = 'SELECT * FROM inventory WHERE inventory_id = ?';
+
+    $result = $db->query($sql, $inventory_id);
+
+    $obj = $db->getObject($result);
+
+    $db->close();
+
+    return $obj;
+}
+
 function getInventory($sortIndex = 0, $sortdir = 0)
 {
     require_once("lib/connect.lib.php");  //mysql
