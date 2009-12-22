@@ -21,12 +21,9 @@
 
 */
 
-require_once('class/database.class.php');  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/inventory.lib.php');
 require_once('lib/purchases.lib.php');
-
-$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -194,8 +191,6 @@ for ($x=0; $x<$count; $x++)
 	}
 }
 	
-$db->close();
-
 header('Location: viewPurchases.php');
 	
 ?>
