@@ -67,6 +67,8 @@ function getViewPurchases( $currentSortIndex=0, $currentSortDir=0 )
         return array();
     }
 
+    $club_id = $_SESSION['club'];
+
     /* Determine query argument for sorting */
     if($currentSortIndex == 0)
         $sortBy = 'purchase_id';
