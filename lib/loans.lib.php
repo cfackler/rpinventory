@@ -152,5 +152,25 @@ function isLoanedOut($inventory_id)
     return $obj;
 }
 
+function addLoan($inventory_id, $borrower_id, $date, $condition, $location_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition, original_location_id, club_id) VALUES (NULL, ?, ?, ?, NULL, ?, ?, ?)';
+
+    $db->query($sql, $inventory_id, $borrower_id, $date, $condition, $location_id, $club_id);
+
+    $db->close();
+}
 
 ?>
