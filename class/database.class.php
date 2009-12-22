@@ -143,7 +143,7 @@ class database{
     {
         $objects = array();
 
-        while($object = mysqli_fetch_object($result))
+        while($object = $this->getObject($result))
         {
             $objects[] = $object;
         }
@@ -155,6 +155,12 @@ class database{
     function getObject($result)
     {
         $object = mysqli_fetch_object($result);
+
+        if (is_null($object))
+        {
+            return NULL;
+        }
+
         $this->stripSlashObject($object);
         return $object;
     }
