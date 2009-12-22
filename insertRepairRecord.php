@@ -21,10 +21,9 @@
 
 */
 
-require_once('class/database.class.php');  //mysql
 require_once("lib/auth.lib.php");  //Session
-
-$db = new database();
+require_once('lib/repairs.lib.php');
+require_once('lib/inventory.lib.php');
 
 //Authenticate
 $auth = GetAuthority();	
@@ -137,18 +136,10 @@ for($x=0; $x<$count; $x++)
         $company = trim($company);
 
         //Insert the business address
-        $query = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, ?, ?, ?, ?, ?, ?)';
-
-        $db->query($query, $address, $address2, $city, $state, $zip, $phone);
-        $address_id = $db->insertId();
+        $address_id = addAddress($address, $address2, $city, $state, $zip, $phone);
 
         //Insert the business
-        $sql = 'INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES (NULL, ?, ?, ?, ?, ?)';
-
-        $db->query($sql, $address_id, $company, $fax, $email, $website);
-
-        // Get the ID of the new business
-        $businessId = $db->insertId();
+        $businessId = addBusiness($address_id, $company, $fax, $email, $website);
     }
     elseif($businessId == 0)
     {
@@ -161,16 +152,10 @@ for($x=0; $x<$count; $x++)
 
 
     //insert repair
-    $sql = 'INSERT INTO repairs (repair_id, inventory_id, business_id, repair_date, repair_cost, description) VALUES (NULL, ?, ?, ?, ?, ?)';
+    $repair_id = addRepair($inventory_id, $businessId, $date, $cost, $desc);
 
-    $db->query($sql, $inventory_id, $businessId, $date, $cost, $desc);
-
-    $sql = 'UPDATE inventory SET current_condition = ? WHERE inventory_id = ?';
-
-    $db->query($sql, $condition, $inventory_id);
+    updateInventoryCondition($inventory_id, $condition);
 }
-
-$db->close();
 
 header('Location: viewInventory.php');
 	
