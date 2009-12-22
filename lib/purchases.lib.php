@@ -119,4 +119,63 @@ function getViewPurchases( $currentSortIndex=0, $currentSortDir=0 )
     return $purchases;  
 }
 
+function addPurchase($business_id, $purchase_date, $total_price)
+{
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
+
+    // Connect
+    $db = new database();
+
+    // Authenticate
+    $auth = GetAuthority();
+
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
+
+    $club_id = $_SESSION['club'];
+
+    //Insert purchase
+    $sql = 'INSERT INTO purchases (purchase_id, business_id, purchase_date, total_price, club_id) VALUES (NULL, ?, ?, ?, ?)';
+
+    $db->query($sql, $business_id, $purchase_date, $total_price, $club_id);
+
+    $id = $db->insertId();
+
+    $db->close();
+
+    return $id;
+}
+
+function addPurchaseItem($purchase_id, $inventory_id, $value)
+{
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
+
+    // Connect
+    $db = new database();
+
+    // Authenticate
+    $auth = GetAuthority();
+
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'INSERT INTO purchase_items (purchase_id, inventory_id, cost, club_id) VALUES (?, ?, ?, ?)';
+
+    $db->query($sql, $purchase_id, $inventory_id, $value, $club_id);
+
+    $id = $db->insertId();
+
+    $db->close();
+
+    return $id;
+}   
+
 ?>
