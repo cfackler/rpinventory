@@ -81,6 +81,27 @@ function getBorrowerName($id) {
     return $name->name;
 }
 
+function getBorrowerId($name, $club_id)
+{
+    require_once('class/database.class.php');
+    session_start();
+
+    // Connect
+    $db = new database();
+
+    // Borrowers
+    $query= "SELECT borrower_id FROM borrowers WHERE club_id = ? AND name = ?";
+
+    $result = $db->query($query, $club_id, $name);
+
+    $record = $db->getObject($result);
+
+    $db->close();
+
+    return $record->borrower_id;
+}
+
+
 
 function getBorrowerNames( $name )
 {
