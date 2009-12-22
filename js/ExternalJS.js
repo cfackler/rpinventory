@@ -709,7 +709,25 @@ function showUsernames(oReq, oJSN){
 
 // Set the username to be the stored username
 function fillText(){
-  document.getElementById( 'username' ).value = document.getElementById( 'tempUsername' ).value;
+    var name = document.getElementById('tempUsername').value;
+    var club_id = document.getElementById('club_id').value;
+    document.getElementById( 'username' ).value = name
+    new Ajax.Request('ajax.php?operation=borrowerIdFromName&name=' + name + '&club_id=' + club_id,
+            {
+                method: 'post',
+                onSuccess: function(transport)
+                {
+                    var response = transport.responseText;
+                    if (response.length > 0)
+                    {
+                        document.getElementById('user_id').value = response;
+                    }
+                    else
+                    {
+                        alert('Could not get borrower id');
+                    }
+                }
+            });
 }
 
 // Store the name into the hidden field on the page
