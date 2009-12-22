@@ -124,10 +124,12 @@ function getViewBusinesses( $currentSortIndex=0, $currentSortDir=0 )
     return $businesses;
 }
 
-function addBusiness($address_id, $company_name, $fax, $email, $website)
+function addBusiness($address_id, $company, $fax, $email, $website)
 {
     require_once('class/database.class.php');
     require_once('lib/auth.lib.php');  //Session
+
+    $db = new database();
 
     if (!isset($_SESSION['club']))
     {
@@ -145,11 +147,14 @@ function addBusiness($address_id, $company_name, $fax, $email, $website)
 
     $db->query($sql, $address_id, $company, $fax, $email, $website, $club_id);
 
+    $id = $db->insertId();
+
     $db->close();
 
-    return $db->insertId();
+    return $id;
 }
 
+// AJAX function
 function insertBusiness( $company, $address, $address2, $city, $state, $zip, $phone, $fax, $email, $website ) 
 {
     require_once('class/database.class.php');
