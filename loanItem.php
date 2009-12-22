@@ -25,6 +25,9 @@ require_once('class/database.class.php');  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/locations.lib.php');
 require_once('lib/tooltip.lib.php');
+require_once('lib/inventory.lib.php');
+require_once('lib/loans.lib.php');
+require_once('lib/checkouts.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
@@ -52,14 +55,7 @@ while ($token !== false)
 //Verify all ids are valid,  get item description
 foreach ($idList as $id) 
 {
-    $result = $db->query('SELECT description FROM inventory WHERE inventory_id = ?', $id);
-
-    if(mysqli_num_rows($result) == 0)
-    {
-        die("Invalid item ID");
-    }
-  
-    $item = $db->getObject($result);
+    $item = getInventoryItem($id);
     $itemDesc[] = $item->description;
 }
 
@@ -71,26 +67,21 @@ $loanedOut = false;
 foreach ($idList as $id)
 {
     // Make sure the item isn't loaned out
-    $loanQuery = 'SELECT description FROM loans, inventory WHERE return_date is NULL and loans.inventory_id = inventory.inventory_id and loans.inventory_id = ?';
+    $result = isLoanedOut($id);
 
-    $loanResult = $db->query($loanQuery, $id);
-
-    if(mysqli_num_rows($loanResult) != 0)
+    if (!is_null($result))
     {
-        $item = $db->getObject($loanResult);
-        $itemsOut[] = $item->description;
+        $itemsOut[] = $result->description;
         $loanedOut = true;
     }
 
-    // Make sure the item isn't checked out
-    $checkoutQuery = 'SELECT description from checkouts, inventory WHERE time_returned is NULL and checkouts.inventory_id = inventory.inventory_id and checkouts.inventory_id = ?';
-    
-    $checkoutResult = $db->query($checkoutQuery, $id);
 
-    if (mysqli_num_rows($checkoutResult) != 0 )
+    // Make sure the item isn't checked out
+    $result = isCheckedOut($id);
+
+    if (!is_null($result))
     {
-        $item = $db->getObject($checkoutResult);
-        $itemsOut[] = $item->description;
+        $itemsOut[] = $result->description;
         $loanedOut = true;
     }
 }
@@ -114,6 +105,7 @@ $smarty->assign('loanedOut', $loanedOut);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('locations', $locations);
 $smarty->assign('toolTipHelp', $tooltips_html);
+$smarty->assign('club_id', $_SESSION['club']);
 
 $smarty->display('index.tpl');
 
