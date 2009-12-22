@@ -41,9 +41,6 @@ $businesses = getViewBusinesses();
 	
 //Assign vars
 $smarty->assign('headers', $headers);
-$smarty->assign('currentSortIndex', $currentSortIndex);
-$smarty->assign('currentSortDir', $currentSortDir);
-$smarty->register_function('generateTableHeader', 'generateTableHeader');
   
 $smarty->assign('title', "Manage Businesses");
 $smarty->assign('authority', $auth);
