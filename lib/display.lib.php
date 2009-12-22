@@ -16,8 +16,15 @@ function get_options($tableName, $valueColumn, $displayColumn)
     // Connect
     $db = new database();
 
-    $query = 'SELECT '.$valueColumn.', '.$displayColumn.' FROM '.$tableName;
-    $result = $db->query($query);
+    if (!isset($_SESSION['club']))
+    {
+        return '';
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $query = 'SELECT '.$valueColumn.', '.$displayColumn.' FROM '.$tableName.' WHERE club_id = ?';
+    $result = $db->query($query, $club_id);
 
     $options = '';
     while($item = $db->getObject($result))
