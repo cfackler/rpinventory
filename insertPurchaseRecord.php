@@ -23,6 +23,8 @@
 
 require_once('class/database.class.php');  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/inventory.lib.php');
+require_once('lib/purchases.lib.php');
 
 $db = new database();
 
@@ -30,6 +32,13 @@ $db = new database();
 $auth = GetAuthority();	
 if($auth < 1)
 	die("You dont have permission to access this page");
+
+if (!isset($_SESSION['club']))
+{
+    die('Need to have a club id');
+}
+
+$club_id = $_SESSION['club'];
 	
 // Business
 $ignoreBusiness = false;
@@ -40,11 +49,14 @@ if (isset($_POST['ignoreBusiness']))
 
 if (!$ignoreBusiness)
 {
+    require_once('lib/businesses.lib.php');
+    require_once('lib/addresses.lib.php');
+
     $bus_id = $_POST['business_id'];
 
-    $sql = "SELECT business_id FROM businesses";
+    $sql = "SELECT business_id FROM businesses WHERE club_id = ?";
 
-    $result = $db->query($sql);
+    $result = $db->query($sql, $club_id);
     $numBusinesses = mysqli_num_rows($result);
 
     // Chose to insert a new business
@@ -99,21 +111,12 @@ if (!$ignoreBusiness)
         $website = $_POST["website"];
 
         //Insert the business address
-        $query = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES(NULL, ?, ?, ?, ?, ?, ?)';
+        $address_id = addAddress($address, $address2, $city, $state, $zip, $phone);
 
-        $db->query($query, $address, $address2, $city, $state, $zip, $phone);
-
-        $address_id = $db->insertId();
-
-        //Inser the business
-        $sql = 'INSERT INTO businesses (business_id, address_id, company_name, fax, email, website) VALUES (NULL, ?, ?, ?, ?, ?)';
-
-        $db->query($sql, $address_id, $company, $fax, $email, $website);
-
-        // Get the ID of the new business
-        $bus_id = $db->insertId();
+        //Insert the business
+        $bus_id = addBusiness($address_id, $company_name, $fax, $email, $website);
     } //Incorrect business was selected
-    elseif ($bus_id == 0)
+    elseif ($bus_id < 1)
     {
         die("Invalid Business was chosen");
     }
@@ -138,22 +141,17 @@ $date = date("Y-m-d", $timestamp);
 //Total cost
 $total_cost = (double)$_POST['total_cost'];	
 
+$purchase_id = 0;
 
 //Insert purchase
-$sql = 'INSERT INTO purchases (purchase_id, business_id, purchase_date, total_price) VALUES	(NULL, ?, ?, ?)';
-
 if ($ignoreBusiness)
 {
-    $db->query($sql, -1, $date, -1);
+    $purchase_id = addPurchase(-1, $date, -1);
 }
 else
 {
-    $db->query($sql, $bus_id, $date, $total_cost);
+    $purchase_id = addPurchase($bus_id, $date, $total_cost);
 }
-
-
-//ID
-$purchase_id = $db->insertId();
 	
 //All items
 for ($x=0; $x<$count; $x++)
@@ -183,19 +181,11 @@ for ($x=0; $x<$count; $x++)
     //Location	
     $location = (int)$_POST["location-" . $x];
 
-    $club_id = $_SESSION['club'];
-  
     //Insert new inventory item
-    $sql = 'INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value, club_id) VALUES (NULL, ?, ?, ?, ?, ?)';
-
-    $db->query($sql, $itemdesc, $location, $condition, $value, $club_id);
-
-    $inv_id = $db->insertId();
+    $inventory_id = addInventory($itemdesc, $location, $condition, $value);
 
     //Insert purchase record for new inventory item
-    $sql = 'INSERT INTO purchase_items (purchase_id, inventory_id, cost) VALUES (?, ?, ?)';
-
-    $db->query($sql, $purchase_id, $inv_id, $value);
+    $purchase_item_id = addPurchaseItem($purchase_id, $inventory_id, $value);
 
     // For all categories
 	$categories = $_POST['category-'.$x];
@@ -204,8 +194,7 @@ for ($x=0; $x<$count; $x++)
 		for ($c = 0; $c < sizeof($categories); $c++)
 		{
 			//Insert item category
-			$sql = 'INSERT INTO inventory_category (inventory_id, category_id) VALUES (?, ?)';
-            $db->query($sql, $inv_id, $categories[$c]);
+            addInventoryCategory($inventory_id, $categories[$c]);
 		}
 	}
 }
