@@ -98,4 +98,33 @@ function getViewRepairs( $currentSortIndex=0, $currentSortDir=0 )
     return $items;
 }
 
+function addRepair($inventory_id, $business_id, $date, $cost, $description)
+{
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
+
+    // Connect
+    $db = new database();    
+
+    // Authenticate
+    $auth = GetAuthority();
+
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'INSERT INTO repairs (repair_id, inventory_id, business_id, repair_date, repair_cost, description, club_id) VALUES (NULL, ?, ?, ?, ?, ?, ?)';
+
+    $db->query($sql, $inventory_id, $business_id, $date, $cost, $description, $club_id);
+
+    $id = $db->insertId();
+
+    $db->close();
+
+    return $id;
+}
+
 ?>
