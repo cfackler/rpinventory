@@ -134,4 +134,26 @@ function getViewCheckouts( $currentSortIndex=0, $currentSortDir=0 )
     return $items;
 }
 
+function isCheckedOut($inventory_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'SELECT description from checkouts, inventory WHERE time_returned is NULL and checkouts.inventory_id = inventory.inventory_id and checkouts.inventory_id = ?';
+
+    $result = $db->query($sql, $inventory_id);
+
+    $obj = NULL;
+
+    if (mysqli_num_rows($result) != 0)
+    {
+        $obj = $db->getObject($result);
+    }
+
+    $db->close();
+
+    return $obj;
+}
+
 ?>
