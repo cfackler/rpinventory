@@ -48,7 +48,7 @@ $result = mysqli_query( $link, $sql ) or
 $result = mysqli_fetch_object( $result );
 $user_id = $result->borrower_id;
 
-if(!VerifyBorrowerExists($user_id, $link))
+if(!VerifyBorrowerExists($user_id))
   die("Invalid Borrower");
 
 //grab all ids
