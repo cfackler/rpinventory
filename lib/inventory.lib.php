@@ -181,4 +181,24 @@ function addInventoryCategory($inventory_id, $category_id)
     return $id;
 }
 
+function updateInventoryCondition($inventory_id, $condition)
+{
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
+
+    // Connect
+    $db = new database();
+
+    // Authenticate
+    $auth = GetAuthority();
+
+    $sql = 'UPDATE inventory SET current_condition = ? WHERE inventory_id = ?';
+
+    $db->query($sql, $condition, $inventory_id);
+
+    $db->close();
+
+    return;
+}
+
 ?>
