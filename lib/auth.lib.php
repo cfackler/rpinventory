@@ -19,7 +19,7 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 // start session
 session_start(); 
@@ -27,82 +27,89 @@ session_start();
 function Authenticate($username, $password, $clubID, $link)
 {
 
-  $safeUsername = mysqli_real_escape_string($link, $username);
-  $md5Password = md5($password);
-	
-  //Find user
-  $result=mysqli_query($link, "SELECT l.id, uc.access_level, clubs.club_name FROM logins l, user_clubs uc, clubs WHERE l.id=uc.user_id AND uc.club_id=" . $clubID . " AND l.username='" . $safeUsername . "' AND l.password='" . $md5Password . "' AND uc.club_id=clubs.club_id");
+    $safeUsername = mysqli_real_escape_string($link, $username);
+    $md5Password = md5($password);
 
-  //verify count
-  if(mysqli_num_rows($result) == 0)
-    return false;
+    //Find user
+    $result=mysqli_query($link, "SELECT l.id, uc.access_level, clubs.club_name FROM logins l, user_clubs uc, clubs WHERE l.id=uc.user_id AND uc.club_id=" . $clubID . " AND l.username='" . $safeUsername . "' AND l.password='" . $md5Password . "' AND uc.club_id=clubs.club_id");
 
-  $row = mysqli_fetch_object($result);
-	
-  //Verify row
-  if($row == false)
-    return false;
+    //verify count
+    if(mysqli_num_rows($result) == 0)
+        return false;
 
-  //Store id, auth, club id, and club name
-  $_SESSION['id'] = $row->id;
-  $_SESSION['authority'] = $row->access_level;
-  $_SESSION['club'] = $clubID;
-  $_SESSION['club_name'] = $row->club_name;
+    $row = mysqli_fetch_object($result);
 
-  return true;
+    //Verify row
+    if($row == false)
+        return false;
+
+    //Store id, auth, club id, and club name
+    $_SESSION['id'] = $row->id;
+    $_SESSION['authority'] = $row->access_level;
+    $_SESSION['club'] = $clubID;
+    $_SESSION['club_name'] = $row->club_name;
+
+    return true;
 }
 
 function Logout()
 {
-  unset($_SESSION['id']);
-  unset($_SESSION['authority']);
-  unset($_SESSION['club']);
-  unset($_SESSION['club_name']);
+    unset($_SESSION['id']);
+    unset($_SESSION['authority']);
+    unset($_SESSION['club']);
+    unset($_SESSION['club_name']);
 
-  @session_destroy();
+    @session_destroy();
 }
 
 //Verify id and authority set
 function IsAuthenticated()
 {
-  if(isset($_SESSION['id']) && isset($_SESSION['authority']) && isset($_SESSION['club']) && isset($_SESSION['club_name']))
-    return true;
+    if(isset($_SESSION['id']) && isset($_SESSION['authority']) && isset($_SESSION['club']) && isset($_SESSION['club_name']))
+        return true;
 
-  Logout();
-  return false;
+    Logout();
+    return false;
 }
 
 function GetAuthority()
 {
-  if(!IsAuthenticated())
-    return null;
-		
-  return $_SESSION['authority'];
+    if(!IsAuthenticated())
+        return null;
+
+    return $_SESSION['authority'];
 }
 
 function VerifyUserExists($id, $link)
 {
-	
-  //Find user
-  $result=mysqli_query($link, "select * from logins where id=" . mysqli_real_escape_string($link, $id));
 
-  //verify count
-  if(mysqli_num_rows($result) == 0)
-    return false;
+    //Find user
+    $result=mysqli_query($link, "select * from logins where id=" . mysqli_real_escape_string($link, $id));
 
-  return true;
+    //verify count
+    if(mysqli_num_rows($result) == 0)
+        return false;
+
+    return true;
 }
 
-function VerifyBorrowerExists($id, $link)
+function VerifyBorrowerExists($id)
 {
-  //Find borrower
-  $result = mysqli_query($link, 'SELECT * FROM borrowers WHERE borrower_id = ' . mysqli_real_escape_string($link,$id)) or
-    die("Query Failed: ".mysqli_error($link));
+    require_once('class/database.class.php');
 
-  if(mysqli_num_rows($result) == 0)
-    return false;
+    $db = new database();
 
-  return true;
+    //Find borrower
+    $result = $db->query('SELECT * FROM borrowers WHERE borrower_id = ?', $id)
+
+    if(mysqli_num_rows($result) == 0)
+    {
+        $db->close();
+        return false;
+    }
+
+    $db->close();
+    return true;
 }
 
 function VerifyBusinessExists($id)
@@ -129,14 +136,14 @@ function VerifyBusinessExists($id)
 
 function VerifyItemExists($id, $link)
 {
-  //Find Inventory Item
-  $result=mysqli_query($link, "select * from `inventory` where inventory_id=" . $id);
+    //Find Inventory Item
+    $result=mysqli_query($link, "select * from `inventory` where inventory_id=" . $id);
 
-  //verify count
-  if(mysqli_num_rows($result) == 0)
-    return false;
+    //verify count
+    if(mysqli_num_rows($result) == 0)
+        return false;
 
-  return true;
+    return true;
 }
 
 ?>
