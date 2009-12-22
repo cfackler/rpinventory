@@ -720,7 +720,7 @@ function fillText(){
                     var response = transport.responseText;
                     if (response.length > 0)
                     {
-                        document.getElementById('user_id').value = response;
+                        document.getElementById('borrower_id').value = response;
                     }
                     else
                     {

@@ -35,7 +35,7 @@
 
         <input type="hidden" name="inventory_ids" size="40" value="{$idString}" />
         <input type="hidden" id="tempUsername" size="50" value="" />
-        <input type="hidden" name="user_id" id="user_id" value="" />
+        <input type="hidden" name="borrower_id" id="borrower_id" value="" />
         <input type="hidden" name="club_id" id="club_id" value="{$club_id}" /> 
 
         <tr>
