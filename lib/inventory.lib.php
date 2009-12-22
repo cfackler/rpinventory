@@ -31,9 +31,16 @@ function getInventoryItem($inventory_id)
     // Authenticate
     $auth = GetAuthority();
 
-    $sql = 'SELECT * FROM inventory WHERE inventory_id = ?';
+    if (!isset($_SESSION['club']))
+    {
+        return NULL;
+    }
 
-    $result = $db->query($sql, $inventory_id);
+    $club_id = $_SESSION['club'];
+
+    $sql = 'SELECT * FROM inventory WHERE inventory_id = ? AND club_id = ?';
+
+    $result = $db->query($sql, $inventory_id, $club_id);
 
     $obj = $db->getObject($result);
 
@@ -217,6 +224,22 @@ function updateInventoryCondition($inventory_id, $condition)
     $sql = 'UPDATE inventory SET current_condition = ? WHERE inventory_id = ?';
 
     $db->query($sql, $condition, $inventory_id);
+
+    $db->close();
+
+    return;
+}
+
+function updateInventoryLocation($inventory_id, $location_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'UPDATE inventory SET location_id = ? WHERE inventory_id = ?';
+
+    $db->query($sql, $location_id, $inventory_id);
 
     $db->close();
 
