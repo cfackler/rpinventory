@@ -54,11 +54,6 @@ if (!$ignoreBusiness)
 
     $bus_id = $_POST['business_id'];
 
-    $sql = "SELECT business_id FROM businesses WHERE club_id = ?";
-
-    $result = $db->query($sql, $club_id);
-    $numBusinesses = mysqli_num_rows($result);
-
     // Chose to insert a new business
     if ($bus_id == 'newBusiness')
     {
@@ -120,7 +115,7 @@ if (!$ignoreBusiness)
     {
         die("Invalid Business was chosen");
     }
-    elseif (!VerifyBusinessExists($bus_id, $db))
+    elseif (!VerifyBusinessExists($bus_id))
     {
         die("Invalid Business");
     }

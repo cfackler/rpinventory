@@ -154,7 +154,7 @@ for($x=0; $x<$count; $x++)
     {
         die("Invalid Business id");
     }
-    elseif(!VerifyBusinessExists($businessId, $db))
+    elseif(!VerifyBusinessExists($businessId))
     {
         die("Invalid Business");
     }
