@@ -216,4 +216,20 @@ function addCheckout($inventory_id, $borrower_id, $time_taken, $event_location, 
     return $id;
 }
 
+function updateCheckout($checkout_id, $time_returned, $ending_condition)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'Update checkouts set time_returned = ?, ending_condition = ? WHERE checkout_id = ?';
+
+    $db->query($sql, $time_returned, $ending_condition, $checkout_id);
+
+    $db->close();
+
+    return;
+}
+
 ?>
