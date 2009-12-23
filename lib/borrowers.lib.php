@@ -296,4 +296,26 @@ function addBorrower($addressId, $rin, $email, $name)
     return $id;
 }
 
+function deleteBorrower($borrower_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'DELETE FROM borrowers WHERE borrower_id = ? AND club_id = ?';
+
+    $db->query($sql, $borrower_id, $club_id);
+
+    $db->close();
+
+    return;
+}
+
 ?>
