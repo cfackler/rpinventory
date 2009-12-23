@@ -24,20 +24,23 @@
 // start session
 session_start(); 
 
-function Authenticate($username, $password, $clubID, $link)
+function Authenticate($username, $password, $clubID)
 {
+    require_once('class/database.class.php');
 
-    $safeUsername = mysqli_real_escape_string($link, $username);
-    $md5Password = md5($password);
+    $db = new database();
 
     //Find user
-    $result=mysqli_query($link, "SELECT l.id, uc.access_level, clubs.club_name FROM logins l, user_clubs uc, clubs WHERE l.id=uc.user_id AND uc.club_id=" . $clubID . " AND l.username='" . $safeUsername . "' AND l.password='" . $md5Password . "' AND uc.club_id=clubs.club_id");
+    
+    $sql = 'SELECT l.id, uc.access_level, clubs.club_name FROM logins l, user_clubs uc, clubs WHERE l.id=uc.user_id AND uc.club_id = ? AND l.username = ? AND l.password= ? AND uc.club_id=clubs.club_id';
+
+    $result = $db->query($sql, $clubID, $username, md5($password));
 
     //verify count
     if(mysqli_num_rows($result) == 0)
         return false;
 
-    $row = mysqli_fetch_object($result);
+    $row = $db->getObject($result);
 
     //Verify row
     if($row == false)

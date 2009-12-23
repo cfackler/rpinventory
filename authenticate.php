@@ -21,33 +21,21 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //authentication
 
 
-$link = connect();
-if($link == null)
-	die("Database connection failed");
-	
-
-
-//------- Page section --------
-
 //Authenticate user
-if(!Authenticate($_POST["username"], $_POST["password"], $_POST["club_id"], $link))
+if(!Authenticate($_POST["username"], $_POST["password"], $_POST["club_id"]))
 {
 	//Logout and kill session
 	Logout();
     
     header("location: login.php?login=fail");
     
-    mysqli_close($link);
-    die();
+    exit();
 }
 
 //Redirect to main page
 header("location: viewInventory.php");
-
-mysqli_close($link);
 
 ?>
