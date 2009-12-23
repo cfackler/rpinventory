@@ -258,4 +258,22 @@ function updateInventoryLocation($inventory_id, $location_id)
     return;
 }
 
+function getInventoryFromLocation($location_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'SELECT location_id FROM inventory WHERE location_id = ?'; 
+
+    $result = $db->query($sql, $location_id);
+
+    $records = $db->getObjectArray($result);
+
+    $db->close();
+
+    return $records;
+}
+
 ?>
