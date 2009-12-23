@@ -19,56 +19,53 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 require_once('modules/json/JSON.php');
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");   //Session
+require_once('lib/addresses.lib.php');
+require_once('lib/borrowers.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
-  die("You dont have permission to access this page");
-	
-$link = connect();
-if($link == null)
-  die("Database connection failed");
-	
+    die("You dont have permission to access this page");
+
 //JSON data 
 $data = array("Found" => 'False', "Address" => '', "Address2" => '', "City" => '', "State" => '', "Zipcode" => '', "Phone" => '');
 
 //GET ID
-$username = mysqli_real_escape_string( $link, $_GET['username'] );
-if( strlen( $username ) == 0)
-  die("Invalid Username");	
-	
-//Address
-$query= "SELECT *  FROM addresses, borrowers WHERE AND addresses.address_id = borrowers.address_id and borrowers.name = '". $username."'";
-$result = mysqli_query($link, $query) or die( "Error finding address".mysql_error() );
+$username = $_GET['username'];
 
-if(mysqli_num_rows($result) != 0)
-  {
-    $item = mysqli_fetch_object($result);
+if( strlen( $username ) == 0)
+    die("Invalid Username");	
+
+//Address
+$borrower_id = getBorrowerId($username, $_SESSION['club']);
+$address = getAddressFromBorrower($borrower_id);
+
+if ($address != false)
+{
     $data["Found"] = 'True';
-	
-    if($item->address != NULL)
-      $data["Address"] = $item->address;
-		
-    if($item->address2 != NULL)
-      $data["Address2"] = $item->address2;
-		
-    if($item->city != NULL)
-      $data["City"] = $item->city;
-		
-    if($item->state != NULL)
-      $data["State"] = $item->state;
-		
-    if($item->zipcode != NULL)
-      $data["Zipcode"] = $item->zipcode;
-		
-    if($item->phone != NULL)
-      $data["Phone"] = $item->phone;
-  }
+
+    if($address->address != NULL)
+        $data["Address"] = $address->address;
+
+    if($address->address2 != NULL)
+        $data["Address2"] = $addres->address2;
+
+    if($address->city != NULL)
+        $data["City"] = $address->city;
+
+    if($address->state != NULL)
+        $data["State"] = $address->state;
+
+    if($address->zipcode != NULL)
+        $data["Zipcode"] = $address->zipcode;
+
+    if($address->phone != NULL)
+        $data["Phone"] = $address->phone;
+}
 
 $json = new Services_JSON(); 
 
