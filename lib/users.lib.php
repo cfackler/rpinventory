@@ -158,6 +158,24 @@ function addUser($username, $password, $accessLevel, $email, $clubId)
 
     // Close the connection
     $db->close();
+
+    return;
+}
+
+function deleteUser($user_id)
+{
+    require_once('class/database.class.php');  //mysql
+
+    // Database connection
+    $db = new database();
+
+    $sql = 'DELETE FROM logins WHERE id = ?';
+
+    $db->query($sql, $user_id);
+
+    $db->close();
+
+    return;
 }
 
 ?>
