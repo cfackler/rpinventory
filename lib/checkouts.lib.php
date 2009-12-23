@@ -173,4 +173,22 @@ function getBorrowerActiveCheckouts($borrower_id)
     return $records;
 }
 
+function getActiveCheckoutsByOriginalLocation($location_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'SELECT original_location_id FROM checkouts WHERE time_returned is null AND original_location_id = ?';
+
+    $result = $db->query($sql, $borrower_id);
+
+    $records = $db->getObjectArray($result);
+
+    $db->close();
+
+    return $records;
+}
+
 ?>
