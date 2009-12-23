@@ -21,7 +21,6 @@
 
 */
 
-require_once('class/database.class.php');  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/locations.lib.php');
 require_once('lib/tooltip.lib.php');
@@ -33,8 +32,6 @@ require_once('lib/checkouts.lib.php');
 $auth = GetAuthority();
 if($auth < 1)
   die("You dont have permission to access this page");
-
-$db = new database();
 
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
@@ -108,7 +105,5 @@ $smarty->assign('toolTipHelp', $tooltips_html);
 $smarty->assign('club_id', $_SESSION['club']);
 
 $smarty->display('index.tpl');
-
-$db->close();
 
 ?>
