@@ -155,13 +155,9 @@ function getInventory($sortIndex = 0, $sortdir = 0)
 function addInventory($itemDescription, $location, $condition, $value)
 {
     require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
 
     // Connect
     $db = new database();
-
-    // Authenticate
-    $auth = GetAuthority();
 
     if (!isset($_SESSION['club']))
     {
@@ -180,6 +176,22 @@ function addInventory($itemDescription, $location, $condition, $value)
     $db->close();
 
     return $id;
+}
+
+function deleteInventory($inventory_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'DELETE FROM inventory WHERE inventory_id = ?';
+
+    $db->query($sql, $inventory_id);
+
+    $db->close();
+
+    return;
 }
 
 function addInventoryCategory($inventory_id, $category_id)
