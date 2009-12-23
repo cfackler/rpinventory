@@ -23,24 +23,23 @@
 /* Returns the loan associated with the loanId given */
 function getLoan( $loanId )
 {
-    require_once( 'lib/connect.lib.php' );
+    require_once('class/database.class.php');
     require_once( 'lib/auth.lib.php' );
 
     // Connect
-    $link = connect();
-    if( $link == null )
-        die( 'Database connection failed' );
+    $db = new database();
 
     // Authenticate
     $auth = GetAuthority();
 
-    $sql = 'SELECT inventory.description, borrowers.name, borrowers.borrower_id, loans.issue_date, locations.location FROM borrowers, loans, inventory, locations WHERE loans.loan_id = ' . $loanId .
-        ' AND loans.inventory_id = inventory.inventory_id AND loans.borrower_id = borrowers.borrower_id AND loans.original_location_id = locations.location_id';
+    $sql = 'SELECT loans.*, inventory.description, borrowers.name, borrowers.borrower_id,locations.location, inventory.current_condition FROM borrowers, loans, inventory, locations WHERE loans.loan_id = ? AND loans.inventory_id = inventory.inventory_id AND loans.borrower_id = borrowers.borrower_id AND loans.original_location_id = locations.location_id';
 
-    $result = mysqli_query( $link, $sql ) or
-        die( 'Error: '. mysqli_error($link) );
+    $result = $db->query($sql, $loanId);
 
-    $loan = mysqli_fetch_object( $result ); 
+    $loan = $db->getObject($result);
+
+    $db->close();
+
     return $loan;
 }
 
