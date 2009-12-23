@@ -21,14 +21,8 @@
 
 */
 
-
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/locations.lib.php' );
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
 
 //Authenticate
 $auth = GetAuthority();	
@@ -55,8 +49,5 @@ if (count($locations) == 0)
 
 
 $smarty->display('index.tpl');
-
-
-
 
 ?>
