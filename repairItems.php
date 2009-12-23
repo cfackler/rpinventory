@@ -21,13 +21,10 @@
 
 */
 
-
-require_once('class/database.class.php');  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/inventory.lib.php');
+require_once('lib/businesses.lib.php');
 
-// Connect
-$db = new database();
-	
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
@@ -55,21 +52,14 @@ while ($token !== false)
 $items = array();
 foreach ($idList as $id)
 {
-    $result = $db->query('SELECT * FROM inventory WHERE inventory_id = ?', $id);
-    if (mysqli_num_rows($result) == 0)
-    {
-        die("Invalid item ID");
-    }
+    $item = getInventoryItem($id);
   
-    $item = $db->getObject($result);
     $items[] = $item;
 }
 	
 
 //businesses list
-$bizQuery= "SELECT company_name, business_id FROM businesses";
-$bizResult = $db->query($bizQuery);
-$businesses = $db->getObjectArray($bizResult);
+$businesses = getBusinesses();
 
 //BEGIN Page
 	
@@ -85,7 +75,5 @@ $smarty->assign('numBusinesses', count($businesses));
 $smarty->assign('selectDate', getdate(time()));
 
 $smarty->display('index.tpl');
-
-$db->close();
 
 ?>
