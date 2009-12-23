@@ -22,13 +22,8 @@
 */
 
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/users.lib.php' );
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
 
 //Authenticate
 $auth = GetAuthority();	
@@ -40,7 +35,6 @@ if($auth != 2)
 require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
-
 
 
 //paginate( $smarty, 'users', $currentSortIndex, $currentSortDir, 'users' );
@@ -58,8 +52,5 @@ if (count($users) == 0)
 }
 
 $smarty->display('index.tpl');
-
-
-
 
 ?>
