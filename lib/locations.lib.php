@@ -29,7 +29,7 @@ function getLocation($location_id)
 
     if (!isset($_SESSION['club']))
     {
-        return array();
+        return NULL;
     }
 
     $club_id = $_SESSION['club'];
