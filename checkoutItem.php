@@ -97,6 +97,7 @@ $smarty->assign('loanedOut', $loanedOut);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('dateTime', date('Y-m-d H:i:s') );
 $smarty->assign('toolTipHelp', $tooltips_html);
+$smarty->assign('club_id', $_SESSION['club']);
 
 $smarty->display('index.tpl');
 
