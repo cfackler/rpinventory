@@ -122,4 +122,24 @@ function updateAddress($address_id, $address, $address2, $city, $state, $zipcode
     $db->close();
 }
 
+function deleteAddress($address_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return 0;
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'DELETE FROM addresses WHERE address_id = ? AND club_id = ?';
+
+    $db->query($sql, $addres_id, $club_id);
+
+    $db->close();
+}
+
 ?>
