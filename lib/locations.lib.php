@@ -20,6 +20,34 @@
 
  */
 
+function getLocation($location_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'SELECT * FROM locations WHERE club_id = ? AND location_id = ?';
+
+    // Execute query
+    $result = $db->query($sql, $club_id, $location_id);
+
+    // Get array of objects
+    $location = $db->getObject($result);
+
+    // Close connection
+    $db->close();
+
+    return $location;
+
+}
 
 function getLocations()
 {
