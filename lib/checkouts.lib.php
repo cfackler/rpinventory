@@ -156,4 +156,21 @@ function isCheckedOut($inventory_id)
     return $obj;
 }
 
+function getBorrowerActiveCheckouts($borrower_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'SELECT * from checkouts WHERE time_returned is null AND borrower_id = ?';
+
+    $result = $db->query($sql, $borrower_id); 
+
+    $records = $db->getObjectArray($result);
+
+    $db->close();
+
+    return $records;
+}
+
 ?>
