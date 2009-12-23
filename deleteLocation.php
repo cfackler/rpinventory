@@ -19,56 +19,45 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
-	
+require_once('lib/inventory.lib.php');
+require_once('lib/loans.lib.php');
+require_once('lib/checkouts.lib.php');
+require_once('lib/locations.lib.php');
+
 //Authenticate
 $auth = GetAuthority();	
 if($auth < 1)
-  die("You dont have permission to access this page");
+    die("You dont have permission to access this page");
 
-$link = connect();
-if($link == null)
-  die("Database connection failed");
-	
 //id
 $id = (int)$_GET["id"];
 if($id == 0)
-  die("Invalid ID");
+    die("Invalid ID");
 
 //Verify no items use the location before deleting
-$sql = "SELECT location_id FROM inventory WHERE location_id = '" . $id ."'";
-$result= mysqli_query($link, $sql);
-$numItems = mysqli_num_rows($result); 
+$inventory = getInventoryFromLocation($id);
 
-if ( $numItems != 0) {
-  die("Location still in use! Deletion will not be allowed until all inventory using this location are updated.");
+if ( count($inventory) != 0) {
+    die("Location still in use! Deletion will not be allowed until all inventory using this location are updated.");
 }
 
 // Make sure no items are loaned out that have the location as their original location
-$sql = 'SELECT original_location_id FROM loans WHERE return_date is null AND original_location_id = '. $id;
-$result = mysqli_query($link, $sql) or
-    die("Query failed: ".mysqli_error($link));
-$numItems = mysqli_num_rows($result);
+$loanItems = getActiveLoansByOriginalLocation($id);
+$numLoanItems = count($loanItems);
 
-$sql = 'SELECT original_location_id FROM checkouts WHERE time_returned is null AND original_location_id = '. $id;
-$result2 = mysqli_query($link, $sql) or
-    die("Query failed: ".mysqli_error($link));
+$checkoutItems = getActiveCheckoutsByOriginalLocation($id);
+$numCheckoutItems = count($checkoutItems);
 
-if ( $numItems != 0 | mysqli_num_rows($result) != 0) {
-  die("Loaned/Checked out item is stored at this location! Deletion will not be allowed until all inventory using this location are updated.");
+if ( $numItems != 0 | $numCheckoutItems != 0)
+{
+    die("Loaned/Checked out item is stored at this location! Deletion will not be allowed until all inventory using this location are updated.");
 }
 
-//Create query
-$sql = "DELETE FROM locations WHERE location_id = '" . $id . "'";
+deleteLocation($id);
 
-//Run update
-if(!mysqli_query($link, $sql))
-  die("Query failed");
-
-mysqli_close($link);
 header('Location: manageLocations.php');
-	
+
 ?>
