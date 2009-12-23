@@ -24,29 +24,29 @@
 
       <table width="400">
 
-        <input type="hidden" name="checkout_id" size="40" value="{$item->checkout_id}"/>
-        <input type="hidden" name="inv_id" size="40" value="{$item->inventory_id}" />
-        <input type="hidden" name="orig_loc_id" size="40"value="{$item->original_location_id}" />
+        <input type="hidden" name="checkout_id" size="40" value="{$checkoutItem->checkout_id}"/>
+        <input type="hidden" name="inv_id" size="40" value="{$checkoutItem->inventory_id}" />
+        <input type="hidden" name="orig_loc_id" size="40"value="{$checkoutItem->original_location_id}" />
 
         <tr>
           <td>Description: </td>
-          <td>{$item->description}</td>
+          <td>{$checkoutItem->description}</td>
         </tr>
 
 
         <tr>
           <td>Previous Condition: </td>
-          <td>{$item->current_condition}</td>
+          <td>{$checkoutItem->current_condition}</td>
         </tr>
 
         <tr>
           <td>Returned Condition: </td>
           <td>
             <select name="condition">
-              <option value="Excellent"{if $item->current_condition == "Excellent"}selected{/if}>Excellent</option>
-              <option value="Good"{if $item->current_condition == "Good"}selected{/if}>Good</option>
-              <option value="Fair"{if $item->current_condition == "Fair"}selected{/if}>Fair</option>
-              <option value="Poor"{if $item->current_condition == "Poor"}selected{/if}>Poor</option>
+              <option value="Excellent"{if $checkoutItem->current_condition == "Excellent"}selected{/if}>Excellent</option>
+              <option value="Good"{if $checkoutItem->current_condition == "Good"}selected{/if}>Good</option>
+              <option value="Fair"{if $checkoutItem->current_condition == "Fair"}selected{/if}>Fair</option>
+              <option value="Poor"{if $checkoutItem->current_condition == "Poor"}selected{/if}>Poor</option>
             </select>
           </td>
         </tr>
@@ -54,7 +54,7 @@
         <tr>
           <td>Time Taken: </td>
           <td>
-            <input type="text" id="time_taken" name="time_taken" value="{$item->time_taken}" disabled="true" />
+            <input type="text" id="time_taken" name="time_taken" value="{$checkoutItem->time_taken}" disabled="true" />
 
             <tr>
               <td>Time Returned: </td>
