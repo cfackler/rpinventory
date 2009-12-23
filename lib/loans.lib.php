@@ -191,6 +191,24 @@ function getBorrowerActiveLoans($borrower_id)
     return $records;
 }
 
+function getActiveLoansByOriginalLocation($location_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'SELECT original_location_id FROM loans WHERE return_date is null AND original_location_id = ?';
+
+    $result = $db->query($sql, $borrower_id);
+
+    $records = $db->getObjectArray($result);
+
+    $db->close();
+
+    return $records;
+}
+
 function deleteLoan($loan_id)
 {
     require_once('class/database.class.php');
