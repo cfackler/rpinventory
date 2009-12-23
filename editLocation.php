@@ -21,18 +21,14 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/locations.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
   die("You dont have permission to access this page");
 
-$link = connect();
-if($link == null)
-  die("Database connection failed");
-	
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
@@ -43,9 +39,7 @@ if($id == 0)
   die("Invalid ID");
 
 //location
-$query= "SELECT *  FROM locations WHERE location_id = " . $id;
-$result = mysqli_query($link, $query);
-$location = mysqli_fetch_object($result);
+$location = getLocation($id);
 	
 //Assign vars
 $smarty->assign('title', "Edit Location");
@@ -54,7 +48,5 @@ $smarty->assign('page_tpl', 'editLocation');
 $smarty->assign('location', $location);
 
 $smarty->display('index.tpl');
-
-mysqli_close($link);
 
 ?>
