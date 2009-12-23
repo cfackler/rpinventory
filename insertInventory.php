@@ -19,88 +19,63 @@
     You should have received a copy of the GNU General Public License
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
+require_once('lib/inventory.lib.php');
+require_once('lib/locations.lib.php');
 
 //Authenticate
 $auth = GetAuthority();	
 
 if($auth<1)
-	die("Please login to complete this action");
+    die("Please login to complete this action");
 
 //Description
 $desc = $_POST["desc"];
 if(strlen($desc) == 0)
-	die("Must have a description");
+    die("Must have a description");
 
 //Condition
 $condition = $_POST["condition"];
 if(strlen($condition) == 0)
-	die("Must have a condition");	
+    die("Must have a condition");	
 
 //Location
 $loc_id = (int)$_POST["location_id"];
 
-$sql = "SELECT location_id FROM locations";
-
-$result = mysqli_query($link, $sql);
-$numLocations = mysqli_num_rows($result);
-
-/* Sanitize */
-$desc = mysqli_real_escape_string( $link, $desc );
-$condition = mysqli_real_escape_string( $link, $condition );
-
 // Chose to insert a new location
-if($loc_id == -1){	
+if($loc_id == -1)
+{	
+    //Description
+    $newLocationDescription = $_POST["newLocationDescription"];
+    if( strlen($newLocationDescription) == 0 )
+        die("Must have a location description");
 
-	//Description
-	$newLocationDescription = $_POST["newLocationDescription"];
-	if( strlen($newLocationDescription) == 0 )
-	  die("Must have a location description");
-	 //name
-	 $newLocationName = $_POST["newLocationName"];
-	 if(strlen($newLocationName) == 0)
-	 	die("Must enter a location name");
+    //name
+    $newLocationName = $_POST["newLocationName"];
+    if(strlen($newLocationName) == 0)
+        die("Must enter a location name");
 
-	 /* Sanitize */
-	 $newLocationDescription = mysqli_real_escape_string( $link, $newLocationDescription );
-	 $newLocationName = mysqli_real_escape_string( $link, $newLocationName );
-
-	//Insert the Location in DB
-	$query = "insert into locations (location_id, location, description) VALUES(NULL, '" . $newLocationName . "', '" . $newLocationDescription . "')";
-		
-	if(!mysqli_query($link, $query))
-	  die("Query failed first");
-	
-	//change loc_id to new location
-	$loc_id = mysqli_insert_id($link);
+    $loc_id = addLocation($newLocationName, $newLocationDescription);
 }
-	
+
 //Value
 $value = (double)$_POST["value"];
 if($value == 0)
-	die("Invalid Value");
-	
-	
-//Check location exists
-$result=mysqli_query($link, "select * from locations where location_id=" . $loc_id);
-//verify count
-if(mysqli_num_rows($result) == 0)
-	die("Invalid Location");
-	
-	
-$sql = "INSERT INTO inventory (inventory_id, description, location_id, current_condition, current_value) VALUES (NULL, '" . $desc . "', " . $loc_id . ", '" . $condition . "', " . $value . ")";		
-	
-if(!mysqli_query($link, $sql))
-	die("Query failed");
+    die("Invalid Value");
 
-mysqli_close($link);
+
+//Check location exists
+$location = getLocation($loc_id);
+
+if (is_null($location))
+{
+    die("Invalid Location");
+}
+
+addInventory($desc, $loc_id, $condition, $value);
+
 header('Location: viewInventory.php');
-	
+
 ?>
