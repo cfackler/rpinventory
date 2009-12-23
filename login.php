@@ -21,11 +21,7 @@
 */
 
 require_once("lib/connect.lib.php");  //mysql
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
-	
+require_once('lib/clubs.lib.php');
 
 // SMARTY Setup
 
@@ -40,11 +36,7 @@ if(isset($_GET['login']) && $_GET['login'] == "fail")
 }
 
 // Clubs list
-$clubsResult = mysqli_query($link, 'SELECT club_id, club_name FROM clubs');
-$clubs = array();
-
-while ($club = mysqli_fetch_object($clubsResult))
-  $clubs [] = $club;
+$clubs = getClubs();
 
 //Assign vars
 $smarty->assign('title', "Login");
@@ -53,9 +45,5 @@ $smarty->assign('page_tpl', 'login');
 $smarty->assign('clubs', $clubs);
 
 $smarty->display('index.tpl');
-
-
-
-mysqli_close($link);
 
 ?>
