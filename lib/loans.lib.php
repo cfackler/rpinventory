@@ -173,4 +173,22 @@ function addLoan($inventory_id, $borrower_id, $date, $condition, $location_id)
     $db->close();
 }
 
+function getBorrowerActiveLoans($borrower_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'SELECT * from loans WHERE return_date is null AND borrower_id = ?';
+
+    $result = $db->query($sql, $borrower_id);
+
+    $records = $db->getObjectArray($result);
+
+    $db->close();
+
+    return $records;
+}
+
 ?>
