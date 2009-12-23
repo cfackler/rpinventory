@@ -21,14 +21,9 @@
 
 */
 
-
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/checkouts.lib.php');
 
-$link = connect();
-if($link == null)
-	die("Database connection failed");
-	
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
@@ -47,32 +42,22 @@ if($id == 0)
 
 
 //Loan status
-$checkoutQuery = "Select description, current_condition, time_taken, checkout_id, inventory.inventory_id, original_location_id from inventory, checkouts where inventory.inventory_id = checkouts.inventory_id and checkout_id = " . $id;
-$checkoutResult = mysqli_query($link, $checkoutQuery);
+$checkoutItem = getCheckout($id);
 
-$status = "None";
-if(mysqli_num_rows($checkoutResult) == 0)
-	die("Invalid Checkout ID");
+if (is_null($checkoutItem))
+{
+    die('Invalid Checkout ID');
+}
 
-$checkoutItem = mysqli_fetch_object($checkoutResult);
-
-//BEGIN Page
-
-
-
-	
 //Assign vars
 $smarty->assign('title', "Return Item");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'returnCheckout');
-$smarty->assign('item', $checkoutItem);
+$smarty->assign('checkoutItem', $checkoutItem);
 $smarty->assign('loan_id', $id);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('dateTime', date('Y-m-d H:i:s') );
 
 $smarty->display('index.tpl');
-
-
-mysqli_close($link);
 
 ?>
