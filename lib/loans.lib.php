@@ -191,4 +191,39 @@ function getBorrowerActiveLoans($borrower_id)
     return $records;
 }
 
+function deleteLoan($loan_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'DELETE FROM loans WHERE loan_id = ?';
+
+    //Run update
+    $db->query($sql, $loan_id);
+
+    $db->close();
+
+    return;
+}
+
+function deleteInventoryLoans($inventory_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'DELETE FROM loans WHERE inventory_id = ?';
+
+    //Run update
+    $db->query($sql, $loan_id);
+
+    $db->close();
+
+    return;
+}
+
+
 ?>
