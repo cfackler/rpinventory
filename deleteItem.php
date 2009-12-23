@@ -21,16 +21,15 @@
 
 */
 
-require_once('class/database.class.php');  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/loans.lib.php');
+require_once('lib/inventory.lib.php');
 
 //Authenticate
 $auth = GetAuthority();	
 if($auth < 1)
   die("You dont have permission to access this page");
 
-$db = new database();
-	
 //grab all ids
 $token = strtok($_GET['ids'], ",");
 $idList = array();
@@ -44,20 +43,13 @@ while ($token !== false)
 //Run delete
 foreach ($idList as $id)
 {
-    //Remove item
-    $sql = 'DELETE FROM inventory WHERE inventory_id = ?';
+    // Delete the inventory item
+    deleteInventory($id);
 
-    //Run update
-    $db->query($sql, $id);
-		
     //Remove any loan records
-    $sql = 'DELETE FROM loans WHERE inventory_id = ?';
-
-    //Run update
-    $db->query($sql, $id);
+    deleteInventoryLoans($id);
 }
 
-$db->close();
 
 header('Location: viewInventory.php');
 	
