@@ -19,18 +19,17 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
-require_once('class/database.class.php');
 require_once('lib/auth.lib.php');  //Session
 require_once('lib/display.lib.php');
+require_once('lib/locations.lib.php');
+require_once('lib/inventory.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
-  die("You dont have permission to access this page");
-
-$db = new database();
+    die("You dont have permission to access this page");
 
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
@@ -38,43 +37,35 @@ $smarty = new Smarty_Inv();
 
 //grab all ids
 $idString = $_GET["ids"];
+
 //Split idString into array using ',' as delimiter
 $idList = array();
 $idList = explode(',', $idString);
 
 if(count($idList) == 0)
-  die("No items");
+    die("No items");
 
 //Get all items
 $items = array();
 foreach($idList as &$id)
 {
     //item
-    $sql = 'SELECT inventory.inventory_id, inventory.description, location, locations.location_id, current_condition, current_value
-						FROM inventory, locations
-						WHERE locations.location_id=inventory.location_id
-									AND inventory.inventory_id = ?';
+    $item = getInventoryItem($id);
+    $location = getLocation($item->location_id);
 
-    $result = $db->query($sql, $id);
+    $item->location = $location->location;
 
-    if(mysqli_num_rows($result) == 0)
-    {
-        die("Invalid ID");
-    }
-	
-    $items[] = $db->getObject($result);	
+    $items[] = $item;
 }
 
 //Locations
-$locQuery= "SELECT location_id, location  FROM locations";
-$locResult = $db->query($locQuery);
-$locations = $db->getObjectArray($locResult);
+$locations = getLocations();
 
 //Categories Options (for populating dropdown)
 $category_options = get_options('categories', 'id', 'category_name');
 
 //BEGIN Page
-	
+
 //Assign vars
 $smarty->assign('title', "Edit Item");
 $smarty->assign('authority', $auth);
@@ -85,7 +76,5 @@ $smarty->assign('locations', $locations);
 $smarty->assign('category_options', $category_options);
 
 $smarty->display('index.tpl');
-
-$db->close();
 
 ?>
