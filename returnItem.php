@@ -22,12 +22,8 @@
 */
 
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
+require_once('lib/loans.lib.php');
 	
 //Authenticate
 $auth = GetAuthority();
@@ -47,20 +43,13 @@ if($id == 0)
 
 
 //Loan status
-$loanQuery = "Select description, current_condition, inventory.inventory_id, original_location_id from inventory, loans where inventory.inventory_id = loans.inventory_id and loan_id = " . $id;
-$loanResult = mysqli_query($link, $loanQuery);
+$loanItem = getLoan($id);
 
-$status = "None";
-if(mysqli_num_rows($loanResult) == 0)
-	die("Invalid Loan ID");
+if (is_null($loanItem))
+{
+    die('Could not fetch loan record');
+}
 
-$loanItem = mysqli_fetch_object($loanResult);
-
-//BEGIN Page
-
-
-
-	
 //Assign vars
 $smarty->assign('title', "Loan Item");
 $smarty->assign('authority', $auth);
@@ -70,9 +59,5 @@ $smarty->assign('loan_id', $id);
 $smarty->assign('selectDate', getdate(time()));
 
 $smarty->display('index.tpl');
-
-
-
-mysqli_close($link);
 
 ?>
