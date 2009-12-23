@@ -127,7 +127,7 @@ function getViewCheckouts( $currentSortIndex=0, $currentSortDir=0 )
 
     $result = $db->query($query, $club_id);
 
-    $item = $db->getObjectArray($result);
+    $items = $db->getObjectArray($result);
 
     $db->close();
 
@@ -189,6 +189,31 @@ function getActiveCheckoutsByOriginalLocation($location_id)
     $db->close();
 
     return $records;
+}
+
+function addCheckout($inventory_id, $borrower_id, $time_taken, $event_location, $event_name, $starting_condition, $original_location_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return NULL;
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'INSERT INTO checkouts (checkout_id, inventory_id, borrower_id, time_taken, time_returned, event_name, event_location, starting_condition, ending_condition, original_location_id, club_id) VALUES (NULL, ?, ?, ?, NULL, ?, ?, ?, NULL, ?, ?)';
+
+    $db->query($sql, $inventory_id, $borrower_id, $time_taken, $event_location, $event_name, $starting_condition, $original_location_id, $club_id);
+
+    $id = $db->insertId();
+
+    $db->close();
+
+    return $id;
 }
 
 ?>
