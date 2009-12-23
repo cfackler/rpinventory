@@ -31,7 +31,7 @@ function getCheckout($checkoutId)
     // Authenticate
     $auth = GetAuthority();
 
-    $sql = 'SELECT inventory.description, borrowers.name, checkouts.time_taken, locations.location, original_location_id FROM checkouts, inventory, borrowers, locations WHERE checkouts.checkout_id = ? AND checkouts.inventory_id = inventory.inventory_id AND checkouts.borrower_id = borrowers.borrower_id AND locations.location_id = checkouts.original_location_id';
+    $sql = 'SELECT checkouts.*, inventory.description, borrowers.name, locations.location, inventory.current_condition FROM checkouts, inventory, borrowers, locations WHERE checkouts.checkout_id = ? AND checkouts.inventory_id = inventory.inventory_id AND checkouts.borrower_id = borrowers.borrower_id AND locations.location_id = checkouts.original_location_id';
 
     $result = $db->query($sql, $checkoutId);
 
