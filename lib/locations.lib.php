@@ -18,7 +18,7 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 
 function getLocations()
@@ -30,11 +30,11 @@ function getLocations()
 
     if (!isset($_SESSION['club']))
     {
-        $return array();
+        return array();
     }
 
     $club_id = $_SESSION['club'];
-  
+
     // Loan History
     $sql = 'SELECT location_id, location, description, club_id FROM locations WHERE club_id = ?';
 
@@ -53,158 +53,158 @@ function getLocations()
 /* Gets the most commonly used location. Returns false upon failure */
 function getCommonLocation()
 {
-  require_once( 'lib/connect.lib.php' );
-  require_once( 'lib/auth.lib.php' );
+    require_once( 'lib/connect.lib.php' );
+    require_once( 'lib/auth.lib.php' );
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( 'Database connection failed' );
-  
-  // Authenticate
-  $auth = GetAuthority();
-  if($auth < 1)
-    die('You dont have permission to access this page');
+    // Connect
+    $link = connect();
+    if( $link == null )
+        die( 'Database connection failed' );
 
-  $sql = 'SELECT count(locations.location_id) AS counts, locations.location_id, location FROM inventory, locations
- WHERE locations.location_id = inventory.location_id GROUP BY locations.location_id ORDER BY counts desc LIMIT 1';
-  $result = mysqli_query( $link, $sql ) or
-    die( 'Could not determine most common location' );
- 
-  $result = mysqli_fetch_object( $result );
+    // Authenticate
+    $auth = GetAuthority();
+    if($auth < 1)
+        die('You dont have permission to access this page');
 
-	if( $result->location_id == NULL ) {
-		return false;
-	}
+    $sql = 'SELECT count(locations.location_id) AS counts, locations.location_id, location FROM inventory, locations
+        WHERE locations.location_id = inventory.location_id GROUP BY locations.location_id ORDER BY counts desc LIMIT 1';
+    $result = mysqli_query( $link, $sql ) or
+        die( 'Could not determine most common location' );
 
-  return $result;
+    $result = mysqli_fetch_object( $result );
+
+    if( $result->location_id == NULL ) {
+        return false;
+    }
+
+    return $result;
 }
 
 /* Gets the "On Loan" location*/
 function getOnLoanLocation()
 {
-	require_once( 'lib/connect.lib.php' );
-	require_once( 'lib/auth.lib.php' );
+    require_once( 'lib/connect.lib.php' );
+    require_once( 'lib/auth.lib.php' );
 
-	// Connect
-	$link = connect();
-	if( $link == null )
-		die( 'Database connection failed' );
+    // Connect
+    $link = connect();
+    if( $link == null )
+        die( 'Database connection failed' );
 
-	// Authenticate
-	$auth = GetAuthority();
-	if( $auth < 1 )
-		die( 'You don\'t have permission to access this page' );
+    // Authenticate
+    $auth = GetAuthority();
+    if( $auth < 1 )
+        die( 'You don\'t have permission to access this page' );
 
-	$sql = 'SELECT * FROM locations WHERE location = "On Loan"';
-	$result = mysqli_query( $link, $sql ) or
-		die( 'Could not determine the id of the "On Loan" location' );
+    $sql = 'SELECT * FROM locations WHERE location = "On Loan"';
+    $result = mysqli_query( $link, $sql ) or
+        die( 'Could not determine the id of the "On Loan" location' );
 
-	$result = mysqli_fetch_object( $result );
+    $result = mysqli_fetch_object( $result );
 
-	return $result;
+    return $result;
 }
 
 /* Gets the html for the location select object */
 function getLocationsOptions()
 {
-  $loc_select;
-	
-  //get locations array
-  $locations = getLocations();
+    $loc_select;
 
-  /* Gets the most common location_id */
-  $commonLocation = getCommonLocation();
+    //get locations array
+    $locations = getLocations();
 
-	/* Make sure we found a common location */
-  if( $commonLocation ) {
-		$loc_select = '<option value="'.$commonLocation->location_id . '">';
-  	$loc_select .= stripslashes($commonLocation->location) . '</option>';
-	}
-  
-  foreach($locations as $location) {
-    if( $location->location_id != $commonLocation->location_id && $location->location != 'On Loan'){
-      $loc_select .= '<option value="' . $location->location_id . '">';
-      $loc_select .= stripslashes($location->location) . '</option>';
+    /* Gets the most common location_id */
+    $commonLocation = getCommonLocation();
+
+    /* Make sure we found a common location */
+    if( $commonLocation ) {
+        $loc_select = '<option value="'.$commonLocation->location_id . '">';
+        $loc_select .= stripslashes($commonLocation->location) . '</option>';
     }
-  }
-  
-  return $loc_select;
+
+    foreach($locations as $location) {
+        if( $location->location_id != $commonLocation->location_id && $location->location != 'On Loan'){
+            $loc_select .= '<option value="' . $location->location_id . '">';
+            $loc_select .= stripslashes($location->location) . '</option>';
+        }
+    }
+
+    return $loc_select;
 }
 
 /* Same as getLocationsOptions except places 'On Loan' as the first entry */
 function getLoanLocationsOptions()
 {
-  $loc_select;
-	
-  //get locations array
-  $locations = getLocations();
+    $loc_select;
 
-  /* Gets the item to put first in the list: the "On Loan" location */
-  $firstLocation = getOnLoanLocation();
+    //get locations array
+    $locations = getLocations();
 
-  $loc_select = '<option value="'.$firstLocation->location_id . '">';
-  $loc_select .= $firstLocation->location . '</option>';
-  
-  foreach($locations as $location) {
-    if( $location->location_id != $commonLocation->location_id && $location->location != 'On Loan'){
-      $loc_select .= '<option value="' . $location->location_id . '">';
-      $loc_select .= $location->location . '</option>';
+    /* Gets the item to put first in the list: the "On Loan" location */
+    $firstLocation = getOnLoanLocation();
+
+    $loc_select = '<option value="'.$firstLocation->location_id . '">';
+    $loc_select .= $firstLocation->location . '</option>';
+
+    foreach($locations as $location) {
+        if( $location->location_id != $commonLocation->location_id && $location->location != 'On Loan'){
+            $loc_select .= '<option value="' . $location->location_id . '">';
+            $loc_select .= $location->location . '</option>';
+        }
     }
-  }
-  $loc_select .= '<option>New Location</option>';
-  
-  return $loc_select;
+    $loc_select .= '<option>New Location</option>';
+
+    return $loc_select;
 }
 
 // AJAX version of inserting a location
 function insertLocation($location, $desc)
 {
-  require_once('lib/connect.lib.php');  //mysql
-  require_once('lib/auth.lib.php');  //Session
-  
-  // Authenticate
-  $auth = GetAuthority();	
-  if($auth<1)
-    die('Please login to complete this action');
-  
-  $link = connect();
-  if($link == null)
-    die('Database connection failed');
-  
-  // Description
-  if(strlen($desc) == 0)
-    die('Must have a description');
-  	
-  // Location
-  if(strlen($location) == 0)
-    die('Must have a location');
-  
-  // Clean user input
-  $desc = mysqli_real_escape_string($link, $desc);
-  $location = mysqli_real_escape_string($link, $location);
-  
-  $location = trim($location);
-  
-  $sql = "SELECT location FROM locations";
-  
-  $result = mysqli_query($link, $sql); 
-  
-  // Make sure location doesn't already exist
-  while ($row = mysqli_fetch_array($result)) {
-    if (strcasecmp($row['location'], $location) == 0){ 
-      die('A location already exists with name, "' . $location .'"');
-    }
-  }
-  
-  $sql = 'INSERT INTO locations (location_id, location, description) VALUES (NULL, "' . $location . '", "' . $desc . '")';
-  	
-  if(!mysqli_query($link, $sql))
-    die('Insertion failed');
-  
-  mysqli_close($link);
+    require_once('lib/connect.lib.php');  //mysql
+    require_once('lib/auth.lib.php');  //Session
 
-	return 'success';
+    // Authenticate
+    $auth = GetAuthority();	
+    if($auth<1)
+        die('Please login to complete this action');
+
+    $link = connect();
+    if($link == null)
+        die('Database connection failed');
+
+    // Description
+    if(strlen($desc) == 0)
+        die('Must have a description');
+
+    // Location
+    if(strlen($location) == 0)
+        die('Must have a location');
+
+    // Clean user input
+    $desc = mysqli_real_escape_string($link, $desc);
+    $location = mysqli_real_escape_string($link, $location);
+
+    $location = trim($location);
+
+    $sql = "SELECT location FROM locations";
+
+    $result = mysqli_query($link, $sql); 
+
+    // Make sure location doesn't already exist
+    while ($row = mysqli_fetch_array($result)) {
+        if (strcasecmp($row['location'], $location) == 0){ 
+            die('A location already exists with name, "' . $location .'"');
+        }
+    }
+
+    $sql = 'INSERT INTO locations (location_id, location, description) VALUES (NULL, "' . $location . '", "' . $desc . '")';
+
+    if(!mysqli_query($link, $sql))
+        die('Insertion failed');
+
+    mysqli_close($link);
+
+    return 'success';
 
 }
 
@@ -226,40 +226,55 @@ function addLocation($location, $description)
     return $id;
 }
 
+function deleteLocation($location_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'DELETE FROM locations WHERE location_id = ?';
+
+    $db->query($sql, $location_id);
+
+    $db->close();
+
+    return;
+}
+
 function getViewLocations( $currentSortIndex=0, $currentSortDir=0 ) {
-  require_once('lib/connect.lib.php');  //mysql
-  require_once('lib/auth.lib.php');  //Session
-  
-  $link = connect();
-  if($link == null)
-    die('Database connection failed');
-  
-  //Authenticate
-  $auth = GetAuthority();
-  
-  /* Determine query argument for sorting */
-  if($currentSortIndex == 0)
-    $sortBy = 'location';
-  else if($currentSortIndex == 1)
-    $sortBy = 'description';
-  
+    require_once('lib/connect.lib.php');  //mysql
+    require_once('lib/auth.lib.php');  //Session
+
+    $link = connect();
+    if($link == null)
+        die('Database connection failed');
+
+    //Authenticate
+    $auth = GetAuthority();
+
+    /* Determine query argument for sorting */
+    if($currentSortIndex == 0)
+        $sortBy = 'location';
+    else if($currentSortIndex == 1)
+        $sortBy = 'description';
+
   /*  Determine query argument for sort direction
-      Ascending is default    */
-  if($currentSortDir == 1)
-    $sortBy .= ' DESC';
-  
-  //users
-  $locQuery= 'SELECT * from locations ORDER BY '.$sortBy;
-  $locResult = mysqli_query($link, $locQuery);
-  $locations = array();
-  
-  while($loc = mysqli_fetch_object($locResult))
+  Ascending is default    */
+    if($currentSortDir == 1)
+        $sortBy .= ' DESC';
+
+    //users
+    $locQuery= 'SELECT * from locations ORDER BY '.$sortBy;
+    $locResult = mysqli_query($link, $locQuery);
+    $locations = array();
+
+    while($loc = mysqli_fetch_object($locResult))
     {
-      $locations [] = $loc;
+        $locations [] = $loc;
     }
-  mysqli_close($link);
-  
-  return $locations;
+    mysqli_close($link);
+
+    return $locations;
 }
 
 ?>
