@@ -37,7 +37,9 @@
     <table width="700">
 
       <input type="hidden" id="tempUsername" size="50" value=""/>
-      <input type="hidden" name="inventory_ids" size="40" value="{$idString}">
+      <input type="hidden" name="inventory_ids" size="40" value="{$idString}" />
+      <input type="hidden" name="borrower_id" id="borrower_id" value="" />
+      <input type="hidden" name="club_id" id="club_id" value="{$club_id}" />
 
       <tr>
         <td valign="top">Items: </td>
