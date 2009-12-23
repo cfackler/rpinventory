@@ -318,4 +318,19 @@ function deleteBorrower($borrower_id)
     return;
 }
 
+function updateBorrower($borrower_id, $name, $rin, $email)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'UPDATE borrowers SET name = ?, rin = ?, email = ? WHERE borrower_id = ?';
+
+    $db->query($sql, $name, $rin, $email, $borrower_id);
+
+    $db->close();
+
+    return;
+}
+
 ?>
