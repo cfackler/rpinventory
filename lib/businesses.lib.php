@@ -229,4 +229,28 @@ function insertBusiness( $company, $address, $address2, $city, $state, $zip, $ph
     return 'success';
 }
 
+function getBusiness($business_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return NULL;
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'SELECT * FROM businesses WHERE business_id = ? AND club_id = ?';
+
+    $result = $db-> query($sql, $business_id, $club_id);
+
+    $obj = $db->getObject($result);
+
+    $db->close();
+
+    return $obj;
+}
+
 ?>
