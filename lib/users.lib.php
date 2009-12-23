@@ -20,6 +20,22 @@
 
 */
 
+function getUser($user_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'SELECT * FROM logins WHERE id = ?';
+
+    $result = $db->query($sql, $user_id);
+
+    $user = $db->getObject($result);
+
+    $db->close();
+
+    return $user;
+}
 
 function getUsers()
 {
