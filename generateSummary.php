@@ -21,15 +21,9 @@
 
 */
 
-
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once("lib/inventory.lib.php"); //inventory functions
 
-$link = connect();
-if($link == null)
-	die("Database connection failed");
-	
 //Authenticate
 $auth = GetAuthority();
 
