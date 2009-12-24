@@ -51,14 +51,13 @@ function getAddressFromBorrower($borrower_id)
 }
 
 /* Returns the address with the given id */
-function getAddress( $id ) {
-	require_once('lib/connect.lib.php');
+function getAddress( $id )
+{
+    require_once('class/database.class.php');
 	require_once('lib/auth.lib.php');
 
 	// Database
-	$link = connect();
-	if( $link == null )
-		die( 'Database connection failed' );
+    $db = new database();
 
 	// Authority
 	$auth = GetAuthority();
@@ -68,12 +67,13 @@ function getAddress( $id ) {
 	if($id == 0)
 		die('Invalid ID');
 
-	$sql = 'SELECT * FROM addresses WHERE address_id = ' . $id;
+	$sql = 'SELECT * FROM addresses WHERE address_id = ?';
 
-	$result = mysqli_query($link, $sql) or
-		die( 'Query failed' );
+    $result = $db->query($sql, $id);
 
-	$address = mysqli_fetch_object($result);
+	$address = $db->getObject($result);
+
+    $db->close();
 
 	return $address;
 }
