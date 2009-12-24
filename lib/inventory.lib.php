@@ -207,7 +207,7 @@ function addInventoryCategory($inventory_id, $category_id)
 
     if (!isset($_SESSION['club']))
     {
-        return array();
+        return NULL;
     }
 
     $club_id = $_SESSION['club'];
@@ -220,6 +220,51 @@ function addInventoryCategory($inventory_id, $category_id)
     $db->close();
 
     return $id;
+}
+
+function removeInventoryCategory($inventory_id, $category_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return NULL;
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'DELETE FROM inventory_category WHERE inventory_id = ? AND category_id = ? AND club_id = ?';
+
+    $db->query($sql, $inventory_id, $category_id, $club_id);
+
+    $db->close();
+
+    return;
+}
+
+function updateInventory($inventory_id, $description, $location_id, $condition, $value)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return NULL;
+    }
+
+    $club_id = $_SESSION['club'];
+
+
+    $sql = 'UPDATE inventory SET description = ?, location_id = ?, current_condition = ?, current_value = ? WHERE inventory_id = ?';
+
+    $db->query($sql, $description, $location_id, $condition, $value, $inventory_id);
+
+    $db->close();
+
+    return;
 }
 
 function updateInventoryCondition($inventory_id, $condition)
