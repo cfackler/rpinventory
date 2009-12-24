@@ -305,4 +305,19 @@ function getViewLocations( $currentSortIndex=0, $currentSortDir=0 ) {
     return $locations;
 }
 
+function updateLocation($location_id, $location, $description)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'UPDATE locations SET description = ?, location = ? WHERE location_id = ?';
+
+    $db->query($sql, $description, $location, $location_id);
+
+    $db->close();
+
+    return;
+}
+
 ?>
