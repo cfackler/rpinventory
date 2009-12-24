@@ -194,4 +194,19 @@ function deleteUser($user_id)
     return;
 }
 
+function updateUser($user_id, $username, $email, $password)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'UPDATE logins SET username = ?, email = ?, password = ? WHERE id = ?';
+
+    $db->query($sql, $username, $email, $password, $user_id);
+
+    $db->close();
+
+    return;
+}
+
 ?>
