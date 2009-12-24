@@ -19,37 +19,37 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 require_once('modules/json/JSON.php');
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");   //Session
 
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
-  die("You dont have permission to access this page");
-	
-$link = connect();
-if($link == null)
-  die("Database connection failed");
-	
+    die("You dont have permission to access this page");
+
+if (!isset($_SESSION['club']))
+{
+    die('Could not get club id');
+}
+
+$club_id = $_SESSION['club'];
+
 //JSON data 
 $data = array("itemID" => '', "numRows" => 0);
 
 // Check valid name
 if ( !isset( $_GET['itemValue'] ) || $_GET['itemValue'] == '' ){
-  die( 'Invalid Name' );
+    die( 'Invalid Name' );
 }
 
 $itemValue = $_GET['itemValue'];
 
 // Gets the ID of the form element to pass along
 if ( !isset( $_GET['itemID'] ) || $_GET['itemID'] == '' ){
-  die( 'Invalid item ID' );
+    die( 'Invalid item ID' );
 }
-
-$itemValue = mysqli_real_escape_string($link, $itemValue);
 
 $itemValue = trim($itemValue);
 
@@ -59,50 +59,52 @@ $data['itemValue'] = $itemValue;
 $numRows = 0;
 
 if ( $data['itemID'] == 'company' ){
-  // Business Query
-  $sql = "SELECT company_name FROM businesses";
-  $result = mysqli_query($link, $sql);
-  
-  // Count rows in result that match case-insensitively
-  while( $row = mysqli_fetch_array( $result ) ){
-    if( strcasecmp( $row['company_name'], $itemValue ) == 0 )
-      $numRows++;
-  }
+    // Businesses
+    $businesses = getBusinesses();
+
+    foreach($businesses as &$business)
+    {
+        if (strcasecmp($business->company_name, $itemValue) == 0)
+        {
+            $numRows++;
+        }
+    }
 }
 else if ( $data['itemID'] == 'location' || preg_match( "/^newlocation[0-9]*$/", $data['itemID']) ){
-  // Location query
-  $sql = "SELECT location FROM locations";
-  
-  $result = mysqli_query($link, $sql); 
+    // Locations
+    $locations = getLocations();
 
-  // Make sure location doesn't already exist
-  while ($row = mysqli_fetch_array($result)) {
-    if (strcasecmp($row['location'], $itemValue) == 0){ 
-      $numRows++;
+    foreach($locations as &$location)
+    {
+        if (strcasecmp($location->location, $itemValue) == 0)
+        {
+            $numRows++;
+        }
     }
-  }
 }
 else if ( $data['itemID'] == 'location_edit' ){
-  if( !isset( $_GET['locID'] )){
-      die( 'Invalid location ID' );
-  }
-
-  $locID = mysqli_real_escape_string( $link, $_GET['locID'] );
-
-  // Location query, excluding itself
-  $sql = "SELECT location FROM locations WHERE location_id != '" . $locID . "'";
-
-  $result = mysqli_query($link, $sql); 
-
-  // Make sure location doesn't already exist
-  while ($row = mysqli_fetch_array($result)) {
-    if (strcasecmp($row['location'], $itemValue) == 0){ 
-      $numRows++;
+    if( !isset( $_GET['locID'] )){
+        die( 'Invalid location ID' );
     }
-  }
+
+    $locID = $_GET['locID'];
+
+    $locations = getLocations();
+
+    // Make sure location doesn't already exist
+    foreach($locations as &$location)
+    {
+        if ($location->location_id != $locID)
+        {
+            if (strcasecmp($location->location, $itemValue) == 0)
+            {
+                $numRows++;
+            }
+        }
+    }
 }
 else {
-  die( "Did not match a function to execute" );
+    die( "Did not match a function to execute" );
 }
 
 $data['numRows'] = $numRows;
