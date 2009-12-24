@@ -53,13 +53,11 @@ function getBorrowers()
 
 /* Return the name of the borrower given an id */
 function getBorrowerName($id) {
-    require_once("lib/connect.lib.php");  //mysql
+    require_once('class/database.class.php');
     require_once("lib/auth.lib.php");  //Session
 
     // Connect
-    $link = connect();
-    if( $link == null )
-        die( "Database connection failed" );
+    $db = new database();
 
     // Authenticate
     $auth = GetAuthority();
@@ -69,14 +67,13 @@ function getBorrowerName($id) {
         die('ID cannot be zero');
 
     // Borrowers
-    $query= "SELECT name FROM borrowers WHERE borrower_id = ". $id;
+    $query = 'SELECT name FROM borrowers WHERE borrower_id = ?';
 
-    $result = mysqli_query($link, $query) or
-        die( 'Could not get the borrowers' );
+    $result = $db->query($query, $id);
 
-    $name = mysqli_fetch_object($result);
+    $name = $db->getObject($result);
 
-    mysqli_close($link);
+    $db->close();
 
     return $name->name;
 }
@@ -216,14 +213,13 @@ function getViewBorrowers( $currentSortIndex=0, $currentSortDir=0 )
     return $borrowers;
 }
 
-function getBorrower( $id ) {
-    require_once('lib/connect.lib.php');
+function getBorrower($id)
+{
+    require_once('class/database.class.php');
     require_once('lib/auth.lib.php');
 
     // Database
-    $link = connect();
-    if( $link == null )
-        die( 'Database connection failed' );
+    $db = new database();
 
     // Authority
     $auth = GetAuthority();
@@ -231,11 +227,11 @@ function getBorrower( $id ) {
     // Sanitize
     $id = (int)$id;
 
-    $sql = 'SELECT * FROM borrowers WHERE borrower_id = ' . $id;
+    $sql = 'SELECT * FROM borrowers WHERE borrower_id = ?';
 
-    $result = mysqli_query($link, $sql) or
-        die('Borrower query failed');
-    $borrower = mysqli_fetch_object($result);
+    $result = $db->query($sql, $id);
+
+    $borrower = $db->getObject($result);
 
     return $borrower;
 }
