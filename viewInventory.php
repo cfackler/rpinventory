@@ -41,6 +41,11 @@ $items = getInventory();
 
 //Assign vars
 $smarty->assign('items', $items);
+if (count($items) == 0)
+{
+    $smarty->assign('emptyTable', TRUE);
+}
+
 $smarty->assign('categories', $categories);
 
 $smarty->assign('title', "View Inventory");

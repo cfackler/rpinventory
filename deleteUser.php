@@ -19,30 +19,28 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-require_once("lib/connect.lib.php");  //mysql
+ */
+
+require_once('lib/users.lib.php');
 require_once("lib/auth.lib.php");  //Session
 
 //Authenticate
 $auth = GetAuthority();	
-if($auth != 2)
-  die("You dont have permission to access this page");
-
-$link = connect();
-if($link == null)
-  die("Database connection failed");
+if ($auth != 2)
+{
+    die("You dont have permission to access this page");
+}
 
 //id
 $id = (int)$_GET["id"];
-if($id == 0)
-  die("Invalid ID");
-	
+if ($id == 0)
+{
+    die("Invalid ID");
+}
+
 //Remove login
-$sql = "DELETE FROM logins WHERE id = '" . $id . "'";
-if(!mysqli_query($link, $sql))
-  die("Query failed");
-	
-mysqli_close($link);
+deleteUser($id);
+
 header('Location: manageUsers.php');
-	
+
 ?>

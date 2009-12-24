@@ -22,13 +22,10 @@
 */
 
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/businesses.lib.php');
+require_once('lib/addresses.lib.php');
 
-$link = connect();
-if($link == null)
-	die("Database connection failed");
-	
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
@@ -45,15 +42,13 @@ $id = (int)$_GET["id"];
 if($id == 0)
 	die("Invalid ID");
 
+$business = getBusiness($id);
 
-//location
-$query= "SELECT addresses.*, company_name  FROM addresses, businesses 
-	 WHERE addresses.address_id = businesses.address_id 
-	 AND businesses.business_id = " . $id;
-$result = mysqli_query($link, $query);
-$address = mysqli_fetch_object($result);
+$address = getAddress($business->address_id);
 
-	
+// Need to pass company name
+$address->company_name = $business->company_name;
+
 //Assign vars
 $smarty->assign('title', "View Business Address");
 $smarty->assign('authority', $auth);
@@ -62,9 +57,5 @@ $smarty->assign('address', $address);
 
 
 $smarty->display('index.tpl');
-
-
-
-mysqli_close($link);
 
 ?>

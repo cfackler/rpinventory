@@ -21,17 +21,12 @@
 
 */
 
-require_once( "lib/connect.lib.php" );  // mysql
 require_once( "lib/auth.lib.php" );  // Session
 
 // Authenticate
 $auth = GetAuthority();	
 if($auth<1)
   die("Please login to complete this action");
-
-$link = connect();
-if($link == null)
-  die("Database connection failed");
 
 if (!isset( $_POST['start_Month'] ) || 
     !isset( $_POST['start_Day'] ) ||
@@ -43,24 +38,19 @@ if (!isset( $_POST['start_Month'] ) ||
 }
 
 /* Get block data */
-$inventory = mysqli_real_escape_string( $link, $_POST['inventory'] );
-$loans = mysqli_real_escape_string( $link, $_POST['loans'] );
-$checkouts = mysqli_real_escape_string( $link, $_POST['checkouts'] );
-$repairs = mysqli_real_escape_string( $link, $_POST['repairs'] );
-$purchases = mysqli_real_escape_string( $link, $_POST['purchases'] );
-$businesses = mysqli_real_escape_string( $link, $_POST['businesses'] );
-$users = mysqli_real_escape_string( $link, $_POST['users'] );
-$borrowers = mysqli_real_escape_string( $link, $_POST['borrowers'] );
-$locations = mysqli_real_escape_string( $link, $_POST['locations'] );
+$inventory = $_POST['inventory'];
+$loans = $_POST['loans'];
+$checkouts = $_POST['checkouts'];
+$repairs = $_POST['repairs'];
+$purchases = $_POST['purchases'];
+$businesses = $_POST['businesses'];
+$users = $_POST['users'];
+$borrowers = $_POST['borrowers'];
+$locations = $_POST['locations'];
+$startDate = $_POST['start_Year'] . '-' . $_POST['start_Month'] . '-' . $_POST['start_Day'];
+$endDate = $_POST['end_Year'] . '-' . $_POST['end_Month'] . '-' . $_POST['end_Day'];
 
-$startDate = mysqli_real_escape_string( $link, $_POST['start_Year'] ). '-' .
-             mysqli_real_escape_string( $link, $_POST['start_Month'] ). '-' .
-             mysqli_real_escape_string( $link, $_POST['start_Day'] );
-$endDate = mysqli_real_escape_string( $link, $_POST['end_Year'] ). '-' .
-           mysqli_real_escape_string( $link, $_POST['end_Month'] ). '-' .
-           mysqli_real_escape_string( $link, $_POST['end_Day'] );
-
-require_once( 'lib/config.class.php' );
+require_once( 'class/config.class.php' );
 
 $data = array();
 $clubName = Config::get( 'club_name' );

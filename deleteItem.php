@@ -21,47 +21,36 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/loans.lib.php');
+require_once('lib/inventory.lib.php');
 
 //Authenticate
 $auth = GetAuthority();	
 if($auth < 1)
   die("You dont have permission to access this page");
 
-$link = connect();
-if($link == null)
-  die("Database connection failed");
-	
 //grab all ids
-$idString = mysqli_real_escape_string($link, $_GET["ids"]);
-$token = strtok($idString, ",");
+$token = strtok($_GET['ids'], ",");
 $idList = array();
 
-while ($token !== false) {
-  $idList[] = (int)$token;
-  $token = strtok(",");
+while ($token !== false)
+{
+    $idList[] = (int)$token;
+    $token = strtok(",");
 }
 
 //Run delete
 foreach ($idList as $id)
-  {
-    //Remove item
-    $sql = "DELETE FROM inventory WHERE inventory_id = '" . $id . "'";
+{
+    // Delete the inventory item
+    deleteInventory($id);
 
-    //Run update
-    if(!mysqli_query($link, $sql))
-      die("Query failed");
-		
     //Remove any loan records
-    $sql = "DELETE FROM loans WHERE inventory_id = '" . $id . "'";
+    deleteInventoryLoans($id);
+}
 
-    //Run update
-    if(!mysqli_query($link, $sql))
-      die("Query failed");
-  }
 
-mysqli_close($link);
 header('Location: viewInventory.php');
 	
 ?>

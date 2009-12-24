@@ -58,12 +58,18 @@ if(isset($loanObj))
 	$smarty->assign('loanObj', $loanObj);
 	
 $smarty->assign('items', $items);
+if (count($items) == 0)
+{
+    $smarty->assign('emptyTable', TRUE);
+}
+
 $smarty->assign('title', "View Loans");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewLoans');
-if(isset($view))
-	$smarty->assign('filter', $view);
-
+if(isset($_GET['view']))
+	$smarty->assign('filter', $_GET['view']);
+else
+  $smarty->assign('filter', 'all');
 
 $smarty->display('index.tpl');
 

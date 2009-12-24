@@ -25,19 +25,19 @@
 
 function getInventoryData()
 {
-  require_once( 'lib/inventory.lib.php' );
-  $items = getInventory();
+    require_once( 'lib/inventory.lib.php' );
+    $items = getInventory();
   
-  $data = array();
-  foreach($items as $value)
+    $data = array();
+    foreach($items as $value)
     {
-      $data [] = array('Item' => $value->description,
-		       'Condition' => $value->current_condition,
-		       'Value' => '$'.$value->current_value,
-		       'Location' => $value->location);
+        $data [] = array('Item' => $value->description,
+            'Condition' => $value->current_condition,
+            'Value' => '$'.$value->current_value,
+            'Location' => $value->location);
     }
   
-  return $data;
+    return $data;
 }
 
 function getLoanData( $startDate, $endDate )
@@ -202,17 +202,12 @@ function getBorrowerData()
 }
 
 function getInventorySummary(){
-  require_once( "lib/connect.lib.php" );  // mysql
   require_once( "lib/auth.lib.php" );  // Session
   
   // Authenticate
   $auth = GetAuthority();	
   
-  $link = connect();
-  if($link == null)
-    die("Database connection failed");
-  
-  require_once( 'lib/config.class.php' );
+  require_once( 'class/config.class.php' );
   
   $data = array();
   $clubName = Config::get( 'club_name' );

@@ -9,8 +9,11 @@
 	/* make buttons look nice when hovered */
 	ui_hover_behavior();
 	
-	/* make table searchable */
+	/* make table with "searchable" class searchable */
 	table_searchable();
+	
+	/* make table with "clickable" class clickable */
+	table_clickable();
 });
 
 

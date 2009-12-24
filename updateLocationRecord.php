@@ -21,28 +21,22 @@
 
 */
 
-
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/locations.lib.php');
 
-$link = connect();
-if($link == null)
-	die("Database connection failed");
-	
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
 	die("You dont have permission to access this page");
 
-	
 //Description
 $desc = $_POST["description"];
 if(strlen($desc) == 0)
 	die("Must have a description");
 	
 //Location
-$location = $_POST["location_edit"];
-if(strlen($location) == 0)
+$location_name = $_POST["location_edit"];
+if(strlen($location_name) == 0)
 	die("Must have a location");
 
 	
@@ -51,22 +45,21 @@ $location_id = (int)$_POST["location_id"];
 if($location_id == 0)
 	die("Invalid item id");	
 
-// Prevent injections	
-$desc = mysqli_real_escape_string( $link, $desc );
-$location = mysqli_real_escape_string( $link, $location );
-
 // Location query, excluding itself
-$sql = "SELECT location FROM locations WHERE location_id != '" . $location_id . "'";
-
-$result = mysqli_query($link, $sql);
+$locations = getLocations();
 
 $numRows = 0;
 
 // Make sure location doesn't already exist
-while ($row = mysqli_fetch_array($result)) {
-  if (strcasecmp($row['location'], $itemValue) == 0){
-    $numRows++;
-  }
+foreach($locations as &$location)
+{
+    if ($location_id != $location->location_id)
+    {
+        if (strcasecmp($location->location, $location_name) == 0)
+        {
+            $numRows++;
+        }
+    }
 }
 
 // If true, location is a duplicate
@@ -74,14 +67,8 @@ if ( $numRows > 0 ){
   die('A location already exists with the name ' . $location );
 }
 
-$query = "update locations set description = '" . $desc . "', location = '" . $location . "' where location_id = " . $location_id;
-
-//Run update
-if(!mysqli_query($link, $query))
-  die( 'Query failed' );	
-
-
-mysqli_close($link);
+// Update the location
+updateLocation($location_id, $location_name, $desc);
 
 header('Location: manageLocations.php');
 

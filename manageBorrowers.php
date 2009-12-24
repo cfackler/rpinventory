@@ -22,13 +22,8 @@
 */
 
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/borrowers.lib.php' );
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
 
 //Authenticate
 $auth = GetAuthority();	
@@ -41,22 +36,20 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-
-
-//paginate( $smarty, 'borrowers', $currentSortIndex, $currentSortDir, 'manageBorrowers' );
 $borrowers = getViewBorrowers();
-
 
 //Assign vars
 $smarty->assign('borrowers', $borrowers);
+if (count($borrowers) == 0)
+{
+    $smarty->assign('emptyTable', TRUE);
+}
+
 $smarty->assign('title', "Manage Borrowers");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'manageBorrowers');
 
 
 $smarty->display('index.tpl');
-
-
-
 
 ?>

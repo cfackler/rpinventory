@@ -21,13 +21,9 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/locations.lib.php');
 
-$link = connect();
-if($link == null)
-  die("Database connection failed");
-	
 //Authenticate
 $auth = GetAuthority();
 
@@ -35,13 +31,7 @@ $auth = GetAuthority();
 require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
-//items
-$query= "SELECT location_id, location  FROM locations";
-$result = mysqli_query($link, $query);
-$locations = array();
-
-while($loc = mysqli_fetch_object($result))
-  $locations [] = $loc;
+$locations = getLocations();
 
 //BEGIN Page
 	
@@ -52,7 +42,5 @@ $smarty->assign('page_tpl', 'addInventory');
 $smarty->assign('locations', $locations);
 
 $smarty->display('index.tpl');
-
-mysqli_close($link);
 
 ?>

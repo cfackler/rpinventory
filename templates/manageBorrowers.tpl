@@ -17,18 +17,21 @@
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 *}
-<div class="TopOfTable">
-	<span class="TopOfTable">
-		<a href="addBorrower.php">Add new borrower</a>
-	</span>
-</div>
-<div id="filters" class="filters">
-	<h3>Search:</h3>
-		<input type="text" id="searchField" class="searchField" />	
+<div id="controlsTop" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
+	<div class="left">
+		<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />
+	</div>
+	<div class="right">
+		<a id="addBorrower" class="ui-state-default ui-corner-all button" href="addBorrower.php">
+			<span class="ui-icon ui-icon-circle-plus"><!-- --></span>
+			<span class="buttonText">Add new borrower</span>
+		</a>
+	</div>
 </div>
 
-<table width="800" border="0" class="itemsTable searchable sortable" cellspacing="0">
-	<thead>
+<table width="800" border="0" class="itemsTable sortable searchable ui-widget ui-corner-all" cellspacing="0">
+	<thead class="ui-widget-header">
 		<tr>
 			<th width="150">Name</th>
 			<th width="100">RIN</th>
@@ -37,15 +40,30 @@
 			<th width="200">Actions</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="ui-widget-content">
 		{section name=borrowerLoop loop=$borrowers}
 		<tr{cycle values=" class=\"alt\","}>
 			<td align="center">{$borrowers[borrowerLoop]->name}</td>
 			<td align="center">{$borrowers[borrowerLoop]->rin}</td>
 			<td align="center"><a href="mailto:{$borrowers[borrowerLoop]->email}">{$borrowers[borrowerLoop]->email}</a></td>
-			<td align="center"><a href="viewBorrowerAddress.php?id={$borrowers[borrowerLoop]->borrower_id}">Address</a></td>
+			<td align="center">
+                <a href="viewBorrowerAddress.php?id={$borrowers[borrowerLoop]->borrower_id}" class="ui-state-default ui-corner-all button">
+                    <span class="ui-icon ui-icon-circle-arrow-e"></span>
+                    <span class="buttonText">View Address</span>
+                </a>
+            </td>
 	
-			<td align="center"><a href="editBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete borrower \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')" value="Delete Borrower"></td>
+			<td align="center">
+                <a href="editBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}" class="ui-state-default ui-corner-all button">
+                    <span class="ui-icon ui-icon-circle-arrow-w"></span>
+                    <span class="buttonText">Edit</span>
+                </a>
+                &nbsp;
+                <a class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete borrower \'{$borrowers[borrowerLoop]->name}\'?','deleteBorrower.php?id={$borrowers[borrowerLoop]->borrower_id}')">
+                    <span class="ui-icon ui-icon-circle-close"></span>
+                    <span class="buttonText">Delete</span>
+                </a>
+            </td>
 		</tr>
 		{/section}	
 	</tbody>

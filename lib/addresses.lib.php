@@ -21,42 +21,43 @@
 */
 
 /* Returns the id of the given borrower */
-function getAddressFromBorrower( $id ) {
-	require_once('lib/connect.lib.php');
-	require_once('lib/auth.lib.php');
+function getAddressFromBorrower($borrower_id)
+{
+    require_once('class/database.class.php');
 
-	// Database
-	$link = connect();
-	if( $link == null )
-		die( 'Database connection failed' );
+    $db = new database();
 
-	// Authority
-	$auth = GetAuthority();
+    if (!isset($_SESSION['club']))
+    {
+        return 0;
+    }
 
-	// Sanitize
-	$id = (int)$id;
-	if($id == 0)
-		die('Invalid ID');
+    $club_id = $_SESSION['club'];
 
-	$sql = 'SELECT address_id FROM borrowers WHERE borrower_id = ' . $id;
+    $sql = 'SELECT *  FROM addresses, borrowers WHERE addresses.address_id = borrowers.address_id and borrowers.borrower_id = ? LIMIT 1';
 
-	$result = mysqli_query($link, $sql) or
-		die( 'Query Failed' );
+    $result = $db->query($sql, $borrower_id);
 
-	$address_id = mysqli_fetch_object($result);
+    if (mysqli_num_rows($result) == 0)
+    {
+        return NULL;
+    }
 
-	return $address_id->address_id;
+    $obj = $db->getObject($result);
+
+    $db->close();
+
+    return $obj;
 }
 
 /* Returns the address with the given id */
-function getAddress( $id ) {
-	require_once('lib/connect.lib.php');
+function getAddress( $id )
+{
+    require_once('class/database.class.php');
 	require_once('lib/auth.lib.php');
 
 	// Database
-	$link = connect();
-	if( $link == null )
-		die( 'Database connection failed' );
+    $db = new database();
 
 	// Authority
 	$auth = GetAuthority();
@@ -66,14 +67,79 @@ function getAddress( $id ) {
 	if($id == 0)
 		die('Invalid ID');
 
-	$sql = 'SELECT * FROM addresses WHERE address_id = ' . $id;
+	$sql = 'SELECT * FROM addresses WHERE address_id = ?';
 
-	$result = mysqli_query($link, $sql) or
-		die( 'Query failed' );
+    $result = $db->query($sql, $id);
 
-	$address = mysqli_fetch_object($result);
+	$address = $db->getObject($result);
+
+    $db->close();
 
 	return $address;
+}
+
+function addAddress($address, $address2, $city, $state, $zipcode, $phone)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return 0;
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone, club_id) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)';
+
+    $db->query($sql, $address, $address2, $city, $state, $zipcode, $phone, $club_id);
+
+    $id = $db->insertId();
+
+    $db->close();
+
+    return $id;
+}
+
+function updateAddress($address_id, $address, $address2, $city, $state, $zipcode, $phone)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return 0;
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'UPDATE addresses SET address = ?, address2 = ?, city = ?, state = ?, zipcode = ?, phone = ? WHERE address_id = ?';
+
+    $db->query($sql, $address, $address2, $city, $state, $zipcode, $phone, $address_id);
+
+    $db->close();
+}
+
+function deleteAddress($address_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return 0;
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'DELETE FROM addresses WHERE address_id = ? AND club_id = ?';
+
+    $db->query($sql, $addres_id, $club_id);
+
+    $db->close();
 }
 
 ?>

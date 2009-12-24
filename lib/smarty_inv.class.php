@@ -19,20 +19,20 @@
     You should have received a copy of the GNU General Public License
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 require_once('Smarty.class.php');
 
 class Smarty_Inv extends Smarty {
-  function Smarty_Inv()
-  {
-    $this->Smarty();
-    $this->template_dir = 'templates';
-    $this->compile_dir = 'templates_c';
-    $this->config_dir = 'config';
-    $this->cache_dir = 'cache';
-    $this->caching = false;
-  }
+    function Smarty_Inv()
+    {
+        $this->Smarty();
+        $this->template_dir = 'templates';
+        $this->compile_dir = 'templates_c';
+        $this->config_dir = 'config';
+        $this->cache_dir = 'cache';
+        $this->caching = false;
+    }
 }
 
 ?>

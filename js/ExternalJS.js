@@ -88,7 +88,7 @@ function sendAddressRequest() {
 
 function sendAddressBorrowerRequest() {
 	var name = $('username');
-
+  
 	new Ajax.Request('getBorrowerAddress.php?username=' + name.value,
 		{
 			method: 'post',
@@ -99,45 +99,43 @@ function sendAddressBorrowerRequest() {
 
 
 function recieveAddress(oReq, oJSN){
-    if(oJSN.Found == "False"){
-	$('address').value = "";
-	$('address2').value = "";
-	$('city').value = "";
-	$('state').value = "";
-	$('zipcode').value = "";
-	$('phone').value = "";
-	$('useOld').checked = false;
-	$('useOld').disabled = true;
-	useAddress();
-	return;
-    }
-    
-    $('address').value = oJSN.Address;
-    $('address2').value = oJSN.Address2;
-    $('city').value = oJSN.City;
-    $('state').value = oJSN.State;
-    $('zipcode').value = oJSN.Zipcode;
-    $('phone').value = oJSN.Phone;
-    
-    $('useOld').checked = true;
-    $('useOld').disabled = false;
-    
+  if(oJSN.Found == "False"){
+    $('address').value = "";
+    $('address2').value = "";
+    $('city').value = "";
+    $('state').value = "";
+    $('zipcode').value = "";
+    $('phone').value = "";
+    $('useOld').checked = false;
+    $('useOld').disabled = true;
     useAddress();
+    return;
+  }
+
+  $('address').value = oJSN.Address;
+  $('address2').value = oJSN.Address2;
+  $('city').value = oJSN.City;
+  $('state').value = oJSN.State;
+  $('zipcode').value = oJSN.Zipcode;
+  $('phone').value = oJSN.Phone;
+
+  /* Check "useOld" box */
+  (jQuery)('#useOld').click();
+  $('useOld').disabled = false;
 }
 
 function useAddress(){
-    var status = true;
-    
-    if($('useOld').checked != true)
-	status = false;
-    
-    
-    $('address').disabled = status;
-    $('address2').disabled = status;
-    $('city').disabled = status;
-    $('state').disabled = status;
-    $('zipcode').disabled = status;
-    $('phone').disabled = status;
+  var status = true;
+
+  if($('useOld').checked != true)
+    status = false;
+
+  $('address').disabled = status;
+  $('address2').disabled = status;
+  $('city').disabled = status;
+  $('state').disabled = status;
+  $('zipcode').disabled = status;
+  $('phone').disabled = status;
 }
 
 function sendValidateRequest(itemID){
@@ -684,29 +682,52 @@ function checkUsername() {
 					onSuccess: showUsernames
 				});
   }
-  else{			// If there's no text, make sure the drop-down is hidden
+  else{
+    // If there's no text, make sure the drop-down is hidden
 		document.getElementById( 'userAutoComplete' ).style.display = "none";
+		// Clear address fields
+		//(jQuery)('#useOld').checked =  false;
+		// Display help bubble
+		(jQuery)('#usernameNotification').show();
   }
 }
 
 // Populate the drop-down
 function showUsernames(oReq, oJSN){
-    var targetDiv = document.getElementById( 'userAutoComplete' );
-    var i;
-    targetDiv.innerHTML = "";
-    for( i = 0; i < oJSN.records.length; i++ ){
-	targetDiv.innerHTML = targetDiv.innerHTML + '<span style="display:block" onmouseover="setUsername(\''+ oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
-    }
+  var targetDiv = document.getElementById( 'userAutoComplete' );
+  var i;
+  targetDiv.innerHTML = "";
+  for( i = 0; i < oJSN.records.length; i++ ){
+    targetDiv.innerHTML = targetDiv.innerHTML + '<span onmouseover="setUsername(\''+ oJSN.records[i] + '\')">&nbsp;' + oJSN.records[i] + '</span>';
+  }
 
-    if( oJSN.records.length > 0 ){
-	targetDiv.style.display = "";
-    }
+  if( oJSN.records.length > 0 ){
+    targetDiv.style.display = "";
+  }
 }
 
 
 // Set the username to be the stored username
 function fillText(){
-    document.getElementById( 'username' ).value = document.getElementById( 'tempUsername' ).value;
+    var name = document.getElementById('tempUsername').value;
+    var club_id = document.getElementById('club_id').value;
+    document.getElementById( 'username' ).value = name
+    new Ajax.Request('ajax.php?operation=borrowerIdFromName&name=' + name + '&club_id=' + club_id,
+            {
+                method: 'post',
+                onSuccess: function(transport)
+                {
+                    var response = transport.responseText;
+                    if (response.length > 0)
+                    {
+                        document.getElementById('borrower_id').value = response;
+                    }
+                    else
+                    {
+                        alert('Could not get borrower id');
+                    }
+                }
+            });
 }
 
 // Store the name into the hidden field on the page
@@ -716,9 +737,19 @@ function setUsername( name ){
 
 // Hide the drop down, set the username, update the address
 function leaveUsername( ){
-    document.getElementById( 'userAutoComplete' ).style.display = "none";
-    fillText();
-		sendAddressBorrowerRequest();
+  // hide suggestions
+  document.getElementById( 'userAutoComplete' ).style.display = "none";
+  /* If username field is blank */
+  if ((jQuery)('#username').val() == '') {
+    /* Show helper notification */
+    (jQuery)('#usernameNotification').animate({opacity: 1.0}, 1000);
+  }
+  else {
+    /* Hide notificiation */
+    (jQuery)('#usernameNotification').animate({opacity: 0}, 1000);
+  }
+  fillText();
+  sendAddressBorrowerRequest();
 }
 
 function updateSidebar() {

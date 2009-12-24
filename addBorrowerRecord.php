@@ -21,18 +21,14 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
-
-$link = connect();
-if($link == null)
-  die("Database connection failed");
+require_once('lib/addresses.lib.php');
+require_once('lib/borrowers.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
   die("You dont have permission to access this page");
-	
 
 //Name
 $name = $_POST['name'];
@@ -71,32 +67,10 @@ $phone = $_POST['phone'];
 if(strlen($phone) == 0)
 	die('Must have a phone number');
 
-// Sanitize the query strings
-$name = mysqli_real_escape_string($link, $name);
-$rin = mysqli_real_escape_string($link, $rin);
-$email = mysqli_real_escape_string($link, $email);
-$address = mysqli_real_escape_string($link, $address);
-$address2 = mysqli_real_escape_string($link, $address2);
-$city = mysqli_real_escape_string($link, $city);
-$state = mysqli_real_escape_string($link, $state);
-$zip = mysqli_real_escape_string($link, $zip);
-$phone = mysqli_real_escape_string($link, $phone);
+$addressId = addAddress($address, $address2, $city, $state, $zip, $phone);
 
-// Insert the address
-$sql = "INSERT INTO addresses (address_id, address, address2, city, state, zipcode, phone) VALUES (NULL, '". $address ."', '". $address2 ."', '". $city ."', '". $state ."', '". $zip ."', '". $phone ."')";
+addBorrower($addressId, $rin, $email, $name);
 
-if(!mysqli_query($link, $sql))
-	die('Query failed');
-
-$address_id = mysqli_insert_id($link);
-
-// Insert the borrower
-$sql = "INSERT INTO borrowers (borrower_id, address_id, rin, email, name) VALUES (NULL, ". $address_id .", '" . $rin . "', '" . $email . "', '" . $name ."')";	
-
-if(!mysqli_query($link, $sql))
-  die("Query failed");
-
-mysqli_close($link);
 header('Location: manageBorrowers.php');
 	
 ?>

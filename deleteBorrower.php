@@ -19,54 +19,44 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-require_once("lib/connect.lib.php");  //mysql
+ */
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/borrowers.lib.php');
+require_once('lib/addresses.lib.php');
+require_once('lib/loans.lib.php');
+require_once('lib/checkouts.lib.php');
 
 //Authenticate
 $auth = GetAuthority();	
 if($auth < 1)
-  die("You dont have permission to access this page");
-
-$link = connect();
-if($link == null)
-  die("Database connection failed");
+    die("You dont have permission to access this page");
 
 //id
 $id = (int)$_GET["id"];
 if($id == 0)
-  die("Invalid ID");
+    die("Invalid ID");
 
 // Don't delete active borrowers
-$sql = 'SELECT * from loans WHERE return_date is null AND borrower_id = ' . $id;
-$result = mysqli_query($link, $sql) or
-    die("Query failed: ".mysqli_error());
-if (mysqli_num_rows($result) > 0) {
+$records = getBorrowerActiveLoans($id);
+if (count($records) > 0) {
     die('Cannot delete an active borrower');
 }
 
-$sql = 'SELECT * from checkouts WHERE time_returned is null AND borrower_id = ' . $id;
-$result = mysqli_query($link, $sql) or
-    die("Query failed: ".mysqli_error());
-if (mysqli_num_rows($result) > 0) {
+$records = getBorrowerActiveCheckouts($id);
+if (count($records) > 0) {
     die('Cannot delete an active borrower');
 }
 
 // Get the address_id of the borrower
-$sql = 'SELECT address_id FROM borrowers WHERE borrower_id = '. $id;
-$result = mysqli_query($link, $sql);
-$address_id = mysqli_fetch_object($result)->address_id;
-	
-//Remove login
-$sql = "DELETE FROM borrowers WHERE borrower_id = '" . $id . "'";
-if(!mysqli_query($link, $sql))
-  die("Query failed");
-	
-// Remove the address
-if(!mysqli_query($link, "DELETE FROM addresses WHERE address_id = " . $address_id))
-  die("Query failed");
+$address = getAddressFromBorrower($id);
+$address_id = $address->address_id;
 
-mysqli_close($link);
+//Remove login
+deleteBorrower($id);
+
+// Remove the address
+deleteAddress($address_id);
+
 header('Location: manageBorrowers.php');
-	
+
 ?>

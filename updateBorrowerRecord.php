@@ -22,12 +22,9 @@
 */
 
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
+require_once('lib/addresses.lib.php');
+require_once('lib/borrowers.lib.php');
 
 //Authenticate
 $auth = GetAuthority();	
@@ -80,30 +77,13 @@ $address_id = (int)$_POST['address_id'];
 if($address_id == 0)
 	die('Invalid Address ID');
 
-/* Sanitize */
-$name = mysqli_real_escape_string( $link, $name );
-$rin = mysqli_real_escape_string( $link, $rin );
-$email = mysqli_real_escape_string( $link, $email );
-$address = mysqli_real_escape_string($link, $address);
-$address2 = mysqli_real_escape_string($link, $address2);
-$city = mysqli_real_escape_string($link, $city);
-$state = mysqli_real_escape_string($link, $state);
-$zip = mysqli_real_escape_string($link, $zip);
-$phone = mysqli_real_escape_string($link, $phone);
 
-//Create query
-$sql = "UPDATE borrowers SET name = '" . $name . "', rin = '" . $rin . "', email = '" . $email . "' WHERE borrower_id = " . $id;
+// Update borrower
+updateBorrower($id, $name, $rin, $email);
 
-//Run update
-if(!mysqli_query($link, $sql))
-	die("Query failed");
+// Update address
+updateAddress($address_id, $address, $address2, $city, $state, $zip, $phone);
 
-$sql = "UPDATE addresses SET address = '". $address ."', address2 = '". $address2 . "', city = '". $city ."', state = '". $state ."', zipcode = '". $zip ."', phone = '". $phone ."' WHERE address_id = ". $address_id;
-
-if(!mysqli_query($link, $sql))
-	die('Query Failed');
-
-mysqli_close($link);	
 header('Location: manageBorrowers.php');
 	
 ?>

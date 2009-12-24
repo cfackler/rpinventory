@@ -18,125 +18,243 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 /* Returns the loan associated with the loanId given */
 function getLoan( $loanId )
 {
-	require_once( 'lib/connect.lib.php' );
-	require_once( 'lib/auth.lib.php' );
+    require_once('class/database.class.php');
+    require_once( 'lib/auth.lib.php' );
 
-	// Connect
-	$link = connect();
-	if( $link == null )
-		die( 'Database connection failed' );
+    // Connect
+    $db = new database();
 
-	// Authenticate
-	$auth = GetAuthority();
+    // Authenticate
+    $auth = GetAuthority();
 
-	$sql = 'SELECT inventory.description, borrowers.name, borrowers.borrower_id, loans.issue_date, locations.location FROM borrowers, loans, inventory, locations WHERE loans.loan_id = ' . $loanId .
-					' AND loans.inventory_id = inventory.inventory_id AND loans.borrower_id = borrowers.borrower_id AND loans.original_location_id = locations.location_id';
+    $sql = 'SELECT loans.*, inventory.description, borrowers.name, borrowers.borrower_id,locations.location, inventory.current_condition FROM borrowers, loans, inventory, locations WHERE loans.loan_id = ? AND loans.inventory_id = inventory.inventory_id AND loans.borrower_id = borrowers.borrower_id AND loans.original_location_id = locations.location_id';
 
-	$result = mysqli_query( $link, $sql ) or
-		die( 'Error: '. mysqli_error($link) );
+    $result = $db->query($sql, $loanId);
 
-	$loan = mysqli_fetch_object( $result ); 
+    $loan = $db->getObject($result);
 
-	return $loan;
+    $db->close();
+
+    return $loan;
 }
 
 /* Takes two dates, formatted as YYYY-MM-DD */
-function getLoans( $startDate, $endDate )
+function getLoans($startDate, $endDate)
 {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( "Database connection failed" );
-  
-  // Authenticate
-  $auth = GetAuthority();
+    // Connect
+    $db = new database();
 
-  $startDate = mysqli_real_escape_string( $link, $startDate );
-  $endDate = mysqli_real_escape_string( $link, $endDate);
-  
-  // Loan History
-  $query= "SELECT issue_date, return_date, starting_condition, inventory.description, borrowers.borrower_id, borrowers.name AS username FROM loans, inventory, borrowers WHERE borrowers.borrower_id = loans.borrower_id AND loans.inventory_id = inventory.inventory_id AND issue_date >= '". $startDate ."' AND (return_date <= '". $endDate ."' OR return_date IS NULL)";
+    // Authenticate
+    $auth = GetAuthority();
 
-  $result = mysqli_query($link, $query) or
-    die( 'Could not get the loan history' );
-
-  $records = array();
-  
-  while($record = mysqli_fetch_object($result))
+    if (!isset($_SESSION['club']))
     {
-      $records [] = $record;
+        return array();
     }
-  
-  mysqli_close($link);	
-  
-  return $records;
+
+    $club_id = $_SESSION['club'];
+
+    // Loan History
+    $query= 'SELECT issue_date, return_date, starting_condition, inventory.description, inventory.club_id, borrowers.borrower_id, borrowers.name AS username FROM loans, inventory, borrowers WHERE borrowers.borrower_id = loans.borrower_id AND loans.inventory_id = inventory.inventory_id AND issue_date >= ? AND (return_date <= ? OR return_date IS NULL) AND inventory.club_id = ?';
+
+    $result = $db->query($query, $startDate, $endDate, $club_id);
+
+    $records = $db->getObjectArray($result);
+
+    $db->close();
+
+    return $records;
 }
 
-function getViewLoans( $currentSortIndex=0, $currentSortDir=0 ){
-  require_once("lib/connect.lib.php");  //mysql
-  require_once('class/Database.class.php');
+function getViewLoans($currentSortIndex=0, $currentSortDir=0)
+{
+    require_once('class/database.class.php');
 
-  //items
-  $query=   'SELECT loan_id, loans.inventory_id, name, loans.borrower_id, borrowers.borrower_id, issue_date, return_date, starting_condition, description
-          FROM borrowers, loans, inventory 
-          WHERE loans.borrower_id = borrowers.borrower_id and inventory.inventory_id = loans.inventory_id ';
-  
-  
-  //Filter
-  if(!isset($_GET['view']))
-    $view = "all";
-  else
-    $view = $_GET['view'];
-  
-  if($view == "outstanding"){
-    $query .= 'and return_date IS NULL ';
-  }
-  else if($view == "returned"){
-    $query .= 'and return_date IS NOT NULL ';
-  }
-  
-  $query .= 'ORDER BY ';
-  
-  /* Determine query argument for sorting */
-  if($currentSortIndex == 0)
-    $query .= 'description';
-  else if($currentSortIndex == 1)
-    $query .= 'starting_condition';
-  else if($currentSortIndex == 2)
-    $query .= 'username';
-  else if($currentSortIndex == 3)
-    $query .= 'issue_date';
-  else if($currentSortIndex == 4)
-    $query .= 'return_date';
-  
-  /* Determine sort direction */
-  if($currentSortDir == 1)
-    $query .= ' DESC';
-  
-  // Database object
-  $db = new Database;
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
 
-  $result = $db->query($query);
+    $club_id = $_SESSION['club'];
 
-  $items = $db->getObjectArray($result);
-  /*
-  $items = array();
-  
-  while($item = mysqli_fetch_object($result)) {
-      $items [] = $item;
-  }
+    //items
+    $query = 'SELECT loan_id, loans.inventory_id, loans.club_id, name, loans.borrower_id, borrowers.borrower_id, issue_date, return_date, starting_condition, description FROM borrowers, loans, inventory WHERE loans.borrower_id = borrowers.borrower_id and inventory.inventory_id = loans.inventory_id AND loans.club_id = ? ';
 
-  mysqli_close($link);
-   */
-  return $items;
+    //Filter
+    if(!isset($_GET['view']))
+        $view = "all";
+    else
+        $view = $_GET['view'];
+
+    if($view == "outstanding"){
+        $query .= 'and return_date IS NULL ';
+    }
+    else if($view == "returned"){
+        $query .= 'and return_date IS NOT NULL ';
+    }
+
+    $query .= 'ORDER BY ';
+
+    /* Determine query argument for sorting */
+    if($currentSortIndex == 0)
+        $query .= 'description';
+    else if($currentSortIndex == 1)
+        $query .= 'starting_condition';
+    else if($currentSortIndex == 2)
+        $query .= 'username';
+    else if($currentSortIndex == 3)
+        $query .= 'issue_date';
+    else if($currentSortIndex == 4)
+        $query .= 'return_date';
+
+    /* Determine sort direction */
+    if($currentSortDir == 1)
+        $query .= ' DESC';
+
+    // Database object
+    $db = new database();
+
+    $result = $db->query($query, $club_id);
+
+    $items = $db->getObjectArray($result);
+
+    return $items;
+}
+
+function isLoanedOut($inventory_id)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'SELECT description FROM loans, inventory WHERE return_date is NULL and loans.inventory_id = inventory.inventory_id and loans.inventory_id = ?';
+
+    $result = $db->query($sql, $inventory_id);
+
+    $obj = NULL;
+
+    if (mysqli_num_rows($result) != 0)
+    {
+        $obj = $db->getObject($result);
+    }
+
+    $db->close();
+
+    return $obj;
+}
+
+function addLoan($inventory_id, $borrower_id, $date, $condition, $location_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'INSERT INTO loans (loan_id, inventory_id, borrower_id, issue_date, return_date, starting_condition, original_location_id, club_id) VALUES (NULL, ?, ?, ?, NULL, ?, ?, ?)';
+
+    $db->query($sql, $inventory_id, $borrower_id, $date, $condition, $location_id, $club_id);
+
+    $db->close();
+}
+
+function getBorrowerActiveLoans($borrower_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'SELECT * from loans WHERE return_date is null AND borrower_id = ?';
+
+    $result = $db->query($sql, $borrower_id);
+
+    $records = $db->getObjectArray($result);
+
+    $db->close();
+
+    return $records;
+}
+
+function getActiveLoansByOriginalLocation($location_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'SELECT original_location_id FROM loans WHERE return_date is null AND original_location_id = ?';
+
+    $result = $db->query($sql, $borrower_id);
+
+    $records = $db->getObjectArray($result);
+
+    $db->close();
+
+    return $records;
+}
+
+function deleteLoan($loan_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'DELETE FROM loans WHERE loan_id = ?';
+
+    //Run update
+    $db->query($sql, $loan_id);
+
+    $db->close();
+
+    return;
+}
+
+function deleteInventoryLoans($inventory_id)
+{
+    require_once('class/database.class.php');
+
+    // Connect
+    $db = new database();
+
+    $sql = 'DELETE FROM loans WHERE inventory_id = ?';
+
+    //Run update
+    $db->query($sql, $loan_id);
+
+    $db->close();
+
+    return;
+}
+
+function returnLoan($loan_id, $return_date)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'UPDATE loans SET return_date = ? WHERE loan_id = ?';
+
+    $db->query($sql, $return_date, $loan_id);
+
+    $db->close();
+
+    return;
 }
 
 ?>

@@ -21,14 +21,10 @@
 
 */
 
-
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/inventory.lib.php');
+require_once('lib/businesses.lib.php');
 
-$link = connect();
-if($link == null)
-	die("Database connection failed");
-	
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
@@ -46,39 +42,26 @@ $token = strtok($idString, ",");
 $idList = array();
 $itemDesc = array();
 
-while ($token !== false) {
-  $idList[] = (int)$token;
-  $token = strtok(",");
+while ($token !== false)
+{
+    $idList[] = (int)$token;
+    $token = strtok(",");
 }
 
 //Verify all ids are valid,  get item description
 $items = array();
 foreach ($idList as $id)
 {
-  $result = mysqli_query($link, "select * from inventory where inventory_id = " . $id);
-  if(mysqli_num_rows($result) == 0)
-    die("Invalid item ID");
+    $item = getInventoryItem($id);
   
-  $item = mysqli_fetch_object($result);
-  $items[] = $item;
+    $items[] = $item;
 }
-
-
 	
 
 //businesses list
-$bizQuery= "SELECT company_name, business_id FROM businesses";
-$bizResult = mysqli_query($link, $bizQuery);
-$businesses = array();
-
-while($biz = mysqli_fetch_object($bizResult))
-{
-	$businesses [] = $biz;
-}
+$businesses = getBusinesses();
 
 //BEGIN Page
-
-
 	
 //Assign vars
 $smarty->assign('title', "Repair Items");
@@ -92,9 +75,5 @@ $smarty->assign('numBusinesses', count($businesses));
 $smarty->assign('selectDate', getdate(time()));
 
 $smarty->display('index.tpl');
-
-
-
-mysqli_close($link);
 
 ?>

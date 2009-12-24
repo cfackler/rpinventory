@@ -11,24 +11,28 @@
  **/
 function get_options($tableName, $valueColumn, $displayColumn)
 {
-	require_once('lib/connect.lib.php');
+    require_once('class/database.class.php');
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( 'Database connection failed' );
-  
-	
-	$query = 'SELECT '.$valueColumn.', '.$displayColumn.' FROM '.$tableName;
-	$result = mysqli_query($link, $query) or die( 'Error selecting from '.$tableName.': '.mysqli_error($link) );
+    // Connect
+    $db = new database();
 
-	$options = '';
-	while($item = mysqli_fetch_object($result))
-	{
-		$options .= '<option value="'.$item->$valueColumn.'">'.$item->$displayColumn.'</option>';
-	}
-	
-	return $options;
+    if (!isset($_SESSION['club']))
+    {
+        return '';
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $query = 'SELECT '.$valueColumn.', '.$displayColumn.' FROM '.$tableName.' WHERE club_id = ?';
+    $result = $db->query($query, $club_id);
+
+    $options = '';
+    while($item = $db->getObject($result))
+    {
+        $options .= '<option value="'.$item->$valueColumn.'">'.$item->$displayColumn.'</option>';
+    }
+
+    return $options;
 
 }
 

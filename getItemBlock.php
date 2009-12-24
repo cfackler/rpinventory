@@ -22,7 +22,6 @@
 */
 
 require_once('modules/json/JSON.php');
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");   //Session
 require_once('lib/locations.lib.php'); //getting locations drop down items
 require_once('lib/display.lib.php');
@@ -61,8 +60,9 @@ echo <<<END
 				</select>
 		</td>
 		<td>
-			<span id="category_notification-$id" name="category_notification-$id" class="notification"><a id="add_category_button-$id" class="ui-state-default ui-corner-all icon_button add_category_button">
-				<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Category
+			<span id="category_notification-$id" name="category_notification-$id" class="notification"><a id="add_category_button-$id" class="ui-state-default ui-corner-all button add_category_button">
+				<span class="ui-icon ui-icon-plus"><!-- --></span>
+				<span class="buttonText">Add Category</span>
 			</a></span>
 		</td>
 	</tr>
@@ -70,7 +70,7 @@ echo <<<END
   <tr>
   <td>Condition: </td>
   <td>
-  <select class="dropDown" name="condition-$id" id="condition-$id">
+  <select name="condition-$id" id="condition-$id">
   <option value="Excellent">Excellent</option>
   <option value="Good">Good</option>
   <option value="Fair">Fair</option>
@@ -92,8 +92,9 @@ echo <<<END
 
 	<td>
 		<span id="location_notification-$id">
-			<a id="add_location_button-$id" class="ui-state-default ui-corner-all icon_button add_location_button">
-				<span class="ui-icon ui-icon-plus icon_button_icon"><!-- --></span>Add Location
+			<a id="add_location_button-$id" class="ui-state-default ui-corner-all button add_location_button">
+				<span class="ui-icon ui-icon-plus"><!-- --></span>
+				<span class="buttonText">Add Location</span>
 			</a>
 		</span>
 	</td>
@@ -101,6 +102,7 @@ echo <<<END
   </tr>
 
   </table>
+  <br />
 END;
 
 ?>

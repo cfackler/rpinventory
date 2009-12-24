@@ -17,32 +17,42 @@
     along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
 *}
-
-<div class="TopOfTable"><span class="TopOfTable">
-{*<h3>Locations</h3>*}
-<a href="addLocation.php">Add new location</a>
-</span></div>
-
-<div id="filters" class="filters">
-	<h3>Search:</h3>
-		<input type="text" id="searchField" class="searchField" />	
+<div id="controlsTop" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
+	<div class="left">
+		<h3>Search:</h3>
+		<input type="text" id="searchField" class="searchField" />
+	</div>
+	<div class="right">
+		<a id="addLocation" class="ui-state-default ui-corner-all button" href="addLocation.php">
+			<span class="ui-icon ui-icon-circle-plus"><!-- --></span>
+			<span class="buttonText">Add new location</span>
+		</a>
+	</div>
 </div>
 
-<table width="700" border="0" cellspacing="0" class="itemsTable searchable sortable">
-	<thead>
+<table width="700" border="0" cellspacing="0" class="itemsTable sortable searchable ui-widget ui-corner-all">
+	<thead class="ui-widget-header">
 		<tr>
 			<th width = "200">Location</th>
 			<th width="300">Description</th>
 			<th width="200">Actions</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="ui-widget-content">
 		{section name=num loop=$locations}
 		<tr{cycle values=" class=\"alt\","}>
 			<td align="center">{$locations[num]->location}</td>
 			<td align="center">{$locations[num]->description}</td>
 			<td align="center">
-			<a href="editLocation.php?id={$locations[num]->location_id}">Edit</a> or <input type="button" class="button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')" value="Delete">
+			<a href="editLocation.php?id={$locations[num]->location_id}" class="ui-state-default ui-corner-all button">
+                <span class="ui-icon ui-icon-circle-arrow-w"></span>
+                <span class="buttonText">Edit</span>
+            </a>
+            &nbsp;
+            <a class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')">
+                <span class="ui-icon ui-icon-circle-close"></span>
+                <span class="buttonText">Delete</span>
+            </a>
 			</td>
 		</tr>
 		{/section}

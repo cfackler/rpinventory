@@ -21,20 +21,18 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/locations.lib.php');
 require_once('lib/tooltip.lib.php');
+require_once('lib/inventory.lib.php');
+require_once('lib/loans.lib.php');
+require_once('lib/checkouts.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
   die("You dont have permission to access this page");
 
-$link = connect();
-if($link == null)
-  die("Database connection failed");
-	
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
@@ -45,19 +43,17 @@ $token = strtok($idString, ",");
 $idList = array();
 $itemDesc = array();
 
-while ($token !== false) {
-  $idList[] = (int)$token;
-  $token = strtok(",");
+while ($token !== false) 
+{
+    $idList[] = (int)$token;
+    $token = strtok(",");
 }
 
 //Verify all ids are valid,  get item description
-foreach ($idList as $id) {
-  $result = mysqli_query($link, "SELECT description FROM inventory WHERE inventory_id = " . $id);
-  if(mysqli_num_rows($result) == 0)
-    die("Invalid item ID");
-  
-  $item = mysqli_fetch_object($result);
-  $itemDesc[] = $item->description;
+foreach ($idList as $id) 
+{
+    $item = getInventoryItem($id);
+    $itemDesc[] = $item->description;
 }
 
 $itemsOut = array();
@@ -65,27 +61,30 @@ $itemsOut = array();
 //Check Loan status
 $loanedOut = false;
 
-foreach ($idList as $id) {
-  $loanQuery = "SELECT description FROM loans, inventory WHERE return_date is NULL and loans.inventory_id = inventory.inventory_id and loans.inventory_id = " . $id;
-  $loanResult = mysqli_query($link, $loanQuery);
-  if(mysqli_num_rows($loanResult) != 0) {
-    $item = mysqli_fetch_object($loanResult);
-    $itemsOut[] = $item->description;
-    $loanedOut = true;
-  }
+foreach ($idList as $id)
+{
+    // Make sure the item isn't loaned out
+    $result = isLoanedOut($id);
 
-  $checkoutQuery = "SELECT description from checkouts, inventory WHERE time_returned is NULL and checkouts.inventory_id = inventory.inventory_id and checkouts.inventory_id = " . $id;
-  $checkoutResult = mysqli_query( $link, $checkoutQuery ) or
-    die( 'Error getting inventory '.mysql_error() );
-  if( mysqli_num_rows( $checkoutResult ) != 0 ){
-    $item = mysqli_fetch_object( $checkoutResult );
-    $itemsOut[] = $item->description;
-    $loanedOut = true;
-  }
+    if (!is_null($result))
+    {
+        $itemsOut[] = $result->description;
+        $loanedOut = true;
+    }
+
+
+    // Make sure the item isn't checked out
+    $result = isCheckedOut($id);
+
+    if (!is_null($result))
+    {
+        $itemsOut[] = $result->description;
+        $loanedOut = true;
+    }
 }
 
 //Locations
-$locations = getLoanLocationsOptions();
+$locations = getLocationsOptions();
 
 //Tooltips
 $tooltips_html = getToolTips('loanItem');
@@ -103,9 +102,8 @@ $smarty->assign('loanedOut', $loanedOut);
 $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('locations', $locations);
 $smarty->assign('toolTipHelp', $tooltips_html);
+$smarty->assign('club_id', $_SESSION['club']);
 
 $smarty->display('index.tpl');
-
-mysqli_close($link);
 
 ?>

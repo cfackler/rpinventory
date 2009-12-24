@@ -18,99 +18,164 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 /* Takes two dates, formatted as YYYY-MM-DD */
 function getPurchases( $startDate, $endDate )
 {
-  require_once("lib/connect.lib.php");  //mysql
-  require_once("lib/auth.lib.php");  //Session
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
 
-  // Connect
-  $link = connect();
-  if( $link == null )
-    die( "Database connection failed" );
-  
-  // Authenticate
-  $auth = GetAuthority();
+    // Connect
+    $db = new database();
 
-  $startDate = mysqli_real_escape_string( $link, $startDate );
-  $endDate = mysqli_real_escape_string( $link, $endDate);
-  
-  // Loan History
-  $query= "SELECT purchase_date, purchases.purchase_id, company_name, description, cost FROM purchases, purchase_items, businesses, inventory WHERE purchase_items.inventory_id = inventory.inventory_id AND purchase_items.purchase_id = purchases.purchase_id AND purchases.business_id = businesses.business_id AND purchase_date >= '". $startDate ."' AND purchase_date <= '". $endDate ."'";
+    // Authenticate
+    $auth = GetAuthority();
 
-  $result = mysqli_query($link, $query) or
-    die( 'Could not get the purchase history' );
-
-  $records = array();
-  
-  while($record = mysqli_fetch_object($result))
+    if (!isset($_SESSION['club']))
     {
-      $records [] = $record;
+        return array();
     }
-  
-  mysqli_close($link);	
-  
-  return $records;
+
+    $club_id = $_SESSION['club'];
+
+    // Loan History
+    $query= 'SELECT purchase_date, purchases.purchase_id, company_name, description, cost, purchases.club_id FROM purchases, purchase_items, businesses, inventory WHERE purchase_items.inventory_id = inventory.inventory_id AND purchase_items.purchase_id = purchases.purchase_id AND purchases.business_id = businesses.business_id AND purchase_date >= ? AND purchase_date <= ?';
+
+    $result = $db->query($query, $startDate, $endDate, $club_id);
+
+    $records = $db->getObjectsArray($result);
+
+    $db->close();
+
+    return $records;
 }
 
-function getViewPurchases( $currentSortIndex=0, $currentSortDir=0 ){
-  require_once( 'lib/connect.lib.php' );
-  require_once( 'lib/auth.lib.php' );
+function getViewPurchases( $currentSortIndex=0, $currentSortDir=0 )
+{
+    require_once('class/database.class.php');
+    require_once( 'lib/auth.lib.php' );
 
-  $link = connect();
-  if( $link == null )
-    die( "Database connection failed" );
-  
-  // Authenticate
-  $auth = GetAuthority();
+    // Connect
+    $db = new database();
 
-  /* Determine query argument for sorting */
-  if($currentSortIndex == 0)
-    $sortBy = 'purchase_id';
-  else if($currentSortIndex == 1)
-    $sortBy = 'company_name';
-  else if($currentSortIndex == 2)
-    $sortBy = 'purchase_date';
-  else if($currentSortIndex == 3)
-    $sortBy = 'total_price';
-  
+    // Authenticate
+    $auth = GetAuthority();
+
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
+
+    $club_id = $_SESSION['club'];
+
+    /* Determine query argument for sorting */
+    if($currentSortIndex == 0)
+        $sortBy = 'purchase_id';
+    else if($currentSortIndex == 1)
+        $sortBy = 'company_name';
+    else if($currentSortIndex == 2)
+        $sortBy = 'purchase_date';
+    else if($currentSortIndex == 3)
+        $sortBy = 'total_price';
+
   /*  Determine query argument for sort direction
-      Ascending is default    */
-  if($currentSortDir == 1)
-    $sortBy .= ' DESC';
-  
-  //users
-  $query= "SELECT purchases.purchase_id, purchases.business_id, purchases.purchase_date, company_name, total_price
-	 FROM purchases, businesses
-	 WHERE businesses.business_id=purchases.business_id ORDER BY ".$sortBy;
-  $result = mysqli_query($link, $query);
-  $purchases = array();
-  $items = array();
-  
-  while($purchase = mysqli_fetch_object($result)){
-    $itemQuery = "select purchase_id, description from inventory, purchase_items where inventory.inventory_id = purchase_items.inventory_id and purchase_items.purchase_id = " . $purchase->purchase_id;
-    
-    $itemResult = mysqli_query($link, $itemQuery);
-    $string = "";
-    
-    while($item = mysqli_fetch_object($itemResult)){
-      if(strlen($string) != 0)
-	$string .= ", ";
-      
-      $string .= $item->description;
+  Ascending is default    */
+    if($currentSortDir == 1)
+        $sortBy .= ' DESC';
+
+    //users
+    $query= "SELECT purchases.purchase_id, purchases.business_id, purchases.purchase_date, company_name, total_price, purchases.club_id FROM purchases, businesses WHERE businesses.business_id=purchases.business_id ORDER BY ".$sortBy;
+
+    $result = $db->query($query, $club_id);
+    $purchases = $db->getObjectArray($result);
+    $items = array();
+
+    foreach($purchases as &$purchase)
+    {
+        $itemQuery = 'SELECT purchase_id, description from inventory, purchase_items WHERE inventory.inventory_id = purchase_items.inventory_id and purchase_items.purchase_id = ?';
+
+        $itemResult = $db->query($itemQuery, $purchase->purchase_id);
+
+        $string = '';
+
+        $items = $db->getObjectArray($itemResult);
+
+        foreach($items as &$item)
+        {
+            if (strlen($string) != 0)
+            {
+                $string .= ', ';
+            }
+
+            $string .= $item->description;
+        }
+
+        $purchase->items = $string;
     }
-    
-    $purchase->items = $string;
-    
-    $purchases[] = $purchase;
-    
-  }
-  
-  mysqli_close($link);
-  
-  return $purchases;  
+
+    $db->close();
+
+    return $purchases;  
 }
+
+function addPurchase($business_id, $purchase_date, $total_price)
+{
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
+
+    // Connect
+    $db = new database();
+
+    // Authenticate
+    $auth = GetAuthority();
+
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
+
+    $club_id = $_SESSION['club'];
+
+    //Insert purchase
+    $sql = 'INSERT INTO purchases (purchase_id, business_id, purchase_date, total_price, club_id) VALUES (NULL, ?, ?, ?, ?)';
+
+    $db->query($sql, $business_id, $purchase_date, $total_price, $club_id);
+
+    $id = $db->insertId();
+
+    $db->close();
+
+    return $id;
+}
+
+function addPurchaseItem($purchase_id, $inventory_id, $value)
+{
+    require_once('class/database.class.php');
+    require_once("lib/auth.lib.php");  //Session
+
+    // Connect
+    $db = new database();
+
+    // Authenticate
+    $auth = GetAuthority();
+
+    if (!isset($_SESSION['club']))
+    {
+        return array();
+    }
+
+    $club_id = $_SESSION['club'];
+
+    $sql = 'INSERT INTO purchase_items (purchase_id, inventory_id, cost, club_id) VALUES (?, ?, ?, ?)';
+
+    $db->query($sql, $purchase_id, $inventory_id, $value, $club_id);
+
+    $id = $db->insertId();
+
+    $db->close();
+
+    return $id;
+}   
 
 ?>

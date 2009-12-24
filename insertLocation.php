@@ -21,17 +21,15 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
+require_once('lib/locations.lib.php'); // Location library
 
 // Authenticate
 $auth = GetAuthority();	
-if($auth<1)
-  die("Please login to complete this action");
-
-$link = connect();
-if($link == null)
-  die("Database connection failed");
+if ($auth < 1)
+{
+    die("Please login to complete this action");
+}
 
 // Description
 $desc = $_POST["description"];
@@ -43,29 +41,25 @@ $location = $_POST["location"];
 if(strlen($location) == 0)
   die("Must have a location");
 
-// Clean user input
-$desc = mysqli_real_escape_string($link, $desc);
-$location = mysqli_real_escape_string($link, $location);
-
+// Remove whitespace
 $location = trim($location);
+$desc = trim($desc);
 
-$sql = "SELECT location FROM locations";
+// Get all of the stored locations
+$locations = getLocations();
 
-$result = mysqli_query($link, $sql); 
-
-// Make sure location doesn't already exist
-while ($row = mysqli_fetch_array($result)) {
-  if (strcasecmp($row['location'], $location) == 0){ 
-    die("A location already exists with name, '" . $location ."'");
-  }
+// Make sure we're not inserting a duplication location
+foreach ($locations as &$loc)
+{
+    if (strcasecmp(stripslashes($loc->location), $location) == 0)
+    {
+        die('A location already exists with the name, "'. $location .'"');
+    }
 }
 
-$sql = "INSERT INTO locations (location_id, location, description) VALUES (NULL, '" . $location . "', '" . $desc . "')";
-	
-if(!mysqli_query($link, $sql))
-  die("Query failed");
+// Add the location
+addLocation($location, $desc);
 
-mysqli_close($link);
 header('Location: manageLocations.php');
 	
 ?>

@@ -22,7 +22,6 @@
 */
 
 
-require_once( "lib/connect.lib.php" );  //mysql
 require_once( "lib/auth.lib.php" );  //Session
 
 // Authenticate
@@ -30,11 +29,7 @@ $auth = GetAuthority();
 if($auth<1)
   die("Please login to complete this action");
 
-$link = connect();
-if($link == null)
-  die("Database connection failed");
-
-require_once( "lib/config.class.php" );
+require_once( "class/config.class.php" );
 
 $user = Config::get( 'database_username' );
 $password = Config::get( 'database_password' );

@@ -18,8 +18,10 @@
 
 *}
 
+{include file=notificationArea.tpl}
 <form name="inventoryLogin" id="inventoryLogin" action="authenticate.php" method="post">	
-<center>
+  <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
+  
 
 	{if $loginStatus == "fail"}
 		<h3>Login Failed</h3>
@@ -34,10 +36,23 @@
 			<td width="100">Password</td>
 			<td><input type="password" name="password" id="password"></td>
 		</tr>
+		<tr>
+			<td width="100">Club</td>
+			<td>
+				<select class="dropDown" id="club_id" name="club_id">
+					<option value="-1">Select a club</option>
+					{section name=club loop=$clubs}
+					  <option value="{$clubs[club]->club_id}">
+					  {$clubs[club]->club_name}</option>
+					{/section}
+				</select>
+			</td>
+		</tr>
 	</table>
 
 	<br>
 
-	<input type="submit" class="button" value="Login">
+	<input type="submit" value="Login">
 
-</center>
+</div>
+</form>

@@ -21,14 +21,8 @@
 
 */
 
-
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/locations.lib.php' );
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
 
 //Authenticate
 $auth = GetAuthority();	
@@ -41,20 +35,19 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-//paginate( $smarty, 'locations', $currentSortIndex, $currentSortDir, 'locations' );
 $locations = getViewLocations();
 
 //Assign vars
-  
 $smarty->assign('title', "Manage Locations");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'manageLocations');
 $smarty->assign('locations', $locations);
+if (count($locations) == 0)
+{
+    $smarty->assign('emptyTable', TRUE);
+}
 
 
 $smarty->display('index.tpl');
-
-
-
 
 ?>
