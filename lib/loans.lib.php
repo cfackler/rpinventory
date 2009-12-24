@@ -242,5 +242,19 @@ function deleteInventoryLoans($inventory_id)
     return;
 }
 
+function returnLoan($loan_id, $return_date)
+{
+    require_once('class/database.class.php');
+
+    $db = new database();
+
+    $sql = 'UPDATE loans SET return_date = ? WHERE loan_id = ?';
+
+    $db->query($sql, $return_date, $loan_id);
+
+    $db->close();
+
+    return;
+}
 
 ?>
