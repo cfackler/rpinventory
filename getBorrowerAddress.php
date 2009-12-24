@@ -19,56 +19,59 @@
   You should have received a copy of the GNU General Public License
   along with RPInventory.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+ */
 
 require_once('modules/json/JSON.php');
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");   //Session
+require_once('lib/borrowers.lib.php');
+require_once('lib/addresses.lib.php');
 
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
-  die("You dont have permission to access this page");
-	
-$link = connect();
-if($link == null)
-  die("Database connection failed");
-	
+    die("You dont have permission to access this page");
+
 //JSON data 
 $data = array("Found" => 'False', "Address" => '', "Address2" => '', "City" => '', "State" => '', "Zipcode" => '', "Phone" => '');
 
 //GET ID
-$username = mysqli_real_escape_string( $link, $_GET['username'] );
+$username = $_GET['username'];
 if( strlen( $username ) == 0)
-  die("Invalid Username");	
-	
-//Address
-$query= "SELECT *  FROM addresses, borrowers WHERE addresses.address_id = borrowers.address_id and borrowers.name = '". $username."'";
-$result = mysqli_query($link, $query) or die( "Error finding address".mysql_error() );
+    die("Invalid Username");	
 
-if(mysqli_num_rows($result) != 0)
-  {
-    $item = mysqli_fetch_object($result);
+if (!isset($_SESSION['club']))
+{
+    die('Need club id');
+}
+
+$club_id = $_SESSION['club'];
+
+$borrower = getBorrowerFromName($username);
+
+$item = getAddressFromBorrower($borrower->borrower_id);
+
+if($item != false)
+{
     $data["Found"] = 'True';
-	
+
     if($item->address != NULL)
-      $data["Address"] = $item->address;
-		
+        $data["Address"] = $item->address;
+
     if($item->address2 != NULL)
-      $data["Address2"] = $item->address2;
-		
+        $data["Address2"] = $item->address2;
+
     if($item->city != NULL)
-      $data["City"] = $item->city;
-		
+        $data["City"] = $item->city;
+
     if($item->state != NULL)
-      $data["State"] = $item->state;
-		
+        $data["State"] = $item->state;
+
     if($item->zipcode != NULL)
-      $data["Zipcode"] = $item->zipcode;
-		
+        $data["Zipcode"] = $item->zipcode;
+
     if($item->phone != NULL)
-      $data["Phone"] = $item->phone;
-  }
+        $data["Phone"] = $item->phone;
+}
 
 $json = new Services_JSON(); 
 
