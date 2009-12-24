@@ -20,7 +20,6 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once('lib/clubs.lib.php');
 
 // SMARTY Setup
