@@ -101,7 +101,32 @@ function getBorrowerId($name, $club_id)
     return $record->borrower_id;
 }
 
+function getBorrowerFromName($name)
+{
+    require_once('class/database.class.php');
+    session_start();
 
+    // Connect
+    $db = new database();
+
+    if (!isset($_SESSION['club']))
+    {
+        die('Need club id');
+    }
+
+    $club_id = $_SESSION['club'];
+
+    // Borrowers
+    $query= "SELECT * FROM borrowers WHERE club_id = ? AND name = ?";
+
+    $result = $db->query($query, $club_id, $name);
+
+    $record = $db->getObject($result);
+
+    $db->close();
+
+    return $record;
+}
 
 function getBorrowerNames( $name )
 {
