@@ -22,7 +22,6 @@
 */
 
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/checkouts.lib.php' );
 
