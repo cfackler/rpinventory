@@ -44,7 +44,7 @@
 			<td align="center">{$locations[num]->location}</td>
 			<td align="center">{$locations[num]->description}</td>
 			<td align="center">
-			<a href="editLocation.php?id={$locations[num]->location_id}" class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete location \'{$locations[num]->location}\' ?','deleteLocation.php?id={$locations[num]->location_id}')">
+			<a href="editLocation.php?id={$locations[num]->location_id}" class="ui-state-default ui-corner-all button">
                 <span class="ui-icon ui-icon-circle-arrow-w"></span>
                 <span class="buttonText">Edit</span>
             </a>
