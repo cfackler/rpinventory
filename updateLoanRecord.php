@@ -21,12 +21,9 @@
 
 */
 
-require_once("lib/connect.lib.php");  //mysql
 require_once("lib/auth.lib.php");  //Session
-
-$link = connect();
-if($link == null)
-	die("Database connection failed");
+require_once('lib/loans.lib.php');
+require_once('lib/inventory.lib.php');
 
 //Authenticate
 $auth = GetAuthority();	
@@ -48,26 +45,26 @@ if( $orig_loc_id < 1 ) {
 	die( 'Invalid Location Id' );
 }
 
+$condition = $_POST['condition'];
+if (strlen($condition) == 0)
+{
+    die('Need a condition');
+}
+
 //Time
 $timestamp = mktime(0, 0, 0, (int)$_POST["months"], (int)$_POST["days"], (int)$_POST["year"]);	
 $date = date("Y-m-d", $timestamp);
 	
 	
-//Create query for returning item
-$sql = "Update loans set return_date = '" . $date . "' where loan_id = " . $loan_id;
+// Return the loan
+returnLoan($loan_id, $date);
 
-//Run update
-if(!mysqli_query($link, $sql))
-	die("Query failed");
+// Update the item condition
+updateInventoryCondition($inv_id, $condition);
 
-//Create query for updating item condition
-$sql = "UPDATE inventory SET current_condition = '". $_POST["condition"] . "', location_id = " . $orig_loc_id . " WHERE inventory_id = " . $inv_id;
+// Reset the item location
+updateInventoryLocation($inv_id, $orig_loc_id);
 
-if(!mysqli_query($link, $sql))
-        die("Query failed");
-
-
-mysqli_close($link);	
 header('Location: viewLoans.php');
 	
 ?>
