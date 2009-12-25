@@ -21,17 +21,18 @@
 
 */
 
-function insertCategory($category_name)
+function insertCategory($category_name, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once('lib/auth.lib.php');  //Session
+    $close = false;
 
-    // Authenticate
-    $auth = GetAuthority();	
-    if($auth<1)
-        die('Please login to complete this action');
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    $db = new database();
+        $db = new database();
+
+        $close = true;
+    }
 
     if(strlen($category_name) == 0)
     {
@@ -58,27 +59,30 @@ function insertCategory($category_name)
     $query = 'INSERT INTO categories (category_name, club_id) VALUES (?, ?)';
     $db->query($query, $category_name, $club_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return 'success';  
 }
 
-function get_item_category_ids($item_id, $store = 0)
+function get_item_category_ids($item_id, $store = 0, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once('lib/auth.lib.php');  //Session
-    session_start();
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     /* Store all category IDs into session variable if specified */
     if($store)
         $_SESSION['item_old_categoryIDs-'.$item_id] = array();
-
-    // Authenticate
-    $auth = GetAuthority();	
-    if($auth<1)
-        die('Please login to complete this action');
-
-    $db = new database();
 
     if (!isset($_SESSION['club']))
     {
@@ -119,7 +123,10 @@ function get_item_category_ids($item_id, $store = 0)
         $ids .= ','.$id->category_id;
     }
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $ids;
 }
