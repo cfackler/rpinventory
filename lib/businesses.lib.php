@@ -305,4 +305,36 @@ function getBusiness($business_id, $db = null)
     return $obj;
 }
 
+function VerifyBusinessExists($id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    //Find business
+    $result = $db->query('SELECT * FROM businesses WHERE business_id= ?', $id);
+
+    //verify count
+    if (mysqli_num_rows($result) == 0)
+    {
+        $db->close();
+
+        return false;
+    }
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return true;
+}
+
 ?>
