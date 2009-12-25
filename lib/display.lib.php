@@ -9,12 +9,19 @@
  *
  *	@return 	formatted list of <option> tags.
  **/
-function get_options($tableName, $valueColumn, $displayColumn)
+function get_options($tableName, $valueColumn, $displayColumn, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -32,8 +39,12 @@ function get_options($tableName, $valueColumn, $displayColumn)
         $options .= '<option value="'.$item->$valueColumn.'">'.$item->$displayColumn.'</option>';
     }
 
-    return $options;
+    if ($close)
+    {
+        $db->close();
+    }
 
+    return $options;
 }
 
 ?>
