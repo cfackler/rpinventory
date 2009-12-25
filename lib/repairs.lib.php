@@ -21,16 +21,18 @@
  */
 
 /* Takes two dates, formatted as YYYY-MM-DD */
-function getRepairs( $startDate, $endDate )
+function getRepairs($startDate, $endDate, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();    
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -46,19 +48,26 @@ function getRepairs( $startDate, $endDate )
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
 
-function getViewRepairs( $currentSortIndex=0, $currentSortDir=0 )
+function getViewRepairs($currentSortIndex=0, $currentSortDir=0, $db = null)
 {
-    require_once('class/database.class.php');    
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    $auth = getAuthority();
+        $db = new database();
+
+        $close = true;
+    }
 
     /* Determine query argument for sorting */
     if($currentSortIndex == 0)
@@ -93,21 +102,26 @@ function getViewRepairs( $currentSortIndex=0, $currentSortDir=0 )
 
     $items = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $items;
 }
 
-function addRepair($inventory_id, $business_id, $date, $cost, $description)
+function addRepair($inventory_id, $business_id, $date, $cost, $description, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();    
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -122,7 +136,10 @@ function addRepair($inventory_id, $business_id, $date, $cost, $description)
 
     $id = $db->insertId();
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $id;
 }
