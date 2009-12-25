@@ -722,10 +722,6 @@ function fillText(){
                     {
                         document.getElementById('borrower_id').value = response;
                     }
-                    else
-                    {
-                        alert('Could not get borrower id');
-                    }
                 }
             });
 }
