@@ -21,16 +21,19 @@
  */
 
 /* Takes two dates, formatted as YYYY-MM-DD */
-function getPurchases( $startDate, $endDate )
+function getPurchases($startDate, $endDate, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -46,21 +49,27 @@ function getPurchases( $startDate, $endDate )
 
     $records = $db->getObjectsArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
 
-function getViewPurchases( $currentSortIndex=0, $currentSortDir=0 )
+function getViewPurchases($currentSortIndex=0, $currentSortDir=0, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once( 'lib/auth.lib.php' );
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -114,21 +123,27 @@ function getViewPurchases( $currentSortIndex=0, $currentSortDir=0 )
         $purchase->items = $string;
     }
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $purchases;  
 }
 
-function addPurchase($business_id, $purchase_date, $total_price)
+function addPurchase($business_id, $purchase_date, $total_price, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -144,21 +159,27 @@ function addPurchase($business_id, $purchase_date, $total_price)
 
     $id = $db->insertId();
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $id;
 }
 
-function addPurchaseItem($purchase_id, $inventory_id, $value)
+function addPurchaseItem($purchase_id, $inventory_id, $value, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -173,7 +194,10 @@ function addPurchaseItem($purchase_id, $inventory_id, $value)
 
     $id = $db->insertId();
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $id;
 }   
