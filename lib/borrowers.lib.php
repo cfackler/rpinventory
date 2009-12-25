@@ -21,16 +21,19 @@
  */
 
 
-function getBorrowers()
+function getBorrowers($db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -46,21 +49,28 @@ function getBorrowers()
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
 
 /* Return the name of the borrower given an id */
-function getBorrowerName($id) {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+function getBorrowerName($id, $db = null)
+{
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $id = (int)$id;
     if($id == 0)
@@ -73,18 +83,27 @@ function getBorrowerName($id) {
 
     $name = $db->getObject($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $name->name;
 }
 
-function getBorrowerId($name, $club_id)
+function getBorrowerId($name, $club_id, $db = null)
 {
-    require_once('class/database.class.php');
-    session_start();
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     // Borrowers
     $query= "SELECT borrower_id FROM borrowers WHERE club_id = ? AND name = ?";
@@ -93,18 +112,27 @@ function getBorrowerId($name, $club_id)
 
     $record = $db->getObject($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $record->borrower_id;
 }
 
-function getBorrowerFromName($name)
+function getBorrowerFromName($name, $db = null)
 {
-    require_once('class/database.class.php');
-    session_start();
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -120,19 +148,30 @@ function getBorrowerFromName($name)
 
     $record = $db->getObject($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $record;
 }
 
-function getBorrowerNames( $name )
+function getBorrowerNames($name, $db = null)
 {
     require_once( 'modules/json/JSON.php' );
-    require_once('class/database.class.php');
     require_once( 'lib/auth.lib.php' );
 
-    // Connect
-    $db = new database();
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     // Authenticate
     $auth = GetAuthority();
@@ -155,7 +194,7 @@ function getBorrowerNames( $name )
 
     foreach($names as &$x)
     {
-        if (preg_match('/'.$name.'/i', $x->name))
+        if (preg_match('/^'.$name.'/i', $x->name))
         {
             $records[] = $x->name;
         }
@@ -163,21 +202,32 @@ function getBorrowerNames( $name )
 
     $data = array( "records" => $records );
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     $json = new Services_JSON();
 
     header('X-JSON: ('.$json->encode( $data ).')');
 }
 
-function getViewBorrowers( $currentSortIndex=0, $currentSortDir=0 )
+function getViewBorrowers( $currentSortIndex=0, $currentSortDir=0, $db = null)
 {
-    require_once('class/database.class.php');
     require_once("lib/auth.lib.php");  //Session
 
-    // Connect
-    $db = new database();
-    
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
+
     // Authenticate
     $auth = GetAuthority();
 
@@ -208,18 +258,29 @@ function getViewBorrowers( $currentSortIndex=0, $currentSortDir=0 )
 
     $borrowers = $db->getObjectArray($borrowerResult);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $borrowers;
 }
 
-function getBorrower($id)
+function getBorrower($id, $db = null)
 {
-    require_once('class/database.class.php');
     require_once('lib/auth.lib.php');
 
-    // Database
-    $db = new database();
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     // Authority
     $auth = GetAuthority();
@@ -233,18 +294,31 @@ function getBorrower($id)
 
     $borrower = $db->getObject($result);
 
+    if ($close)
+    {
+        $db->close();
+    }
+
     return $borrower;
 }
 
 // AJAX Call for adding a new borrower
-function insertBorrower( $name, $rin, $email, $address, $address2, $city, $state, $zip, $phone )
+function insertBorrower( $name, $rin, $email, $address, $address2, $city, $state, $zip, $phone, $db = null)
 {
-    require_once('class/database.class.php');
     require_once( 'modules/json/JSON.php' );
     require_once('lib/auth.lib.php');
 
-    // Database
-    $db = new database();
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     // Authority
     $auth = GetAuthority();
@@ -288,15 +362,28 @@ function insertBorrower( $name, $rin, $email, $address, $address2, $city, $state
 
     $result = $db->query($sql, $address_id, $name, $rin, $email, $club_id);
 
+    if ($close)
+    {
+        $db->close();
+    }
+
     header('X-JSON: ('.$json->encode($data).')');
 }
 
 // Add a borrower to the system
-function addBorrower($addressId, $rin, $email, $name)
-{
-    require_once('class/database.class.php');
+function addBorrower($addressId, $rin, $email, $name, $db = null)
+{    
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -312,16 +399,27 @@ function addBorrower($addressId, $rin, $email, $name)
 
     $id = $db->insertId();
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $id;
 }
 
-function deleteBorrower($borrower_id)
+function deleteBorrower($borrower_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -334,22 +432,36 @@ function deleteBorrower($borrower_id)
 
     $db->query($sql, $borrower_id, $club_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
 
-function updateBorrower($borrower_id, $name, $rin, $email)
+function updateBorrower($borrower_id, $name, $rin, $email, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'UPDATE borrowers SET name = ?, rin = ?, email = ? WHERE borrower_id = ?';
 
     $db->query($sql, $name, $rin, $email, $borrower_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
