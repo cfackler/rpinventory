@@ -20,11 +20,18 @@
 
 */
 
-function getUser($user_id)
+function getUser($user_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT * FROM logins WHERE id = ?';
 
@@ -32,14 +39,27 @@ function getUser($user_id)
 
     $user = $db->getObject($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $user;
 }
 
-function getUsers()
+function getUsers($db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
     require_once("lib/auth.lib.php");  //Session
 
     if (!isset($_SESSION['club']))
@@ -48,9 +68,6 @@ function getUsers()
     }
 
     $clubId = (int)$_SESSION['club'];
-
-    // Connect
-    $db = new database();
 
     // Authenticate
     $auth = GetAuthority();
@@ -62,19 +79,29 @@ function getUsers()
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
   
     return $records;
 }
 
-function getUsernames( $name )
+function getUsernames($name, $db = null)
 {
     require_once( 'modules/json/JSON.php' );
-    require_once('class/database.class.php');
     require_once( 'lib/auth.lib.php' );
 
-    // Connect
-    $db = new database();
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -104,20 +131,31 @@ function getUsernames( $name )
     }
 
     $data = array( "records" => $records );
-    $db->close();
+
+    if ($close)
+    {
+        $db->close();
+    }
 
     $json = new Services_JSON();
 
     header('X-JSON: ('.$json->encode( $data ).')');
 }
 
-function getViewUsers( $currentSortIndex=0, $currentSortDir=0 )
+function getViewUsers($currentSortIndex=0, $currentSortDir=0, $db = null)
 {
-    require_once('class/database.class.php');  //mysql
     require_once("lib/auth.lib.php");  //Session
 
-    // Database
-    $db = new database();
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     // Authenticate
     $auth = GetAuthority();
@@ -153,16 +191,29 @@ function getViewUsers( $currentSortIndex=0, $currentSortDir=0 )
 
     $result = $db->query($sql, $clubId);
 
-    return $db->getObjectArray($result);
+    $users = $db->getObjectArray($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $users;
 }
 
 // Add a new user and link them to the current club
-function addUser($username, $password, $accessLevel, $email, $clubId)
+function addUser($username, $password, $accessLevel, $email, $clubId, $db = null)
 {
-    require_once('class/database.class.php');  //mysql
+    $close = false;
 
-    // Database connection
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     // Insert the new user
     $sql = 'INSERT INTO logins (id, username, password, email) VALUES (NULL, ?, ?, ?)';
@@ -172,39 +223,60 @@ function addUser($username, $password, $accessLevel, $email, $clubId)
     $sql = 'INSERT INTO user_clubs (user_id, club_id, access_level) VALUES (?, ?, ?)';
     $db->query($sql, $db->insertId(), $clubId, $accessLevel);
 
-    // Close the connection
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
 
-function deleteUser($user_id)
+function deleteUser($user_id, $db = null)
 {
-    require_once('class/database.class.php');  //mysql
+    $close = false;
 
-    // Database connection
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'DELETE FROM logins WHERE id = ?';
 
     $db->query($sql, $user_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
 
-function updateUser($user_id, $username, $email, $password)
+function updateUser($user_id, $username, $email, $password, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'UPDATE logins SET username = ?, email = ?, password = ? WHERE id = ?';
 
     $db->query($sql, $username, $email, $password, $user_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
