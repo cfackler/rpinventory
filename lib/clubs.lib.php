@@ -20,11 +20,18 @@
 
  */
 
-function getClubs()
+function getClubs($db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT club_id, club_name FROM clubs';
 
@@ -32,7 +39,10 @@ function getClubs()
 
     $clubs = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $clubs;
 }
