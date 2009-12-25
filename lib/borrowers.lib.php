@@ -466,4 +466,34 @@ function updateBorrower($borrower_id, $name, $rin, $email, $db = null)
     return;
 }
 
+function VerifyBorrowerExists($id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    //Find borrower
+    $result = $db->query('SELECT * FROM borrowers WHERE borrower_id = ?', $id);
+
+    if(mysqli_num_rows($result) == 0)
+    {
+        $db->close();
+        return false;
+    }
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return true;
+}
+
 ?>
