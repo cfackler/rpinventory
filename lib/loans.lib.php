@@ -21,16 +21,18 @@
  */
 
 /* Returns the loan associated with the loanId given */
-function getLoan( $loanId )
+function getLoan($loanId, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once( 'lib/auth.lib.php' );
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT loans.*, inventory.description, borrowers.name, borrowers.borrower_id,locations.location, inventory.current_condition FROM borrowers, loans, inventory, locations WHERE loans.loan_id = ? AND loans.inventory_id = inventory.inventory_id AND loans.borrower_id = borrowers.borrower_id AND loans.original_location_id = locations.location_id';
 
@@ -38,22 +40,27 @@ function getLoan( $loanId )
 
     $loan = $db->getObject($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $loan;
 }
 
 /* Takes two dates, formatted as YYYY-MM-DD */
-function getLoans($startDate, $endDate)
+function getLoans($startDate, $endDate, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -69,14 +76,26 @@ function getLoans($startDate, $endDate)
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
 
-function getViewLoans($currentSortIndex=0, $currentSortDir=0)
+function getViewLoans($currentSortIndex=0, $currentSortDir=0, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -119,21 +138,30 @@ function getViewLoans($currentSortIndex=0, $currentSortDir=0)
     if($currentSortDir == 1)
         $query .= ' DESC';
 
-    // Database object
-    $db = new database();
-
     $result = $db->query($query, $club_id);
 
     $items = $db->getObjectArray($result);
 
+    if ($close)
+    {
+        $db->close();
+    }
+
     return $items;
 }
 
-function isLoanedOut($inventory_id)
+function isLoanedOut($inventory_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT description FROM loans, inventory WHERE return_date is NULL and loans.inventory_id = inventory.inventory_id and loans.inventory_id = ?';
 
@@ -146,17 +174,26 @@ function isLoanedOut($inventory_id)
         $obj = $db->getObject($result);
     }
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $obj;
 }
 
-function addLoan($inventory_id, $borrower_id, $date, $condition, $location_id)
+function addLoan($inventory_id, $borrower_id, $date, $condition, $location_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -169,15 +206,26 @@ function addLoan($inventory_id, $borrower_id, $date, $condition, $location_id)
 
     $db->query($sql, $inventory_id, $borrower_id, $date, $condition, $location_id, $club_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return;
 }
 
-function getBorrowerActiveLoans($borrower_id)
+function getBorrowerActiveLoans($borrower_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT * from loans WHERE return_date is null AND borrower_id = ?';
 
@@ -185,17 +233,26 @@ function getBorrowerActiveLoans($borrower_id)
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
 
-function getActiveLoansByOriginalLocation($location_id)
+function getActiveLoansByOriginalLocation($location_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT original_location_id FROM loans WHERE return_date is null AND original_location_id = ?';
 
@@ -203,56 +260,87 @@ function getActiveLoansByOriginalLocation($location_id)
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
 
-function deleteLoan($loan_id)
+function deleteLoan($loan_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'DELETE FROM loans WHERE loan_id = ?';
 
     //Run update
     $db->query($sql, $loan_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
 
-function deleteInventoryLoans($inventory_id)
+function deleteInventoryLoans($inventory_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'DELETE FROM loans WHERE inventory_id = ?';
 
     //Run update
     $db->query($sql, $loan_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
 
-function returnLoan($loan_id, $return_date)
+function returnLoan($loan_id, $return_date, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'UPDATE loans SET return_date = ? WHERE loan_id = ?';
 
     $db->query($sql, $return_date, $loan_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
