@@ -24,11 +24,18 @@
 // start session
 session_start(); 
 
-function Authenticate($username, $password, $clubID)
+function Authenticate($username, $password, $clubID, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     //Find user
     
@@ -41,6 +48,11 @@ function Authenticate($username, $password, $clubID)
         return false;
 
     $row = $db->getObject($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
 
     //Verify row
     if($row == false)
@@ -81,72 +93,6 @@ function GetAuthority()
         return null;
 
     return $_SESSION['authority'];
-}
-
-function VerifyUserExists($id, $link)
-{
-
-    //Find user
-    $result=mysqli_query($link, "select * from logins where id=" . mysqli_real_escape_string($link, $id));
-
-    //verify count
-    if(mysqli_num_rows($result) == 0)
-        return false;
-
-    return true;
-}
-
-function VerifyBorrowerExists($id)
-{
-    require_once('class/database.class.php');
-
-    $db = new database();
-
-    //Find borrower
-    $result = $db->query('SELECT * FROM borrowers WHERE borrower_id = ?', $id);
-
-    if(mysqli_num_rows($result) == 0)
-    {
-        $db->close();
-        return false;
-    }
-
-    $db->close();
-    return true;
-}
-
-function VerifyBusinessExists($id)
-{
-    require_once('class/database.class.php');
-
-    $db = new database();
-
-    //Find business
-    $result = $db->query('SELECT * FROM businesses WHERE business_id= ?', $id);
-
-    //verify count
-    if (mysqli_num_rows($result) == 0)
-    {
-        $db->close();
-
-        return false;
-    }
-
-    $db->close();
-
-    return true;
-}
-
-function VerifyItemExists($id, $link)
-{
-    //Find Inventory Item
-    $result=mysqli_query($link, "select * from `inventory` where inventory_id=" . $id);
-
-    //verify count
-    if(mysqli_num_rows($result) == 0)
-        return false;
-
-    return true;
 }
 
 ?>
