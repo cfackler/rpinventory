@@ -25,6 +25,7 @@ require_once("lib/auth.lib.php");  //Session
 require_once('lib/checkouts.lib.php');
 require_once('lib/inventory.lib.php');
 require_once('lib/addresses.lib.php');
+require_once('lib/borrowers.lib.php');
 
 //Authenticate
 $auth = GetAuthority();	
