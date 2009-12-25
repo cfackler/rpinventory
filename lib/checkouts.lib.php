@@ -20,16 +20,19 @@
 
  */
 
-function getCheckout($checkoutId)
+function getCheckout($checkoutId, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT checkouts.*, inventory.description, borrowers.name, locations.location, inventory.current_condition FROM checkouts, inventory, borrowers, locations WHERE checkouts.checkout_id = ? AND checkouts.inventory_id = inventory.inventory_id AND checkouts.borrower_id = borrowers.borrower_id AND locations.location_id = checkouts.original_location_id';
 
@@ -37,17 +40,27 @@ function getCheckout($checkoutId)
 
     $checkout = $db->getObject($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $checkout;
 }
 
-function getCheckouts( $startDate, $endDate ){
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+function getCheckouts($startDate, $endDate, $db = null)
+{
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -55,9 +68,6 @@ function getCheckouts( $startDate, $endDate ){
     }
 
     $club_id = $_SESSION['club'];
-
-    // Authenticate
-    $auth = GetAuthority();
 
     // Checkout History
     $query= 'SELECT time_taken, time_returned, event_name, starting_condition, ending_condition, inventory.description, username, original_location_id, checkouts.club_id FROM checkouts, inventory, logins WHERE logins.id = checkouts.borrower_id AND checkouts.inventory_id = inventory.inventory_id AND time_taken >= ? AND (time_returned <= ? OR time_returned IS NULL) AND checkouts.club_id = ?';
@@ -67,19 +77,27 @@ function getCheckouts( $startDate, $endDate ){
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
 
-function getViewCheckouts( $currentSortIndex=0, $currentSortDir=0 )
+function getViewCheckouts($currentSortIndex=0, $currentSortDir=0, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    //Authenticate
-    $auth = GetAuthority();	
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -129,16 +147,27 @@ function getViewCheckouts( $currentSortIndex=0, $currentSortDir=0 )
 
     $items = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $items;
 }
 
-function isCheckedOut($inventory_id)
+function isCheckedOut($inventory_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT description from checkouts, inventory WHERE time_returned is NULL and checkouts.inventory_id = inventory.inventory_id and checkouts.inventory_id = ?';
 
@@ -151,16 +180,27 @@ function isCheckedOut($inventory_id)
         $obj = $db->getObject($result);
     }
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $obj;
 }
 
-function getBorrowerActiveCheckouts($borrower_id)
+function getBorrowerActiveCheckouts($borrower_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT * from checkouts WHERE time_returned is null AND borrower_id = ?';
 
@@ -168,17 +208,27 @@ function getBorrowerActiveCheckouts($borrower_id)
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
 
-function getActiveCheckoutsByOriginalLocation($location_id)
+function getActiveCheckoutsByOriginalLocation($location_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT original_location_id FROM checkouts WHERE time_returned is null AND original_location_id = ?';
 
@@ -186,17 +236,27 @@ function getActiveCheckoutsByOriginalLocation($location_id)
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
 
-function addCheckout($inventory_id, $borrower_id, $time_taken, $event_location, $event_name, $starting_condition, $original_location_id)
+function addCheckout($inventory_id, $borrower_id, $time_taken, $event_location, $event_name, $starting_condition, $original_location_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -211,23 +271,36 @@ function addCheckout($inventory_id, $borrower_id, $time_taken, $event_location, 
 
     $id = $db->insertId();
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $id;
 }
 
-function updateCheckout($checkout_id, $time_returned, $ending_condition)
+function updateCheckout($checkout_id, $time_returned, $ending_condition, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'Update checkouts set time_returned = ?, ending_condition = ? WHERE checkout_id = ?';
 
     $db->query($sql, $time_returned, $ending_condition, $checkout_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
