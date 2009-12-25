@@ -27,6 +27,7 @@ require_once( 'lib/businesses.lib.php' );
 require_once( 'lib/borrowers.lib.php' );
 require_once( 'lib/display.lib.php' );
 require_once( 'lib/categories.lib.php' );
+require_once('lib/auth.lib.php');
 
 switch ($_GET['operation'])
 {
