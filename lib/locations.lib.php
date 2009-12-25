@@ -20,12 +20,19 @@
 
  */
 
-function getLocation($location_id)
+function getLocation($location_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -42,19 +49,29 @@ function getLocation($location_id)
     // Get array of objects
     $location = $db->getObject($result);
 
-    // Close connection
-    $db->close();
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
 
     return $location;
 
 }
 
-function getLocations()
+function getLocations($db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -72,25 +89,29 @@ function getLocations()
     // Get array of objects
     $locations = $db->getObjectArray($result);
 
-    // Close connection
-    $db->close();
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
 
     return $locations;
 }
 
 /* Gets the most commonly used location. Returns false upon failure */
-function getCommonLocation()
+function getCommonLocation($db = null)
 {
-    require_once('class/database.class.php');
-    require_once( 'lib/auth.lib.php' );
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
-    if($auth < 1)
-        die('You dont have permission to access this page');
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT count(locations.location_id) AS counts, locations.location_id, location FROM inventory, locations
         WHERE locations.location_id = inventory.location_id GROUP BY locations.location_id ORDER BY counts desc LIMIT 1';
@@ -103,22 +124,29 @@ function getCommonLocation()
         return false;
     }
 
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
+
     return $location;
 }
 
 /* Gets the "On Loan" location*/
-function getOnLoanLocation()
+function getOnLoanLocation($db = null)
 {
-    require_once('class/database.class.php');    
-    require_once( 'lib/auth.lib.php' );
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
-    if( $auth < 1 )
-        die( 'You don\'t have permission to access this page' );
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT * FROM locations WHERE location = "On Loan"';
 
@@ -126,21 +154,37 @@ function getOnLoanLocation()
 
     $result = $db->getObject($result); 
 
-    $db->close();
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
 
     return $result;
 }
 
 /* Gets the html for the location select object */
-function getLocationsOptions()
+function getLocationsOptions($db = null)
 {
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
+
     $loc_select;
 
     //get locations array
-    $locations = getLocations();
+    $locations = getLocations($db);
 
     /* Gets the most common location_id */
-    $commonLocation = getCommonLocation();
+    $commonLocation = getCommonLocation($db);
 
     /* Make sure we found a common location */
     if( $commonLocation ) {
@@ -155,19 +199,37 @@ function getLocationsOptions()
         }
     }
 
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
+
     return $loc_select;
 }
 
 /* Same as getLocationsOptions except places 'On Loan' as the first entry */
-function getLoanLocationsOptions()
+function getLoanLocationsOptions($db = null)
 {
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
+
     $loc_select;
 
     //get locations array
-    $locations = getLocations();
+    $locations = getLocations($db);
 
     /* Gets the item to put first in the list: the "On Loan" location */
-    $firstLocation = getOnLoanLocation();
+    $firstLocation = getOnLoanLocation($db);
 
     $loc_select = '<option value="'.$firstLocation->location_id . '">';
     $loc_select .= $firstLocation->location . '</option>';
@@ -180,21 +242,29 @@ function getLoanLocationsOptions()
     }
     $loc_select .= '<option>New Location</option>';
 
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
+
     return $loc_select;
 }
 
 // AJAX version of inserting a location
-function insertLocation($location, $desc)
+function insertLocation($location, $desc, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once('lib/auth.lib.php');  //Session
+    $close = false;
 
-    // Authenticate
-    $auth = GetAuthority();	
-    if($auth<1)
-        die('Please login to complete this action');
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    $db = new database();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     // Description
     if(strlen($desc) == 0)
@@ -224,18 +294,29 @@ function insertLocation($location, $desc)
 
     $db->query($sql, $location, $desc);
 
-    $db->close();
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
 
     return 'success';
-
 }
 
 // Add a new location
-function addLocation($location, $description)
+function addLocation($location, $description, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'INSERT INTO locations (location_id, location, description) VALUES (NULL, ?, ?)';
 
@@ -243,34 +324,55 @@ function addLocation($location, $description)
 
     $id = $db->insertId();
 
-    $db->close();
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
 
     return $id;
 }
 
-function deleteLocation($location_id)
+function deleteLocation($location_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'DELETE FROM locations WHERE location_id = ?';
 
     $db->query($sql, $location_id);
 
-    $db->close();
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
 
     return;
 }
 
-function getViewLocations( $currentSortIndex=0, $currentSortDir=0 ) {
-    require_once('class/database.class.php');
-    require_once('lib/auth.lib.php');  //Session
+function getViewLocations( $currentSortIndex=0, $currentSortDir=0, $db = null)
+{
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    //Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     /* Determine query argument for sorting */
     if($currentSortIndex == 0)
@@ -289,22 +391,38 @@ function getViewLocations( $currentSortIndex=0, $currentSortDir=0 ) {
 
     $location = $db->getObjectArray($locResult);
 
-    $db->close();
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
 
     return $locations;
 }
 
-function updateLocation($location_id, $location, $description)
+function updateLocation($location_id, $location, $description, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'UPDATE locations SET description = ?, location = ? WHERE location_id = ?';
 
     $db->query($sql, $description, $location, $location_id);
 
-    $db->close();
+    if ($close)
+    {
+        // Close connection
+        $db->close();
+    }
 
     return;
 }
