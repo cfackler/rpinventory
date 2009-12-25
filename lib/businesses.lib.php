@@ -21,16 +21,19 @@
  */
 
 
-function getBusinesses()
+function getBusinesses($db = null)
 {
-    require_once('class/database.class.php');
-    require_once('lib/auth.lib.php');  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -46,13 +49,29 @@ function getBusinesses()
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
 
 // Returns HTML for the content of a drop-down 'select' box
-function getBusinessesOptions() {
+function getBusinessesOptions($db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
+
     $output = '';
 
     $businesses = getBusinesses();	
@@ -65,19 +84,28 @@ function getBusinessesOptions() {
     }
 
     $output .= '<option value="newBusiness">Add a New Business</option>';
+    
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $output;
 }
 
-function getViewBusinesses( $currentSortIndex=0, $currentSortDir=0 )
+function getViewBusinesses($currentSortIndex=0, $currentSortDir=0, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    //Authenticate
-    $auth = GetAuthority();	
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -119,17 +147,27 @@ function getViewBusinesses( $currentSortIndex=0, $currentSortDir=0 )
     $result = $db->query($query, $club_id);
     $businesses = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $businesses;
 }
 
-function addBusiness($address_id, $company, $fax, $email, $website)
+function addBusiness($address_id, $company, $fax, $email, $website, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once('lib/auth.lib.php');  //Session
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -137,11 +175,6 @@ function addBusiness($address_id, $company, $fax, $email, $website)
     }
 
     $club_id = $_SESSION['club'];
-
-    // Authenticate
-    $auth = GetAuthority();	
-    if($auth<1)
-        die('Please login to complete this action');
 
     $sql = 'INSERT INTO businesses (business_id, address_id, company_name, fax, email, website, club_id) VALUES ( NULL, ?, ?, ?, ?, ?, ?)';
 
@@ -149,16 +182,28 @@ function addBusiness($address_id, $company, $fax, $email, $website)
 
     $id = $db->insertId();
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $id;
 }
 
 // AJAX function
-function insertBusiness( $company, $address, $address2, $city, $state, $zip, $phone, $fax, $email, $website ) 
+function insertBusiness($company, $address, $address2, $city, $state, $zip, $phone, $fax, $email, $website, $db = null) 
 {
-    require_once('class/database.class.php');
-    require_once('lib/auth.lib.php');  //Session
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -166,13 +211,6 @@ function insertBusiness( $company, $address, $address2, $city, $state, $zip, $ph
     }
 
     $club_id = $_SESSION['club'];
-
-    // Authenticate
-    $auth = GetAuthority();	
-    if($auth<1)
-        die('Please login to complete this action');
-
-    $db = new database();
 
     if( strlen( $company ) == 0 ) {
         die( 'Must have a company name' );
@@ -224,16 +262,27 @@ function insertBusiness( $company, $address, $address2, $city, $state, $zip, $ph
 
     $db->query($sql, $address_id, $company, $fax, $email, $website, $club_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return 'success';
 }
 
-function getBusiness($business_id)
+function getBusiness($business_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -248,7 +297,10 @@ function getBusiness($business_id)
 
     $obj = $db->getObject($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $obj;
 }
