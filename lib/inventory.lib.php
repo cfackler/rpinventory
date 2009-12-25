@@ -20,13 +20,19 @@
 
  */
 
-function getInventoryItem($inventory_id)
+function getInventoryItem($inventory_id, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     // Authenticate
     $auth = GetAuthority();
@@ -44,20 +50,27 @@ function getInventoryItem($inventory_id)
 
     $obj = $db->getObject($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $obj;
 }
 
-function getInventory($sortIndex = 0, $sortdir = 0)
+function getInventory($sortIndex = 0, $sortdir = 0, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    //Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     //Determine which column to sort by
     if($sortIndex == 0)
@@ -156,15 +169,27 @@ function getInventory($sortIndex = 0, $sortdir = 0)
         $item->category = $categoryString;
     }
 
+    if ($close)
+    {
+        $db->close();
+    }
+
     return $items;
 }
 
-function addInventory($itemDescription, $location, $condition, $value)
+function addInventory($itemDescription, $location, $condition, $value, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -180,37 +205,53 @@ function addInventory($itemDescription, $location, $condition, $value)
 
     $id = $db->insertId();
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $id;
 }
 
-function deleteInventory($inventory_id)
+function deleteInventory($inventory_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'DELETE FROM inventory WHERE inventory_id = ?';
 
     $db->query($sql, $inventory_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
 
-function addInventoryCategory($inventory_id, $category_id)
+function addInventoryCategory($inventory_id, $category_id, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -224,16 +265,27 @@ function addInventoryCategory($inventory_id, $category_id)
 
     $id = $db->insertId();
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $id;
 }
 
-function removeInventoryCategory($inventory_id, $category_id)
+function removeInventoryCategory($inventory_id, $category_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -246,16 +298,27 @@ function removeInventoryCategory($inventory_id, $category_id)
 
     $db->query($sql, $inventory_id, $category_id, $club_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
 
-function updateInventory($inventory_id, $description, $location_id, $condition, $value)
+function updateInventory($inventory_id, $description, $location_id, $condition, $value, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -269,53 +332,79 @@ function updateInventory($inventory_id, $description, $location_id, $condition, 
 
     $db->query($sql, $description, $location_id, $condition, $value, $inventory_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
 
-function updateInventoryCondition($inventory_id, $condition)
+function updateInventoryCondition($inventory_id, $condition, $db = null)
 {
-    require_once('class/database.class.php');
-    require_once("lib/auth.lib.php");  //Session
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-    // Authenticate
-    $auth = GetAuthority();
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'UPDATE inventory SET current_condition = ? WHERE inventory_id = ?';
 
     $db->query($sql, $condition, $inventory_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
 
-function updateInventoryLocation($inventory_id, $location_id)
+function updateInventoryLocation($inventory_id, $location_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'UPDATE inventory SET location_id = ? WHERE inventory_id = ?';
 
     $db->query($sql, $location_id, $inventory_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return;
 }
 
-function getInventoryFromLocation($location_id)
+function getInventoryFromLocation($location_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    // Connect
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
 
     $sql = 'SELECT location_id FROM inventory WHERE location_id = ?'; 
 
@@ -323,7 +412,10 @@ function getInventoryFromLocation($location_id)
 
     $records = $db->getObjectArray($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $records;
 }
