@@ -21,11 +21,17 @@
 */
 
 /* Returns the id of the given borrower */
-function getAddressFromBorrower($borrower_id)
+function getAddressFromBorrower($borrower_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -45,22 +51,28 @@ function getAddressFromBorrower($borrower_id)
 
     $obj = $db->getObject($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $obj;
 }
 
 /* Returns the address with the given id */
-function getAddress( $id )
+function getAddress($id, $db = null)
 {
-    require_once('class/database.class.php');
-	require_once('lib/auth.lib.php');
+    $close = false;
 
-	// Database
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
 
-	// Authority
-	$auth = GetAuthority();
+    	// Database
+        $db = new database();
+
+        $close = true;
+    }
 
 	// Sanitize
 	$id = (int)$id;
@@ -73,16 +85,26 @@ function getAddress( $id )
 
 	$address = $db->getObject($result);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
 	return $address;
 }
 
-function addAddress($address, $address2, $city, $state, $zipcode, $phone)
+function addAddress($address, $address2, $city, $state, $zipcode, $phone, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -97,16 +119,26 @@ function addAddress($address, $address2, $city, $state, $zipcode, $phone)
 
     $id = $db->insertId();
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 
     return $id;
 }
 
-function updateAddress($address_id, $address, $address2, $city, $state, $zipcode, $phone)
+function updateAddress($address_id, $address, $address2, $city, $state, $zipcode, $phone, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -119,14 +151,24 @@ function updateAddress($address_id, $address, $address2, $city, $state, $zipcode
 
     $db->query($sql, $address, $address2, $city, $state, $zipcode, $phone, $address_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 }
 
-function deleteAddress($address_id)
+function deleteAddress($address_id, $db = null)
 {
-    require_once('class/database.class.php');
+    $close = false;
 
-    $db = new database();
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
 
     if (!isset($_SESSION['club']))
     {
@@ -139,7 +181,10 @@ function deleteAddress($address_id)
 
     $db->query($sql, $addres_id, $club_id);
 
-    $db->close();
+    if ($close)
+    {
+        $db->close();
+    }
 }
 
 ?>
