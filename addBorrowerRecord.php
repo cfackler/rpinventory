@@ -24,6 +24,10 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/addresses.lib.php');
 require_once('lib/borrowers.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -67,9 +71,12 @@ $phone = $_POST['phone'];
 if(strlen($phone) == 0)
 	die('Must have a phone number');
 
-$addressId = addAddress($address, $address2, $city, $state, $zip, $phone);
+$addressId = addAddress($address, $address2, $city, $state, $zip, $phone, $db);
 
-addBorrower($addressId, $rin, $email, $name);
+addBorrower($addressId, $rin, $email, $name, $db);
+
+// Close database
+$db->close();
 
 header('Location: manageBorrowers.php');
 	
