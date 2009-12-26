@@ -23,6 +23,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/locations.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -39,7 +43,7 @@ if($id == 0)
   die("Invalid ID");
 
 //location
-$location = getLocation($id);
+$location = getLocation($id, $db);
 	
 //Assign vars
 $smarty->assign('title', "Edit Location");
@@ -48,5 +52,7 @@ $smarty->assign('page_tpl', 'editLocation');
 $smarty->assign('location', $location);
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
