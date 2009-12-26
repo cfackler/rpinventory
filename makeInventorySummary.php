@@ -22,7 +22,13 @@
 */
 
 require_once( 'lib/pdf.lib.php' );
+require_once('class/database.class.php');
 
-getInventorySummary();
+// Connect
+$db = new database();
+
+getInventorySummary($db);
+
+$db->close();
 
 ?>
