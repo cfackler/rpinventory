@@ -24,6 +24,10 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/inventory.lib.php');
 require_once('lib/purchases.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -103,16 +107,16 @@ if (!$ignoreBusiness)
         $website = $_POST["website"];
 
         //Insert the business address
-        $address_id = addAddress($address, $address2, $city, $state, $zip, $phone);
+        $address_id = addAddress($address, $address2, $city, $state, $zip, $phone, $db);
 
         //Insert the business
-        $bus_id = addBusiness($address_id, $company_name, $fax, $email, $website);
+        $bus_id = addBusiness($address_id, $company_name, $fax, $email, $website, $db);
     } //Incorrect business was selected
     elseif ($bus_id < 1)
     {
         die("Invalid Business was chosen");
     }
-    elseif (!VerifyBusinessExists($bus_id))
+    elseif (!VerifyBusinessExists($bus_id, $db))
     {
         die("Invalid Business");
     }
@@ -138,11 +142,11 @@ $purchase_id = 0;
 //Insert purchase
 if ($ignoreBusiness)
 {
-    $purchase_id = addPurchase(-1, $date, -1);
+    $purchase_id = addPurchase(-1, $date, -1, $db);
 }
 else
 {
-    $purchase_id = addPurchase($bus_id, $date, $total_cost);
+    $purchase_id = addPurchase($bus_id, $date, $total_cost, $db);
 }
 	
 //All items
@@ -174,10 +178,10 @@ for ($x=0; $x<$count; $x++)
     $location = (int)$_POST["location-" . $x];
 
     //Insert new inventory item
-    $inventory_id = addInventory($itemdesc, $location, $condition, $value);
+    $inventory_id = addInventory($itemdesc, $location, $condition, $value, $db);
 
     //Insert purchase record for new inventory item
-    $purchase_item_id = addPurchaseItem($purchase_id, $inventory_id, $value);
+    $purchase_item_id = addPurchaseItem($purchase_id, $inventory_id, $value, $db);
 
     // For all categories
 	$categories = $_POST['category-'.$x];
@@ -186,10 +190,12 @@ for ($x=0; $x<$count; $x++)
 		for ($c = 0; $c < sizeof($categories); $c++)
 		{
 			//Insert item category
-            addInventoryCategory($inventory_id, $categories[$c]);
+            addInventoryCategory($inventory_id, $categories[$c], $db);
 		}
 	}
 }
+
+$db->close();
 	
 header('Location: viewPurchases.php');
 	
