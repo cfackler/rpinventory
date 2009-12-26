@@ -23,6 +23,10 @@
 
 require_once('lib/users.lib.php');
 require_once("lib/auth.lib.php");  //Session
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -39,7 +43,9 @@ if ($id == 0)
 }
 
 //Remove login
-deleteUser($id);
+deleteUser($id, $db);
+
+$db->close();
 
 header('Location: manageUsers.php');
 
