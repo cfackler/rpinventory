@@ -23,6 +23,10 @@
 
 require_once('modules/json/JSON.php');
 require_once("lib/auth.lib.php");   //Session
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -60,7 +64,7 @@ $numRows = 0;
 
 if ( $data['itemID'] == 'company' ){
     // Businesses
-    $businesses = getBusinesses();
+    $businesses = getBusinesses($db);
 
     foreach($businesses as &$business)
     {
@@ -72,7 +76,7 @@ if ( $data['itemID'] == 'company' ){
 }
 else if ( $data['itemID'] == 'location' || preg_match( "/^newlocation[0-9]*$/", $data['itemID']) ){
     // Locations
-    $locations = getLocations();
+    $locations = getLocations($db);
 
     foreach($locations as &$location)
     {
@@ -89,7 +93,7 @@ else if ( $data['itemID'] == 'location_edit' ){
 
     $locID = $_GET['locID'];
 
-    $locations = getLocations();
+    $locations = getLocations($db);
 
     // Make sure location doesn't already exist
     foreach($locations as &$location)
@@ -110,6 +114,8 @@ else {
 $data['numRows'] = $numRows;
 
 $json = new Services_JSON(); 
+
+$db->close();
 
 header('X-JSON: ('.$json->encode($data).')');
 
