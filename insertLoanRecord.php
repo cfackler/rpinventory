@@ -26,6 +26,10 @@ require_once('lib/borrowers.lib.php');
 require_once('lib/addresses.lib.php');
 require_once('lib/inventory.lib.php');
 require_once('lib/loans.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -40,7 +44,7 @@ if ($borrower_id == 0)
 }
 
 // Check if the borrower exists
-if(!VerifyBorrowerExists($borrower_id)) {
+if(!VerifyBorrowerExists($borrower_id, $db)) {
     die('Invalid Borrower');
 }
 
@@ -65,7 +69,7 @@ $items = array();
 //Verify all ids are valid
 foreach ($idList as $id)
 {
-    $item = getInventoryItem($id);
+    $item = getInventoryItem($id, $db);
     
     if(is_null($item))
         die("Invalid item ID");
@@ -81,7 +85,7 @@ $useOld = $_POST["useOld"];
 $oldExists = false;
 //Check if old address exists
 
-$addressResult = getAddressFromBorrower($borrower_id);
+$addressResult = getAddressFromBorrower($borrower_id, $db);
 
 $address_id;
 if(!is_null($addressResult))
@@ -112,11 +116,11 @@ else
 
     if(!$oldExists)
     {
-        $address_id = addAddress($address, $address2, $city, $state, $zipcode, $phone);
+        $address_id = addAddress($address, $address2, $city, $state, $zipcode, $phone, $db);
     }
     else
     {
-        updateAddress($address_id, $address, $address2, $city, $state, $zipcode, $phone);
+        updateAddress($address_id, $address, $address2, $city, $state, $zipcode, $phone, $db);
     }
 }
 
@@ -127,11 +131,13 @@ $date = date("Y-m-d", $timestamp);
 foreach ($items as $item)
 {
     // Create the loan
-    addLoan($item->inventory_id, $borrower_id, $date, $item->current_condition, $item->location_id);
+    addLoan($item->inventory_id, $borrower_id, $date, $item->current_condition, $item->location_id, $db);
 
     // Update the current location of the item
-    updateInventoryLocation($item->inventory_id, $onLoanLocationId);
+    updateInventoryLocation($item->inventory_id, $onLoanLocationId, $db);
 }
+
+$db->close();
 
 header('Location: viewInventory.php');
 
