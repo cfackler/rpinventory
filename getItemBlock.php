@@ -25,6 +25,10 @@ require_once('modules/json/JSON.php');
 require_once("lib/auth.lib.php");   //Session
 require_once('lib/locations.lib.php'); //getting locations drop down items
 require_once('lib/display.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -37,8 +41,8 @@ $id = (int)$_GET['id'];
 if($id == 0)
   die("Invalid ID");
 
-$location_options = getLocationsOptions();
-$category_options = get_options('categories', 'id', 'category_name');
+$location_options = getLocationsOptions($db);
+$category_options = get_options('categories', 'id', 'category_name', $db);
 
 echo <<<END
 <table>
@@ -104,5 +108,7 @@ echo <<<END
   </table>
   <br />
 END;
+
+$db->close();
 
 ?>
