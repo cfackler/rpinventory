@@ -23,6 +23,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/locations.lib.php' );
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -35,7 +39,7 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-$locations = getViewLocations();
+$locations = getViewLocations($db);
 
 //Assign vars
 $smarty->assign('title', "Manage Locations");
@@ -49,5 +53,7 @@ if (count($locations) == 0)
 
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
