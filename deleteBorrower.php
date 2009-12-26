@@ -25,6 +25,10 @@ require_once('lib/borrowers.lib.php');
 require_once('lib/addresses.lib.php');
 require_once('lib/loans.lib.php');
 require_once('lib/checkouts.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -37,25 +41,27 @@ if($id == 0)
     die("Invalid ID");
 
 // Don't delete active borrowers
-$records = getBorrowerActiveLoans($id);
+$records = getBorrowerActiveLoans($id, $db);
 if (count($records) > 0) {
     die('Cannot delete an active borrower');
 }
 
-$records = getBorrowerActiveCheckouts($id);
+$records = getBorrowerActiveCheckouts($id, $db);
 if (count($records) > 0) {
     die('Cannot delete an active borrower');
 }
 
 // Get the address_id of the borrower
-$address = getAddressFromBorrower($id);
+$address = getAddressFromBorrower($id, $db);
 $address_id = $address->address_id;
 
 //Remove login
-deleteBorrower($id);
+deleteBorrower($id, $db);
 
 // Remove the address
-deleteAddress($address_id);
+deleteAddress($address_id, $db);
+
+$db->close();
 
 header('Location: manageBorrowers.php');
 
