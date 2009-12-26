@@ -25,6 +25,10 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/businesses.lib.php');
 require_once('lib/addresses.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -42,9 +46,9 @@ $id = (int)$_GET["id"];
 if($id == 0)
 	die("Invalid ID");
 
-$business = getBusiness($id);
+$business = getBusiness($id, $db);
 
-$address = getAddress($business->address_id);
+$address = getAddress($business->address_id, $db);
 
 // Need to pass company name
 $address->company_name = $business->company_name;
@@ -55,7 +59,8 @@ $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'viewBusinessAddress');
 $smarty->assign('address', $address);
 
-
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
