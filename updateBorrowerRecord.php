@@ -25,6 +25,10 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/addresses.lib.php');
 require_once('lib/borrowers.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -79,10 +83,12 @@ if($address_id == 0)
 
 
 // Update borrower
-updateBorrower($id, $name, $rin, $email);
+updateBorrower($id, $name, $rin, $email, $db);
 
 // Update address
-updateAddress($address_id, $address, $address2, $city, $state, $zip, $phone);
+updateAddress($address_id, $address, $address2, $city, $state, $zip, $phone, $db);
+
+$db->close();
 
 header('Location: manageBorrowers.php');
 	
