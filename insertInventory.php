@@ -24,6 +24,10 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/inventory.lib.php');
 require_once('lib/locations.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -57,7 +61,7 @@ if($loc_id == -1)
     if(strlen($newLocationName) == 0)
         die("Must enter a location name");
 
-    $loc_id = addLocation($newLocationName, $newLocationDescription);
+    $loc_id = addLocation($newLocationName, $newLocationDescription, $db);
 }
 
 //Value
@@ -67,14 +71,16 @@ if($value == 0)
 
 
 //Check location exists
-$location = getLocation($loc_id);
+$location = getLocation($loc_id, $db);
 
 if (is_null($location))
 {
     die("Invalid Location");
 }
 
-addInventory($desc, $loc_id, $condition, $value);
+addInventory($desc, $loc_id, $condition, $value, $db);
+
+$db->close();
 
 header('Location: viewInventory.php');
 
