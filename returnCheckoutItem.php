@@ -23,6 +23,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/checkouts.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -42,7 +46,7 @@ if($id == 0)
 
 
 //Loan status
-$checkoutItem = getCheckout($id);
+$checkoutItem = getCheckout($id, $db);
 
 if (is_null($checkoutItem))
 {
@@ -59,5 +63,7 @@ $smarty->assign('selectDate', getdate(time()));
 $smarty->assign('dateTime', date('Y-m-d H:i:s') );
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
