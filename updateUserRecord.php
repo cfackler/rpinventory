@@ -23,6 +23,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/users.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -56,7 +60,7 @@ if($id == 0)
 
 if (strlen($password) == 0)
 {
-    $user = getUser($id);
+    $user = getUser($id, $db);
     $password = $user->password;
 }
 else
@@ -64,7 +68,9 @@ else
     $password = md5($password);
 }
 
-updateUser($id, $username, $email, $password);
+updateUser($id, $username, $email, $password, $db);
+
+$db->close();
 
 header('Location: manageUsers.php');
 	
