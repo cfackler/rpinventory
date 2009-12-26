@@ -23,6 +23,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/users.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -38,7 +42,7 @@ if($id == 0)
     die("Invalid ID");
 
 //users
-$user = getUser($id);
+$user = getUser($id, $db);
 
 if($user == false)
     die("Invalid ID");
@@ -52,5 +56,7 @@ $smarty->assign('page_tpl', 'editUser');
 $smarty->assign('user', $user);
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
