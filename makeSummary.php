@@ -22,6 +22,10 @@
 */
 
 require_once( "lib/auth.lib.php" );  // Session
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 // Authenticate
 $auth = GetAuthority();	
@@ -76,7 +80,7 @@ if ( $inventory != '' ){
   $pdf->ezText('<u>Current Inventory</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
-  $return = getInventoryData();
+  $return = getInventoryData($db);
 
   $pdf->ezTable( $return );
   unset($data);
@@ -89,7 +93,7 @@ if ( $loans != '' ){
   $pdf->ezText('<u>Loan History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
-  $return = getLoanData( $startDate, $endDate );
+  $return = getLoanData($startDate, $endDate, $db);
 
   $pdf->ezTable( $return );
   unset($data);
@@ -101,7 +105,7 @@ if ( $checkouts != '' ){
   $pdf->ezText('<u>Checkout History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
 
-  $return = getCheckoutData( $startDate, $endDate );
+  $return = getCheckoutData($startDate, $endDate, $db);
 
   $pdf->ezTable( $return );
   unset( $data );
@@ -114,7 +118,7 @@ if ( $repairs != '' ){
   $pdf->ezText('<u>Repair History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
 
-  $return = getRepairData( $startDate, $endDate );
+  $return = getRepairData($startDate, $endDate, $db);
 
   $pdf->ezTable( $return );
   unset($data);
@@ -127,7 +131,7 @@ if ( $purchases != '' ){
   $pdf->ezText('<u>Purchase History</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
 
-  $return = getPurchasesData( $startDate, $endDate );
+  $return = getPurchasesData($startDate, $endDate, $db);
 
   $pdf->ezTable( $return );
   unset($data);
@@ -140,7 +144,7 @@ if ( $businesses != '' ){
   $pdf->ezText('<u>Businesses</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
-  $return = getBusinessesData();
+  $return = getBusinessesData($db);
   
   foreach( $return as $item ){
     $data[] = $item;
@@ -159,7 +163,7 @@ if ( $borrowers != '' ){
   $pdf->ezText('<u>Borrowers</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
-  $return = getBorrowerData();
+  $return = getBorrowerData($db);
   
   foreach( $return as $item ){
     $data[] = $item;
@@ -176,7 +180,7 @@ if ( $users != '' ){
   $pdf->ezText('<u>Users</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
-  $return = getUsersData();
+  $return = getUsersData($db);
   
   foreach( $return as $item ){
     $data[] = $item;
@@ -193,7 +197,7 @@ if ( $locations != '' ){
   $pdf->ezText('<u>Locations</u>', 10, array('justification'=>'center'));
   $pdf->ezText('');
   
-  $return = getLocationsData();
+  $return = getLocationsData($db);
   
   foreach( $return as $item ){
     $data[] = $item;
@@ -205,6 +209,7 @@ if ( $locations != '' ){
   $pdf->ezText('');
 }
 
+$db->close();
 
 $pdf->ezStream();
 ?>
