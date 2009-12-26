@@ -23,6 +23,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/purchases.lib.php' );
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -38,7 +42,7 @@ $smarty = new Smarty_Inv();
 //BEGIN Page
 
 //paginate( $smarty, 'purchases', $currentSortIndex, $currentSortDir, 'purchases' );
-$purchases = getViewPurchases( );
+$purchases = getViewPurchases($db);
 
 	
 //Assign vars
@@ -54,7 +58,6 @@ if (count($purchases) == 0)
 
 $smarty->display('index.tpl');
 
-
-
+$db->close();
 
 ?>
