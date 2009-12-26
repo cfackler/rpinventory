@@ -23,6 +23,10 @@
 
 require_once('lib/auth.lib.php');  //Session
 require_once('lib/users.lib.php'); // User library
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -59,7 +63,9 @@ if (!isset($_SESSION['club']))
     die('Must have a club ID');
 }
 
-addUser($username, md5($password), $access, $email, $_SESSION['club']);
+addUser($username, md5($password), $access, $email, $_SESSION['club'], $db);
+
+$db->close();
 
 header('Location: manageUsers.php');
 
