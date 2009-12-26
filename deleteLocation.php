@@ -26,6 +26,10 @@ require_once('lib/inventory.lib.php');
 require_once('lib/loans.lib.php');
 require_once('lib/checkouts.lib.php');
 require_once('lib/locations.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -38,17 +42,17 @@ if($id == 0)
     die("Invalid ID");
 
 //Verify no items use the location before deleting
-$inventory = getInventoryFromLocation($id);
+$inventory = getInventoryFromLocation($id, $db);
 
 if ( count($inventory) != 0) {
     die("Location still in use! Deletion will not be allowed until all inventory using this location are updated.");
 }
 
 // Make sure no items are loaned out that have the location as their original location
-$loanItems = getActiveLoansByOriginalLocation($id);
+$loanItems = getActiveLoansByOriginalLocation($id, $db);
 $numLoanItems = count($loanItems);
 
-$checkoutItems = getActiveCheckoutsByOriginalLocation($id);
+$checkoutItems = getActiveCheckoutsByOriginalLocation($id, $db);
 $numCheckoutItems = count($checkoutItems);
 
 if ( $numItems != 0 | $numCheckoutItems != 0)
@@ -56,7 +60,9 @@ if ( $numItems != 0 | $numCheckoutItems != 0)
     die("Loaned/Checked out item is stored at this location! Deletion will not be allowed until all inventory using this location are updated.");
 }
 
-deleteLocation($id);
+deleteLocation($id, $db);
+
+$db->close();
 
 header('Location: manageLocations.php');
 
