@@ -25,6 +25,10 @@ require_once('lib/auth.lib.php');  //Session
 require_once('lib/display.lib.php');
 require_once('lib/locations.lib.php');
 require_once('lib/inventory.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -50,8 +54,8 @@ $items = array();
 foreach($idList as &$id)
 {
     //item
-    $item = getInventoryItem($id);
-    $location = getLocation($item->location_id);
+    $item = getInventoryItem($id, $db);
+    $location = getLocation($item->location_id, $db);
 
     $item->location = $location->location;
 
@@ -59,10 +63,10 @@ foreach($idList as &$id)
 }
 
 //Locations
-$locations = getLocations();
+$locations = getLocations($db);
 
 //Categories Options (for populating dropdown)
-$category_options = get_options('categories', 'id', 'category_name');
+$category_options = get_options('categories', 'id', 'category_name', $db);
 
 //BEGIN Page
 
@@ -76,5 +80,7 @@ $smarty->assign('locations', $locations);
 $smarty->assign('category_options', $category_options);
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
