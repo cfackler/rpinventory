@@ -26,6 +26,10 @@ require_once('lib/locations.lib.php'); 	//locations
 require_once('lib/display.lib.php');		//formatting <option>s
 require_once('lib/tooltip.lib.php');
 require_once('lib/businesses.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -37,14 +41,14 @@ require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
 //Business List
-$businesses = getBusinesses();
+$businesses = getBusinesses($db);
 
 //Locations
-$locations = getLocationsOptions();
+$locations = getLocationsOptions($db);
 $tooltip_html = getToolTips('addPurchase');
 
-//Categoryes
-$category_options = get_options('categories', 'id', 'category_name');
+//Categories
+$category_options = get_options('categories', 'id', 'category_name', $db);
 
 //BEGIN Page
 	
@@ -59,5 +63,8 @@ $smarty->assign('tooltip', $tooltip_html);
 $smarty->assign('category_options', $category_options);
 
 $smarty->display('index.tpl');
+
+// Close
+$db->close();
 
 ?>
