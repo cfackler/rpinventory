@@ -23,6 +23,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/locations.lib.php'); // Location library
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 // Authenticate
 $auth = GetAuthority();	
@@ -46,7 +50,7 @@ $location = trim($location);
 $desc = trim($desc);
 
 // Get all of the stored locations
-$locations = getLocations();
+$locations = getLocations($db);
 
 // Make sure we're not inserting a duplication location
 foreach ($locations as &$loc)
@@ -58,7 +62,9 @@ foreach ($locations as &$loc)
 }
 
 // Add the location
-addLocation($location, $desc);
+addLocation($location, $desc, $db);
+
+$db->close();
 
 header('Location: manageLocations.php');
 	
