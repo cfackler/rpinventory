@@ -24,6 +24,10 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/loans.lib.php');
 require_once('lib/inventory.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -57,13 +61,15 @@ $date = date("Y-m-d", $timestamp);
 	
 	
 // Return the loan
-returnLoan($loan_id, $date);
+returnLoan($loan_id, $date, $db);
 
 // Update the item condition
-updateInventoryCondition($inv_id, $condition);
+updateInventoryCondition($inv_id, $condition, $db);
 
 // Reset the item location
-updateInventoryLocation($inv_id, $orig_loc_id);
+updateInventoryLocation($inv_id, $orig_loc_id, $db);
+
+$db->close();
 
 header('Location: viewLoans.php');
 	
