@@ -24,6 +24,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/loans.lib.php' ); 
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -42,10 +46,10 @@ if( isset( $_GET['loanId'] ) ) {
 
 
 //paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'loans' );
-$items = getViewLoans();
+$items = getViewLoans($db);
 
 if( $viewLoanId > 0 ) {
-	$loanObj = getLoan( $viewLoanId );
+	$loanObj = getLoan($viewLoanId, $db);
 }
 
 //BEGIN Page
@@ -72,5 +76,7 @@ else
   $smarty->assign('filter', 'all');
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
