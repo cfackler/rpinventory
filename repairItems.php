@@ -24,6 +24,10 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/inventory.lib.php');
 require_once('lib/businesses.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -52,14 +56,14 @@ while ($token !== false)
 $items = array();
 foreach ($idList as $id)
 {
-    $item = getInventoryItem($id);
+    $item = getInventoryItem($id, $db);
   
     $items[] = $item;
 }
 	
 
 //businesses list
-$businesses = getBusinesses();
+$businesses = getBusinesses($db);
 
 //BEGIN Page
 	
@@ -75,5 +79,7 @@ $smarty->assign('numBusinesses', count($businesses));
 $smarty->assign('selectDate', getdate(time()));
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
