@@ -22,7 +22,6 @@
 */
 
 require_once("lib/auth.lib.php");  //Session
-require_once("lib/inventory.lib.php"); //inventory functions
 
 //Authenticate
 $auth = GetAuthority();
