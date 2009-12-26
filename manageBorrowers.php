@@ -24,6 +24,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/borrowers.lib.php' );
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -36,7 +40,7 @@ require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-$borrowers = getViewBorrowers();
+$borrowers = getViewBorrowers($db);
 
 //Assign vars
 $smarty->assign('borrowers', $borrowers);
@@ -51,5 +55,7 @@ $smarty->assign('page_tpl', 'manageBorrowers');
 
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
