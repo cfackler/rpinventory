@@ -24,6 +24,10 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/inventory.lib.php');
 require_once('lib/checkouts.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -48,14 +52,16 @@ if( $time_returned == '' ){
 }
 
 // Get location
-$checkout = getCheckout($checkout_id);
+$checkout = getCheckout($checkout_id, $db);
 	
 // Update the checkout
-updateCheckout($checkout_id, $time_returned, $condition);
+updateCheckout($checkout_id, $time_returned, $condition, $db);
 
 // Update inventory
-updateInventoryLocation($inv_id, $checkout->original_location_id);
-updateInventoryCondition($inv_id, $condition);
+updateInventoryLocation($inv_id, $checkout->original_location_id, $db);
+updateInventoryCondition($inv_id, $condition, $db);
+
+$db->close();
 
 header('Location: viewCheckouts.php');
 	
