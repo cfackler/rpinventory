@@ -24,6 +24,10 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/loans.lib.php');
 require_once('lib/inventory.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -44,12 +48,13 @@ while ($token !== false)
 foreach ($idList as $id)
 {
     // Delete the inventory item
-    deleteInventory($id);
+    deleteInventory($id, $db);
 
     //Remove any loan records
-    deleteInventoryLoans($id);
+    deleteInventoryLoans($id, $db);
 }
 
+$db->close();
 
 header('Location: viewInventory.php');
 	
