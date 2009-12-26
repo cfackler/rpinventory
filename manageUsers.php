@@ -24,6 +24,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/users.lib.php' );
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -38,7 +42,7 @@ $smarty = new Smarty_Inv();
 
 
 //paginate( $smarty, 'users', $currentSortIndex, $currentSortDir, 'users' );
-$users = getViewUsers();
+$users = getViewUsers($db);
 
 
 //Assign vars
@@ -52,5 +56,7 @@ if (count($users) == 0)
 }
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
