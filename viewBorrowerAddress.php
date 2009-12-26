@@ -21,11 +21,12 @@
 
 */
 
-require_once('class/database.class.php');
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/borrowers.lib.php');
 require_once('lib/addresses.lib.php');	
+require_once('class/database.class.php');
 
+// Connect
 $db = new database();
 
 //Authenticate
