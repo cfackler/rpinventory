@@ -23,6 +23,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once( 'lib/repairs.lib.php' );
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -34,7 +38,7 @@ require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
 //paginate( $smarty, 'items', $currentSortIndex, $currentSortDir, 'repairs' );
-$items = getViewRepairs();
+$items = getViewRepairs($db);
 
 //BEGIN Page
 
@@ -48,5 +52,7 @@ $smarty->assign('page_tpl', 'viewRepairs');
 $smarty->assign('filter', $view);
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
