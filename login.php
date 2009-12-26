@@ -21,6 +21,10 @@
 */
 
 require_once('lib/clubs.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 // SMARTY Setup
 
@@ -35,7 +39,7 @@ if(isset($_GET['login']) && $_GET['login'] == "fail")
 }
 
 // Clubs list
-$clubs = getClubs();
+$clubs = getClubs($db);
 
 //Assign vars
 $smarty->assign('title', "Login");
@@ -44,5 +48,7 @@ $smarty->assign('page_tpl', 'login');
 $smarty->assign('clubs', $clubs);
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
