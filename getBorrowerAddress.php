@@ -25,6 +25,10 @@ require_once('modules/json/JSON.php');
 require_once("lib/auth.lib.php");   //Session
 require_once('lib/borrowers.lib.php');
 require_once('lib/addresses.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -46,9 +50,9 @@ if (!isset($_SESSION['club']))
 
 $club_id = $_SESSION['club'];
 
-$borrower = getBorrowerFromName($username);
+$borrower = getBorrowerFromName($username, $db);
 
-$item = getAddressFromBorrower($borrower->borrower_id);
+$item = getAddressFromBorrower($borrower->borrower_id, $db);
 
 if($item != false)
 {
@@ -74,6 +78,8 @@ if($item != false)
 }
 
 $json = new Services_JSON(); 
+
+$db->close();
 
 header('X-JSON: ('.$json->encode($data).')');
 
