@@ -24,6 +24,10 @@
 require_once("lib/auth.lib.php");  // Session
 require_once('lib/addresses.lib.php');
 require_once('lib/businesses.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 // Authenticate
 $auth = GetAuthority();	
@@ -82,7 +86,7 @@ $website = preg_replace('/^(http:\/\/)*(.+)$/i', 'http://$2', $website);
 
 $company = trim($company);
 
-$businesses = getBusinesses();
+$businesses = getBusinesses($db);
 
 // Case insensitive search 
 foreach($businesses as &$business)
@@ -95,9 +99,11 @@ foreach($businesses as &$business)
 }
 
 
-$address_id = addAddress($address, $address2, $city, $state, $zip, $phone);
+$address_id = addAddress($address, $address2, $city, $state, $zip, $phone, $db);
 
-$bus_id = addBusiness($address_id, $company, $fax, $email, $website);
+$bus_id = addBusiness($address_id, $company, $fax, $email, $website, $db);
+
+$db->close();
 
 header('Location: viewBusinesses.php');
 
