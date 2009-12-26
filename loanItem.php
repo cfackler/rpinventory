@@ -27,6 +27,10 @@ require_once('lib/tooltip.lib.php');
 require_once('lib/inventory.lib.php');
 require_once('lib/loans.lib.php');
 require_once('lib/checkouts.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -52,7 +56,7 @@ while ($token !== false)
 //Verify all ids are valid,  get item description
 foreach ($idList as $id) 
 {
-    $item = getInventoryItem($id);
+    $item = getInventoryItem($id, $db);
     $itemDesc[] = $item->description;
 }
 
@@ -64,7 +68,7 @@ $loanedOut = false;
 foreach ($idList as $id)
 {
     // Make sure the item isn't loaned out
-    $result = isLoanedOut($id);
+    $result = isLoanedOut($id, $db);
 
     if (!is_null($result))
     {
@@ -74,7 +78,7 @@ foreach ($idList as $id)
 
 
     // Make sure the item isn't checked out
-    $result = isCheckedOut($id);
+    $result = isCheckedOut($id, $db);
 
     if (!is_null($result))
     {
@@ -84,7 +88,7 @@ foreach ($idList as $id)
 }
 
 //Locations
-$locations = getLocationsOptions();
+$locations = getLocationsOptions($db);
 
 //Tooltips
 $tooltips_html = getToolTips('loanItem');
@@ -105,5 +109,7 @@ $smarty->assign('toolTipHelp', $tooltips_html);
 $smarty->assign('club_id', $_SESSION['club']);
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
