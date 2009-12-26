@@ -24,7 +24,11 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/loans.lib.php');
-	
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
+
 //Authenticate
 $auth = GetAuthority();
 if($auth < 1)
@@ -43,7 +47,7 @@ if($id == 0)
 
 
 //Loan status
-$loanItem = getLoan($id);
+$loanItem = getLoan($id, $db);
 
 if (is_null($loanItem))
 {
@@ -59,5 +63,7 @@ $smarty->assign('loan_id', $id);
 $smarty->assign('selectDate', getdate(time()));
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
