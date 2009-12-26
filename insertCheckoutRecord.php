@@ -26,6 +26,10 @@ require_once('lib/checkouts.lib.php');
 require_once('lib/inventory.lib.php');
 require_once('lib/addresses.lib.php');
 require_once('lib/borrowers.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -40,7 +44,7 @@ if ($borrower_id == 0)
     die('Invalid borrower');
 }
 
-if (!VerifyBorrowerExists($borrower_id))
+if (!VerifyBorrowerExists($borrower_id, $db))
 {
     die('Invalid borrower ID');
 }
@@ -61,7 +65,7 @@ $items = array();
 //Verify all ids are valid
 foreach ($idList as $id)
 {
-    $item = getInventoryItem($id);
+    $item = getInventoryItem($id, $db);
 
     if (is_null($item))
     {
@@ -79,7 +83,7 @@ $useOld = $_POST["useOld"];
 $oldExists = false;
 //Check if old address exists
 
-$address = getAddressFromBorrower($borrower_id);
+$address = getAddressFromBorrower($borrower_id, $db);
 $address_id;
 
 if (!is_null($address))
@@ -112,11 +116,11 @@ else
 
     if(!$oldExists)
     {
-        $address_id = addAddress($address, $address2, $city, $state, $zipcode, $phone);
+        $address_id = addAddress($address, $address2, $city, $state, $zipcode, $phone, $db);
     }
     else
     {
-        updateAddress($address_id, $address, $address2, $city, $state, $zipcode, $phone);
+        updateAddress($address_id, $address, $address2, $city, $state, $zipcode, $phone, $db);
     }
 }
 
@@ -126,10 +130,12 @@ $event_location = $_POST['event_location'];
 
 foreach ($items as $item)
 {
-    $checkoutId = addCheckout($item->inventory_id, $borrower_id, $date, $event_location, $event_name, $item->current_condition, $item->location_id);
+    $checkoutId = addCheckout($item->inventory_id, $borrower_id, $date, $event_location, $event_name, $item->current_condition, $item->location_id, $db);
 
-    updateInventoryLocation($item->inventory_id, 2);
+    updateInventoryLocation($item->inventory_id, 2, $db);
 }
+
+$db->close();
 
 header('Location: viewInventory.php');
 
