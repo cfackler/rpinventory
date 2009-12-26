@@ -24,6 +24,10 @@
 
 require_once('lib/auth.lib.php');  //Session
 require_once('lib/inventory.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -106,17 +110,19 @@ for($x=0; $x<$count; $x++)
     // Remove old categories
     foreach($toDeleteIDs as &$category_id)
     {
-        removeInventoryCategory($inventory_id, $category_id);
+        removeInventoryCategory($inventory_id, $category_id, $db);
     }
 
     // Add new categories
     foreach($toAddIDs as &$category_id)
     {
-        addInventoryCategory($inventory_id, $category_id);
+        addInventoryCategory($inventory_id, $category_id, $db);
     }
 
-    updateInventory($inventory_id, $desc, $location, $condition, $value);
+    updateInventory($inventory_id, $desc, $location, $condition, $value, $db);
 }
+
+$db->close();
 
 header('Location: viewInventory.php');
 
