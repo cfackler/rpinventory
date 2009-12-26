@@ -25,6 +25,10 @@ require_once("lib/auth.lib.php");  //Session
 require_once('lib/repairs.lib.php');
 require_once('lib/inventory.lib.php');
 require_once('lib/businesses.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -137,26 +141,28 @@ for($x=0; $x<$count; $x++)
         $company = trim($company);
 
         //Insert the business address
-        $address_id = addAddress($address, $address2, $city, $state, $zip, $phone);
+        $address_id = addAddress($address, $address2, $city, $state, $zip, $phone, $db);
 
         //Insert the business
-        $businessId = addBusiness($address_id, $company, $fax, $email, $website);
+        $businessId = addBusiness($address_id, $company, $fax, $email, $website, $db);
     }
     elseif($businessId == 0)
     {
         die("Invalid Business id");
     }
-    elseif(!VerifyBusinessExists($businessId))
+    elseif(!VerifyBusinessExists($businessId, $db))
     {
         die("Invalid Business");
     }
 
 
     //insert repair
-    $repair_id = addRepair($inventory_id, $businessId, $date, $cost, $desc);
+    $repair_id = addRepair($inventory_id, $businessId, $date, $cost, $desc, $db);
 
-    updateInventoryCondition($inventory_id, $condition);
+    updateInventoryCondition($inventory_id, $condition, $db);
 }
+
+$db->close();
 
 header('Location: viewInventory.php');
 	
