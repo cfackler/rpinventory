@@ -23,6 +23,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/locations.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -31,7 +35,7 @@ $auth = GetAuthority();
 require_once('lib/smarty_inv.class.php');
 $smarty = new Smarty_Inv();
 
-$locations = getLocations();
+$locations = getLocations($db);
 
 //BEGIN Page
 	
@@ -42,5 +46,7 @@ $smarty->assign('page_tpl', 'addInventory');
 $smarty->assign('locations', $locations);
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
