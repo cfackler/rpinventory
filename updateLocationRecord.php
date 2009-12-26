@@ -23,6 +23,10 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/locations.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();
@@ -46,7 +50,7 @@ if($location_id == 0)
 	die("Invalid item id");	
 
 // Location query, excluding itself
-$locations = getLocations();
+$locations = getLocations($db);
 
 $numRows = 0;
 
@@ -68,7 +72,9 @@ if ( $numRows > 0 ){
 }
 
 // Update the location
-updateLocation($location_id, $location_name, $desc);
+updateLocation($location_id, $location_name, $desc, $db);
+
+$db->close();
 
 header('Location: manageLocations.php');
 
