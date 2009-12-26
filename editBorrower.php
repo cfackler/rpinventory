@@ -24,6 +24,10 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/borrowers.lib.php');
 require_once('lib/addresses.lib.php');
+require_once('class/database.class.php');
+
+// Connect
+$db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
@@ -39,13 +43,13 @@ if($id == 0)
   die("Invalid ID Given");
 
 //borrowers
-$borrower = getBorrower( $id );
+$borrower = getBorrower($id, $db);
 
 if($borrower == false)
   die("Could not get information");
  
 $address_id = $borrower->address_id;
-$address = getAddress( $address_id );
+$address = getAddress($address_id, $db);
 
 //BEGIN Page
 	
@@ -58,5 +62,7 @@ $smarty->assign('address', $address);
 $smarty->assign('address_id', $address_id);
 
 $smarty->display('index.tpl');
+
+$db->close();
 
 ?>
