@@ -109,10 +109,19 @@ class database{
         for( $i = 1; $i < $numArgs; $i++ ) /* Replaces all %x vars with their actual values */
         {
             $arg = func_get_arg($i);
-            $arg = mysqli_real_escape_string( $this->_link, $arg);
-    
-            if (!is_numeric($arg)) /* Add double quotes if necessary for SQL */
+            
+            /* Remove slashes if magic quotes is on */
+            if (get_magic_quotes_gpc())
             {
+                $arg = stripslashes($value);
+            }
+
+            /* Only need to escape non-numeric values */
+            if (!is_numeric($arg))
+            {
+                $arg = mysqli_real_escape_string( $this->_link, $arg);
+                
+                /* Add double quotes if necessary for SQL */
         	    $arg = '"'. $arg .'"';
             }
     
