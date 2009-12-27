@@ -19,7 +19,7 @@
 *}
 
 
-<form id="itemList" name="itemList">
+<form id="itemList" name="itemList" method="post" action="#">
 
 <div id="controlsTop" class="ui-widget-smaller ui-widget-content ui-corner-all controls">
 	<div class="left">
@@ -58,7 +58,7 @@
 		{section name=itemLoop loop=$items}
 		<tr{cycle values=" class=\"alt\","}>
 			{if $authority >= 1}
-				<td><input type="checkbox" name="{$items[itemLoop]->inventory_id}" id="{$items[itemLoop]->inventory_id}"></td>
+				<td><input type="checkbox" name="{$items[itemLoop]->inventory_id}" id="item{$items[itemLoop]->inventory_id}" /></td>
 			{/if}
 			<td>{$items[itemLoop]->description}</td>
 			<td>{$items[itemLoop]->category}</td>

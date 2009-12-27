@@ -34,7 +34,7 @@ $this->assign('clubName', $_SESSION['club_name']);
 <script src="js/helpToolTip.js" language="javascript" type="text/javascript"></script>
 <link rel="stylesheet" href="js/modulesJS/asmselect/jquery.asmselect.css" type="text/css" />
 <script src="js/modules.js" language="javascript" type="text/javascript"></script>
-<script>jQuery.noConflict();</script>
+<script type="text/javascript">jQuery.noConflict();</script>
 
 <script src="js/functions.interface.js" language="javascript" type="text/javascript"></script>
 
