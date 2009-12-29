@@ -113,7 +113,7 @@ class database{
             /* Remove slashes if magic quotes is on */
             if (get_magic_quotes_gpc())
             {
-                $arg = stripslashes($value);
+                $arg = stripslashes($arg);
             }
 
             /* Only need to escape non-numeric values */
