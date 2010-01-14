@@ -281,4 +281,31 @@ function updateUser($user_id, $username, $email, $password, $db = null)
     return;
 }
 
+function getClubUsers($club_id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'SELECT user_id FROM user_clubs WHERE club_id = ?';
+
+    $result = $db->query($sql, $club_id);
+
+    $users = getObjectArray($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $users;
+}
+
 ?>
