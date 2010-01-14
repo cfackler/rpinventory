@@ -46,3 +46,55 @@ function getClubs($db = null)
 
     return $clubs;
 }
+
+function getClub($id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'SELECT club_id, club_name FROM clubs WHERE club_id = ?';
+
+    $result = $db->query($sql, $id);
+
+    $clubs = $db->getObject($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $clubs;
+}
+
+function updateClub($id, $club_name, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'UPDATE clubs SET club_name = ? WHERE club_id = ?';
+
+    $result = $db->query($sql, $club_name, $id);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $clubs;
+}
