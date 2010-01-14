@@ -26,13 +26,14 @@
 		<h3>Search:</h3>
 		<input type="text" id="searchField" class="searchField" />
 	</div>
+    {if $authority >= 1}
 	<div class="right">
 		<a id="addPurchase" class="ui-state-default ui-corner-all button" href="addPurchase.php" title="Add to inventory">
 			<span class="ui-icon ui-icon-circle-plus"><!-- --></span>
 			<span class="buttonText">Insert inventory</span>
 		</a>
-		
 	</div>
+    {/if}
 </div>
 {if $authority >= 1}
 <table width="800" id="itemsTable" class="itemsTable sortable searchable clickable ui-widget ui-corner-all" cellspacing="0" >
