@@ -112,9 +112,34 @@ function deleteClub($id, $db = null)
         $close = true;
     }
 
-    $sql = 'DELETE FROM logins WHERE club_id = ? LIMIT 1';
+    $sql = 'DELETE FROM clubs WHERE club_id = ? LIMIT 1';
 
-    $result = $db->query($sql, $club_name, $id);
+    $result = $db->query($sql, $id);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $clubs;
+}
+
+function addClub($club_name, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'INSERT INTO clubs VALUES (NULL, ?)';
+
+    $result = $db->query($sql, $club_name);
 
     if ($close)
     {
