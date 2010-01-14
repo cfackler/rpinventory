@@ -244,7 +244,7 @@ function deleteUser($user_id, $db = null)
         $close = true;
     }
 
-    $sql = 'DELETE FROM logins WHERE id = ?';
+    $sql = 'DELETE FROM logins WHERE id = ? LIMIT 1';
 
     $db->query($sql, $user_id);
 
