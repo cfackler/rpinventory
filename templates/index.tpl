@@ -127,6 +127,12 @@ $this->assign('clubName', $_SESSION['club_name']);
 					<li class="ui-state-default ui-corner-all">
 				{/if}
 				<a id="manageUsers" href="manageUsers.php">Users</a></li>
+                {if $page_tpl == 'manageClubs'}
+                    <li class="ui-state-default ui-corner-all ui-state-active">
+                {else}
+                    <li class="ui-state-default ui-corner-all">
+                {/if}
+                <a id="manageClubs" href="manageClubs.php">Clubs</a></li>
 				{if $page_tpl == 'generateSummary'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
