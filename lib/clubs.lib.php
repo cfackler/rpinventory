@@ -98,3 +98,29 @@ function updateClub($id, $club_name, $db = null)
 
     return $clubs;
 }
+
+function deleteClub($id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'DELETE FROM logins WHERE club_id = ? LIMIT 1';
+
+    $result = $db->query($sql, $club_name, $id);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $clubs;
+}
+
