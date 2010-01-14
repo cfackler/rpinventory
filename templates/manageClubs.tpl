@@ -48,7 +48,7 @@
                     <span class="buttonText">Edit name</span>
                 </a>
                 &nbsp;
-                <a href="addUserClub.php?id{$clubs[clubLoop]->club_id}" class="ui-state-default ui-corner-all button">
+                <a href="addUserClub.php?id={$clubs[clubLoop]->club_id}" class="ui-state-default ui-corner-all button">
                     <span class="ui-icon ui-icon-circle-plus"></span>
                     <span class="buttonText">Add user to club</span>
                 </a>
