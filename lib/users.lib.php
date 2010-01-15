@@ -455,4 +455,29 @@ function addUserToClub($user_id, $club_id, $accessLevel, $db = null)
     return;
 }
 
+function removeUserFromClub($user_id, $club_id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    // Link the user to the current club
+    $sql = 'DELETE FROM user_clubs WHERE user_id = ? AND club_id = ? LIMIT 1';
+    $db->query($sql, $user_id, $club_id);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return;
+}
+
 ?>
