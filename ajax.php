@@ -103,6 +103,22 @@ case 'borrowerIdFromName':
 
     print getBorrowerId($_GET['name'], $_GET['club_id']);
     break;
+
+case 'addUserToClub':
+    require_once('class/database.class.php');
+    require_once('lib/users.lib.php');
+
+    $db = new database();
+    $username = $_GET['username'];
+    $access = $_GET['access'];
+    $club_id = $_GET['club_id'];
+
+    $user_id = getUserFromName($_GET['username']);
+    addUserToClub($user_id->id, $club_id, $access, $db);
+
+    $db->close();
+    break;
+
 }
 
 

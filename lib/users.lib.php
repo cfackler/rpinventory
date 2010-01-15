@@ -47,6 +47,101 @@ function getUser($user_id, $db = null)
     return $user;
 }
 
+function getAllUsers($db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    require_once("lib/auth.lib.php");  //Session
+
+    // Authenticate
+    $auth = GetAuthority();
+
+    // Users
+    $query = "SELECT * FROM logins";
+
+    $result = $db->query($query);
+
+    $records = $db->getObjectArray($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+  
+    return $records;
+}
+
+function getUserFromName($username, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    // Users
+    $query = "SELECT * FROM logins WHERE username = ? LIMIT 1";
+
+    $result = $db->query($query, $username);
+
+    $record = $db->getObject($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+  
+    return $record;
+
+}
+
+function getAllUsernames($db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    require_once("lib/auth.lib.php");  //Session
+
+    // Authenticate
+    $auth = GetAuthority();
+
+    // Users
+    $query = "SELECT username FROM logins";
+
+    $result = $db->query($query);
+
+    $records = $db->getObjectArray($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+  
+    return $records;
+}
+
 function getUsers($db = null)
 {
     $close = false;
@@ -73,7 +168,7 @@ function getUsers($db = null)
     $auth = GetAuthority();
 
     // Users
-    $query = "SELECT username, email FROM logins, user_clubs WHERE user_clubs.user_id = logins.user_id AND user_clubs.club_id = ?";
+    $query = "SELECT username, email FROM logins, user_clubs WHERE user_clubs.user_id = logins.id AND user_clubs.club_id = ?";
 
     $result = $db->query($query, $clubId);
 
@@ -294,11 +389,11 @@ function getClubUsers($club_id, $db = null)
         $close = true;
     }
 
-    $sql = 'SELECT user_id FROM user_clubs WHERE club_id = ?';
+    $sql = 'SELECT user_id, username FROM user_clubs, logins WHERE club_id = ? AND logins.id = user_clubs.user_id';
 
     $result = $db->query($sql, $club_id);
 
-    $users = getObjectArray($result);
+    $users = $db->getObjectArray($result);
 
     if ($close)
     {
@@ -306,6 +401,58 @@ function getClubUsers($club_id, $db = null)
     }
 
     return $users;
+}
+
+function getClubUsernames($club_id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'SELECT username FROM user_clubs, logins WHERE club_id = ? AND logins.id = user_clubs.user_id';
+
+    $result = $db->query($sql, $club_id);
+
+    $users = $db->getObjectArray($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $users;
+}
+
+function addUserToClub($user_id, $club_id, $accessLevel, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    // Link the user to the current club
+    $sql = 'INSERT INTO user_clubs (user_id, club_id, access_level) VALUES (?, ?, ?)';
+    $db->query($sql, $user_id, $club_id, $accessLevel);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return;
 }
 
 ?>

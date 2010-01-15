@@ -23,6 +23,7 @@
 
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/clubs.lib.php');
+require_once('lib/users.lib.php');
 require_once('class/database.class.php');
 
 // Connect
@@ -52,14 +53,36 @@ if ($club == false)
 {
     die("Could not get information");
 }
- 
-//BEGIN Page
+
+$users = getAllUsers($db);
+$users_strings = array();
+foreach($users as &$user)
+{
+    $users_strings[] = $user->username;
+}
+
+$club_users = getClubUsers($id, $db);
+$club_users_strings = array();
+foreach($club_users as &$user)
+{
+    $club_users_strings[] = $user->username;
+}
+
+// Get all users not currently in the club already
+$display_users = array_diff($users_strings, $club_users_strings);
+$finalUsers = array();
+foreach($display_users as &$user)
+{
+    $finalUsers[] = $user;
+}
 	
 //Assign vars
 $smarty->assign('title', "Edit Club");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'editClub');
 $smarty->assign('club', $club);
+$smarty->assign('users', $club_users);
+$smarty->assign('newUsers', $finalUsers);
 
 $smarty->display('index.tpl');
 

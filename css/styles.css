@@ -128,6 +128,9 @@ div.header {
   border-left: 1px solid #347992;
 }
 
+.userTable tbody tr td {
+    border-top: 1px solid #347992;
+}
 
 
 
@@ -224,7 +227,7 @@ span.headerContent {
   color: #ffffff;
 }
 
-a.icon_button {
+a.icon_button, p.icon_button {
   float: left;
   padding: 4px 4px 4px 0px;
   text-decoration: none;
@@ -240,24 +243,27 @@ span.icon_button_icon {
   float: left;
   margin: 0 4px;
 }
-a.button {
+a.button, p.button {
   padding: 0.4em 0.4em 0.4em 20px;
   position: relative;
   text-decoration: none;
 }
-a.button span.ui-icon {
+a.button span.ui-icon, p.button span.ui-icon {
   left: 0.2em;
   margin: -8px 5px 0 0;
   position: absolute;
   top: 50%;
 }
-a.button span.buttonText {
+a.button span.buttonText, p.button span.buttonText {
   font-size: 12px;
 }
-a.button.ui-state-active {
+a.button.ui-state-active, p.button.ui-state-active {
   cursor: default;
 }
 
+a.button:hover, p.button:hover {
+    cursor: pointer;
+}
 
 
 #helpToolTip {

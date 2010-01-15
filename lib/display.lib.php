@@ -47,4 +47,16 @@ function get_options($tableName, $valueColumn, $displayColumn, $db = null)
     return $options;
 }
 
+function get_options_from_array($data, $valueColumn, $displayColumn)
+{
+    $options = '';
+
+    foreach($data as &$row)
+    {
+        $options .= '<option value="'. $row->$valueColumn .'">'.$row->$displayColumn.'</option>';
+    }
+
+    return $options;
+}
+
 ?>

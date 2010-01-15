@@ -31,6 +31,52 @@
           <td><input type="text" name="club_name" size="40" value="{$club->club_name}" id="club_name" class="validate"></td>
         </tr>
 
+        <tr>
+            <td valign="top">Users: </td>
+            <td>
+                <table class="itemsTable userTable ui-widget ui-corner-all" cellspacing="0">
+                    {section name=userLoop loop=$users}
+                    <tr {cycle values=" class=\"alt\","}>
+                        <td>{$users[userLoop]->username}</td>
+                        <td>
+                            <a href="deleteUserClub.php?club_id={$club->club_id}&user_id={$users[userLoop]->user_id}" class="ui-state-default ui-corner-all button">
+                                <span class="ui-icon ui-icon-circle-minus"></span>
+                                <span class="buttonText">Remove user</span>
+                            </a>
+                    </tr>
+                    {/section}
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td/>
+            <td>
+                <p id="responseMessage"></p>
+                <p style="width: 100px" onclick="newUserClubShow();" class="ui-state-default ui-corner-all button">
+                    <span class="ui-icon ui-icon-circle-arrow-s"></span>
+                    <span class="buttonText">Show new user</span>
+                </p>
+            </td>
+        </tr>
+
+        <tr id="newUser" style="display: none">
+            <td/>
+            <td>
+                <select id="newUserSelect">
+                    {section name=usersLoop loop=$newUsers}
+                        <option value="{$newUsers[usersLoop]}">{$newUsers[usersLoop]}</option>
+                    {/section}
+                </select>
+                <br />
+                <input type="radio" name="access" id="access1" value="1" checked="checked" /><label for="access1">User </label><input type="radio" name="access" id="access2" value="2" /><label for="access2">Admin</label>
+                <p style="width: 100px" onclick="addUserToClub({$club->club_id});" class="ui-state-default ui-corner-all button">
+                    <span class="ui-icon ui-icon-circle-plus"></span>
+                    <span class="buttonText">Save new user</span>
+                </p>
+
+            </td>
+        </tr>
+
       </table>
 
       <br>

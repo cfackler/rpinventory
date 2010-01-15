@@ -952,3 +952,33 @@ function updateTotal(callingID)
 		//change total value
     total.val(sum.toFixed(2));
 }
+
+function newUserClubShow()
+{
+    (jQuery)("#newUser").toggle();
+}
+
+function addUserToClub(club_id)
+{
+    var username = (jQuery)('#newUserSelect').val();
+    var access = (jQuery)("input[name='access']:checked").val();
+
+    new Ajax.Request('ajax.php?operation=addUserToClub&username=' + username + '&club_id=' + club_id + '&access=' + access,
+            {
+                method: 'post',
+                onSuccess: function(transport)
+                {
+                    var response = transport.responseText;
+                    if (response.length == 0)
+                    {
+                        (jQuery)('#responseMessage').html('User saved successfully');
+                        (jQuery)('#newUser').toggle();
+                    }
+                    else
+                    {
+                        (jQuery)('#responseMessage').html('Error saving user');
+                    }
+                }
+            });
+
+}
