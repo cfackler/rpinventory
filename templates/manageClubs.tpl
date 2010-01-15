@@ -45,12 +45,7 @@
 			<td align="center">
                 <a href="editClub.php?id={$clubs[clubLoop]->club_id}" class="ui-state-default ui-corner-all button">
                     <span class="ui-icon ui-icon-circle-arrow-w"></span>
-                    <span class="buttonText">Edit name</span>
-                </a>
-                &nbsp;
-                <a href="addUserClub.php?id={$clubs[clubLoop]->club_id}" class="ui-state-default ui-corner-all button">
-                    <span class="ui-icon ui-icon-circle-plus"></span>
-                    <span class="buttonText">Add user to club</span>
+                    <span class="buttonText">Edit Club</span>
                 </a>
                 &nbsp;
                 <a class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete club {$clubs[clubLoop]->club_name} ?','deleteClub.php?id={$clubs[clubLoop]->club_id}')">

@@ -80,6 +80,6 @@
       </table>
 
       <br>
-      <input type="submit" value="Update Club">
+      <input type="submit" value="Update Club">&nbsp;&nbsp;<a href="manageClubs.php">Back to all clubs</a>
     </div>
     <form>
