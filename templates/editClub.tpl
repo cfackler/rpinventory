@@ -18,6 +18,7 @@
 
   *}
 
+{include file=notificationArea.tpl}
   <form name="storeTransaction" action="updateClubRecord.php" onsubmit="return ValidateForm()" METHOD="post">
     <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
       <h3 class="ui-widget-header ui-corner-all">Edit Club</h3>
@@ -54,7 +55,7 @@
                 <p id="responseMessage"></p>
                 <p style="width: 100px" onclick="newUserClubShow();" class="ui-state-default ui-corner-all button">
                     <span class="ui-icon ui-icon-circle-arrow-s"></span>
-                    <span class="buttonText">Show new user</span>
+                    <span class="buttonText">Add new user</span>
                 </p>
             </td>
         </tr>
