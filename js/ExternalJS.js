@@ -971,12 +971,11 @@ function addUserToClub(club_id)
                     var response = transport.responseText;
                     if (response.length == 0)
                     {
-                        (jQuery)('#responseMessage').html('User saved successfully');
-                        (jQuery)('#newUser').toggle();
+                        pageNotification('User saved successfully', 0);
                     }
                     else
                     {
-                        (jQuery)('#responseMessage').html('Error saving user');
+                        pageNotification('Error saving user!', 1);
                     }
                 }
             });
