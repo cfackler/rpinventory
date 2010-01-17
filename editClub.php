@@ -26,6 +26,41 @@ require_once('lib/clubs.lib.php');
 require_once('lib/users.lib.php');
 require_once('class/database.class.php');
 
+function array_obj_diff ($array1, $array2) {
+    $usernames = array();
+    $usernames_remove = array();
+    $result = array();
+
+    // All usernames
+    foreach ($array1 as &$obj)
+    {
+        array_push($usernames, $obj->username);
+    }
+
+    // All usernames to remove
+    foreach ($array2 as &$obj)
+    {
+        if (in_array($obj->username, $usernames))
+        {
+            array_push($usernames_remove, $obj->username);
+        }
+    }
+
+    for ($i=0; $i<count($usernames); $i++)
+    {
+        if (in_array($usernames[$i], $usernames_remove))
+        {
+            array_shift($array1);
+        }
+        else
+        {
+            array_push($result, array_shift($array1));
+        }
+    }
+   
+    return $result;
+}
+
 // Connect
 $db = new database();
 
@@ -55,34 +90,18 @@ if ($club == false)
 }
 
 $users = getAllUsers($db);
-$users_strings = array();
-foreach($users as &$user)
-{
-    $users_strings[] = $user->username;
-}
 
 $club_users = getClubUsers($id, $db);
-$club_users_strings = array();
-foreach($club_users as &$user)
-{
-    $club_users_strings[] = $user->username;
-}
 
-// Get all users not currently in the club already
-$display_users = array_diff($users_strings, $club_users_strings);
-$finalUsers = array();
-foreach($display_users as &$user)
-{
-    $finalUsers[] = $user;
-}
-	
+$display_users = array_obj_diff($users, $club_users);
+
 //Assign vars
 $smarty->assign('title', "Edit Club");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'editClub');
 $smarty->assign('club', $club);
 $smarty->assign('users', $club_users);
-$smarty->assign('newUsers', $finalUsers);
+$smarty->assign('newUsers', $display_users);
 
 $smarty->display('index.tpl');
 
