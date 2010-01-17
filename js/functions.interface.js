@@ -8,11 +8,11 @@
  **/
 function pageNotification(text, type) {
   if(type == "error" || type == 1) {
-    (jQuery)('#pageNotification').html('<div class="ui-state-error ui-corner-all notification">'+text+'</div>')
+    (jQuery)('#pageNotification').html('<div class="ui-state-error ui-corner-all notification">'+text+'</div><br/>')
     .animate({opacity: 0}, 0).animate({opacity: 1.0}, 1000);
   }
   else {
-    (jQuery)('#pageNotification').html('<div class="ui-state-highlight ui-corner-all notification">'+text+'</div>')
+    (jQuery)('#pageNotification').html('<div class="ui-state-highlight ui-corner-all notification">'+text+'</div><br/>')
     .animate({opacity: 0}, 0).animate({opacity: 1.0}, 1000);
   }
 }
