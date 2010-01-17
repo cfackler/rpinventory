@@ -979,5 +979,9 @@ function addUserToClub(club_id)
                     }
                 }
             });
+}
 
+function formSubmit(formID)
+{
+    (jQuery)('#'+formID).submit();
 }

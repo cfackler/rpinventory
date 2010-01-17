@@ -243,25 +243,31 @@ span.icon_button_icon {
   float: left;
   margin: 0 4px;
 }
-a.button, p.button {
+a.button, p.button, input.button {
   padding: 0.4em 0.4em 0.4em 20px;
   position: relative;
   text-decoration: none;
 }
-a.button span.ui-icon, p.button span.ui-icon {
+a.button span.ui-icon, p.button span.ui-icon, input.button span.ui-icon {
   left: 0.2em;
   margin: -8px 5px 0 0;
   position: absolute;
   top: 50%;
 }
-a.button span.buttonText, p.button span.buttonText {
+
+input.button span.ui-icon {
+    display:none;
+    top: 25%;
+}
+
+a.button span.buttonText, p.button span.buttonText, input.button span.ui-icon  {
   font-size: 12px;
 }
-a.button.ui-state-active, p.button.ui-state-active {
+a.button.ui-state-active, p.button.ui-state-active, input.button span.ui-icon  {
   cursor: default;
 }
 
-a.button:hover, p.button:hover {
+a.button:hover, p.button:hover, input.button:hover {
     cursor: pointer;
 }
 

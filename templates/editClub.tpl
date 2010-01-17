@@ -19,7 +19,7 @@
   *}
 
 {include file=notificationArea.tpl}
-  <form name="storeTransaction" action="updateClubRecord.php" onsubmit="return ValidateForm()" METHOD="post">
+  <form name="storeTransaction" id="storeTransaction" action="updateClubRecord.php" onsubmit="return ValidateForm()" METHOD="post">
     <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
       <h3 class="ui-widget-header ui-corner-all">Edit Club</h3>
 
@@ -78,9 +78,17 @@
             </td>
         </tr>
 
-      </table>
+        </table>
 
-      <br>
-      <input type="submit" value="Update Club">&nbsp;&nbsp;<a href="manageClubs.php">Back to all clubs</a>
+        <br>
+        <a class="ui-corner-all ui-state-default button" onclick="formSubmit('storeTransaction')">
+            <span class="ui-icon ui-icon-circle-check"></span>
+            <span class="buttonText">Update Club</span>
+          </a>
+        &nbsp;&nbsp;
+        <a href="manageClubs.php" class="ui-corner-all ui-state-default button">
+            <span class="ui-icon ui-icon-circle-arrow-w"></span>
+            <span class="buttonText">Back to all clubs</span>
+        </a>
     </div>
     <form>
