@@ -119,6 +119,20 @@ case 'addUserToClub':
     $db->close();
     break;
 
+case 'alterUserClubAccess':
+    require_once('class/database.class.php');
+    require_once('lib/clubs.lib.php');
+
+    $db = new database();
+
+    $user_id = (int)$_GET['user_id'];
+    $club_id = (int)$_GET['club_id'];
+    $access_level = (int)$_GET['access_level'];
+
+    echo alterUserClubAccess($user_id, $club_id, $access_level, $db);
+
+    $db->close();
+    break;
 }
 
 

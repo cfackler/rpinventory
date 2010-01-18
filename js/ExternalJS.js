@@ -985,3 +985,23 @@ function formSubmit(formID)
 {
     (jQuery)('#'+formID).submit();
 }
+
+function alterUserClubAccess(user_id, access_level, club_id)
+{
+    new Ajax.Request('ajax.php?operation=alterUserClubAccess&user_id='+user_id+'&access_level='+access_level+'&club_id='+club_id,
+            {
+                method: 'post',
+                onSuccess: function(transport)
+                {
+                    var response = transport.responseText;
+                    if (response == 'success')
+                    {
+                        pageNotification('Permission changed', 0);
+                    }
+                    else
+                    {
+                        pageNotification('Error changing permission', 1);
+                    }
+                }
+            });
+}

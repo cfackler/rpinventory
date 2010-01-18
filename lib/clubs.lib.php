@@ -149,3 +149,29 @@ function addClub($club_name, $db = null)
     return $clubs;
 }
 
+function alterUserClubAccess($user_id, $club_id, $access_level, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'UPDATE user_clubs SET access_level = ? WHERE user_id = ? AND club_id = ?';
+
+    $result = $db->query($sql, $access_level, $user_id, $club_id);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return 'success';
+}
+
+?>

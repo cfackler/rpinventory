@@ -98,6 +98,7 @@ $display_users = array_obj_diff($users, $club_users);
 $smarty->assign('title', "Edit Club");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'editClub');
+$smarty->assign('club_id', $id);
 $smarty->assign('club', $club);
 $smarty->assign('users', $club_users);
 $smarty->assign('newUsers', $display_users);
