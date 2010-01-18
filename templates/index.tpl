@@ -120,32 +120,37 @@ $this->assign('clubName', $_SESSION['club_name']);
 				<a id="manageBorrowers" href="manageBorrowers.php">Borrowers</a></li>
 			{/if}
 			
-			{if $authority == 2}
+			{if $authority > 1}
 				{if $page_tpl == 'manageUsers'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
 					<li class="ui-state-default ui-corner-all">
 				{/if}
 				<a id="manageUsers" href="manageUsers.php">Users</a></li>
-                {if $page_tpl == 'manageClubs'}
-                    <li class="ui-state-default ui-corner-all ui-state-active">
-                {else}
-                    <li class="ui-state-default ui-corner-all">
-                {/if}
-                <a id="manageClubs" href="manageClubs.php">Clubs</a></li>
 				{if $page_tpl == 'generateSummary'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
 					<li class="ui-state-default ui-corner-all">
 				{/if}
 				<a id="generateSummary" href="generateSummary.php">Summary</a></li>
-				{if $page_tpl == 'backupDatabase'}
+			{/if}
+
+            {if $authority > 2}
+			     <li><br /></li>
+			     <li class="ui-widget-header ui-corner-all navigationHeader">Management</li>
+                {if $page_tpl == 'manageClubs'}
+                    <li class="ui-state-default ui-corner-all ui-state-active">
+                {else}
+                    <li class="ui-state-default ui-corner-all">
+                {/if}
+                <a id="manageClubs" href="manageClubs.php">Clubs</a></li>
+                {if $page_tpl == 'backupDatabase'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
-			    <li class="ui-state-default ui-corner-all">
+			        <li class="ui-state-default ui-corner-all">
 				{/if}
 				<a id="backupDatabase" href="backupDatabase.php">Backup</a></li>
-			{/if}
+            {/if}
 			
 			<li><br /></li>
 			
