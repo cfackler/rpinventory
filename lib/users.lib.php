@@ -389,7 +389,7 @@ function getClubUsers($club_id, $db = null)
         $close = true;
     }
 
-    $sql = 'SELECT user_id, username FROM user_clubs, logins WHERE club_id = ? AND logins.id = user_clubs.user_id';
+    $sql = 'SELECT user_id, username, access_level FROM user_clubs, logins WHERE club_id = ? AND logins.id = user_clubs.user_id';
 
     $result = $db->query($sql, $club_id);
 

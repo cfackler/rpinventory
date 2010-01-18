@@ -90,7 +90,6 @@ if ($club == false)
 }
 
 $users = getAllUsers($db);
-
 $club_users = getClubUsers($id, $db);
 
 $display_users = array_obj_diff($users, $club_users);

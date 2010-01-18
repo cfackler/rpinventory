@@ -40,6 +40,10 @@
                     <tr {cycle values=" class=\"alt\","}>
                         <td>{$users[userLoop]->username}</td>
                         <td>
+                            <input id="userPriv" type="radio" name="curaccess-{$users[userLoop]->user_id}" {if $users[userLoop]->access_level == 1} checked="checked"{/if}/><label for="userPriv">User</label>&nbsp;
+                            <input id="adminPriv" type="radio" name="curaccess-{$users[userLoop]->user_id}" {if $users[userLoop]->access_level == 2} checked="checked" {/if}/><label for="adminPriv">Admin</label>
+                        </td>
+                        <td>
                             <a href="deleteUserClub.php?club_id={$club->club_id}&user_id={$users[userLoop]->user_id}" class="ui-state-default ui-corner-all button">
                                 <span class="ui-icon ui-icon-circle-minus"></span>
                                 <span class="buttonText">Remove user</span>
