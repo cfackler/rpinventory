@@ -97,10 +97,18 @@ if (!file_exists('config/config.ini.php') || $retry) {
   } while(mysqli_next_result($link));
 
   /* create admin user for application */
-  $sql = 'INSERT INTO logins (id, username, password, email, access_level) VALUES ';
-  $sql .= '(NULL, "' . mysqli_real_escape_string($link, $adminuser) . '", "' . mysqli_real_escape_string($link, md5($adminpass)) . '", "'.mysqli_real_escape_string($link, $adminEmail).'", 2)';
+  $sql = 'INSERT INTO logins (id, username, password, email) VALUES ';
+  $sql .= '(NULL, "' . mysqli_real_escape_string($link, $adminuser) . '", "' . mysqli_real_escape_string($link, md5($adminpass)) . '", "'.mysqli_real_escape_string($link, $adminEmail).'")';
 
   mysqli_query($link, $sql) || die("Could not create admin account: ".mysqli_error($link));
+
+  /* Default club */
+  $sql = 'INSERT INTO clubs (club_id, club_name) VALUES (NULL, "Default Club")';
+  mysqli_query($link, $sql) || die('Could not create default club: '.mysqli_error($link));
+
+  /* Link user to club */
+  $sql = 'INSERT INTO user_clubs (user_id, club_id, access_level) VALUES (1, 1, 3)';
+  mysqli_query($link, $sql) || die('Could not link user to club: '.mysqli_error($link));
   echo('<p>Admin account creation successful.</p>');
 
   /* close connection */
