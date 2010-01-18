@@ -27,6 +27,11 @@ require_once("lib/auth.lib.php");  //Session
 //Authenticate
 $auth = GetAuthority();
 
+if ($auth < 3)
+{
+    die('Invalid permission');
+}
+
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
 
