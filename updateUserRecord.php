@@ -30,7 +30,7 @@ $db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
-if($auth != 2)
+if($auth < 2)
 	die("You dont have permission to access this page");
 	
 //Username
