@@ -24,7 +24,7 @@
 
       <table width="400">
 
-        <input type="hidden" name="id" size="40" value="{$user->id}">
+        <input type="hidden" name="id" size="40" value="{$user->user_id}">
 
         <tr>
           <td>Username: </td>

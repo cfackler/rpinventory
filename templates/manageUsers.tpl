@@ -57,12 +57,12 @@
 			<td align="center"><a href="mailto:{$users[userLoop]->email}">{$users[userLoop]->email}</a></td>
 	
 			<td align="center">
-                <a href="editUser.php?id={$users[userLoop]->id}" class="ui-state-default ui-corner-all button">
+                <a href="editUser.php?id={$users[userLoop]->user_id}" class="ui-state-default ui-corner-all button">
                     <span class="ui-icon ui-icon-circle-arrow-w"></span>
                     <span class="buttonText">Edit</span>
                 </a>
                 &nbsp;
-                <a class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->id}')">
+                <a class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete user {$users[userLoop]->username} ?','deleteUser.php?id={$users[userLoop]->user_id}')">
                     <span class="ui-icon ui-icon-circle-close"></span>
                     <span class="buttonText">Delete</span>
                 </a>
