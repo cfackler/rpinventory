@@ -59,7 +59,7 @@ function Authenticate($username, $password, $clubID, $db = null)
         return false;
 
     //Store id, auth, club id, and club name
-    $_SESSION['id'] = $row->id;
+    $_SESSION['user_id'] = $row->user_id;
     $_SESSION['authority'] = $row->access_level;
     $_SESSION['club'] = $clubID;
     $_SESSION['club_name'] = $row->club_name;
@@ -69,7 +69,7 @@ function Authenticate($username, $password, $clubID, $db = null)
 
 function Logout()
 {
-    unset($_SESSION['id']);
+    unset($_SESSION['user_id']);
     unset($_SESSION['authority']);
     unset($_SESSION['club']);
     unset($_SESSION['club_name']);
@@ -80,7 +80,7 @@ function Logout()
 //Verify id and authority set
 function IsAuthenticated()
 {
-    if(isset($_SESSION['id']) && isset($_SESSION['authority']) && isset($_SESSION['club']) && isset($_SESSION['club_name']))
+    if(isset($_SESSION['user_id']) && isset($_SESSION['authority']) && isset($_SESSION['club']) && isset($_SESSION['club_name']))
         return true;
 
     Logout();
