@@ -147,5 +147,5 @@ CREATE TABLE `inventory_category` (
 ) type=MyISAM;
 
 -- Adds the default locations for loans and checkouts
-INSERT INTO locations VALUES ( 1, "On Loan", "This item is on loan" );
-INSERT INTO locations VALUES ( 2, "Checked Out", "This item is checked out" );
+INSERT INTO locations VALUES (1, "On Loan", "This item is on loan", 1);
+INSERT INTO locations VALUES (2, "Checked Out", "This item is checked out", 1);
