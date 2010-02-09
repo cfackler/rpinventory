@@ -70,7 +70,7 @@ function getCheckouts($startDate, $endDate, $db = null)
     $club_id = $_SESSION['club'];
 
     // Checkout History
-    $query= 'SELECT time_taken, time_returned, event_name, starting_condition, ending_condition, inventory.description, username, original_location_id, checkouts.club_id FROM checkouts, inventory, logins WHERE logins.id = checkouts.borrower_id AND checkouts.inventory_id = inventory.inventory_id AND time_taken >= ? AND (time_returned <= ? OR time_returned IS NULL) AND checkouts.club_id = ?';
+    $query= 'SELECT time_taken, time_returned, event_name, starting_condition, ending_condition, inventory.description, username, original_location_id, checkouts.club_id FROM checkouts, inventory, users WHERE users.user_id = checkouts.borrower_id AND checkouts.inventory_id = inventory.inventory_id AND time_taken >= ? AND (time_returned <= ? OR time_returned IS NULL) AND checkouts.club_id = ?';
 
 
     $result = $db->query($query, $startDate, $endDate, $club_id);

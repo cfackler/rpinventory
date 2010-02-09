@@ -97,7 +97,7 @@ if (!file_exists('config/config.ini.php') || $retry) {
     } while(mysqli_next_result($link));
 
     /* create admin user for application */
-    $sql = 'INSERT INTO logins (id, username, password, email) VALUES ';
+    $sql = 'INSERT INTO users (user_id, username, password, email) VALUES ';
     $sql .= '(NULL, "' . mysqli_real_escape_string($link, $adminuser) . '", "' . mysqli_real_escape_string($link, md5($adminpass)) . '", "'.mysqli_real_escape_string($link, $adminEmail).'")';
 
     mysqli_query($link, $sql) || die("Could not create admin account: ".mysqli_error($link));

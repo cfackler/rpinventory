@@ -39,7 +39,7 @@ function Authenticate($username, $password, $clubID, $db = null)
 
     //Find user
     
-    $sql = 'SELECT l.id, uc.access_level, clubs.club_name FROM logins l, user_clubs uc, clubs WHERE l.id=uc.user_id AND uc.club_id = ? AND l.username = ? AND l.password= ? AND uc.club_id=clubs.club_id';
+    $sql = 'SELECT l.id, uc.access_level, clubs.club_name FROM users, user_clubs uc, clubs WHERE users.user_id=uc.user_id AND uc.club_id = ? AND users.username = ? AND users.password= ? AND uc.club_id=clubs.club_id';
 
     $result = $db->query($sql, $clubID, $username, md5($password));
 

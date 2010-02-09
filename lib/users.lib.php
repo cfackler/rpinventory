@@ -33,7 +33,7 @@ function getUser($user_id, $db = null)
         $close = true;
     }
 
-    $sql = 'SELECT * FROM logins WHERE id = ?';
+    $sql = 'SELECT * FROM users WHERE user_id = ?';
 
     $result = $db->query($sql, $user_id);
 
@@ -66,7 +66,7 @@ function getAllUsers($db = null)
     $auth = GetAuthority();
 
     // Users
-    $query = "SELECT * FROM logins";
+    $query = "SELECT * FROM users";
 
     $result = $db->query($query);
 
@@ -94,7 +94,7 @@ function getUserFromName($username, $db = null)
     }
 
     // Users
-    $query = "SELECT * FROM logins WHERE username = ? LIMIT 1";
+    $query = "SELECT * FROM users WHERE username = ? LIMIT 1";
 
     $result = $db->query($query, $username);
 
@@ -128,7 +128,7 @@ function getAllUsernames($db = null)
     $auth = GetAuthority();
 
     // Users
-    $query = "SELECT username FROM logins";
+    $query = "SELECT username FROM users";
 
     $result = $db->query($query);
 
@@ -168,7 +168,7 @@ function getUsers($db = null)
     $auth = GetAuthority();
 
     // Users
-    $query = "SELECT username, email FROM logins, user_clubs WHERE user_clubs.user_id = logins.id AND user_clubs.club_id = ?";
+    $query = "SELECT username, email FROM users, user_clubs WHERE user_clubs.user_id = users.user_id AND user_clubs.club_id = ?";
 
     $result = $db->query($query, $clubId);
 
@@ -211,7 +211,7 @@ function getUsernames($name, $db = null)
     if($auth < 1)
         die("You dont have permission to access this page");
 
-    $sql = 'SELECT username FROM logins';
+    $sql = 'SELECT username FROM users';
 
     $result = $db->query($sql);
 
@@ -282,7 +282,7 @@ function getViewUsers($currentSortIndex=0, $currentSortDir=0, $db = null)
     $clubId = $_SESSION['club'];
 
     //users
-    $sql = "SELECT * from logins, user_clubs WHERE user_clubs.user_id = logins.id AND user_clubs.club_id = ? ORDER BY ".$sortBy;
+    $sql = "SELECT * from users, user_clubs WHERE user_clubs.user_id = users.user_id AND user_clubs.club_id = ? ORDER BY ".$sortBy;
 
     $result = $db->query($sql, $clubId);
 
@@ -311,7 +311,7 @@ function addUser($username, $password, $accessLevel, $email, $clubId, $db = null
     }
 
     // Insert the new user
-    $sql = 'INSERT INTO logins (id, username, password, email) VALUES (NULL, ?, ?, ?)';
+    $sql = 'INSERT INTO users (user_id, username, password, email) VALUES (NULL, ?, ?, ?)';
     $db->query($sql, $username, $password, $email);
 
     // Link the user to the current club
@@ -339,7 +339,7 @@ function deleteUser($user_id, $db = null)
         $close = true;
     }
 
-    $sql = 'DELETE FROM logins WHERE id = ? LIMIT 1';
+    $sql = 'DELETE FROM users WHERE user_id = ? LIMIT 1';
 
     $db->query($sql, $user_id);
 
@@ -364,7 +364,7 @@ function updateUser($user_id, $username, $email, $password, $db = null)
         $close = true;
     }
 
-    $sql = 'UPDATE logins SET username = ?, email = ?, password = ? WHERE id = ?';
+    $sql = 'UPDATE users SET username = ?, email = ?, password = ? WHERE user_id = ?';
 
     $db->query($sql, $username, $email, $password, $user_id);
 
@@ -389,7 +389,7 @@ function getClubUsers($club_id, $db = null)
         $close = true;
     }
 
-    $sql = 'SELECT user_id, username, access_level FROM user_clubs, logins WHERE club_id = ? AND logins.id = user_clubs.user_id';
+    $sql = 'SELECT user_clubs.user_id, username, access_level FROM user_clubs, users WHERE club_id = ? AND users.user_id = user_clubs.user_id';
 
     $result = $db->query($sql, $club_id);
 
@@ -416,7 +416,7 @@ function getClubUsernames($club_id, $db = null)
         $close = true;
     }
 
-    $sql = 'SELECT username FROM user_clubs, logins WHERE club_id = ? AND logins.id = user_clubs.user_id';
+    $sql = 'SELECT username FROM user_clubs, users WHERE club_id = ? AND users.user_id = user_clubs.user_id';
 
     $result = $db->query($sql, $club_id);
 
