@@ -70,53 +70,68 @@ $this->assign('clubName', $_SESSION['club_name']);
 				<li class="ui-state-default ui-corner-all">
 			{/if}
 			<a id="viewInventory" href="viewInventory.php">Inventory</a></li>
-			{if $authority >= 1}
+			{if $authority > 0}
 				{if $page_tpl == 'viewLoans'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
 					<li class="ui-state-default ui-corner-all">
 				{/if}
+
 				<a id="viewLoans" href="viewLoans.php">Loans</a></li>
+
 				{if $page_tpl == 'viewCheckouts'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
-			    <li class="ui-state-default ui-corner-all">
+			        <li class="ui-state-default ui-corner-all">
 				{/if}
+
 				<a id="viewCheckouts" href="viewCheckouts.php">Checkouts</a></li>
-			     {if $authority == 2}
+
+			    {if $authority > 1}
 						{if $page_tpl == 'viewRepairs'}
 							<li class="ui-state-default ui-corner-all ui-state-active">
 						{else}
 							<li class="ui-state-default ui-corner-all">
 						{/if}
+
 						<a id="viewRepairs" href="viewRepairs.php">Repairs</a></li>
-		    	  {if $page_tpl == 'viewPurchases'}
-							<li class="ui-state-default ui-corner-all ui-state-active">
+
+		    	        {if $page_tpl == 'viewPurchases'}
+					        <li class="ui-state-default ui-corner-all ui-state-active">
 						{else}
 							<li class="ui-state-default ui-corner-all">
 						{/if}
+
 						<a id="viewPurchases" href="viewPurchases.php">Purchases</a></li>
+
 						{if $page_tpl == 'viewBusinesses'}
 							<li class="ui-state-default ui-corner-all ui-state-active">
 						{else}
 							<li class="ui-state-default ui-corner-all">
 						{/if}
-						<a id="viewBusinesses" href="viewBusinesses.php">Businesses</a></li>
-			     {/if}
+						
+                        <a id="viewBusinesses" href="viewBusinesses.php">Businesses</a></li>
+			    {/if}
 			     
-			     <li><br /></li>
-			     <li class="ui-widget-header ui-corner-all navigationHeader">Admin</li>
+			    <li>
+                    <br />
+                </li>
+
+			    <li class="ui-widget-header ui-corner-all navigationHeader">Admin</li>
 				{if $page_tpl == 'manageLocations'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
 					<li class="ui-state-default ui-corner-all">
 				{/if}
+
 				<a id="manageLocations" href="manageLocations.php">Locations</a></li>
+
 				{if $page_tpl == 'manageBorrowers'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}
 					<li class="ui-state-default ui-corner-all">
 				{/if}
+
 				<a id="manageBorrowers" href="manageBorrowers.php">Borrowers</a></li>
 			{/if}
 			
