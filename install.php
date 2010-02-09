@@ -29,10 +29,13 @@ $smarty = new Smarty_Inv();
 $retry = false;
 $error = '';
 
-if ($_POST['install'] && !file_exists('config/config.ini.php')) {
+if ($_POST['install'] && !file_exists('config/config.ini.php'))
+{
     $retry = true;
     $error = 'Config file either nonexistant or unreadable. Please fix before continuing.';
-} else if ($_GET['error']) {
+}
+else if ($_GET['error'])
+{
     $retry = true;
     if ($_GET['error'] == 'connect')
         $error = 'Database connection failed: correct username and password or edit config.ini.php and try again.';
@@ -40,19 +43,26 @@ if ($_POST['install'] && !file_exists('config/config.ini.php')) {
         $error = 'Missing at least one field below required for installation.';
     else
         $error = 'Unknown error';
-} else if ($_POST['adminpass1'] != $_POST['adminpass2']) {
+}
+else if ($_POST['adminpass1'] != $_POST['adminpass2'])
+{
     $retry = true;
     $error = 'Passwords do not match.';
-} else if(!isset($_POST['adminEmail']) || $_POST['adminEmail'] == '') {
+}
+else if(!isset($_POST['adminEmail']) || $_POST['adminEmail'] == '')
+{
     $error = 'Must enter an email address.';
 }
 
-if (!file_exists('config/config.ini.php') || $retry) {
+if (!file_exists('config/config.ini.php') || $retry)
+{
     if ($retry)
         $smarty->assign('error', $error);
 
     $smarty->display('install.tpl');
-} elseif ($_POST['install']) {
+}
+elseif ($_POST['install'])
+{
     /* perform installation */
     require_once('class/config.class.php'); // configurations
 
@@ -66,14 +76,17 @@ if (!file_exists('config/config.ini.php') || $retry) {
     $adminuser = $_POST['adminuser'];
     $adminpass = $_POST['adminpass1'];
     $adminEmail = $_POST['adminEmail'];
+    $clubName = $_POST['clubname'];
 
-    if (!$superuser || !$superpass || !$adminuser || !$adminpass || !$adminEmail) {
+    if (!$superuser || !$superpass || !$adminuser || !$adminpass || !$adminEmail || !$clubName)
+    {
         header('Location: install.php?error=missing');
         die();
     }
 
     $link = mysqli_connect($hostname, $superuser, $superpass);
-    if (!$link) {
+    if (!$link)
+    {
         header('Location: install.php?error=connect');
         die();
     }
@@ -102,8 +115,8 @@ if (!file_exists('config/config.ini.php') || $retry) {
 
     mysqli_query($link, $sql) || die("Could not create admin account: ".mysqli_error($link));
 
-    /* Default club */
-    $sql = 'INSERT INTO clubs (club_id, club_name) VALUES (NULL, "Default Club")';
+    /* Initial club */
+    $sql = 'INSERT INTO clubs (club_id, club_name) VALUES (NULL, "'. mysqli_real_escape_string($link, $clubName) .'")';
     mysqli_query($link, $sql) || die('Could not create default club: '.mysqli_error($link));
 
     /* Link user to club */
@@ -115,7 +128,9 @@ if (!file_exists('config/config.ini.php') || $retry) {
     mysqli_close($link);
 
     echo('<p>Installation successful. <a href="index.php">Use RPInventory</a></p>');
-} else {
+}
+else
+{
     /* GO AWAY! Shouldn't be here if no need to install */
     header('Location: index.php');
 }

@@ -100,6 +100,12 @@
                     <br />
                     <input type="password" name="adminpass2" id="adminpass2" size="20" />
                 </p>
+                
+                <p>
+                    Please enter a club to create.
+                    <br />
+                    <input type="text" name="clubname" id="clubname" size="20" />
+                </p>
 
                 <input type="submit" name="install" value="Install" />
             </form>
