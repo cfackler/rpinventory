@@ -78,7 +78,7 @@
                 <hr />
 
                 <p>
-                    This installer will create a user for the RPInventory system, giving them administrative privileges. Please enter a username to create.
+                    This installer will create a site-wide administrative privileges. Please enter a username.
                     <br />
                     <input type="text" name="adminuser" id="adminuser" size="20" />
                 </p>
