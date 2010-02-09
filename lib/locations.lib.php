@@ -389,7 +389,7 @@ function getViewLocations( $currentSortIndex=0, $currentSortDir=0, $db = null)
     $locQuery= 'SELECT * from locations ORDER BY '.$sortBy;
     $locResult = $db->query($locQuery);
 
-    $location = $db->getObjectArray($locResult);
+    $locations = $db->getObjectArray($locResult);
 
     if ($close)
     {
