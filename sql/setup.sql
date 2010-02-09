@@ -95,12 +95,12 @@ CREATE TABLE addresses (
        PRIMARY KEY (address_id)
 ) type = MyISAM;
 
-CREATE TABLE logins (
-       id int(5) NOT NULL auto_increment,
+CREATE TABLE users (
+       user_id int(5) NOT NULL auto_increment,
        username varchar(50) NOT NULL,
        password varchar(32) NOT NULL,
        email varchar(100) NOT NULL,
-       PRIMARY KEY (id)
+       PRIMARY KEY (user_id)
 ) type = MyISAM;
 
 CREATE TABLE user_clubs (
