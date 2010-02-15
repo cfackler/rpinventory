@@ -44,11 +44,11 @@
 		<tr{cycle values=" class=\"alt\","}>
 			<td align="center">{$users[userLoop]->username}</td>
 			<td align="center">
-			{if $users[userLoop]->access_level == 2}
+			{if $users[userLoop]->access_level == 3}
 				Administrator
-			{elseif $users[userLoop]->access_level == 1}
+			{elseif $users[userLoop]->access_level == 2}
 				Manager
-			{else}
+			{elseif $users[userLoop]->access_level == 1}
 				User
 			{/if}
 		
