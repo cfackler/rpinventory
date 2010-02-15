@@ -111,7 +111,7 @@ case 'addUserToClub':
     $access = $_GET['access'];
     $club_id = $_GET['club_id'];
 
-    addUserToClub($userId, $club_id, $access, $db);
+    addUserToClub($userId, $club_id, $access);
 
     break;
 
