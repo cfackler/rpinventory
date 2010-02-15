@@ -66,7 +66,7 @@ $db = new database();
 
 //Authenticate
 $auth = GetAuthority();	
-if ($auth < 2)
+if ($auth < 3)
 {
 	die( 'Permission Denied' );
 }
