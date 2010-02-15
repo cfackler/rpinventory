@@ -21,6 +21,13 @@
 
  */
 
+/* Authentication Levels:
+ *  0/NULL = Not Authenticated
+ *  1 = User
+ *  2 = Club Admin
+ *  3 = System Admin
+ */
+
 // start session
 session_start(); 
 
