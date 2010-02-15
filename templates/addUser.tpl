@@ -44,9 +44,11 @@
           <td>Permissions: </td>
           <td>
             <select name="access_level">
-              <option value="0">User</option>
-              <option value="1">Manager</option>
-              <option value="2">Administrator</option>
+              <option value="1">User</option>
+              <option value="2">Manager</option>
+              {if $auth > 2}
+                <option value="3">Administrator</option>
+              {/if}
             </select>	
           </td>
         </tr>

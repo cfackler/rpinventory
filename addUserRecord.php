@@ -49,7 +49,7 @@ if(strlen($password) == 0)
 
 //Access level	
 $access = (int)$_POST["access_level"];
-if($access > 2 || $access < 0)
+if($access > 3 || $access < 1)
     die("Invalid access level");		
 
 //email
@@ -61,6 +61,15 @@ if(strlen($email) == 0)
 if (!isset($_SESSION['club']))
 {
     die('Must have a club ID');
+}
+
+// Ensure you have permission to make an admin account
+if ($access > 2)
+{
+    if ($auth < 3)
+    {
+        die('Insufficient permission');
+    }
 }
 
 addUser($username, md5($password), $access, $email, $_SESSION['club'], $db);
