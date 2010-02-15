@@ -69,7 +69,7 @@
             <td>
                 <select id="newUserSelect">
                     {section name=usersLoop loop=$newUsers}
-                        <option value="{$newUsers[usersLoop]->username}">{$newUsers[usersLoop]->username}</option>
+                        <option value="{$newUsers[usersLoop]->user_id}">{$newUsers[usersLoop]->username}</option>
                     {/section}
                 </select>
                 <br />

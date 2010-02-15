@@ -960,10 +960,10 @@ function newUserClubShow()
 
 function addUserToClub(club_id)
 {
-    var username = (jQuery)('#newUserSelect').val();
+    var userId = (jQuery)('#newUserSelect').val();
     var access = (jQuery)("input[name='access']:checked").val();
 
-    new Ajax.Request('ajax.php?operation=addUserToClub&username=' + username + '&club_id=' + club_id + '&access=' + access,
+    new Ajax.Request('ajax.php?operation=addUserToClub&userId=' + userId + '&club_id=' + club_id + '&access=' + access,
             {
                 method: 'post',
                 onSuccess: function(transport)
