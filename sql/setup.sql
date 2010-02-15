@@ -146,6 +146,30 @@ CREATE TABLE `inventory_category` (
        PRIMARY KEY (id)
 ) type=MyISAM;
 
+--
+-- Custom Field Tables
+--
+CREATE TABLE fields (
+    field_id int(5) NOT NULL AUTO_INCREMENT,
+    club_id int(5) NOT NULL,
+    field_name varchar(200) NOT NULL,
+    fieldtype_id int(5) NOT NULL,
+    PRIMARY KEY (field_id)
+) type=MyISAM;
+
+CREATE TABLE field_types (
+    field_type_id int(5) NOT NULL AUTO_INCREMENT,
+    field_type_name varchar(100) NOT NULL,
+    PRIMARY KEY (field_type_id)
+) type=MyISAM;
+
+CREATE TABLE field_select_value (
+    field_type_id int(5) NOT NULL,
+    field_choice varchar(200) NOT NULL,
+    PRIMARY KEY (field_type_id, field_choice)
+) type=MyISAM;
+    
+
 -- Adds the default locations for loans and checkouts
 INSERT INTO locations VALUES (1, "On Loan", "This item is on loan", 1);
 INSERT INTO locations VALUES (2, "Checked Out", "This item is checked out", 1);
