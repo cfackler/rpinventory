@@ -1,5 +1,5 @@
 {*
-    Copyright (C) 2009, All Rights Reserved.
+    Copyright (C) 2010, All Rights Reserved.
 
     This file is part of RPInventory.
 
@@ -18,3 +18,13 @@
 
 *}
 
+{include file=notificationArea.tpl}
+
+<div class="ui-widget-smaller ui-widget-content ui-corner-all">
+    <div class="right">
+        <a id="addCustomField" class="ui-state-default ui-corner-all button" title="Add Custom Field" href="addCustomField.php">
+            <span class="ui-icon ui-icon-circle-plus"></span>
+            <span class="buttonText">Add Custom Field</span>
+        </a>
+    </div>
+</div>
