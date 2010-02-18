@@ -2,7 +2,7 @@
 
 /*
 
-  Copyright (C) 2009, All Rights Reserved.
+  Copyright (C) 2010, All Rights Reserved.
 
   This file is part of RPInventory.
 

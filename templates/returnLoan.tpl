@@ -1,5 +1,5 @@
 {*
-    Copyright (C) 2009, All Rights Reserved.
+    Copyright (C) 2010, All Rights Reserved.
 
     This file is part of RPInventory.
 
@@ -89,6 +89,7 @@
             <option value="2007"{if $selectDate.year == 2007}selected{/if}>2007</option>
             <option value="2008"{if $selectDate.year == 2008}selected{/if}>2008</option>
             <option value="2009"{if $selectDate.year == 2009}selected{/if}>2009</option>
+            <option value="2010"{if $selectDate.year == 2010}selected{/if}>2010</option>
           </select>
 
         </td>

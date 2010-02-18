@@ -1,8 +1,8 @@
 <?php
 
 /*
-    Copyright (C) 2009, All Rights Reserved
-    Copyright (C) 2009 Josh Elser
+    Copyright (C) 2010, All Rights Reserved
+    Copyright (C) 2010 Josh Elser
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
