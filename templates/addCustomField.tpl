@@ -20,5 +20,20 @@
 
 {include file=notificationArea.tpl}
 
-<div class="ui-widget-smaller ui-widget-content ui-corner-all">
+<div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
+    <form name="addCustomField" action="insertCustomField.php" onsubmit="return ValidateForm()" method="post">
+        <table width="400">
+            <tr>
+                <td>Field Name: </td>
+                <td><input type="text" name="fieldName" size="40" id="fieldName" class="validate" /></td>
+            </tr>
+            <tr>
+                <td>Field Type: </td>
+                </td>{* radio buttons *}</td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Add Field" /></td>
+            </tr>
+        </table>
+    </form>
 </div>
