@@ -414,25 +414,21 @@ function getOptionBlockContents(newElement, count)
 }
 
 function addItemField() {
-		/* the table containing the form */
+	/* the table containing the form */
     var t = document.getElementById("itemTable");
 
-		/* the amount of items currently on the form */
+	/* the amount of items currently on the form */
     var nextnum = (jQuery)('#count').attr('value')*1;
 
-		/* the new rows about to be entered */
+	/* the new rows about to be entered */
     var newrow = document.createElement('div');
 
     newrow.setAttribute('id', 'item-' + nextnum);
-		newrow.setAttribute('class', 'item');
+	newrow.setAttribute('class', 'item');
 
-		/* get content for new items */
+    /* get content for new items */
     getItemBlockContents(newrow, nextnum);
     t.appendChild(newrow);
-
-
-		//initialize asm selects because livequery isn't working right
-//		(jQuery)('#category-'+nextnum).asmSelect();
 
     (jQuery)('#count').attr('value', nextnum+1);
 
@@ -460,7 +456,7 @@ function addOptionField() {
     // Option Div
     var parentElement = (jQuery)('#dropDownOptions');
 
-    var count = (jQuery)('#count').attr('value')*1;
+    var count = parseInt((jQuery)('#count').attr('value'));
 
     var newElement = document.createElement('div');
 
@@ -474,6 +470,22 @@ function addOptionField() {
 
     // Show delete button
     (jQuery)('#removeButton').css('display', '');
+}
+
+function removeOptionField() {
+    var count = (jQuery)('#count');
+
+    if (count.attr('value') > 0)
+    {
+        (jQuery)('#dropDownOptions div.item:last').remove();
+
+        count.attr('value', count.attr('value') - 1);
+
+        if (count.attr('value') < 2)
+        {
+            (jQuery)('#removeButton').css('display', 'none');
+        }
+    }
 }
 
 function rtrim(str) {		// Trims all trailing whitespace from a string
