@@ -22,23 +22,45 @@
 
 <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
     <form name="addCustomField" action="insertCustomField.php" onsubmit="return ValidateForm()" method="post">
-        <table width="400">
+        <input type="hidden" name="count" id="count" value="1" />
+        <table width="600">
             <tr>
-                <td>Field Name: </td>
+                <td width="100">Field Name: </td>
                 <td><input type="text" name="fieldName" size="40" id="fieldName" class="validate" /></td>
             </tr>
             <tr>
                 <td>Field Type: </td>
                 <td>
-                    <select class="dropDown" name="dataType">
+                    <select class="dropDown" name="dataType" id="dataType" onChange="OnChange('dataType', 'options')">
                         <option value="integer">Integer</option>
                         <option value="string">Word</option>
+                        <option value="dropDown" onselect>Selection</option>
                     </select>
                 </td>
             </tr>
-            <tr>
-                <td><input type="submit" value="Add Field" /></td>
-            </tr>
         </table>
+        <div id="options" style="display: none">
+            <div id="dropDownOptions">
+                <div id="option-0" class="item">
+                    <table width="600">
+                        <tr>
+                            <td width="100">Option:</td>
+                            <td><input type="text" name="option-0" id="option-0" class="validate" size="40" /></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="controls">
+                <p>
+                    <input type="button" onClick="addOptionField();" value="Add Option" />
+                    <input type="button" id="removeButton" style="display: none" onClick="removeOptionField();" value="Remove Last Option" />
+                </p>
+            </div>
+        </div>
+
+        <br />
+
+        <input type="submit" value="Add Field" />
     </form>
 </div>

@@ -400,6 +400,19 @@ function getItemBlockContents(element, idnum)
 		     });
 }
 
+function getOptionBlockContents(newElement, count)
+{
+    new Ajax.Request('ajax.php?operation=getOptionBlockContents&count='+count,
+            {
+                method: 'post',
+                onSuccess: function(transport) 
+                {
+                    var response = transport.responseText;
+                    newElement.innerHTML = response;
+                }
+            });
+}
+
 function addItemField() {
 		/* the table containing the form */
     var t = document.getElementById("itemTable");
@@ -441,6 +454,26 @@ function removeItemField() {
 			if ((jQuery)('#count').attr('value') < 2)
 	    	(jQuery)('#removeButton').css('display', 'none');
     }
+}
+
+function addOptionField() {
+    // Option Div
+    var parentElement = (jQuery)('#dropDownOptions');
+
+    var count = (jQuery)('#count').attr('value')*1;
+
+    var newElement = document.createElement('div');
+
+    newElement.setAttribute('id', 'option-'+count);
+    newElement.setAttribute('class', 'item');
+
+    getOptionBlockContents(newElement, count);
+    parentElement.append(newElement);
+
+    (jQuery)('#count').attr('value', count+1);
+
+    // Show delete button
+    (jQuery)('#removeButton').css('display', '');
 }
 
 function rtrim(str) {		// Trims all trailing whitespace from a string
