@@ -21,7 +21,8 @@
 
 */
 
-function addCustomField($fieldName, $fieldType, $clubId, $db = null)
+/* Inserts the custom field into the 'fields' table and updates all inventory items */
+function addCustomField($fieldName, $fieldTypeId, $clubId, $db = null)
 {
     $close = false;
 
@@ -34,14 +35,24 @@ function addCustomField($fieldName, $fieldType, $clubId, $db = null)
         $close = true;
     }
 
+    $sql = 'INSERT INTO fields (field_id, club_id, field_name, fieldtype_id) VALUES (NULL, ?, ?, ?)';
+    $db->query($sql, $clubId $fieldName, $fieldTypeId);
+
+    $id = $db->insertId();
+
+    // Add the new custom fields
+    updateInventoryCustomFields($id);
 
     if ($close)
     {
         $db->close();
     }
+
+    return $id;
 }
 
-function addFieldType($fieldType, $db = null)
+/* Records the field type (int, string, selection, etc) */
+function addFieldType($fieldTypeName, $db = null)
 {
     $close = false;
 
@@ -54,13 +65,20 @@ function addFieldType($fieldType, $db = null)
         $close = true;
     }
 
+    $sql = 'INSERT INTO field_types (field_type_id, field_type_name) VALUES (NULL, ?)';
+    $db->query($sql, $fieldTypeName);
+
+    $id = $db->insertId();
 
     if ($close)
     {
         $db->close();
     }
+
+    return $id;
 }
 
+/* Stores an array of options to be used for a selection custom field */
 function addSelectValues($fieldTypeId, $optionArray, $db = null)
 {
     $close = false;
@@ -74,11 +92,18 @@ function addSelectValues($fieldTypeId, $optionArray, $db = null)
         $close = true;
     }
 
+    $sql = 'INSERT INTO field_select_value (field_type_id, field_choice) VALUES (?, ?)';
+    foreach($optionArray as &$option)
+    {
+        $db->query($sql, $fieldTypeId, $option);
+    }
 
     if ($close)
     {
         $db->close();
     }
+
+    return;
 }
 
 
