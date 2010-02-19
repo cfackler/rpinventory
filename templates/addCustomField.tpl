@@ -22,7 +22,6 @@
 
 <div class="ui-widget-smaller ui-widget-content ui-corner-all mainForm">
     <form name="addCustomField" action="insertCustomField.php" onsubmit="return ValidateForm()" method="post">
-<<<<<<< HEAD
         <input type="hidden" name="count" id="count" value="1" />
         <table width="600">
             <tr>
@@ -64,7 +63,6 @@
         <br />
 
         <input type="submit" value="Add Field" />
-=======
         <table width="400">
             <tr>
                 <td>Field Name: </td>
@@ -78,6 +76,5 @@
                 <td><input type="submit" value="Add Field" /></td>
             </tr>
         </table>
->>>>>>> a6a75ee34a27f4acc1777b1f59e7cf95a2a8b6ae
     </form>
 </div>
