@@ -46,25 +46,9 @@ if ($fieldType != 'integer' && $fieldType != 'string' && $fieldType != 'selectio
 // Field Name
 $fieldName = $_POST['fieldName'];
 
-if (strlen($fieldName) == 0 && $fieldType != 'selection')
+if (strlen($fieldName) == 0)
 {
     die('Must have a field name');
-}
-
-// Ensure sane values for the field type selected
-if ($fieldType == 'integer')
-{
-    if (!is_numeric($fieldType))
-    {
-        die('Please enter a valid number');
-    }
-}
-elseif ($fieldType == 'string')
-{
-    if (!is_string($fieldType))
-    {
-        die('Please enter a valid word');
-    }
 }
 
 // Count
