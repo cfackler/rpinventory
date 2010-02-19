@@ -293,5 +293,60 @@ function addSelectionFieldValue($value, $db = null)
     return $id;
 }
 
+function getClubCustomFields($clubId, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }    
+
+    $sql = 'SELECT * FROM fields, field_types WHERE fields.club_id = ? AND fields.field_type_id = field_types.field_type_id';
+    $result = $db->query($sql, $clubId);
+
+    $items = $db->getObjectArray($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $items;
+}
+
+function getInventoryCustomFields($clubId, $db = null)
+{
+    require_once('lib/inventory.lib.php');
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $clubId = (int)$clubId;
+
+    $sql = 'SELECT * FROM fields, field_types, club_fields_'.$clubId.' WHERE fields.club_id = ? AND fields.field_type_id = field_type.field_type_id AND club_fields_'.$clubId.'.field_id = fields.field_id';
+
+    $result = $db->query($sql);
+
+    $items = $db->getObjectArray($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $items;
+}
 
 ?>
