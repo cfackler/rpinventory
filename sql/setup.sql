@@ -153,7 +153,7 @@ CREATE TABLE fields (
     field_id int(5) NOT NULL AUTO_INCREMENT,
     club_id int(5) NOT NULL,
     field_name varchar(200) NOT NULL,
-    fieldtype_id int(5) NOT NULL,
+    field_type_id int(5) NOT NULL,
     PRIMARY KEY (field_id)
 ) type=MyISAM;
 
