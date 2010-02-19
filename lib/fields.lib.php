@@ -41,4 +41,46 @@ function addCustomField($fieldName, $fieldType, $clubId, $db = null)
     }
 }
 
+function addFieldType($fieldType, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+
+    if ($close)
+    {
+        $db->close();
+    }
+}
+
+function addSelectValues($fieldTypeId, $optionArray, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+
+    if ($close)
+    {
+        $db->close();
+    }
+}
+
+
+
 ?>

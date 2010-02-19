@@ -34,12 +34,13 @@
                     <select class="dropDown" name="dataType" id="dataType" onChange="OnChange('dataType', 'options')">
                         <option value="integer">Integer</option>
                         <option value="string">Word</option>
-                        <option value="dropDown" onselect>Selection</option>
+                        <option value="selection">Selection</option>
                     </select>
                 </td>
             </tr>
         </table>
         <div id="options" style="display: none">
+            <p>Enter a list of options to choose from:</p>
             <div id="dropDownOptions">
                 <div id="option-0" class="item">
                     <table width="600">
