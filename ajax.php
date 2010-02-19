@@ -137,7 +137,7 @@ case 'getOptionBlockContents':
 <table width="600">
     <tr>
         <td width="100">Option:</td>
-        <td><input type="text" name="option-$count" id="option-$count" class="validate" size="40" /></td>
+        <td><input type="text" name="option-$count" id="option-$count" size="40" /></td>
     </tr>
 </table>
 END;

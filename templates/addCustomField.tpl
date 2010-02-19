@@ -26,12 +26,12 @@
         <table width="600">
             <tr>
                 <td width="100">Field Name: </td>
-                <td><input type="text" name="fieldName" size="40" id="fieldName" class="validate" /></td>
+                <td><input type="text" name="fieldName" size="40" id="fieldName" /></td>
             </tr>
             <tr>
                 <td>Field Type: </td>
                 <td>
-                    <select class="dropDown" name="dataType" id="dataType" onChange="OnChange('dataType', 'options')">
+                    <select class="dropDown" name="fieldType" id="fieldType" onChange="OnChange('fieldType', 'options')">
                         <option value="integer">Integer</option>
                         <option value="string">Word</option>
                         <option value="selection">Selection</option>
@@ -46,7 +46,7 @@
                     <table width="600">
                         <tr>
                             <td width="100">Option:</td>
-                            <td><input type="text" name="option-0" id="option-0" class="validate" size="40" /></td>
+                            <td><input type="text" name="option-0" id="option-0" size="40" /></td>
                         </tr>
                     </table>
                 </div>
