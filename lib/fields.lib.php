@@ -21,6 +21,32 @@
 
 */
 
+function getField($fieldId, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'SELECT * FROM fields, field_types WHERE field_id = ? AND fields.field_type_id = field_types.field_type_id';
+    $result = $db->query($sql, $fieldId);
+
+    $item = $db->getObject($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $item;
+}
+
 /* Inserts the custom field into the 'fields' table and updates all inventory items */
 function addCustomField($fieldName, $fieldTypeId, $clubId, $db = null)
 {
@@ -36,12 +62,12 @@ function addCustomField($fieldName, $fieldTypeId, $clubId, $db = null)
     }
 
     $sql = 'INSERT INTO fields (field_id, club_id, field_name, fieldtype_id) VALUES (NULL, ?, ?, ?)';
-    $db->query($sql, $clubId $fieldName, $fieldTypeId);
+    $db->query($sql, $clubId, $fieldName, $fieldTypeId);
 
     $id = $db->insertId();
 
     // Add the new custom fields
-    updateInventoryCustomFields($id);
+    updateInventoryCustomFields($id, $clubId);
 
     if ($close)
     {
@@ -106,6 +132,166 @@ function addSelectValues($fieldTypeId, $optionArray, $db = null)
     return;
 }
 
+function updateInventoryCustomFields($fieldId, $clubId)
+{
+    require_once('lib/inventory.lib.php');
+
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $clubId = (int)$clubId;
+
+    $items = getBareInventory($clubId, $db);
+    $sql = 'INSERT INTO club_field_'.$clubID.' (inventory_id, field_id, field_value_id) VALUES (?, ?, ?)';
+    $fieldValueId;
+    $field = getField($fieldId);
+
+    foreach($items as &$item)
+    {
+        // Default int value
+        if ($field->field_type_name == 'integer')
+        {
+            $fieldValueId = addIntFieldValue(0);
+        }
+        elseif ($field->field_type_name == 'string')
+        {
+            $fieldValueId = addStringFieldValue('');
+        }
+        elseif ($field->field_type_name == 'selection')
+        {
+            $fieldValueId = addSelectionFieldValue(null);
+        }
+        else
+        {
+            die('Invalid field type name');
+        }
+
+        $db->query($sql, $inventory_id, $field_id, $fieldValueId);
+    }
+    
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return;
+}
+
+/* Create the table to store the custom fields for a given club */
+function createClubCustomFieldTable($clubId, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = <<<END
+CREATE TABLE club_fields_$clubId (
+    inventory_id int(5) NOT NULL,
+    field_id int(5) NOT NULL,
+    field_value_id int(5) NOT NULL,
+    PRIMARY KEY (inventory_id, field_id)
+) type=MyISAM;
+END;
+
+    $db->query($sql);
+    
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return;
+}
+
+function addIntFieldValue($value, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }    
+
+    $sql = 'INSERT INTO field_value_int (field_value_int_id, value) VALUES (NULL, ?)';
+    $db->query($sql, $value);
+
+    $id = $db->insertId();
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $id;
+}
+
+function addStringFieldValue($value, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }    
+
+    $sql = 'INSERT INTO field_value_string (field_value_string_id, value) VALUES (NULL, ?)';
+    $db->query($sql, $value);
+
+    $id = $db->insertId();
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $id;
+}
+
+function addSelectionFieldValue($value, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }    
+
+    // TODO
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $id;
+}
 
 
 ?>
