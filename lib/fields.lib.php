@@ -21,6 +21,7 @@
 
 */
 
+<<<<<<< HEAD
 function getField($fieldId, $db = null)
 {
     $close = false;
@@ -485,4 +486,7 @@ function getInventoryCustomFields($clubId, $inventoryId, $db = null)
 
     return $items;
 }
+=======
+
+>>>>>>> a6a75ee34a27f4acc1777b1f59e7cf95a2a8b6ae
 ?>
