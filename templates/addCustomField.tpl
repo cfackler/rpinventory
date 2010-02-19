@@ -29,7 +29,12 @@
             </tr>
             <tr>
                 <td>Field Type: </td>
-                </td>{* radio buttons *}</td>
+                <td>
+                    <select class="dropDown" name="dataType">
+                        <option value="integer">Integer</option>
+                        <option value="string">Word</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td><input type="submit" value="Add Field" /></td>
