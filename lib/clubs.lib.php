@@ -139,14 +139,16 @@ function addClub($club_name, $db = null)
 
     $sql = 'INSERT INTO clubs VALUES (NULL, ?)';
 
-    $result = $db->query($sql, $club_name);
+    $db->query($sql, $club_name);
+
+    $id = $db->insertId();
 
     if ($close)
     {
         $db->close();
     }
 
-    return $clubs;
+    return $id;
 }
 
 function alterUserClubAccess($user_id, $club_id, $access_level, $db = null)
