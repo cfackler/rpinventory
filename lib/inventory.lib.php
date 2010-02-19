@@ -20,6 +20,33 @@
 
  */
 
+function getBareInventory($clubId, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'SELECT * FROM inventory WHERE club_id = ?';
+    $result = $db->query($sql, $clubId);
+
+    $items = $db->getObjectArray($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $items;
+}
+
 function getInventoryItem($inventory_id, $db = null)
 {
     $close = false;
