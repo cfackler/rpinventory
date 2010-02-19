@@ -218,6 +218,32 @@ END;
     return;
 }
 
+function getIntFieldValue($id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }    
+
+    $sql = 'SELECT * FROM field_value_int WHERE field_value_int_id = ?';
+    $result = $db->query($sql, $id);
+
+    $item = $db->getObject($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $item;
+}
+
 function addIntFieldValue($value, $db = null)
 {
     $close = false;
@@ -244,6 +270,32 @@ function addIntFieldValue($value, $db = null)
     return $id;
 }
 
+function getStringFieldValue($id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }    
+
+    $sql = 'SELECT * FROM field_value_string WHERE field_value_string_id = ?';
+    $result = $db->query($sql, $id);
+
+    $item = $db->getObject($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $item;
+}
+
 function addStringFieldValue($value, $db = null)
 {
     $close = false;
@@ -268,6 +320,29 @@ function addStringFieldValue($value, $db = null)
     }
 
     return $id;
+}
+
+function getSelectionFieldValue($id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }    
+
+    // TODO
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $item;
 }
 
 function addSelectionFieldValue($value, $db = null)
@@ -319,7 +394,7 @@ function getClubCustomFields($clubId, $db = null)
     return $items;
 }
 
-function getInventoryCustomFields($clubId, $db = null)
+function getAllInventoryCustomFields($clubId, $db = null)
 {
     require_once('lib/inventory.lib.php');
     $close = false;
@@ -335,11 +410,27 @@ function getInventoryCustomFields($clubId, $db = null)
 
     $clubId = (int)$clubId;
 
-    $sql = 'SELECT * FROM fields, field_types, club_fields_'.$clubId.' WHERE fields.club_id = ? AND fields.field_type_id = field_type.field_type_id AND club_fields_'.$clubId.'.field_id = fields.field_id';
+    $sql = 'SELECT field_type_name, field_value_id, inventory_id FROM fields, field_types, club_fields_'.$clubId.' WHERE fields.club_id = ? AND fields.field_type_id = field_type.field_type_id AND club_fields_'.$clubId.'.field_id = fields.field_id';
 
     $result = $db->query($sql);
 
     $items = $db->getObjectArray($result);
+
+    foreach($items as &$item)
+    {
+        if ($item->field_type_name == 'integer')
+        {
+            $item->value = getIntFieldValue($item->field_value_id);
+        }
+        elseif ($item->field_type_name == 'string')
+        {
+            $item->value = getStringFieldValue($item->field_value_id);
+        }
+        elseif ($item->field_type_name == 'selection')
+        {
+            //TODO
+        }
+    }
 
     if ($close)
     {
@@ -349,4 +440,49 @@ function getInventoryCustomFields($clubId, $db = null)
     return $items;
 }
 
+function getInventoryCustomFields($clubId, $inventoryId, $db = null)
+{
+    require_once('lib/inventory.lib.php');
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $clubId = (int)$clubId;
+
+    $sql = 'SELECT field_type_name, field_value_id, fields.field_id, inventory_id FROM fields, field_types, club_fields_'.$clubId.' WHERE fields.club_id = ? AND fields.field_type_id = field_types.field_type_id AND club_fields_'.$clubId.'.field_id = fields.field_id AND inventory_id = ?';
+
+    $result = $db->query($sql, $clubId, $inventoryId);
+
+    $items = $db->getObjectArray($result);
+
+    foreach($items as &$item)
+    {
+        if ($item->field_type_name == 'integer')
+        {
+            $item->value = getIntFieldValue($item->field_value_id);
+        }
+        elseif ($item->field_type_name == 'string')
+        {
+            $item->value = getStringFieldValue($item->field_value_id);
+        }
+        elseif ($item->field_type_name == 'selection')
+        {
+            //TODO
+        }
+    }
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $items;
+}
 ?>

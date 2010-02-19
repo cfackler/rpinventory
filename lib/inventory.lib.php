@@ -87,6 +87,8 @@ function getInventoryItem($inventory_id, $db = null)
 
 function getInventory($sortIndex = 0, $sortdir = 0, $db = null)
 {
+    require_once('lib/fields.lib.php');
+
     $close = false;
 
     if (is_null($db))
@@ -194,6 +196,9 @@ function getInventory($sortIndex = 0, $sortdir = 0, $db = null)
         }
 
         $item->category = $categoryString;
+
+        $customFields = getInventoryCustomFields($_SESSION['club'], $item->inventory_id, $db);
+        // TODO: actually display the junk
     }
 
     if ($close)
