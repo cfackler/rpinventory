@@ -61,7 +61,7 @@ function addCustomField($fieldName, $fieldTypeId, $clubId, $db = null)
         $close = true;
     }
 
-    $sql = 'INSERT INTO fields (field_id, club_id, field_name, fieldtype_id) VALUES (NULL, ?, ?, ?)';
+    $sql = 'INSERT INTO fields (field_id, club_id, field_name, field_type_id) VALUES (NULL, ?, ?, ?)';
     $db->query($sql, $clubId, $fieldName, $fieldTypeId);
 
     $id = $db->insertId();
@@ -150,7 +150,7 @@ function updateInventoryCustomFields($fieldId, $clubId)
     $clubId = (int)$clubId;
 
     $items = getBareInventory($clubId, $db);
-    $sql = 'INSERT INTO club_field_'.$clubID.' (inventory_id, field_id, field_value_id) VALUES (?, ?, ?)';
+    $sql = 'INSERT INTO club_fields_'.$clubId.' (inventory_id, field_id, field_value_id) VALUES (?, ?, ?)';
     $fieldValueId;
     $field = getField($fieldId);
 
@@ -174,7 +174,7 @@ function updateInventoryCustomFields($fieldId, $clubId)
             die('Invalid field type name');
         }
 
-        $db->query($sql, $inventory_id, $field_id, $fieldValueId);
+        $db->query($sql, $item->inventory_id, $fieldId, $fieldValueId);
     }
     
     if ($close)
