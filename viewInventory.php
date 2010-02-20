@@ -32,8 +32,6 @@ $db = new database();
 //Authenticate
 $auth = GetAuthority();
 
-$clubId = $_SESSION['club'];
-
 // SMARTY Setup
 require_once('lib/smarty_inv.class.php');
 
@@ -45,9 +43,13 @@ $categories = get_options('categories', 'id', 'category_name', $db);
 /* get inventory items */
 $items = getInventory(0, 0, $db);
 
-$fields = getClubCustomFields($clubId, $db);
-//print_r($items);
-//die();
+if ($auth > 1)
+{
+    $clubId = $_SESSION['club'];
+
+    $fields = getClubCustomFields($clubId, $db);
+}
+
 //Assign vars
 $smarty->assign('items', $items);
 if (count($items) == 0)

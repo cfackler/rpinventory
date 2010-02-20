@@ -87,6 +87,7 @@ function getInventoryItem($inventory_id, $db = null)
 
 function getInventory($sortIndex = 0, $sortdir = 0, $db = null)
 {
+    require_once('lib/auth.lib.php');
     require_once('lib/fields.lib.php');
 
     $close = false;
@@ -197,13 +198,16 @@ function getInventory($sortIndex = 0, $sortdir = 0, $db = null)
 
         $item->category = $categoryString;
 
-        // Get all of the custom fields for the inventory item
-        $customFields = getInventoryCustomFields($_SESSION['club'], $item->inventory_id, $db);
-
-        // Add the fields to the inventory item
-        foreach($customFields as &$field)
+        if (GetAuthority() > 0)
         {
-            $item->{$field->field_name} = $field->value;
+            // Get all of the custom fields for the inventory item
+            $customFields = getInventoryCustomFields($_SESSION['club'], $item->inventory_id, $db);
+
+            // Add the fields to the inventory item
+            foreach($customFields as &$field)
+            {
+                $item->{$field->field_name} = $field->value;
+            }
         }
     }
 
