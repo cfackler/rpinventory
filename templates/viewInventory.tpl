@@ -51,6 +51,9 @@
 			{if $authority >= 1}
 				<th width="100">Condition</th>
 				<th width="150">Current Value</th>
+                {section name=fieldLoop loop=$fields}
+                <th width="150">{$fields[fieldLoop]->field_name}</th>
+                {/section}
 			{/if}
 			<th width="150">Location</th>
 	  </tr>
@@ -66,6 +69,10 @@
 			{if $authority >= 1}
 				<td>{$items[itemLoop]->current_condition}</td>
 				<td>${$items[itemLoop]->current_value}</td>
+                {section name=fieldLoop loop=$fields}
+                {assign var="temp" value=$fields[fieldLoop]->field_name}
+                <td>{$items[itemLoop]->$temp}</td>
+                {/section}
 			{/if}
 			{if $items[itemLoop]->loan_id == 0 && $items[itemLoop]->checkout_id == 0}
 				<td>{$items[itemLoop]->location}</td>

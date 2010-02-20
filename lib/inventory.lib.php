@@ -197,8 +197,14 @@ function getInventory($sortIndex = 0, $sortdir = 0, $db = null)
 
         $item->category = $categoryString;
 
+        // Get all of the custom fields for the inventory item
         $customFields = getInventoryCustomFields($_SESSION['club'], $item->inventory_id, $db);
-        // TODO: actually display the junk
+
+        // Add the fields to the inventory item
+        foreach($customFields as &$field)
+        {
+            $item->{$field->field_name} = $field->value;
+        }
     }
 
     if ($close)
