@@ -241,7 +241,7 @@ function getIntFieldValue($id, $db = null)
         $db->close();
     }
 
-    return $item;
+    return $item->value;
 }
 
 function addIntFieldValue($value, $db = null)
@@ -293,7 +293,7 @@ function getStringFieldValue($id, $db = null)
         $db->close();
     }
 
-    return $item;
+    return $item->value;
 }
 
 function addStringFieldValue($value, $db = null)
@@ -456,7 +456,7 @@ function getInventoryCustomFields($clubId, $inventoryId, $db = null)
 
     $clubId = (int)$clubId;
 
-    $sql = 'SELECT field_type_name, field_value_id, fields.field_id, inventory_id FROM fields, field_types, club_fields_'.$clubId.' WHERE fields.club_id = ? AND fields.field_type_id = field_types.field_type_id AND club_fields_'.$clubId.'.field_id = fields.field_id AND inventory_id = ?';
+    $sql = 'SELECT field_name, field_type_name, field_value_id, fields.field_id, inventory_id FROM fields, field_types, club_fields_'.$clubId.' WHERE fields.club_id = ? AND fields.field_type_id = field_types.field_type_id AND club_fields_'.$clubId.'.field_id = fields.field_id AND inventory_id = ?';
 
     $result = $db->query($sql, $clubId, $inventoryId);
 
