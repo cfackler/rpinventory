@@ -154,6 +154,7 @@ CREATE TABLE fields (
     club_id int(5) NOT NULL,
     field_name varchar(200) NOT NULL,
     field_type_id int(5) NOT NULL,
+    default_field_value_id int(5) NOT NULL,
     PRIMARY KEY (field_id)
 ) type=MyISAM;
 
