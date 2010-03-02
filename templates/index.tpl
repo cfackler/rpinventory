@@ -29,12 +29,12 @@ $this->assign('clubName', $_SESSION['club_name']);
 
 <link rel="stylesheet" href="js/modulesJS/jquery-ui-1.7.2.custom/css/custom-theme/jquery-ui-1.7.2.custom.css" type="text/css" />
 <link rel="stylesheet" href="css/styles.css" type="text/css" />
-<script src="js/ExternalJS.js" language="javascript" type="text/javascript"></script>
 <script src="js/modulesJS/prototype.js" language="javascript" type="text/javascript"></script>
-<script src="js/helpToolTip.js" language="javascript" type="text/javascript"></script>
-<link rel="stylesheet" href="js/modulesJS/asmselect/jquery.asmselect.css" type="text/css" />
 <script src="js/modules.js" language="javascript" type="text/javascript"></script>
 <script type="text/javascript">jQuery.noConflict();</script>
+<script src="js/ExternalJS.js" language="javascript" type="text/javascript"></script>
+<script src="js/helpToolTip.js" language="javascript" type="text/javascript"></script>
+<link rel="stylesheet" href="js/modulesJS/asmselect/jquery.asmselect.css" type="text/css" />
 
 <script src="js/functions.interface.js" language="javascript" type="text/javascript"></script>
 
@@ -46,6 +46,10 @@ $this->assign('clubName', $_SESSION['club_name']);
     {/if}
 {else}
     <script src="js/buttons.interface.js" language="javascript" type="text/javascript"></script>
+{/if}
+
+{if $page_tpl == 'login'}
+    <script>{php}echo "(jQuery)(document).ready(function() { (jQuery)('#username').focus();});"{/php}</script>
 {/if}
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
