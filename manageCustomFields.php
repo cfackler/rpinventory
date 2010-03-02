@@ -38,15 +38,28 @@ if ($auth < 2)
 
 require_once('lib/smarty_inv.class.php');
 
+// Club ID
+$clubId = $_SESSION['club'];
+
+// Double check club id
+if ($clubId < 1)
+{
+    die('Invalid club id');
+}
+
+// Get the fields
+$fields = getClubCustomFields($clubId, $db);
+//print_r($fields);die;
+
 $smarty = new Smarty_Inv();
 
 //Assign vars
 $smarty->assign('title', "Manage Custom Fields");
 $smarty->assign('authority', $auth);
 $smarty->assign('page_tpl', 'manageCustomFields');
-$smarty->assign('users', $users);
+$smarty->assign('fields', $fields);
 
-if (count($users) == 0)
+if (count($fields) == 0)
 {
     $smarty->assign('emptyTable', TRUE);
 }
