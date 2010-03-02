@@ -48,7 +48,7 @@ function getField($fieldId, $db = null)
 }
 
 /* Inserts the custom field into the 'fields' table and updates all inventory items */
-function addCustomField($fieldName, $fieldTypeId, $clubId, $db = null)
+function addCustomField($fieldName, $fieldTypeId, $defaultValue, $defaultValueId, $clubId, $db = null)
 {
     $close = false;
 
@@ -61,13 +61,13 @@ function addCustomField($fieldName, $fieldTypeId, $clubId, $db = null)
         $close = true;
     }
 
-    $sql = 'INSERT INTO fields (field_id, club_id, field_name, field_type_id) VALUES (NULL, ?, ?, ?)';
-    $db->query($sql, $clubId, $fieldName, $fieldTypeId);
+    $sql = 'INSERT INTO fields (field_id, club_id, field_name, field_type_id, default_field_value_id) VALUES (NULL, ?, ?, ?, ?)';
+    $db->query($sql, $clubId, $fieldName, $fieldTypeId, $defaultValueId);
 
     $id = $db->insertId();
 
     // Add the new custom fields
-    updateInventoryCustomFields($id, $clubId);
+    updateInventoryCustomFields($id, $clubId, $defaultValue);
 
     if ($close)
     {
@@ -91,6 +91,8 @@ function addFieldType($fieldTypeName, $db = null)
         $close = true;
     }
 
+    // TODO Change this so not to create duplicate field-types
+    // There's no reason why multiple fields can't use the same field_type_id, right?
     $sql = 'INSERT INTO field_types (field_type_id, field_type_name) VALUES (NULL, ?)';
     $db->query($sql, $fieldTypeName);
 
@@ -132,7 +134,7 @@ function addSelectValues($fieldTypeId, $optionArray, $db = null)
     return;
 }
 
-function updateInventoryCustomFields($fieldId, $clubId)
+function updateInventoryCustomFields($fieldId, $clubId, $value)
 {
     require_once('lib/inventory.lib.php');
 
@@ -159,15 +161,15 @@ function updateInventoryCustomFields($fieldId, $clubId)
         // Default int value
         if ($field->field_type_name == 'integer')
         {
-            $fieldValueId = addIntFieldValue(0);
+            $fieldValueId = addIntFieldValue($value);
         }
         elseif ($field->field_type_name == 'string')
         {
-            $fieldValueId = addStringFieldValue('');
+            $fieldValueId = addStringFieldValue($value);
         }
         elseif ($field->field_type_name == 'selection')
         {
-            $fieldValueId = addSelectionFieldValue(null);
+            $fieldValueId = addSelectionFieldValue($value);
         }
         else
         {
@@ -198,6 +200,9 @@ function createClubCustomFieldTable($clubId, $db = null)
 
         $close = true;
     }
+
+    // Just in case
+    $clubId = (int)$clubId;
 
     $sql = <<<END
 CREATE TABLE club_fields_$clubId (

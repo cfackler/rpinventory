@@ -43,6 +43,45 @@ if ($fieldType != 'integer' && $fieldType != 'string' && $fieldType != 'selectio
     die('Invalid field type!');
 }
 
+// Check to see if a default value was given
+if (!isset($_POST['defaultValue']))
+{
+    die('No default value given!');
+}
+
+// Default value
+$defaultValue = $_POST['defaultValue'];
+$defaultValueId = 0;
+
+// Validate the default values against value type chosen
+if ($fieldType == 'integer')
+{
+    $defaultValue = (int)$defaultValue;
+
+    // Insert the default value
+    $defaultValueId = addIntFieldValue($defaultValue, $db);
+}
+elseif ($fieldType == 'string')
+{
+    if (strlen($defaultValue) == 0)
+    {
+        die('Please supply a valid string default value');
+    }
+
+    // Insert the default value
+    $defaultValueId = addStringFieldValue($defaultValue, $db);
+}
+else
+{
+    // TODO Check for selections
+}
+
+// Sanity Check on default value
+if ($defaultValueId == 0)
+{
+    die('Error creating the default value');
+}
+
 // Field Name
 $fieldName = $_POST['fieldName'];
 
@@ -100,7 +139,7 @@ if ($count > 2)
     addSelectValues($fieldTypeId, $optionArray);
 }
 
-addCustomField($fieldName, $fieldTypeId, $clubId, $db);
+addCustomField($fieldName, $fieldTypeId, $defaultValue, $defaultValueId, $clubId, $db);
 
 header('Location: manageCustomFields.php');
 
