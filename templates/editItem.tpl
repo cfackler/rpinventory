@@ -44,13 +44,13 @@
       </tr>
 
       <tr>
-        <td>Category: </td>
+        <td valign="top">Category: </td>
         <td id="categoryTD-{$smarty.section.num.index}">
           <select multiple="multiple" name="category-{$smarty.section.num.index}[]" id="category-{$smarty.section.num.index}" class="category_select" title="Please select a category">
             {$category_options}
           </select>
         </td>
-        <td>
+        <td valign="top">
           <div id="category_notification-{$smarty.section.num.index}" class="category_notification">
             <a id="add_category_button-{$smarty.section.num.index}" class="ui-state-default ui-corner-all button add_category_button">
               <span class="ui-icon ui-icon-plus"><!-- --></span>
@@ -59,7 +59,6 @@
           </div>
         </td>
       </tr>
-
 
       <tr>
         <td>Condition: </td>
