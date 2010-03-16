@@ -149,13 +149,13 @@
             </tr>
 
             <tr>
-              <td>Category: </td>
+              <td valign="top">Category: </td>
               <td>
                 <select multiple="multiple" id="category-0" name="category-0[]" class="category_select" title="Please select a category">
                   {$category_options}
                 </select>				
               </td>
-              <td>
+              <td valign="top">
                 <span id="category_notification-0" name="category_notification-0" class="notification"><a id="add_category_button-0" class="ui-state-default ui-corner-all button add_category_button">
                   <span class="ui-icon ui-icon-plus"><!-- --></span>
                   <span class="buttonText">Add Category</span>
