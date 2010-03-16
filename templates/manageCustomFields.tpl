@@ -52,7 +52,7 @@
                         <span class="buttonText">Edit</span>
                     </a>
                     &nbsp;
-                    <a class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete field {$fields[fieldLoop]->field_name} ?','deleteField.php?id={$fields[fieldLoop]->field_id}')">
+                    <a class="ui-state-default ui-corner-all button" onclick="confirmation('Are you sure you want to delete field {$fields[fieldLoop]->field_name} ?','deleteCustomField.php?id={$fields[fieldLoop]->field_id}')">
                         <span class="ui-icon ui-icon-circle-close"></span>
                         <span class="buttonText">Delete</span>
                     </a>
