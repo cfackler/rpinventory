@@ -67,7 +67,7 @@ function addCustomField($fieldName, $fieldTypeId, $defaultValue, $defaultValueId
     $id = $db->insertId();
 
     // Add the new custom fields
-    updateInventoryCustomFields($id, $clubId, $defaultValue);
+    updateInventoryCustomFields($id, $clubId, $defaultValue, $db);
 
     if ($close)
     {
@@ -134,7 +134,67 @@ function addSelectValues($fieldTypeId, $optionArray, $db = null)
     return;
 }
 
-function updateInventoryCustomFields($fieldId, $clubId, $value)
+function deleteCustomField($fieldId, $clubId, $db)
+{
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    // Get the field
+    $field = getField($fieldId, $db);
+
+    // Security
+    $clubId = (int)$clubId;
+
+    // Determine what to do for the type of field 
+    switch ($field->field_type_name)
+    {
+        case 'integer':
+            // Get all of the field-value ids
+            $sql = 'SELECT * FROM club_fields_'.$clubId.' WHERE field_id = ?';
+
+            $result = $db->query($sql, $fieldId);
+            $items = $db->getObjectArray($result);
+
+            // Delete each of the field_values
+            $sql = 'DELETE FROM field_value_int WHERE field_value_int_id = ? LIMIT 1';
+
+            foreach($items as &$item)
+            {
+                $db->query($sql, $item->field_value_id);
+            }
+
+            break;
+        case 'string':
+            break;
+        case 'selection':
+            break;
+        default:
+            die('Unsupported value');
+    }
+
+    // Delete the club_field entries
+    $sql = 'DELETE FROM club_fields_'.$clubId.' WHERE field_id = ?';
+    $db->query($sql, $field->field_id);
+
+    // Delete the custom field entry
+    $sql = 'DELETE FROM fields WHERE field_id = ?';
+    $db->query($sql, $field->field_id);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return;
+}
+
+function updateInventoryCustomFields($fieldId, $clubId, $value, $db=null)
 {
     require_once('lib/inventory.lib.php');
 
