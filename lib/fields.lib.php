@@ -151,16 +151,16 @@ function deleteCustomField($fieldId, $clubId, $db)
     // Security
     $clubId = (int)$clubId;
 
+    // Get all of the field-value ids
+    $sql = 'SELECT * FROM club_fields_'.$clubId.' WHERE field_id = ?';
+
+    $result = $db->query($sql, $fieldId);
+    $items = $db->getObjectArray($result);
+
     // Determine what to do for the type of field 
     switch ($field->field_type_name)
     {
         case 'integer':
-            // Get all of the field-value ids
-            $sql = 'SELECT * FROM club_fields_'.$clubId.' WHERE field_id = ?';
-
-            $result = $db->query($sql, $fieldId);
-            $items = $db->getObjectArray($result);
-
             // Delete each of the field_values
             $sql = 'DELETE FROM field_value_int WHERE field_value_int_id = ? LIMIT 1';
 
@@ -170,8 +170,17 @@ function deleteCustomField($fieldId, $clubId, $db)
             }
 
             break;
+
         case 'string':
+            $sql = 'DELETE FROM field_value_string WHERE field_value_string_id = ? LIMIT 1';
+
+            foreach($items as &$item)
+            {
+                $db->query($sql, $item->field_value_id);
+            }
+
             break;
+
         case 'selection':
             break;
         default:
