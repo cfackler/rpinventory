@@ -164,6 +164,8 @@ function deleteCustomField($fieldId, $clubId, $db)
             // Delete each of the field_values
             $sql = 'DELETE FROM field_value_int WHERE field_value_int_id = ? LIMIT 1';
 
+            $db->query($sql, $field->default_field_value_id);
+
             foreach($items as &$item)
             {
                 $db->query($sql, $item->field_value_id);
@@ -173,6 +175,8 @@ function deleteCustomField($fieldId, $clubId, $db)
 
         case 'string':
             $sql = 'DELETE FROM field_value_string WHERE field_value_string_id = ? LIMIT 1';
+
+            $db->query($sql, $field->default_field_value_id);
 
             foreach($items as &$item)
             {
