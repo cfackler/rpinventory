@@ -378,6 +378,30 @@ function addIntFieldValue($value, $db = null)
     return $id;
 }
 
+function updateIntFieldValue($id, $value, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }    
+
+    $sql = 'UPDATE field_value_int SET value = ? WHERE field_value_int_id = ?';
+    $db->query($sql, $value, $id);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return;
+}
+
 function getStringFieldValue($id, $db = null)
 {
     $close = false;
@@ -428,6 +452,30 @@ function addStringFieldValue($value, $db = null)
     }
 
     return $id;
+}
+
+function updateStringFieldValue($id, $value, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }    
+
+    $sql = 'UPDATE field_value_string SET value = ? WHERE field_value_string_id = ?';
+    $db->query($sql, $value, $id);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return;
 }
 
 function getSelectionFieldValue($id, $db = null)
