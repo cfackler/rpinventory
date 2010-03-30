@@ -46,7 +46,7 @@
       {section name=index loop=$fields[$inventory_id]}
       <tr>
         <td>{$fields[$inventory_id][index]->field_name}:</td>
-        <td><input type="text" name="field-{$fields[$inventory_id][index]->field_value_id}" value="{$fields[$inventory_id][index]->value}"></input</td>
+        <td><input type="text" name="field-{$smarty.section.num.index}-{$fields[$inventory_id][index]->field_id}" value="{$fields[$inventory_id][index]->value}"></input</td>
         <td></td>
       </tr>
       {/section}

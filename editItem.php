@@ -75,6 +75,8 @@ foreach($idList as &$id)
     $items[] = $item;
 }
 
+//print_r($fields);die();
+
 //Locations
 $locations = getLocations($db);
 
