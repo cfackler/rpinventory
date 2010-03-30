@@ -47,6 +47,36 @@ function getField($fieldId, $db = null)
     return $item;
 }
 
+/**
+ * Change the name of a custom field given an id
+ *
+ * @param fieldId The id of the field to update
+ * @param fieldName The name to change the field to
+ */
+function updateFieldName($fieldId, $fieldName, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'UPDATE fields SET field_name = ? WHERE field_id = ?';
+    $result = $db->query($sql, $fieldName, $fieldId);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $item;
+}
+
 /* Inserts the custom field into the 'fields' table and updates all inventory items */
 function addCustomField($fieldName, $fieldTypeId, $defaultValue, $defaultValueId, $clubId, $db = null)
 {
