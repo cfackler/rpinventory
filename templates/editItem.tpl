@@ -42,7 +42,14 @@
         <td><input type="text" name="value-{$smarty.section.num.index}" size="40" id="value" value="{$items[num]->current_value}"></td>
         <td><!-- --></td>
       </tr>
-
+      {assign var=inventory_id value=$items[num]->inventory_id}
+      {section name=index loop=$fields[$inventory_id]}
+      <tr>
+        <td>{$fields[$inventory_id][index]->field_name}:</td>
+        <td><input type="text" name="field-{$fields[$inventory_id][index]->field_value_id}" value="{$fields[$inventory_id][index]->value}"></input</td>
+        <td></td>
+      </tr>
+      {/section}
       <tr>
         <td valign="top">Category: </td>
         <td id="categoryTD-{$smarty.section.num.index}">
