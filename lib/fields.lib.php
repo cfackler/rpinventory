@@ -164,7 +164,7 @@ function addSelectValues($fieldTypeId, $optionArray, $db = null)
     return;
 }
 
-function deleteCustomField($fieldId, $clubId, $db)
+function deleteCustomField($fieldId, $clubId, $db = null)
 {
     if (is_null($db))
     {
@@ -236,6 +236,56 @@ function deleteCustomField($fieldId, $clubId, $db)
 
     return;
 }
+
+function createInventoryCustomField($fieldId, $clubId, $inventory_id, $value, $db = null)
+{
+    require_once('lib/inventory.lib.php');
+
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $clubId = (int)$clubId;
+
+    $sql = 'INSERT INTO club_fields_'.$clubId.' (inventory_id, field_id, field_value_id) VALUES (?, ?, ?)';
+    $fieldValueId;
+    $field = getField($fieldId);
+
+    // Default int value
+    if ($field->field_type_name == 'integer')
+    {
+        $fieldValueId = addIntFieldValue($value);
+    }
+    elseif ($field->field_type_name == 'string')
+    {
+        $fieldValueId = addStringFieldValue($value);
+    }
+    elseif ($field->field_type_name == 'selection')
+    {
+        $fieldValueId = addSelectionFieldValue($value);
+    }
+    else
+    {
+        die('Invalid field type name');
+    }
+
+    $db->query($sql, $item->inventory_id, $fieldId, $fieldValueId);
+    
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return;
+}
+
 
 function updateInventoryCustomFields($fieldId, $clubId, $value, $db=null)
 {

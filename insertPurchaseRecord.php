@@ -24,6 +24,7 @@
 require_once("lib/auth.lib.php");  //Session
 require_once('lib/inventory.lib.php');
 require_once('lib/purchases.lib.php');
+require_once('lib/fields.lib.php');
 require_once('class/database.class.php');
 
 // Connect
@@ -41,6 +42,12 @@ if (!isset($_SESSION['club']))
 
 $club_id = $_SESSION['club'];
 	
+// Ensure valid club ID
+if ($club_id < 1)
+{
+    die('Invalid club ID');
+}
+
 // Business
 $ignoreBusiness = false;
 if (isset($_POST['ignoreBusiness']))
@@ -192,6 +199,15 @@ for ($x=0; $x<$count; $x++)
             //Insert item category
             addInventoryCategory($inventory_id, $categories[$c], $db);
         }
+    }
+
+    // Custom fields
+    $fields = getClubCustomFields($club_id, $db);
+    foreach($fields as &$field)
+    {
+        $field_value = $_POST['fields-'.$x.'-'.$field->field_id];
+
+        createInventoryCustomField($field->field_id, $club_id, $inventory_id, $field_value);
     }
 }
 
