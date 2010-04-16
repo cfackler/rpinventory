@@ -29,8 +29,8 @@
     </div>
 </div>
 {if $emptyTable == TRUE}
-    <div style="margin: 10px;">
-        <p>No custom fields defined.</p>
+    <div style="padding: 10px;" class="ui-widget-content ui-widget ui-corner-all">
+        <p style="font-weight: bold">No custom fields defined.</p>
     </div>
 {else}
     <table width="800" id="itemsTable" class="itemsTable searchable ui-widget" cellspacing="0">
