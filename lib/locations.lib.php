@@ -266,6 +266,13 @@ function insertLocation($location, $desc, $db = null)
         $close = true;
     }
 
+    $club_id = (int)$_SESSION['club'];
+
+    if ($club_id < 1)
+    {
+        die('Invalid club id');
+    }
+
     // Description
     if(strlen($desc) == 0)
         die('Must have a description');
@@ -290,9 +297,9 @@ function insertLocation($location, $desc, $db = null)
         }
     }
 
-    $sql = 'INSERT INTO locations (location_id, location, description) VALUES (NULL, ?, ?)';
+    $sql = 'INSERT INTO locations (location_id, location, description, club_id) VALUES (NULL, ?, ?, ?)';
 
-    $db->query($sql, $location, $desc);
+    $db->query($sql, $location, $desc, $club_id);
 
     if ($close)
     {
@@ -318,9 +325,16 @@ function addLocation($location, $description, $db = null)
         $close = true;
     }
 
-    $sql = 'INSERT INTO locations (location_id, location, description) VALUES (NULL, ?, ?)';
+    $club_id = (int)$_SESSION['club'];
 
-    $db->query($sql, $location, $description);
+    if ($club_id < 1)
+    {
+        die('Invalid club id');
+    }
+
+    $sql = 'INSERT INTO locations (location_id, location, description, club_id) VALUES (NULL, ?, ?, ?)';
+
+    $db->query($sql, $location, $description, $club_id);
 
     $id = $db->insertId();
 
