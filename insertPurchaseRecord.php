@@ -184,15 +184,15 @@ for ($x=0; $x<$count; $x++)
     $purchase_item_id = addPurchaseItem($purchase_id, $inventory_id, $value, $db);
 
     // For all categories
-	$categories = $_POST['category-'.$x];
-	if (sizeof($categories) > 0)
-	{
-		for ($c = 0; $c < sizeof($categories); $c++)
-		{
-			//Insert item category
+    $categories = $_POST['category-'.$x];
+    if (sizeof($categories) > 0)
+    {
+        for ($c = 0; $c < sizeof($categories); $c++)
+        {
+            //Insert item category
             addInventoryCategory($inventory_id, $categories[$c], $db);
-		}
-	}
+        }
+    }
 }
 
 $db->close();
