@@ -25,6 +25,7 @@ require_once('modules/json/JSON.php');
 require_once("lib/auth.lib.php");   //Session
 require_once('lib/locations.lib.php'); //getting locations drop down items
 require_once('lib/display.lib.php');
+require_once('lib/fields.lib.php');
 require_once('class/database.class.php');
 
 // Connect
@@ -41,8 +42,42 @@ $id = (int)$_GET['id'];
 if($id == 0)
   die("Invalid ID");
 
+$club_id = (int)$_SESSION['club'];
+if ($club_id < 1)
+{
+    die('Invalid club ID');
+}
+
 $location_options = getLocationsOptions($db);
 $category_options = get_options('categories', 'id', 'category_name', $db);
+
+// Fields
+$custom_fields = getClubCustomFields($club_id, $db);
+
+// Default field values
+$default_field_values = array();
+
+foreach($custom_fields as &$field)
+{
+    if ($field->field_type_name == 'integer')
+    {
+        $default_field_values[$field->field_id] = getIntFieldValue($field->default_field_value_id, $db);
+    }
+    elseif ($field->field_type_name == 'string')
+    {
+        $default_field_values[$field->field_id] = getStringFieldValue($field->default_field_value_id, $db);
+    }
+    elseif ($field->field_type_name == 'selection')
+    {
+        // TODO Implement selections
+        ;
+    }
+    else
+    {
+        die('Unknown custom field type');
+    }
+}
+
 
 echo <<<END
 <table>
@@ -55,7 +90,20 @@ echo <<<END
   <td>Value: </td>
   <td><input type="text" name="value-$id" id="value-$id" class="value validate" onchange="updateTotal('value-$id')"/></td>
   </tr>
-	
+END;
+
+foreach ($custom_fields as &$field)
+{
+    $value = $default_field_values[$field->field_id];
+    echo <<<END
+<tr>
+    <td>$field->field_name:</td>
+    <td><input type="text" name="field-$id-$field->field_id" value="$value" class="validate" /></td>
+</td>
+END;
+}
+
+echo <<<END
 	<tr>
 		<td>Category: </td>
 		<td>

@@ -152,7 +152,7 @@
                 {assign var=field_id value=$custom_fields[field]->field_id}
                 <tr>
                     <td>{$custom_fields[field]->field_name}:</td>
-                    <td><input type="text" name="field-{$custom_fields[field]->field_id}" value="{$default_field_values[$field_id]}" /></td>
+                    <td><input type="text" name="field-0-{$custom_fields[field]->field_id}" value="{$default_field_values[$field_id]}" class="validate" /></td>
                 </tr>
             {/section}
 
