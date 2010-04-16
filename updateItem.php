@@ -24,6 +24,7 @@
 
 require_once('lib/auth.lib.php');  //Session
 require_once('lib/inventory.lib.php');
+require_once('lib/fields.lib.php');
 require_once('class/database.class.php');
 
 // Connect
@@ -38,6 +39,11 @@ $count = (int)$_POST['count'];
 if($count == 0)
     die('Must edit at least one item');
 
+$clubId = (int)$_SESSION['club'];
+if ($clubId < 1)
+{
+    die('Invalid club id');
+}
 
 //Run update for each item
 for($x=0; $x<$count; $x++)
@@ -65,6 +71,56 @@ for($x=0; $x<$count; $x++)
     $inventory_id = (int)$_POST['inventory_id-' . $x];
     if($inventory_id == 0)
         die('Invalid item id');	
+
+    /**
+     * Fields
+     **/
+    $fields = getInventoryCustomFields($clubId, $inventory_id, $db);
+
+    // For each field
+    foreach ($fields as &$field)
+    {
+        // Ensure a value was passed in
+        if (!isset($_POST['field-'.$x.'-'.$field->field_id]))
+        {
+            die('Missing value for field: '.$field->field_name);
+        }
+
+        $newFieldValue = $_POST['field-'.$x.'-'.$field->field_id];
+
+        // Integer fields
+        if ($field->field_type_name == 'integer')
+        {
+            // Cast to the proper type
+            $newFieldValue = (int)$newFieldValue;
+
+            // Only update if the value has actually changed
+            if ($field->value != $newFieldValue)
+            {
+                updateIntFieldValue($field->field_value_id, $newFieldValue, $db);
+            }
+        }   // String fields
+        elseif ($field->field_type_name == 'string')
+        {
+            // Cast to the proper type
+            $newFieldValue = (string)$newFieldValue;
+
+            // Only update if the value has actually changed
+            if ($field->value != $newFieldValue)
+            {
+                updateStringFieldValue($field->field_value_id, $newFieldValue, $db);
+            }
+        }
+        elseif ($field->field_type_name == 'selection')
+        {
+            //TODO Add support for selection objects
+            ;
+        }
+        else
+        {
+            die('Unsupported field type');
+        }
+    }
 
     /**
      *	Categories

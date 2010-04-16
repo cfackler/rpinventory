@@ -400,26 +400,35 @@ function getItemBlockContents(element, idnum)
 		     });
 }
 
+function getOptionBlockContents(newElement, count)
+{
+    new Ajax.Request('ajax.php?operation=getOptionBlockContents&count='+count,
+            {
+                method: 'post',
+                onSuccess: function(transport) 
+                {
+                    var response = transport.responseText;
+                    newElement.innerHTML = response;
+                }
+            });
+}
+
 function addItemField() {
-		/* the table containing the form */
+	/* the table containing the form */
     var t = document.getElementById("itemTable");
 
-		/* the amount of items currently on the form */
+	/* the amount of items currently on the form */
     var nextnum = (jQuery)('#count').attr('value')*1;
 
-		/* the new rows about to be entered */
+	/* the new rows about to be entered */
     var newrow = document.createElement('div');
 
     newrow.setAttribute('id', 'item-' + nextnum);
-		newrow.setAttribute('class', 'item');
+	newrow.setAttribute('class', 'item');
 
-		/* get content for new items */
+    /* get content for new items */
     getItemBlockContents(newrow, nextnum);
     t.appendChild(newrow);
-
-
-		//initialize asm selects because livequery isn't working right
-//		(jQuery)('#category-'+nextnum).asmSelect();
 
     (jQuery)('#count').attr('value', nextnum+1);
 
@@ -440,6 +449,42 @@ function removeItemField() {
 			// hide delete button?
 			if ((jQuery)('#count').attr('value') < 2)
 	    	(jQuery)('#removeButton').css('display', 'none');
+    }
+}
+
+function addOptionField() {
+    // Option Div
+    var parentElement = (jQuery)('#dropDownOptions');
+
+    var count = parseInt((jQuery)('#count').attr('value'));
+
+    var newElement = document.createElement('div');
+
+    newElement.setAttribute('id', 'option-'+count);
+    newElement.setAttribute('class', 'item');
+
+    getOptionBlockContents(newElement, count);
+    parentElement.append(newElement);
+
+    (jQuery)('#count').attr('value', count+1);
+
+    // Show delete button
+    (jQuery)('#removeButton').css('display', '');
+}
+
+function removeOptionField() {
+    var count = (jQuery)('#count');
+
+    if (count.attr('value') > 0)
+    {
+        (jQuery)('#dropDownOptions div.item:last').remove();
+
+        count.attr('value', count.attr('value') - 1);
+
+        if (count.attr('value') < 2)
+        {
+            (jQuery)('#removeButton').css('display', 'none');
+        }
     }
 }
 

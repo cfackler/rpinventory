@@ -126,6 +126,8 @@ function deleteClub($id, $db = null)
 
 function addClub($club_name, $db = null)
 {
+    require_once('lib/fields.lib.php');
+
     $close = false;
 
     if (is_null($db))
@@ -142,6 +144,9 @@ function addClub($club_name, $db = null)
     $db->query($sql, $club_name);
 
     $id = $db->insertId();
+
+    // Create the custom field table for the club
+    createClubCustomFieldTable($id);
 
     if ($close)
     {

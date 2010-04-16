@@ -140,6 +140,12 @@ $this->assign('clubName', $_SESSION['club_name']);
 			{/if}
 			
 			{if $authority > 1}
+                {if $page_tpl == 'manageCustomFields'}
+                    <li class="ui-state-default ui-corner-all ui-state-active">
+                {else}
+                    <li class="ui-state-default ui-corner-all">
+                {/if}
+                <a id="manageCustomFields" href="manageCustomFields.php">Custom Fields</a></li>
 				{if $page_tpl == 'manageUsers'}
 					<li class="ui-state-default ui-corner-all ui-state-active">
 				{else}

@@ -148,14 +148,22 @@
               <td><input type="text" name="value-0" id="value-0" class="value validate" onchange="updateTotal('value-0')"></td>
             </tr>
 
+            {section name=field loop=$custom_fields}
+                {assign var=field_id value=$custom_fields[field]->field_id}
+                <tr>
+                    <td>{$custom_fields[field]->field_name}:</td>
+                    <td><input type="text" name="field-0-{$custom_fields[field]->field_id}" value="{$default_field_values[$field_id]}" class="validate" /></td>
+                </tr>
+            {/section}
+
             <tr>
-              <td>Category: </td>
+              <td valign="top">Category: </td>
               <td>
                 <select multiple="multiple" id="category-0" name="category-0[]" class="category_select" title="Please select a category">
                   {$category_options}
                 </select>				
               </td>
-              <td>
+              <td valign="top">
                 <span id="category_notification-0" name="category_notification-0" class="notification"><a id="add_category_button-0" class="ui-state-default ui-corner-all button add_category_button">
                   <span class="ui-icon ui-icon-plus"><!-- --></span>
                   <span class="buttonText">Add Category</span>

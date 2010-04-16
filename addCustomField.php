@@ -21,48 +21,35 @@
 
 */
 
-require_once("lib/auth.lib.php");  //Session
-require_once("lib/inventory.lib.php"); //inventory functions
-require_once( 'lib/display.lib.php' ); // categories options
+
+require_once('lib/auth.lib.php');  //Session
+require_once('lib/fields.lib.php');
 require_once('class/database.class.php');
 
 // Connect
 $db = new database();
 
 //Authenticate
-$auth = GetAuthority();
+$auth = GetAuthority();	
+if ($auth < 2)
+{
+	die("You dont have permission to access this page");
+}
 
-// SMARTY Setup
 require_once('lib/smarty_inv.class.php');
 
 $smarty = new Smarty_Inv();
 
-/* get categories */
-$categories = get_options('categories', 'id', 'category_name', $db);
-
-/* get inventory items */
-$items = getInventory(0, 0, $db);
-
-if ($auth > 1)
-{
-    $clubId = $_SESSION['club'];
-
-    $fields = getClubCustomFields($clubId, $db);
-}
-
 //Assign vars
-$smarty->assign('items', $items);
-if (count($items) == 0)
+$smarty->assign('title', "Add Custom Field");
+$smarty->assign('authority', $auth);
+$smarty->assign('page_tpl', 'addCustomField');
+$smarty->assign('users', $users);
+
+if (count($users) == 0)
 {
     $smarty->assign('emptyTable', TRUE);
 }
-
-$smarty->assign('categories', $categories);
-
-$smarty->assign('title', "View Inventory");
-$smarty->assign('authority', $auth);
-$smarty->assign('fields', $fields);
-$smarty->assign('page_tpl', 'viewInventory');
 
 $smarty->display('index.tpl');
 

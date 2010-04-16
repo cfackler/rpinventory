@@ -20,6 +20,33 @@
 
  */
 
+function getBareInventory($clubId, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        // Connect
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'SELECT * FROM inventory WHERE club_id = ?';
+    $result = $db->query($sql, $clubId);
+
+    $items = $db->getObjectArray($result);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $items;
+}
+
 function getInventoryItem($inventory_id, $db = null)
 {
     $close = false;
@@ -60,6 +87,9 @@ function getInventoryItem($inventory_id, $db = null)
 
 function getInventory($sortIndex = 0, $sortdir = 0, $db = null)
 {
+    require_once('lib/auth.lib.php');
+    require_once('lib/fields.lib.php');
+
     $close = false;
 
     if (is_null($db))
@@ -167,6 +197,18 @@ function getInventory($sortIndex = 0, $sortdir = 0, $db = null)
         }
 
         $item->category = $categoryString;
+
+        if (GetAuthority() > 0)
+        {
+            // Get all of the custom fields for the inventory item
+            $customFields = getInventoryCustomFields($_SESSION['club'], $item->inventory_id, $db);
+
+            // Add the fields to the inventory item
+            foreach($customFields as &$field)
+            {
+                $item->{$field->field_name} = $field->value;
+            }
+        }
     }
 
     if ($close)

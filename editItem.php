@@ -25,6 +25,7 @@ require_once('lib/auth.lib.php');  //Session
 require_once('lib/display.lib.php');
 require_once('lib/locations.lib.php');
 require_once('lib/inventory.lib.php');
+require_once('lib/fields.lib.php');
 require_once('class/database.class.php');
 
 // Connect
@@ -42,12 +43,17 @@ $smarty = new Smarty_Inv();
 //grab all ids
 $idString = $_GET["ids"];
 
+// Get the clubid
+$clubId = (int)$_SESSION['club'];
+
 //Split idString into array using ',' as delimiter
 $idList = array();
 $idList = explode(',', $idString);
 
 if(count($idList) == 0)
     die("No items");
+
+$fields = array();
 
 //Get all items
 $items = array();
@@ -59,8 +65,17 @@ foreach($idList as &$id)
 
     $item->location = $location->location;
 
+    // Get the fields for the inventory item
+    $field = getInventoryCustomFields($clubId, $id, $db);
+    if (count($field) > 0)
+    {
+        $fields[$field[0]->inventory_id] = $field;
+    }
+
     $items[] = $item;
 }
+
+//print_r($fields);die();
 
 //Locations
 $locations = getLocations($db);
@@ -78,6 +93,7 @@ $smarty->assign('items', $items);
 $smarty->assign('itemCount', count($items));
 $smarty->assign('locations', $locations);
 $smarty->assign('category_options', $category_options);
+$smarty->assign('fields', $fields);
 
 $smarty->display('index.tpl');
 

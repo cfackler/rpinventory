@@ -129,6 +129,20 @@ case 'alterUserClubAccess':
 
     $db->close();
     break;
+
+case 'getOptionBlockContents':
+    $count = (int)$_GET['count'];
+
+    echo <<<END
+<table width="600">
+    <tr>
+        <td width="100">Option:</td>
+        <td><input type="text" name="option-$count" id="option-$count" size="40" /></td>
+    </tr>
+</table>
+END;
+
+    break;
 }
 
 

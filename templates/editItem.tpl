@@ -42,15 +42,22 @@
         <td><input type="text" name="value-{$smarty.section.num.index}" size="40" id="value" value="{$items[num]->current_value}"></td>
         <td><!-- --></td>
       </tr>
-
+      {assign var=inventory_id value=$items[num]->inventory_id}
+      {section name=index loop=$fields[$inventory_id]}
       <tr>
-        <td>Category: </td>
+        <td>{$fields[$inventory_id][index]->field_name}:</td>
+        <td><input type="text" name="field-{$smarty.section.num.index}-{$fields[$inventory_id][index]->field_id}" value="{$fields[$inventory_id][index]->value}"></input</td>
+        <td></td>
+      </tr>
+      {/section}
+      <tr>
+        <td valign="top">Category: </td>
         <td id="categoryTD-{$smarty.section.num.index}">
           <select multiple="multiple" name="category-{$smarty.section.num.index}[]" id="category-{$smarty.section.num.index}" class="category_select" title="Please select a category">
             {$category_options}
           </select>
         </td>
-        <td>
+        <td valign="top">
           <div id="category_notification-{$smarty.section.num.index}" class="category_notification">
             <a id="add_category_button-{$smarty.section.num.index}" class="ui-state-default ui-corner-all button add_category_button">
               <span class="ui-icon ui-icon-plus"><!-- --></span>
@@ -59,7 +66,6 @@
           </div>
         </td>
       </tr>
-
 
       <tr>
         <td>Condition: </td>

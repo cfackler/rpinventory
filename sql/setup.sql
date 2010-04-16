@@ -153,7 +153,8 @@ CREATE TABLE fields (
     field_id int(5) NOT NULL AUTO_INCREMENT,
     club_id int(5) NOT NULL,
     field_name varchar(200) NOT NULL,
-    fieldtype_id int(5) NOT NULL,
+    field_type_id int(5) NOT NULL,
+    default_field_value_id int(5) NOT NULL,
     PRIMARY KEY (field_id)
 ) type=MyISAM;
 
@@ -168,7 +169,18 @@ CREATE TABLE field_select_value (
     field_choice varchar(200) NOT NULL,
     PRIMARY KEY (field_type_id, field_choice)
 ) type=MyISAM;
+
+CREATE TABLE field_value_int (
+    field_value_int_id int(5) NOT NULL AUTO_INCREMENT,
+    value int(11) NOT NULL,
+    PRIMARY KEY (field_value_int_id)
+) type=MyISAM;
     
+CREATE TABLE field_value_string (
+    field_value_string_id int(5) NOT NULL AUTO_INCREMENT,
+    value varchar(200) NOT NULL,
+    PRIMARY KEY (field_value_string_id)
+) type=MyISAM;
 
 -- Adds the default locations for loans and checkouts
 INSERT INTO locations VALUES (1, "On Loan", "This item is on loan", 1);
