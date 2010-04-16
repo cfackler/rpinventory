@@ -480,4 +480,32 @@ function removeUserFromClub($user_id, $club_id, $db = null)
     return;
 }
 
+
+function removeAllUsersFromClub($id, $db = null)
+{
+    $close = false;
+
+    if (is_null($db))
+    {
+        require_once('class/database.class.php');
+
+        $db = new database();
+
+        $close = true;
+    }
+
+    $sql = 'DELETE FROM user_clubs WHERE club_id = ?';
+
+    $result = $db->query($sql, $id);
+
+    if ($close)
+    {
+        $db->close();
+    }
+
+    return $clubs;
+
+}
+
+
 ?>

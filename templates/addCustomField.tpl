@@ -37,7 +37,7 @@
                 <td>
                     <select class="dropDown" name="fieldType" id="fieldType" onChange="OnChange('fieldType', 'options')">
                         <option value="integer">Integer</option>
-                        <option value="string">Word</option>
+                        <option value="string">String</option>
                         <option value="selection">Selection</option>
                     </select>
                 </td>

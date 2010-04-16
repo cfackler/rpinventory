@@ -101,6 +101,8 @@ function updateClub($id, $club_name, $db = null)
 
 function deleteClub($id, $db = null)
 {
+    require_once('lib/users.lib.php');
+
     $close = false;
 
     if (is_null($db))
@@ -116,6 +118,8 @@ function deleteClub($id, $db = null)
 
     $result = $db->query($sql, $id);
 
+    removeAllUsersFromClub($id, $db);
+
     if ($close)
     {
         $db->close();
@@ -127,6 +131,7 @@ function deleteClub($id, $db = null)
 function addClub($club_name, $db = null)
 {
     require_once('lib/fields.lib.php');
+    require_once('lib/users.lib.php');
 
     $close = false;
 
@@ -147,6 +152,9 @@ function addClub($club_name, $db = null)
 
     // Create the custom field table for the club
     createClubCustomFieldTable($id);
+
+    // Create the admin as admin for the new club
+    addUserToClub(1, $id, 3, $db);
 
     if ($close)
     {

@@ -40,8 +40,10 @@
                     <tr {cycle values=" class=\"alt\","}>
                         <td>{$users[userLoop]->username}</td>
                         <td>
-                            <input id="userPriv" type="radio" onchange="alterUserClubAccess({$users[userLoop]->user_id}, 1, {$club_id})" name="curaccess-{$users[userLoop]->user_id}" {if $users[userLoop]->access_level == 1} checked="checked"{/if}/><label for="userPriv">User</label>&nbsp;
-                            <input id="adminPriv" type="radio" onchange="alterUserClubAccess({$users[userLoop]->user_id}, 2, {$club_id})" name="curaccess-{$users[userLoop]->user_id}" {if $users[userLoop]->access_level == 2} checked="checked" {/if}/><label for="adminPriv">Admin</label>
+                            <input id="userPriv" type="radio" onchange="alterUserClubAccess({$users[userLoop]->user_id}, 1, {$club_id})" name="curaccess-{$users[userLoop]->user_id}"
+                                {if $users[userLoop]->access_level == 1} checked="checked"{/if} /> <label for="userPriv">User</label>&nbsp;
+                            <input id="adminPriv" type="radio" onchange="alterUserClubAccess({$users[userLoop]->user_id}, 2, {$club_id})" name="curaccess-{$users[userLoop]->user_id}"
+                                {if $users[userLoop]->access_level == 2} checked="checked" {/if}/><label for="adminPriv">Admin</label>
                         </td>
                         <td>
                             <a href="deleteUserClub.php?club_id={$club->club_id}&user_id={$users[userLoop]->user_id}" class="ui-state-default ui-corner-all button">
