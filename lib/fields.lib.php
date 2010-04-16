@@ -276,7 +276,7 @@ function createInventoryCustomField($fieldId, $clubId, $inventory_id, $value, $d
         die('Invalid field type name');
     }
 
-    $db->query($sql, $item->inventory_id, $fieldId, $fieldValueId);
+    $db->query($sql, $inventory_id, $fieldId, $fieldValueId);
     
     if ($close)
     {

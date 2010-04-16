@@ -205,7 +205,7 @@ for ($x=0; $x<$count; $x++)
     $fields = getClubCustomFields($club_id, $db);
     foreach($fields as &$field)
     {
-        $field_value = $_POST['fields-'.$x.'-'.$field->field_id];
+        $field_value = $_POST['field-'.$x.'-'.$field->field_id];
 
         createInventoryCustomField($field->field_id, $club_id, $inventory_id, $field_value);
     }
